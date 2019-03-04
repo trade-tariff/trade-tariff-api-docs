@@ -488,30 +488,32 @@ components:
 
     Sections:
       description: |
-        A list of all 21 sections of the Tariff.
+        An array of [referenced section objects](/reference.html#referencedsection "see referenced section object"), which are abbreviated versions of a full [section](/reference.html#section "see section object") object.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
       type: object
       properties:
         id:
           type: integer
-          description: the `id` of the section
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
         position:
           type: integer
-          description: the `position` of the section
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
         title:
           type: string
-          description: the `title` of the section
+          description: The `title` of the section
         numeral:
           type: string
-          description: the `numeral` of the section
+          description: The `numeral` of the section, as a roman numeral
         chapter_from:
           type: string
-          description: the first chapter in the section
+          description: The `chapter_from` of the section, the first chapter of this section.
         chapter_to:
           type: string
-          description: the last chapter in the section
+          description: The `chapter_to` of the section, the last chapter of this section.
         section_note_id:
           type: integer
-          description: the `section_note_id` of the note for this section
+          description: The `section_note_id` of the note for this section
       example:
       - id: 1
         position: 1
@@ -530,16 +532,18 @@ components:
 
     Section:
       description: |
-        A section of the Tariff
-        There are 21 sections in the Tariff.
+        A section of the Tariff.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+
       type: object
       properties:
         id:
           type: integer
-          description: The `id` of the section.
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
         position:
           type: integer
-          description: The `position` of the section, or the order in which this section appears in the tariff.
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
         title:
           type: string
           description: The `title` of the section.
@@ -548,11 +552,11 @@ components:
           description: The `numeral` of the section, as a roman numeral
         chapter_from:
           type: string
-          description: The `chapter_from` of the section, e.g., the first chapter of this section.
+          description: The `chapter_from` of the section, the first chapter of this section.
           x-nullable: true
         chapter_to:
           type: string
-          description: The `chapter_to` of the section, e.g., the last chapter of this section.
+          description: The `chapter_to` of the section, the last chapter of this section.
         chapter_to:
           description: The `id` of the section.
           x-nullable: true
@@ -562,7 +566,7 @@ components:
         chapters:
           type: array
           description: |
-            An array of [chapter](/reference.html#referencedchapter "see referenced chapter object") objects.
+            An array of [ReferencedChapter](/reference.html#referencedchapter "see ReferencedChapter object") objects.
           items:
             type: object
             properties:
@@ -671,15 +675,17 @@ components:
     SectionNote:
       description: |
         A note associated with a section of the Tariff.
-        <p>Not all sections have a section note.</p>
+
+        A note provides textual about the section. Not all sections have a section note.
+
       type: object
       properties:
         id:
           type: integer
-          description: The `id` of the sction_note
+          description: The `id` of the section_note.
         section_id:
           type: integer
-          description: The `section_id` of the sction_note
+          description: The `section_id` of the sction_note. It may be used to uniquely identify a section_note and request it from the API.
         content:
           type: string
           description: The `content` of the section_note. Not all sections have a note.
