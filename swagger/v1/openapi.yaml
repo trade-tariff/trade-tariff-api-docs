@@ -490,7 +490,8 @@ components:
       description: |
         An array of [referenced section objects](/reference.html#referencedsection "see referenced section object"), which are abbreviated versions of a full [section](/reference.html#section "see section object") object.
 
-        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique identifier.
+
       type: object
       properties:
         id:
@@ -562,7 +563,7 @@ components:
           x-nullable: true
         section_note:
           type: string
-          description: The `section_note` of the section.
+          description: The `section_note` of the section. Not all sections have a note.
         chapters:
           type: array
           description: |
@@ -703,13 +704,18 @@ components:
 
     Chapters:
       description: |
-        All chapters in the Tariff
+        An array of objects, which contain a reference to a full [chapter](/reference.html#chapter "see chapter object") object.
+
+        Each chapter has a `goods_nomenclature_item_id`, which is a unique identifier.
+
       type: object
       properties:
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_item_id` of the chapter. This is a unique identifier for a chapter.
         chapter_note_id:
           type: integer
+          description: The `chapter_note_id` of the chapter.
       example:
       - goods_nomenclature_item_id: '0100000000'
         chapter_note_id: 46
@@ -720,18 +726,24 @@ components:
 
     Chapter:
       description: |
-        Similar chapters are grouped into sections.
-        A chapter contains many headings.
+        A chapter in the Tariff.
+
+        Each chapter has a `goods_nomenclature_sid`, which is a unique identifier. Each chapter has a `goods_nomenclature_item_id`, which is a unique identifier.
+
       type: object
       properties:
         goods_nomenclature_sid:
           type: integer
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_item_id` of the chapter. This is a unique identifier.
         description:
           type: string
+          description: The `description` of the chapter.
         formatted_description:
           type: string
+          description: The `formatted_description` of the chapter.
           x-nullable: true
         section:
           type: object
@@ -750,10 +762,13 @@ components:
               type: string
         chapter_note_id:
           type: integer
+          description: The `chapter_note_id` of the chapter. This is a unique identifier for a chapter_note.
         section_id:
           type: integer
+          description: The `section_id` of the chapter. This is a unique identifier for a section.
         chapter_note:
           type: string
+          description: The `chapter_note` of the chapter. Not all chapters have a note.
         guides:
           type: array
           description: |
@@ -911,19 +926,23 @@ components:
 
     ChapterNote:
       description: |
-        A note associated with a chapter of the Tariff
-        Not all chapters have a chapter note
+        A note associated with a chapter of the Tariff.
+
+        Not all chapters have a chapter note.
       type: object
       properties:
         id:
           type: integer
-          description: foobar desc
+          description: The `id` of the chapter_note. This is a unique identifier.
         chapter_id:
+          type: string
+          description: The `chapter_id` of the chapter_note.
+        section_id:
           type: integer
-          description: foobar desc
+          description: The `section_id` of this chapter that has this note.
         content:
           type: string
-          description: foobar desc
+          description: The `content` of the chapter_note.
       required:
       - id
       example:
@@ -943,13 +962,13 @@ components:
       properties:
         oid:
           type: integer
-          description: foobar desc
+          description: The `oid` of the chapter_change, which is a unique identifier of the change.
         model_name:
           type: string
-          description: foobar desc
+          description: The `model_name` of the chapter_change, whcih is the type of model that was changed.
         operation:
           type: string
-          description: foobar desc
+          description: The `operation` of the chapter_change. This enumerable value must be one of `["C", "D", "U", "X"]`.
           enum:
           - C
           - D
@@ -957,7 +976,8 @@ components:
           - X
         operation_date:
           type: string
-          description: foobar desc
+          description: The `operation_date` of the chapter_change, e.g. `2019-02-14`
+          format: date
         record:
           type: object
           description: |
@@ -1032,26 +1052,23 @@ components:
 
     Heading:
       description: |
-        Similar headings are grouped into chapters.
-        <br/>
-        A heading may be a commodity, or may contain other commodities.
+        A heading in the tariff.
+
+        A heading (or sub-heading) describes products more detail than do chapters or sections.
       type: object
       properties:
         goods_nomenclature_item_id:
           type: string
-          description: A string of 10 digits. For headings, the first four (4) digits are significant, and the last six (6) digits are always "000000".
+          description: The `goods_nomenclature_item_id` of the heading. This is a unique identifier.
         description:
           type: string
-          description: |
-            Description of the heading
-            <br/>
-            e.g., can be used as a title or a slug
+          description: The text `description` of the heading.
         bti_url:
           type: string
-          description: Reference URL
+          description: The `bti_url` of the heading, which is a link to more information.
         formatted_description:
           type: string
-          description: Description of the heading, may include markup
+          description: The `formatted_description` of the heading, which may be suitable for presentation to the end user.
         footnotes:
           type: array
           description: |
@@ -1238,15 +1255,26 @@ components:
       properties:
         oid:
           type: integer
+          description: The `oid` of the heading change
         model_name:
           type: string
+          description: The `model_name` of the heading_change, which is the type of model that was changed.
         operation:
           type: string
+          description: The type of `operation` of the heading change. This enumerable value must be one of `["C", "D", "U", "X"]`.
+          enum:
+          - C
+          - D
+          - U
+          - X
         operation_date:
           type: string
+          description: The `operation_date` of the heading change, in date format, e.g., `2019-02-02`
           format: date
         record:
           type: object
+          description: |
+            A [referenced_record](/reference.html#referencedrecord "see referenced record object") object.
           properties:
             id:
               type: integer
@@ -1271,7 +1299,11 @@ components:
                 description:
                   type: string
       required:
-      - id
+      - oid
+      - model_name
+      - operation
+      - operation_date
+      - record
       example:
       - oid: 3371184
         model_name: Measure
@@ -1307,38 +1339,49 @@ components:
     Commodity:
       description: |
         Commodities are headings or subheadings.
-        <br/>
+
         A commodity has a specific code (the `goods_nomenclature_item_id`), which is unique.
       type: object
       properties:
         producline_suffix:
           type: string
+          description: The `producline_suffix` of the commodity.
         description:
           type: string
+          description: The `description` of the commodity.
         number_indents:
           type: integer
+          description: The `number_indents` of the commodity.
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_item_id` of the commodity.
         bti_url:
           type: string
+          description: The `bti_url` of the heading, which is a link to more information.
         formatted_description:
           type: string
+          description: The `formatted_description` of the commodity.
         description_plain:
           type: string
+          description: The `description_plain` of the commodity.
         consigned_from:
           type: string
+          description: The `consigned_from` of the commodity.
           x-nullable: true
         basic_duty_rate:
           type: string
+          description: The `basic_duty_rate` of the commodity.
           x-nullable: true
         meursing_code:
           type: boolean
+          description: The `meursing_code` of the commodity.
         declarable:
           type: boolean
+          description: The `declarable` of the commodity.
         section:
           type: object
           description: |
-            A [section](/reference.html#referencedsection "see referenced section object") object.
+            A [referenced_section](/reference.html#referencedsection "see referenced_section object") object.
           properties: 
             id:
               type: integer
@@ -1354,7 +1397,7 @@ components:
         chapter:
           type: object
           description: |
-            A [chapter](/reference.html#referencedchapter "see referenced chapter object") object.
+            A [referenced_chapter](/reference.html#referencedchapter "see referenced_chapter object") object.
           properties:
             goods_nomenclature_item_id:
               type: string
@@ -1374,6 +1417,8 @@ components:
               type: string
         import_measures:
           type: array
+          description: |
+            An array of [referenced_measure](/reference.html#referencedmeasure "see referenced_measure object") objects.
           items:
             type: object
             properties:
@@ -1478,6 +1523,8 @@ components:
                     type: string
         export_measures:
           type: array
+          description: |
+            An array of [referenced_measure](/reference.html#referencedmeasure "see referenced_measure object") objects.
           items:
             type: object
             properties:
@@ -1596,7 +1643,7 @@ components:
         heading:
           type: object
           description: |
-            A [heading](/reference.html#referencedheading "see referenced heading object") object.
+            A [referenced_heading](/reference.html#referencedheading "see referenced_heading object") object.
           properties:
             goods_nomenclature_item_id:
               type: string
@@ -1608,6 +1655,8 @@ components:
               type: string
         ancestors:
           type: array
+          description: |
+            An array of [referenced_ancestor](/reference.html#referencedancestor "see referenced_ancestor object") object.
           items:
             type: object
             properties:
@@ -1643,38 +1692,46 @@ components:
         All changes for a commodity
       type: object
       properties:
-                oid:
-                  type: integer
-                model_name:
+        oid:
+          type: integer
+          description: The `oid` of the commodity change.
+        model_name:
+          type: string
+          description: The `model_name` of the commodity change, which is the type of model that was changed.
+        operation:
+          type: string
+          description: The `operation` of the commodity change.
+        operation_date:
+          type: string
+          description: The `operation_date` of the commodity change.
+          format: date
+        record:
+          type: object
+          description: |
+            A [referenced_record](/reference.html#referencedrecord "see referenced-record object") object.
+          properties:
+            id:
+              type: integer
+            origin:
+              type: string
+            import:
+              type: boolean
+            goods_nomenclature_item_id:
+              type: string
+            geographical_area:
+              type: object
+              properties:
+                id:
                   type: string
-                operation:
+                description:
                   type: string
-                operation_date:
+            measure_type:
+              type: object
+              properties:
+                id:
                   type: string
-                  format: date
-                record:
-                  id:
-                    type: integer
-                  origin:
-                    type: string
-                  import:
-                    type: boolean
-                  goods_nomenclature_item_id:
-                    type: string
-                  geographical_area:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      description:
-                        type: string
-                  measure_type:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      description:
-                        type: string
+                description:
+                  type: string
       required:
       - id
       example:
@@ -1716,13 +1773,17 @@ components:
       properties:
         child_monetary_unit_code:
           type: string
+          description: The `child_monetary_unit_code` of the monetary exchange rate. This is the currency that is being echanged to.
         exchange_rate:
           type: string
+          description: The `exchange_rate` of the monetary exchange rate. This is the exchange rate from EUR to GBP
         operation_date:
           type: string
+          description: The `operation_date` of the monetary exchange rate. Use `date` format, e.g., `2018-02-14`
           format: date
         validity_start_date:
           type: string
+          description: The `validity_start_date` of the monetary exchange rate, or the date this rate takes effect. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
           format: date-time
       example:
       - child_monetary_unit_code: GBP
@@ -2052,38 +2113,51 @@ components:
       properties:
         filename:
           type: string
+          description: The `filename` of the update.
         update_type:
           type: string
+          description: The `update_type` of the update.
         state:
           type: string
+          description: The `state` of the update.
         issue_date:
           type: string
+          description: The `issue_date` of the update. Use `date` format, e.g., `2018-02-14`
           format: date
         updated_at:
           type: string
+          description: The `updated_at` timestamp of the update. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
           format: date-time
         created_at:
           type: string
+          description: The `created_at` timestamp of the update. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
           format: date-time
         filesize:
           type: integer
+          description: The `filesize`, in bytes, of the update.
         applied_at:
           type: string
+          description: The `applied_at` timestamp of the update. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
           format: date-time
         last_error:
           type: string
+          description: The `last_error` of the update.
           x-nullable: true
         last_error_at:
           type: string
+          description: The `last_error_at` of the update.
           x-nullable: true
         exception_backtrace:
           type: string
+          description: The `exception_backtrace` of the update.
           x-nullable: true
         exception_queries:
           type: string
+          description: The `exception_queries` of the update.
           x-nullable: true
         exception_class:
           type: string
+          description: The `exception_class` of the update.
           x-nullable: true
       example:
       - filename: 2019-02-24_KBT009(19055).txt
@@ -2122,14 +2196,19 @@ components:
       properties:
         id:
           type: integer
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
         title:
           type: string
+          description: The `title` of the section.
         numeral:
           type: string
+          description: The `numeral` of the section, as a roman numeral
         position:
           type: integer
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
         section_note:
           type: string
+          description: The `section_note` of the section. Not all sections have a note.
           x-nullable: true
       example:
           title: Live animals; animal products
@@ -2155,17 +2234,23 @@ components:
       properties:
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
         goods_nomenclature_sid:
           type: integer
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
         description:
           type: string
+          description: The `description` of the chapter.
         formatted_description:
           type: string
+          description: The `formatted_description` of the chapter.
           x-nullable: true
         headings_from:
           type: string
+          description: The `headings_from` of the chapter, or the first heading in this chapter
         headings_to:
           type: string
+          description: The `headings_to` of the chapter, or the last heading in this chapter
         guides:
           type: array
           description: |
@@ -2179,8 +2264,10 @@ components:
                 type: string
         chapter_note:
           type: string
+          description: The `chapter_note` of the chapter. Not all chapters have a note.
         chapter_note_id:
           type: integer
+          description: The `chapter_note_id` of the chapter. This is a unique identifier for a chapter_note.
       example:
         goods_nomenclature_item_id: '0100000000'
         description: LIVE ANIMALS
@@ -2201,12 +2288,20 @@ components:
       properties:
         id:
           type: integer
+          description: The `id` of the record.
         origin:
           type: string
+          description: The `origin` of the record.
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_item_id` of the record.
+        import:
+          type: boolean
+          description: The boolean `import` of the record.
         geographical_area:
           type: object
+          description: |
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") objects.
           properties:
             id:
               type: string
@@ -2214,11 +2309,20 @@ components:
               type: string
         measure_type:
           type: object
+          description: |
+            A [referenced_measure_type](/reference.html#referencedgeomeasuretype "see referenced measure_type 
           properties:
             id:
               type: string
             description:
               type: string
+      required:
+      - id
+      - origin
+      - goods_nomenclature_item_id
+      - geographical_area
+      - geographical_area
+      - measure_type
       example:
         id: -494058
         origin: uk
@@ -2238,22 +2342,32 @@ components:
       properties:
         goods_nomenclature_sid:
           type: integer
+          description: The `goods_nomenclature_sid` of the heading. This is a unique identifier.
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_item_id` of the heading. This is a unique identifier.
         declarable:
           type: boolean
+          description: Whether this heading is `declarable`.
         description:
           type: string
+          description: The text `description` of the heading.
         producline_suffix:
           type: string
+          description: The `producline_suffix` of the heading.
         leaf:
           type: boolean
+          description: Whether this heading is a `leaf`.
         description_plain:
           type: string
+          description: The `description_plain` of the heading.
         formatted_description:
           type: string
+          description: The `formatted_description` of the heading, which may be suitable for presentation to the end user.
         children:
           type: array
+          description: |
+            An array of [referenced_child](/reference.html#referencedchild "see referenced child object") objects.
           items:
             type: object
       example:
@@ -2289,22 +2403,31 @@ components:
       properties:
         description:
           type: string
+          description: The `description` of the commodity
         number_indents:
           type: integer
+          description: The `number_indents` of the commodity.
         goods_nomenclature_item_id:
           type: string
+          description: The `goods_nomenclature_item_id` of the commodity.
         leaf:
           type: boolean
+          description: Whether this commodity is a `leaf`.
         goods_nomenclature_sid:
           type: integer
+          description: The `goods_nomenclature_sid` of the commodity. This is a unique identifier.
         formatted_description:
           type: string
+          description: The `formatted_description` of the commodity, which may be suitable for presentation to the end user.
         description_plain:
           type: string
+          description: The `description_plain` of the commodity.
         producline_suffix:
           type: string
+          description: The `producline_suffix` of the commodity.
         parent_sid:
           type: string
+          description: The `parent_sid` of the commodity.
           x-nullable: true
       example:
         description: Horses
@@ -2324,10 +2447,13 @@ components:
       properties:
         code:
           type: string
+          description: The `code` for the footnote.
         description:
           type: string
+          description: The `description` for the footnote.
         formatted_description:
           type: string
+          description: The `formatted_description` for the footnote.
       example:
         - code: TN701
           description: "According to  the Council Regulation (EU) No 692/2014
@@ -2371,8 +2497,10 @@ components:
       properties:
         title:
           type: string
+          description: The `title` for the guide.
         url:
           type: string
+          description: The `url` for the guide.
       example:
         title: Classification of goods
         url: https://www.gov.uk/government/collections/classification-of-goods
@@ -2406,8 +2534,10 @@ components:
       properties:
         rel:
           type: string
+          description: The `rel` for the link.
         href:
           type: string
+          description: The `href` for the link.
       example:
         rel: self
         href: "/trade-tariff/headings/0101.json"
@@ -2419,10 +2549,13 @@ components:
       properties:
         page:
           type: integer
+          description: The current `page` number.
         per_page:
           type: integer
+          description: The number of items `per_page`.
         total_count:
           type: integer
+          description: The `total_count` of items that are paginated.
       example:
         pagination:
           page: 1
@@ -2436,34 +2569,47 @@ components:
       properties:
         update_type:
           type: string
+          description: The `update_type` of the update.
         state:
           type: string
+          description: The `state` of the update.
         created_at:
           type: string
+          description: The `created_at` timestamp of the update.
           format: date-time
         updated_at:
           type: string
+          description: The `updated_at` timestamp of the update.
           format: date-time
         filename:
           type: string
+          description: The source `filename` of the update.
         applied_at:
           type: string
+          description: The `applied_at` timestamp of the update.
           format: date-time
         filesize:
           type: integer
+          description: The `filesize` of the update.
         exception_backtrace:
           type: string
+        exception_backtrace:
+          description: The `exception_backtrace` of the update.
           x-nullable: true
         exception_queries:
           type: string
+          description: The `exception_queries` of the update.
           x-nullable: true
         exception_class:
           type: string
+          description: The `exception_class` of the update.
           x-nullable: true
         file_presigned_url:
           type: string
+          description: The `file_presigned_url` of the update.
         log_presigned_urls:
           type: object
+          description: The `log_presigned_urls` of the update.
           properties: {}
         conformance_errors:
           type: array
@@ -2617,8 +2763,10 @@ components:
       properties:
         model_name:
           type: string
+          description: The `model_name` of the model involved in the conformance error.
         model_primary_key:
           type: array
+          description: The `model_primary_key` of the model involved in the conformance error.
           items:
             type: string
         model_values:
