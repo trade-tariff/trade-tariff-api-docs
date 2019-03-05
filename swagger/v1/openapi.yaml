@@ -309,6 +309,11 @@ paths:
           description: Commodity was not found.
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/headings/0101.json
 
   /v1/headings/{heading_id}/changes.json:
     get:
@@ -344,6 +349,11 @@ paths:
           description: A heading's changes were not found.
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/headings/0101/changes.json
 
 ### Commodities
   /v1/commodities/{goods_nomenclature_item_id}.json:
@@ -381,6 +391,11 @@ paths:
           description: Commodity was not found.
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json
 
   /v1/commodities/{goods_nomenclature_item_id}/changes.json:
     get:
@@ -417,6 +432,11 @@ paths:
           description: A commodity's changes were not found.
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/commodities/0101210000/changes.json
 
 ### Monetary exchange rates
   /v1/monetary_exchange_rates.json:
@@ -439,6 +459,11 @@ paths:
                 $ref: '#/components/schemas/MonetaryExchangeRates/example'
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/monetary_exchange_rates.json
 
 ### Updates
   /v1/updates.json:
@@ -461,6 +486,11 @@ paths:
                 $ref: '#/components/schemas/Updates/example'
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/updates.json
 
   /v1/updates/latest.json:
     get:
@@ -482,6 +512,11 @@ paths:
                 $ref: '#/components/schemas/UpdatesLatest/example'
         5XX:
           description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/updates/latest.json
 
 components:
   schemas:
@@ -1686,6 +1721,248 @@ components:
                     type: string
                   href:
                     type: string
+      example:
+        producline_suffix: '80'
+        description: Pure-bred breeding animals
+        number_indents: 2
+        goods_nomenclature_item_id: '0101210000'
+        bti_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0101210000&Expand=true
+        formatted_description: Pure-bred breeding animals
+        description_plain: Pure-bred breeding animals
+        consigned_from: 
+        basic_duty_rate: "<span title='0.0 '>0.00</span> %"
+        meursing_code: false
+        section:
+          title: Live animals; animal products
+          position: 1
+          numeral: I
+          section_note: "* 1\\. Any reference in this section to a particular
+            genus or species of an animal, except where the context otherwise
+            requires, includes a reference to the young of that genus or species.\r\n*
+            2\\. Except where the context otherwise requires, throughout the
+            nomenclature any reference to 'dried' products also covers products
+            which have been dehydrated, evaporated or freeze-dried.\r\n"
+        chapter:
+          goods_nomenclature_item_id: '0100000000'
+          description: LIVE ANIMALS
+          formatted_description: Live animals
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note: "* 1\\. This chapter covers all live animals except:\r\n
+            \ * (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+            of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+            and other products of heading 3002; and\r\n  * (c) animals of heading
+            9508."
+        declarable: true
+        import_measures:
+        - id: 3563221
+          origin: eu
+          effective_start_date: '2017-06-01T00:00:00.000Z'
+          effective_end_date: 
+          import: true
+          measure_conditions:
+          - condition_code: B
+            condition: 'B: Presentation of a certificate/licence/document'
+            document_code: C640
+            requirement: 'Other certificates: Common Veterinary Entry Document
+              (CVED) in accordance with Commission Regulation (EC) No. 282/2004,
+              used for veterinary checks on live animals'
+            action: Import/export allowed after control
+            duty_expression: ''
+          - condition_code: B
+            condition: 'B: Presentation of a certificate/licence/document'
+            document_code: ''
+            requirement: 
+            action: Import/export not allowed after control
+            duty_expression: ''
+          excluded_countries:
+          - geographical_area_id: AD
+            description: Andorra
+          - geographical_area_id: CH
+            description: Switzerland and Liechtenstein
+          - geographical_area_id: FO
+            description: Faroe Islands
+          - geographical_area_id: LI
+            description: Liechtenstein
+          - geographical_area_id: 'NO'
+            description: Norway
+          - geographical_area_id: SM
+            description: San Marino
+          footnotes:
+          - code: CD625
+            description: Import of live animals is subject to the presentation
+              of a CVED for animals in accordance with the conditions laid down
+              in Regulation (EC) No 282/2004 (OJ L49)
+            formatted_description: Import of live animals is subject to the
+              presentation of a CVED for animals in accordance with the conditions
+              laid down in Regulation (EC) No 282/2004 (OJ L49)
+          order_number: 
+          excise: false
+          vat: false
+          measure_type:
+            id: '410'
+            description: Veterinary control
+          duty_expression:
+            base: ''
+            formatted_base: ''
+          legal_acts:
+          - validity_start_date: '2012-04-01T00:00:00.000Z'
+            validity_end_date: 
+            officialjournal_number: L 116
+            officialjournal_page: 9
+            published_date: '2007-05-04'
+            regulation_code: D0275/07
+            regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
+          geographical_area:
+            id: '1008'
+            description: All third countries
+            children_geographical_areas:
+            - id: AD
+              description: Andorra
+            - id: AE
+              description: United Arab Emirates
+            - id: AF
+              description: Afghanistan
+            - id: AG
+              description: Antigua and Barbuda
+            - id: ZA
+              description: South Africa
+            - id: ZM
+              description: Zambia
+            - id: ZW
+              description: Zimbabwe
+        export_measures:
+        - id: 3540065
+          origin: eu
+          effective_start_date: '2017-02-04T00:00:00.000Z'
+          effective_end_date: 
+          import: false
+          measure_conditions:
+          - condition_code: Y
+            condition: 'Y: Other conditions'
+            document_code: C400
+            requirement: 'Other certificates: Presentation of the required "CITES"
+              certificate'
+            action: Import/export allowed after control
+            duty_expression: ''
+          - condition_code: Y
+            condition: 'Y: Other conditions'
+            document_code: ''
+            requirement: 
+            action: Import/export not allowed after control
+            duty_expression: ''
+          excluded_countries: []
+          footnotes:
+          - code: CD371
+            description: If the product is mentioned in the list annexed to
+              Regulation (EC) No 338/97 and its last amendments, an export authorization
+              must be presented.
+            formatted_description: If the product is mentioned in the list annexed
+              to Regulation (EC) No 338/97 and its last amendments, an export
+              authorization must be presented.
+          order_number: 
+          excise: false
+          vat: false
+          measure_type:
+            id: '715'
+            description: Export control - CITES
+          duty_expression:
+            base: ''
+            formatted_base: ''
+          legal_acts:
+          - validity_start_date: '2017-02-04T00:00:00.000Z'
+            validity_end_date: 
+            officialjournal_number: L 27
+            officialjournal_page: 1
+            published_date: '2017-02-01'
+            regulation_code: R0160/17
+            regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D27,YEAR_OJ%3D2017,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en
+          - validity_start_date: '1997-06-01T00:00:00.000Z'
+            validity_end_date: 
+            officialjournal_number: L 61
+            officialjournal_page: 1
+            published_date: '1997-03-03'
+            regulation_code: R0338/97
+            regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D61,YEAR_OJ%3D1997,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en
+          geographical_area:
+            id: '1008'
+            description: All third countries
+            children_geographical_areas:
+            - id: AD
+              description: Andorra
+            - id: AE
+              description: United Arab Emirates
+        footnotes:
+        - code: NC018
+          description: Entry under this subheading is subject to the conditions
+            laid down in the relevant provisions of the European Union (see
+            Regulation (EU) 2016/1012 of European Parliament and of the Council
+            (OJ L 171, 29.6.2016, p. 66); Commission Implementing Regulation
+            (EU) 2017/717 (OJ L 109, 26.4.2017, p. 9); Commission Implementing
+            Regulation (EU) 2015/262 (OJ L 59, 3.3.2015, p. 1)).
+          formatted_description: Entry under this subheading is subject to the
+            conditions laid down in the relevant provisions of the European
+            Union (see Regulation (EU) 2016/1012 of European Parliament and
+            of the Council (OJ L 171, 29.6.2016, p. 66); Commission Implementing
+            Regulation (EU) 2017/717 (OJ L 109, 26.4.2017, p. 9); Commission
+            Implementing Regulation (EU) 2015/262 (OJ L 59, 3.3.2015, p. 1)).
+        - code: TN701
+          description: "According to  the Council Regulation (EU) No 692/2014
+            (OJ L183, p. 9) it shall be prohibited to import into European Union
+            goods originating in Crimea or Sevastopol.\nThe prohibition shall
+            not apply in respect of: \n(a) the execution until 26 September
+            2014, of trade contracts concluded before 25 June 2014, or of ancillary
+            contracts necessary for the execution of such contracts, provided
+            that the natural or legal persons, entity or body seeking to perform
+            the contract have notified, at least 10 working days in advance,
+            the activity or transaction to the competent authority of the Member
+            State in which they are established. \n(b) goods originating in
+            Crimea or Sevastopol which have been made available to the Ukrainian
+            authorities for examination, for which compliance with the conditions
+            conferring entitlement to preferential origin has been verified
+            and for which a certificate of origin has been issued in accordance
+            with Regulation (EU) No 978/2012 and Regulation (EU) No 374/2014
+            or in accordance with the EU-Ukraine Association Agreement."
+          formatted_description: 'According to  the Council Regulation (EU)
+            No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
+            European Union goods originating in Crimea or Sevastopol.<br/>The
+            prohibition shall not apply in respect of: <br/>(a) the execution
+            until 26 September 2014, of trade contracts concluded before 25
+            June 2014, or of ancillary contracts necessary for the execution
+            of such contracts, provided that the natural or legal persons, entity
+            or body seeking to perform the contract have notified, at least
+            10 working days in advance, the activity or transaction to the competent
+            authority of the Member State in which they are established. <br/>(b)
+            goods originating in Crimea or Sevastopol which have been made available
+            to the Ukrainian authorities for examination, for which compliance
+            with the conditions conferring entitlement to preferential origin
+            has been verified and for which a certificate of origin has been
+            issued in accordance with Regulation (EU) No 978/2012 and Regulation
+            (EU) No 374/2014 or in accordance with the EU-Ukraine Association
+            Agreement.'
+        heading:
+          goods_nomenclature_item_id: '0101000000'
+          description: Live horses, asses, mules and hinnies
+          formatted_description: Live horses, asses, mules and hinnies
+          description_plain: Live horses, asses, mules and hinnies
+        ancestors:
+        - producline_suffix: '10'
+          description: Horses
+          number_indents: 1
+          goods_nomenclature_item_id: '0101210000'
+          formatted_description: Horses
+          description_plain: Horses
+        _response_info:
+          links:
+          - rel: self
+            href: "/trade-tariff/commodities/0101210000.json"
+          - rel: heading
+            href: "/trade-tariff/headings/0101"
+          - rel: chapter
+            href: "/trade-tariff/chapters/01"
+          - rel: section
+            href: "/trade-tariff/sections/1"
 
     CommodityChanges:
       description: |
