@@ -2578,7 +2578,7 @@ components:
         geographical_area:
           type: object
           description: |
-            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") objects.
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
           properties:
             id:
               type: string
@@ -2587,7 +2587,7 @@ components:
         measure_type:
           type: object
           description: |
-            A [referenced_measure_type](/reference.html#referencedgeomeasuretype "see referenced measure_type 
+            A [referenced_measure_type](/reference.html#referencedgeomeasuretype "see referenced measure_type")
           properties:
             id:
               type: string
@@ -2597,7 +2597,6 @@ components:
       - id
       - origin
       - goods_nomenclature_item_id
-      - geographical_area
       - geographical_area
       - measure_type
       example:
@@ -2716,6 +2715,153 @@ components:
         description_plain: Horses
         producline_suffix: '10'
         parent_sid: 
+
+    ReferencedMeasure:
+      description: |
+        A measure object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the measure. This is a unique identifier.
+        origin:
+          type: string
+          description: The `origin` of the measure.
+        effective_start_date:
+          type: string
+          description: The `origin` of the measure. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+        effective_end_date:
+          type: string
+          description: The `origin` of the measure. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+          x-nullable: true
+        import:
+          type: boolean
+          description: Whether the measure is an `import`.
+        order_number:
+          type: string
+          description: The `order_number` of the measure.
+          x-nullable: true
+        excise:
+          type: boolean
+          description: Whether the measure is subject to `excise`.
+        vat:
+          type: boolean
+          description: Whether the measure is subject to `vat`.
+        measure_conditions:
+          type: array
+          description: |
+            An array of [referenced_measure_condition](/reference.html#referencedmeasurecondition "see referenced measure condition object") objects.
+          items:
+            type: object
+        excluded_countries:
+          type: array
+          description: |
+            An array of [excluded_country](/reference.html#referencedexcludedcountry "see referenced duty expression object") objects.
+          items:
+            type: object
+        footnotes:
+          type: array
+          description: |
+            An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects.
+          items:
+            type: object
+        measure_type:
+          type: object
+          description: |
+            An array of [measure_type](/reference.html#referencedmeasuretype "see referenced measure type object") objects.
+        duty_expression:
+          type: object
+          description: |
+            A [duty_expression](/reference.html#referencedmeasuretype "see referenced duty expression object") object.
+        legal_acts:
+          type: array
+          description: |
+            An array of [legal_act](/reference.html#referencedlegalact "see referenced legal act object") objects.
+          items:
+            type: object
+        geographical_area:
+          type: object
+          description: |
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
+      example:
+        id: 3563221
+        origin: eu
+        effective_start_date: '2017-06-01T00:00:00.000Z'
+        effective_end_date: 
+        import: true
+        measure_conditions:
+        - condition_code: B
+          condition: 'B: Presentation of a certificate/licence/document'
+          document_code: C640
+          requirement: 'Other certificates: Common Veterinary Entry Document
+            (CVED) in accordance with Commission Regulation (EC) No. 282/2004,
+            used for veterinary checks on live animals'
+          action: Import/export allowed after control
+          duty_expression: ''
+        - condition_code: B
+          condition: 'B: Presentation of a certificate/licence/document'
+          document_code: ''
+          requirement: 
+          action: Import/export not allowed after control
+          duty_expression: ''
+        excluded_countries:
+        - geographical_area_id: AD
+          description: Andorra
+        - geographical_area_id: CH
+          description: Switzerland and Liechtenstein
+        - geographical_area_id: FO
+          description: Faroe Islands
+        - geographical_area_id: LI
+          description: Liechtenstein
+        - geographical_area_id: 'NO'
+          description: Norway
+        - geographical_area_id: SM
+          description: San Marino
+        footnotes:
+        - code: CD625
+          description: Import of live animals is subject to the presentation
+            of a CVED for animals in accordance with the conditions laid down
+            in Regulation (EC) No 282/2004 (OJ L49)
+          formatted_description: Import of live animals is subject to the
+            presentation of a CVED for animals in accordance with the conditions
+            laid down in Regulation (EC) No 282/2004 (OJ L49)
+        order_number: 
+        excise: false
+        vat: false
+        measure_type:
+          id: '410'
+          description: Veterinary control
+        duty_expression:
+          base: ''
+          formatted_base: ''
+        legal_acts:
+        - validity_start_date: '2012-04-01T00:00:00.000Z'
+          validity_end_date: 
+          officialjournal_number: L 116
+          officialjournal_page: 9
+          published_date: '2007-05-04'
+          regulation_code: D0275/07
+          regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
+        geographical_area:
+          id: '1008'
+          description: All third countries
+          children_geographical_areas:
+          - id: AD
+            description: Andorra
+          - id: AE
+            description: United Arab Emirates
+          - id: AF
+            description: Afghanistan
+          - id: AG
+            description: Antigua and Barbuda
+          - id: ZA
+            description: South Africa
+          - id: ZM
+            description: Zambia
+          - id: ZW
+            description: Zimbabwe
 
     ReferencedFootnote:
       description: |
@@ -3086,6 +3232,135 @@ components:
                 The start date of the first description period must be equal to the start date of the footnote.
                 No two associated description periods may have the same start date.
                 The start date must be less than or equal to the end date of the footnote.
+
+    ReferencedGeographicalArea:
+      description: A geographical_area object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The `id` of the geographical area.
+        description:
+          type: string
+          description: The `description` of the geographical area.
+        children:
+          type: array
+          description: |
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
+          items: 
+            type: object
+      example:
+        id: '1008'
+        description: All third countries
+        children_geographical_areas:
+        - id: AD
+          description: Andorra
+        - id: AE
+          description: United Arab Emirates
+
+    ReferencedMeasureCondition:
+      description: A measure_condition object referenced elsewhere.
+      type: object
+      properties:
+        condition_code:
+          type: string
+          description: The `condition_code` for the measure condition.
+        condition:
+          type: string
+          description: The `condition` for the measure condition.
+        document_code:
+          type: string
+          description: The `document_code` for the measure condition.
+        requirement:
+          type: string
+          description: The `requirement` for the measure condition.
+        action:
+          type: string
+          description: The `action` for the measure condition.
+        duty_expression:
+          type: string
+          description: The `duty_expression` for the measure condition.
+      example:
+
+    ReferencedMeasureType:
+      description: A measure_type object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The `id` of the measure type.
+        description:
+          type: string
+          description: The `description` of the measure type.
+      example:
+        id: '410'
+        description: Veterinary control
+
+    ReferencedLegalAct:
+      description: A legal act object referenced elsewhere.
+      type: object
+      properties:
+        validity_start_date:
+          type: string
+          description: The `validity_start_date` of the legal act. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`.
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The `validity_start_date` of the legal act. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`.
+          format: date-time
+          x-nullable: true
+        officialjournal_number:
+          type: string
+          description: The `officialjournal_number` of the legal act.
+        officialjournal_page:
+          type: integer
+          description: The `officialjournal_page` of the legal act.
+        published_date:
+          type: string
+          description: The `validity_start_date` of the legal act. Use `date` format, e.g., `2014-01-01`.
+          format: date
+        regulation_code:
+          type: string
+          description: The `regulation_code` of the legal act.
+        regulation_url:
+          type: string
+          description: The `regulation_url` of the legal act.
+      example:
+        validity_start_date: '2012-04-01T00:00:00.000Z'
+        validity_end_date: 
+        officialjournal_number: L 116
+        officialjournal_page: 9
+        published_date: '2007-05-04'
+        regulation_code: D0275/07
+        regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
+
+    ReferencedExcludedCountry:
+      description: An excluded_country object referenced elsewhere.
+      type: object
+      properties:
+        geographical_area_id:
+          type: string
+          description: The `geographical_area_id` of the excluded country, which is a unique code for a geographical_area.
+        description:
+          type: string
+          description: The `description` of the excluded country, which is a name of a geographical_area.
+      example:
+        geographical_area_id: AD
+        description: Andorra
+
+    ReferencedDutyExpression:
+      description: A duty expression object referenced elsewhere.
+      type: object
+      properties:
+        base:
+          type: string
+          description: The `base` of the duty expression.
+        formatted_base:
+          type: string
+          description: The `formatted_base` of the duty expression.
+      example:
+        base: ''
+        formatted_base: ''
 
     ReferencedModelConformanceError:
       description: |
