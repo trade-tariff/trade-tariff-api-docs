@@ -87,7 +87,7 @@ paths:
         /v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET http://localhost:3002/v1/sections/1.json
+            curl -X GET https://trade-tariff.service.gov.uk/v1/sections/1.json
 
   /v1/sections/{section_id}/section_note.json:
     get:
@@ -127,7 +127,7 @@ paths:
         /v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET http://localhost:3002/v1/sections/1/section_note.json
+            curl -X GET https://trade-tariff.service.gov.uk/v1/sections/1/section_note.json
 
 ### Chapters
   /v1/chapters.json:

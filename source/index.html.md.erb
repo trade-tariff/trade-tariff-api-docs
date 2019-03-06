@@ -4,16 +4,6 @@ title: About - GOV.UK Tariff API
 
 # GOV.UK Tariff API
 
-<div class="phase-tag">
-  <p>
-    <strong class="phase-banner"><%= config[:tech_docs][:phase] %></strong>
-    <span>
-      This is a trial service. <a href="#beta-software">Find out what
-      this means</a>.
-    </span>
-  </p>
-</div>
-
 GOV.UK Tariff API makes it easy to access trade tariff data
 on [https://www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff).
 The data includes commodity codes, duty and VAT rates.
@@ -24,6 +14,8 @@ overview of the endpoints and the response format.
 
 ## What you can do with this API
 
+The data provided by this API is used on GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff).
+
 With the GOV.UK Tariff API, you can access Commodity codes, which [classify 
 goods](https://www.gov.uk/guidance/finding-commodity-codes-for-imports-or-exports)
 for import and export. Commodity codes allow you to:
@@ -33,15 +25,11 @@ for import and export. Commodity codes allow you to:
 - find out about duty reliefs and preferential rates
 - find out if import or export licenses are needed
 
-<%# This API is useful for applications that incorporate content from GOV.UK and
-for keeping that content up to date. It provides a more accessible and
-predictable interface than what can be achieved through scraping HTML pages. %>
-
-The data provided by this API is used on GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff).
+This API is useful for applications that incorporate content from GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff) and for keeping that content up to date. It is meant to provide a predictable and stable interface to UK.GOV tariff data.
 
 ## What you can't do with this API
 
-Not all features are implemented yet. Some items we would like to implement are:
+Not all features are implemented yet. Some features we would like to implement are:
 
 - Search by free-form text or `goods_nomenclature_item_id`
 - Scope API calls by date
@@ -65,18 +53,6 @@ For example, using the curl command line utility tool:
 ```shell
 curl https://trade-tariff.service.gov.uk/v1/sections.json
 ```
-
-## Beta software
-
-GOV.UK Tariff API is currently beta software and may be subject to changes
-and improvements as we learn from usage.
-
-<%# This means that you may use this software and build applications that utilise
-it. However as we learn from feedback we may make changes to the software.
-We will communicate those via our [mailing list](#keep-informed). %>
-
-<%# If you would like to share your feedback about GOV.UK Content API you can do so
-via [this survey](http://www.smartsurvey.co.uk/s/GPYGP). %>
 
 ## Keep informed
 
