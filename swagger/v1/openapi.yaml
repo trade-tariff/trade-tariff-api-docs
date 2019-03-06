@@ -1,0 +1,3409 @@
+openapi: '3.0.0'
+
+info:
+  title: Trade Tariff Public API
+  description: |
+    The Trade Tariff Public API provides a simple and consistent way to request
+    [UK Trade Tariff](https://gov.uk/trade-tariff) content as structured data in a predictable format.
+
+    This API accepts HTTP requests and responds with
+    [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
+    published content as is presented on GOV.UK.
+
+  version: '1'
+
+servers:
+  - url: https://trade-tariff.service.gov.uk
+
+paths:
+### Sections
+  /v1/sections.json:
+    get:
+      summary: Retrieves all sections
+      description: |
+        This resource represents _all sections_ in the Tariff.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+
+      tags:
+      - Sections
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Sections were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sections'
+              example:
+                $ref: '#/components/schemas/Sections/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/sections.json
+
+  /v1/sections/{position}.json:
+    get:
+      summary: Retreives a section by its position
+      description: |
+        This resource represents _a single section_ in the Tariff.
+
+        For this resource, `position` is used to uniquely identify a section and request it from the API.
+
+        There are 21 sections in the Tariff, and their positions range from 1 to 21.
+
+      tags:
+      - Sections
+      produces:
+      - application/json
+      parameters:
+        - name: 'position'
+          in: path
+          required: true
+          description: |
+            The `position` of the section to be retrieved
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      responses:
+        200:
+          description: Section was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Section'
+              example:
+                $ref: '#/components/schemas/Section/example'
+        404:
+          description: Section was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET http://localhost:3002/v1/sections/1.json
+
+  /v1/sections/{section_id}/section_note.json:
+    get:
+      summary: Retreives a section's notes
+      description: |
+        This resource represents the notes for a particular section.
+
+        For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
+      tags:
+      - Sections
+      produces:
+      - application/json
+      parameters:
+        name: section_id
+        in: path
+        required: true
+        description: |
+          The `section_id` of the section.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A section's notes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionNote'
+              example:
+                $ref: '#/components/schemas/SectionNote/example'
+        404:
+          description: A section's notes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET http://localhost:3002/v1/sections/1/section_note.json
+
+### Chapters
+  /v1/chapters.json:
+    get:
+      summary: Retrieves all chapters
+      description: >
+        This resource represents all chapters in the Tariff.
+        Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
+        There are curently 97 chapters in the Tariff.
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Chapters were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chapters'
+              example:
+                $ref: '#/components/schemas/Chapters/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters.json
+  
+  /v1/chapters/{chapter_id}.json:
+    get:
+      summary: Retrieves a chapter
+      description: >
+        Retrieves a chapter, given the first two (2) digits of its `goods_nomenclature_item_id`
+        <p>This should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+      - name: 'chapter_id'
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
+        schema:
+          type: string
+      responses:
+        200:
+          description: A chapter was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chapter'
+              example:
+                $ref: '#/components/schemas/Chapter/example'
+        404:
+          description: Chapter was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters/34.json
+
+  /v1/chapters/{chapter_id}/chapter_note.json:
+    get:
+      summary: Retreives a chapter's notes
+      description: >
+        This resource represents the note for a particular chapter.
+        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
+        <p>`chapter_id` should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+        name: chapter_id
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A chapter's notes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterNote'
+              example:
+                $ref: '#/components/schemas/ChapterNote/example'
+        404:
+          description: A chapter's notes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters/{chapter_id}/chapter_note.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters/34/chapter_note.json
+
+  /v1/chapters/{chapter_id}/changes.json:
+    get:
+      summary: Retreives a chapter's changes
+      description: >
+        This resource represents the changes for a particular chapter.
+        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
+        <p>`chapter_id` should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+        name: chapter_id
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter.
+        schema:
+          type: string
+      responses:
+        200:
+          description: A chapter's changes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterChanges'
+              example:
+                $ref: '#/components/schemas/ChapterChanges/example'
+        404:
+          description: A chapter's changes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters/{chapter_id}/changes.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters/01/changes.json
+
+### Headings
+  /v1/headings/{heading_id}.json:
+    get:
+      summary: Retrieves a heading
+      description: >
+        This resource represents a single heading.
+        For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
+        <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
+      tags:
+      - Headings
+      produces:
+      - application/json
+      parameters:
+      - name: 'heading_id'
+        in: path
+        required: true
+        description: |
+          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+        schema:
+          type: string
+          minimum: 4
+          maximum: 4
+          example: "0101"
+      responses:
+        200:
+          description: A heading was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Heading'
+              example:
+                $ref: '#/components/schemas/Heading/example'
+        404:
+          description: Commodity was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/headings/0101.json
+
+  /v1/headings/{heading_id}/changes.json:
+    get:
+      summary: Retreives a heading's changes
+      description: >
+        This resource represents the changes for a particular heading.
+        For this resource, `heading_id` is used to uniquely identify a heading and request its changes from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
+        <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
+      tags:
+      - Headings
+      produces:
+      - application/json
+      parameters:
+        name: heading_id
+        in: path
+        required: true
+        description: |
+          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A heading's changes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeadingChanges'
+              example:
+                $ref: '#/components/schemas/HeadingChanges/example'
+        404:
+          description: A heading's changes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/headings/0101/changes.json
+
+### Commodities
+  /v1/commodities/{goods_nomenclature_item_id}.json:
+    get:
+      summary: Retrieves a commodity
+      description: >
+        This resource represents a single commodity.
+        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
+        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+      tags:
+      - Commodities
+      produces:
+      - application/json
+      parameters:
+      - name: 'goods_nomenclature_item_id'
+        in: path
+        required: true
+        description: |
+          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+        schema:
+          type: string
+          minimum: 10
+          maximum: 10
+          example: "0102291020"
+      responses:
+        200:
+          description: A commodity was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Commodity'
+              example:
+                $ref: '#/components/schemas/Commodity/example'
+        404:
+          description: Commodity was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json
+
+  /v1/commodities/{goods_nomenclature_item_id}/changes.json:
+    get:
+      summary: Retreives a commodity's changes
+      description: >
+        This resource represents a single commodity.
+        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
+        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+      tags:
+      - Commodities
+      produces:
+      - application/json
+      parameters:
+        name: goods_nomenclature_item_id
+        in: path
+        required: true
+        description: |
+          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+        schema:
+          type: integer
+          minimum: 10
+          maximum: 10
+          example: "0102291020"
+      responses:
+        200:
+          description: A commodity's changes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommodityChanges'
+              example:
+                $ref: '#/components/schemas/CommodityChanges/example'
+        404:
+          description: A commodity's changes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/commodities/0101210000/changes.json
+
+### Monetary exchange rates
+  /v1/monetary_exchange_rates.json:
+    get:
+      summary: Retrieves a list of monetary exchange rates
+      description: >
+        Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
+      tags:
+      - Monetary Exchange Rates
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Monetary exchange rates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonetaryExchangeRates'
+              example:
+                $ref: '#/components/schemas/MonetaryExchangeRates/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/monetary_exchange_rates.json
+
+### Updates
+  /v1/updates.json:
+    get:
+      summary: Retrieves a list of updates
+      description: >
+        Retrieves a list of updates to the tariff
+      tags:
+      - Updates
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Updates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Updates'
+              example:
+                $ref: '#/components/schemas/Updates/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/updates.json
+
+  /v1/updates/latest.json:
+    get:
+      summary: Retrieves list of recent updates
+      description: >
+        Retrieves a list of recent updates to the tariff
+      tags:
+      - Updates
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Recent updates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatesLatest'
+              example:
+                $ref: '#/components/schemas/UpdatesLatest/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://trade-tariff.service.gov.uk/v1/updates/latest.json
+
+components:
+  schemas:
+
+    Sections:
+      description: |
+        An array of [referenced section objects](/reference.html#referencedsection "see referenced section object"), which are abbreviated versions of a full [section](/reference.html#section "see section object") object.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique identifier.
+
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
+        position:
+          type: integer
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
+        title:
+          type: string
+          description: The `title` of the section
+        numeral:
+          type: string
+          description: The `numeral` of the section, as a roman numeral
+        chapter_from:
+          type: string
+          description: The `chapter_from` of the section, the first chapter of this section.
+        chapter_to:
+          type: string
+          description: The `chapter_to` of the section, the last chapter of this section.
+        section_note_id:
+          type: integer
+          description: The `section_note_id` of the note for this section
+      example:
+      - id: 1
+        position: 1
+        title: Live animals; animal products
+        numeral: I
+        chapter_from: '01'
+        chapter_to: '05'
+        section_note_id: 1
+      - id: 2
+        position: 2
+        title: Vegetable products
+        numeral: II
+        chapter_from: '06'
+        chapter_to: '14'
+        section_note_id: 6
+
+    Section:
+      description: |
+        A section of the Tariff.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
+        position:
+          type: integer
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
+        title:
+          type: string
+          description: The `title` of the section.
+        numeral:
+          type: string
+          description: The `numeral` of the section, as a roman numeral
+        chapter_from:
+          type: string
+          description: The `chapter_from` of the section, the first chapter of this section.
+          x-nullable: true
+        chapter_to:
+          type: string
+          description: The `chapter_to` of the section, the last chapter of this section.
+        chapter_to:
+          description: The `id` of the section.
+          x-nullable: true
+        section_note:
+          type: string
+          description: The `section_note` of the section. Not all sections have a note.
+        chapters:
+          type: array
+          description: |
+            An array of [ReferencedChapter](/reference.html#referencedchapter "see ReferencedChapter object") objects.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              goods_nomenclature_item_id:
+                type: string
+              goods_nomenclature_sid:
+                type: integer
+              headings_from:
+                type: string
+              headings_to:
+                type: string
+              formatted_description:
+                type: string
+                x-nullable: true
+              guides:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    url:
+                      type: string
+              chapter_note_id:
+                type: integer
+      required:
+      - id
+      example:
+        id: 1
+        position: 1
+        title: Live animals; animal products
+        numeral: I
+        chapter_from: '01'
+        chapter_to: '05'
+        chapters:
+        - description: LIVE ANIMALS
+          goods_nomenclature_item_id: '0100000000'
+          goods_nomenclature_sid: 27623
+          headings_from: '0101'
+          headings_to: '0106'
+          formatted_description: Live animals
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note_id: 46
+        - description: MEAT AND EDIBLE MEAT OFFAL
+          goods_nomenclature_item_id: '0200000000'
+          goods_nomenclature_sid: 27809
+          headings_from: '0201'
+          headings_to: '0210'
+          formatted_description: Meat and edible meat offal
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note_id: 47
+        - description: FISH AND CRUSTACEANS, MOLLUSCS AND OTHER AQUATIC INVERTEBRATES
+          goods_nomenclature_item_id: '0300000000'
+          goods_nomenclature_sid: 28373
+          headings_from: '0301'
+          headings_to: 0308
+          formatted_description: Fish and crustaceans, molluscs and other aquatic
+            invertebrates
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note_id: 48
+        - description: DAIRY PRODUCE; BIRDS' EGGS; NATURAL HONEY; EDIBLE PRODUCTS
+            OF ANIMAL ORIGIN, NOT ELSEWHERE SPECIFIED OR INCLUDED
+          goods_nomenclature_item_id: '0400000000'
+          goods_nomenclature_sid: 29417
+          headings_from: '0401'
+          headings_to: '0410'
+          formatted_description: Dairy produce; birds' eggs; natural honey;
+            edible products of animal origin, not elsewhere specified or included
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note_id: 49
+        - description: PRODUCTS OF ANIMAL ORIGIN, NOT ELSEWHERE SPECIFIED OR
+            INCLUDED
+          goods_nomenclature_item_id: '0500000000'
+          goods_nomenclature_sid: 30015
+          headings_from: '0501'
+          headings_to: '0511'
+          formatted_description: Products of animal origin, not elsewhere specified
+            or included
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note_id: 50
+        section_note: "* 1\\. Any reference in this section to a particular
+          genus or species of an animal, except where the context otherwise
+          requires, includes a reference to the young of that genus or species.\r\n*
+          2\\. Except where the context otherwise requires, throughout the nomenclature
+          any reference to 'dried' products also covers products which have
+          been dehydrated, evaporated or freeze-dried.\r\n"
+        _response_info:
+          links:
+          - rel: self
+            href: "/trade-tariff/sections/1.json"
+          - rel: sections
+            href: "/trade-tariff/sections"
+
+    SectionNote:
+      description: |
+        A note associated with a section of the Tariff.
+
+        A note provides textual about the section. Not all sections have a section note.
+
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the section_note.
+        section_id:
+          type: integer
+          description: The `section_id` of the sction_note. It may be used to uniquely identify a section_note and request it from the API.
+        content:
+          type: string
+          description: The `content` of the section_note. Not all sections have a note.
+      required:
+      - id
+      example:
+        id: 1
+        section_id: 1
+        content: "* 1\\. Any reference in this section to a particular genus
+          or species of an animal, except where the context otherwise requires,
+          includes a reference to the young of that genus or species.\r\n* 2\\.
+          Except where the context otherwise requires, throughout the nomenclature
+          any reference to 'dried' products also covers products which have
+          been dehydrated, evaporated or freeze-dried.\r\n"
+
+    Chapters:
+      description: |
+        An array of objects, which contain a reference to a full [chapter](/reference.html#chapter "see chapter object") object.
+
+        Each chapter has a `goods_nomenclature_item_id`, which is a unique identifier.
+
+      type: object
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the chapter. This is a unique identifier for a chapter.
+        chapter_note_id:
+          type: integer
+          description: The `chapter_note_id` of the chapter.
+      example:
+      - goods_nomenclature_item_id: '0100000000'
+        chapter_note_id: 46
+      - goods_nomenclature_item_id: '0200000000'
+        chapter_note_id: 47
+      - goods_nomenclature_item_id: '0300000000'
+        chapter_note_id: 48
+
+    Chapter:
+      description: |
+        A chapter in the Tariff.
+
+        Each chapter has a `goods_nomenclature_sid`, which is a unique identifier. Each chapter has a `goods_nomenclature_item_id`, which is a unique identifier.
+
+      type: object
+      properties:
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the chapter. This is a unique identifier.
+        description:
+          type: string
+          description: The `description` of the chapter.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the chapter.
+          x-nullable: true
+        section:
+          type: object
+          description: |
+            A [section](/reference.html#referencedsection "see referenced section object") object.
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            position:
+              type: integer
+            numeral:
+              type: string
+            section_note:
+              type: string
+        chapter_note_id:
+          type: integer
+          description: The `chapter_note_id` of the chapter. This is a unique identifier for a chapter_note.
+        section_id:
+          type: integer
+          description: The `section_id` of the chapter. This is a unique identifier for a section.
+        chapter_note:
+          type: string
+          description: The `chapter_note` of the chapter. Not all chapters have a note.
+        guides:
+          type: array
+          description: |
+            An array of [guide](/reference.html#referencedguide "see referenced guide object") objects.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              url:
+                type: string
+        headings:
+          type: array
+          description: |
+            An array of [heading](/reference.html#referencedheading "see referenced heading object") objects.
+          items:
+            type: object
+            properties:
+              goods_nomenclature_sid:
+                type: integer
+              goods_nomenclature_item_id:
+                type: string
+              declarable:
+                type: boolean
+              description:
+                type: string
+              producline_suffix:
+                type: string
+              leaf:
+                type: boolean
+              description_plain:
+                type: string
+              formatted_description:
+                type: string
+              children:
+                type: array
+                items:
+                  type: object
+      required:
+      - id
+      example:
+        goods_nomenclature_sid: 38054
+        goods_nomenclature_item_id: '3400000000'
+        description: SOAP, ORGANIC SURFACE-ACTIVE AGENTS, WASHING PREPARATIONS, LUBRICATING
+          PREPARATIONS, ARTIFICIAL WAXES, PREPARED WAXES, POLISHING OR SCOURING PREPARATIONS,
+          CANDLES AND SIMILAR ARTICLES, MODELLING PASTES, 'DENTAL WAXES' AND DENTAL PREPARATIONS
+          WITH A BASIS OF PLASTER
+        formatted_description: Soap, organic surface-active agents, washing preparations,
+          lubricating preparations, artificial waxes, prepared waxes, polishing or scouring
+          preparations, candles and similar articles, modelling pastes, 'dental waxes' and
+          dental preparations with a basis of plaster
+        section:
+          id: 6
+          title: Products of the chemical or allied industries
+          position: 6
+          numeral: VI
+          section_note: "* 1\\. (A) Goods (other than radioactive ores) answering to a description
+            in heading 2844 or 2845 are to be classified in those headings and in no other
+            heading of the nomenclature.\r\n* (B) Subject to paragraph (A) above, goods answering
+            to a description in heading 2843, 2846 or 2852 are to be classified in those headings
+            and in no other heading of this section.\r\n* 2\\. Subject to Note 1 above, goods
+            classifiable in heading 3004, 3005, 3006, 3212, 3303, 3304, 3305, 3306, 3307,
+            3506, 3707 or 3808 by reason of being put up in measured doses or for retail sale
+            are to be classified in those headings and in no other heading of the nomenclature.\r\n*
+            3\\. Goods put up in sets consisting of two or more separate constituents, some
+            or all of which fall in this section and are intended to be mixed together to
+            obtain a product of Section VI or VII, are to be classified in the heading appropriate
+            to that product, provided that the constituents are:\r\n  * (a) having regard
+            to the manner in which they are put up, clearly identifiable as being intended
+            to be used together without first being repacked;\r\n  * (b) presented together;
+            and\r\n  * (c) identifiable, whether by their nature or by the relative proportions
+            in which they are present, as being complementary one to another.\r\n"
+        guides:
+        - title: Classification of goods
+          url: https://www.gov.uk/government/collections/classification-of-goods
+        chapter_note_id: 83
+        section_id: 6
+        chapter_note: "* 1\\. This chapter does not cover:\r\n  * (a) edible mixtures or preparations
+          of animal or vegetable fats or oils of a kind used as mould-release preparations
+          (heading 1517);\r\n  * (b) separate chemically defined compounds; or\r\n  * (c)
+          shampoos, dentifrices, shaving creams and foams, or bath preparations, containing
+          soap or other organic surface-active agents (heading 3305, 3306 or 3307).\r\n* 2\\.
+          For the purposes of heading 3401, the expression 'soap' applies only to soap soluble
+          in water. Soap and the other products of heading 3401 may contain added substances
+          (for example, disinfectants, abrasive powders, fillers or medicaments). Products
+          containing abrasive powders remain classified in heading 3401 only if in the form
+          of bars, cakes or moulded pieces or shapes. In other forms, they are to be classified
+          in heading 3405 as 'scouring powders and similar preparations'.\r\n* 3\\. For the
+          purposes of heading 3402 'organic surface-active agents' are products which, when
+          mixed with water at a concentration of 0-2.25% at 20 C and left to stand for one
+          hour at the same temperature:\r\n  * (a) give a transparent or translucent liquid
+          or stable emulsion without separation of insoluble matter; and\r\n  * (b) reduce
+          the surface tension of water to 4.5 x 10-2 N/m (45 dyn/cm) or less.\r\n* 4\\. In
+          heading 3403, the expression 'petroleum oils and oils obtained from bituminous minerals'
+          applies to the products defined in Note 2 to Chapter 27.\r\n* 5\\. In heading 3404,
+          subject to the exclusions provided below, the expression 'artificial waxes and prepared
+          waxes' applies only to:\r\n  * (a) chemically produced organic products of a waxy
+          character, whether or not water soluble;\r\n  * (b) products obtained by mixing
+          different waxes;\r\n  * (c) products of a waxy character with a basis of one or
+          more waxes and containing fats, resins, mineral substances or other materials.\r\n
+          \ * The heading does not apply to:\r\n    * (a) products of heading 1516, 3402 or
+          3823, even if having a waxy character;\r\n    * (b) unmixed animal waxes or unmixed
+          vegetable waxes, whether or not refined or coloured, of heading 1521;\r\n    * (c)
+          mineral waxes or similar products of heading 2712, whether or not intermixed or
+          merely coloured; or\r\n    * (d) waxes mixed with, dispersed in or dissolved in
+          a liquid medium (headings 3405, 3809, etc.).\r\n"
+        headings:
+        - goods_nomenclature_sid: 38055
+          goods_nomenclature_item_id: '3401000000'
+          declarable: false
+          description: Soap; organic surface-active products and preparations for use as soap,
+            in the form of bars, cakes, moulded pieces or shapes, whether or not containing
+            soap; organic surface-active products and preparations for washing the skin, in
+            the form of liquid or cream and put up for retail sale, whether or not containing
+            soap; paper, wadding, felt and nonwovens, impregnated, coated or covered with
+            soap or detergent
+          producline_suffix: '80'
+          leaf: true
+          description_plain: Soap; organic surface-active products and preparations for use
+            as soap, in the form of bars, cakes, moulded pieces or shapes, whether or not
+            containing soap; organic surface-active products and preparations for washing
+            the skin, in the form of liquid or cream and put up for retail sale, whether or
+            not containing soap; paper, wadding, felt and nonwovens, impregnated, coated or
+            covered with soap or detergent
+          formatted_description: Soap; organic surface-active products and preparations for
+            use as soap, in the form of bars, cakes, moulded pieces or shapes, whether or
+            not containing soap; organic surface-active products and preparations for washing
+            the skin, in the form of liquid or cream and put up for retail sale, whether or
+            not containing soap; paper, wadding, felt and nonwovens, impregnated, coated or
+            covered with soap or detergent
+          children: []
+        - goods_nomenclature_sid: 38062
+          goods_nomenclature_item_id: '3402000000'
+          declarable: false
+          description: Organic surface-active agents (other than soap); surface-active preparations,
+            washing preparations (including auxiliary washing preparations) and cleaning preparations,
+            whether or not containing soap, other than those of heading|3401
+          producline_suffix: '80'
+          leaf: true
+          description_plain: Organic surface-active agents (other than soap); surface-active
+            preparations, washing preparations (including auxiliary washing preparations)
+            and cleaning preparations, whether or not containing soap, other than those of
+            heading 3401
+          formatted_description: Organic surface-active agents (other than soap); surface-active
+            preparations, washing preparations (including auxiliary washing preparations)
+            and cleaning preparations, whether or not containing soap, other than those of
+            heading&nbsp;3401
+          children: []
+        _response_info:
+          links:
+          - rel: self
+            href: "/trade-tariff/chapters/34.json"
+          - rel: section
+            href: "/trade-tariff/sections/6"
+
+    ChapterNote:
+      description: |
+        A note associated with a chapter of the Tariff.
+
+        Not all chapters have a chapter note.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the chapter_note. This is a unique identifier.
+        chapter_id:
+          type: string
+          description: The `chapter_id` of the chapter_note.
+        section_id:
+          type: integer
+          description: The `section_id` of this chapter that has this note.
+        content:
+          type: string
+          description: The `content` of the chapter_note.
+      required:
+      - id
+      example:
+        id: 46
+        section_id: 1
+        chapter_id: '01'
+        content: "* 1\\. This chapter covers all live animals except:\r\n  *
+          (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+          of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+          and other products of heading 3002; and\r\n  * (c) animals of heading
+          9508."
+
+    ChapterChanges:
+      description: |
+        All changes for a chapter in the Tariff
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the chapter_change, which is a unique identifier of the change.
+        model_name:
+          type: string
+          description: The `model_name` of the chapter_change, whcih is the type of model that was changed.
+        operation:
+          type: string
+          description: The `operation` of the chapter_change. This enumerable value must be one of `["C", "D", "U", "X"]`.
+          enum:
+          - C
+          - D
+          - U
+          - X
+        operation_date:
+          type: string
+          description: The `operation_date` of the chapter_change, e.g. `2019-02-14`
+          format: date
+        record:
+          type: object
+          description: |
+            A [record](/reference.html#referencedrecord "see referenced record object") object.
+          properties:
+            id:
+              type: integer
+            origin:
+              type: string
+            goods_nomenclature_item_id:
+              type: string
+            geographhical_area:
+              type: object
+              properties:
+                id:
+                  type: string
+                description:
+                  type: string
+            measure_type:
+              type: object
+              properties:
+                id:
+                  type: string
+                description:
+                  type: string
+      example:
+      - oid: 3372028
+        model_name: Measure
+        operation: U
+        operation_date: '2019-02-02'
+        record:
+          id: -494058
+          origin: uk
+          import: true
+          goods_nomenclature_item_id: '0105111100'
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: CVD
+            description: Common Veterinary Entry Document (CVED)
+      - oid: 3372029
+        model_name: Measure
+        operation: C
+        operation_date: '2019-02-02'
+        record:
+          id: -506560
+          origin: uk
+          import: true
+          goods_nomenclature_item_id: '0105111100'
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: CVD
+            description: Common Veterinary Entry Document (CVED)
+      - oid: 3372190
+        model_name: Measure
+        operation: U
+        operation_date: '2019-02-02'
+        record:
+          id: -494124
+          origin: uk
+          import: true
+          goods_nomenclature_item_id: 0103921100
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: CVD
+            description: Common Veterinary Entry Document (CVED)
+
+    Heading:
+      description: |
+        A heading in the tariff.
+
+        A heading (or sub-heading) describes products more detail than do chapters or sections.
+      type: object
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the heading. This is a unique identifier.
+        description:
+          type: string
+          description: The text `description` of the heading.
+        bti_url:
+          type: string
+          description: The `bti_url` of the heading, which is a link to more information.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the heading, which may be suitable for presentation to the end user.
+        footnotes:
+          type: array
+          description: |
+            An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects.
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+              formatted_description:
+                type: string
+        chapter:
+          type: object
+          description: |
+            A [chapter](/reference.html#referencedchapter "see referenced chapter object") object.
+          properties:
+            goods_nomenclature_item_id:
+              type: string
+            description:
+              type: string
+            formatted_description:
+              type: string
+              x-nullable: true
+            guides:
+              type: array
+              items:
+                title:
+                  type: string
+                url:
+                  type: string
+            chapter_note:
+              type: string
+        section:
+          type: object
+          description: |
+            A [section](/reference.html#referencedsection "see referenced section object") object.
+          properties:
+            title:
+              type: string
+            numeral:
+              type: string
+            position:
+              type: integer
+            section_note:
+              type: string
+              x-nullable: true
+        commodities:
+          type: array
+          description: |
+            An array of [commodity](/reference.html#referencedcommodity "see referenced commodity object") objects.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              number_indents:
+                type: integer
+              goods_nomenclature_item_id:
+                type: string
+              leaf:
+                type: boolean
+              goods_nomenclature_sid:
+                type: integer
+              formatted_description:
+                type: string
+              description_plain:
+                type: string
+              producline_suffix:
+                type: string
+              parent_sid:
+                type: string
+                x-nullable: true
+        _response_info:
+          type: object
+          description: |
+            A [\_response_info](/reference.html#referenced-responseinfo "see referenced _response_info object") object.
+          properties:
+            links:
+              type: array
+              items:
+                type: object
+                properties:
+                  rel:
+                    type: string
+                  href:
+                    type: string
+      example:
+        goods_nomenclature_item_id: '0101000000'
+        description: Live horses, asses, mules and hinnies
+        bti_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0101000000&Expand=true
+        formatted_description: Live horses, asses, mules and hinnies
+        footnotes:
+        - code: TN701
+          description: "According to  the Council Regulation (EU) No 692/2014
+            (OJ L183, p. 9) it shall be prohibited to import into European Union
+            goods originating in Crimea or Sevastopol.\nThe prohibition shall
+            not apply in respect of: \n(a) the execution until 26 September
+            2014, of trade contracts concluded before 25 June 2014, or of ancillary
+            contracts necessary for the execution of such contracts, provided
+            that the natural or legal persons, entity or body seeking to perform
+            the contract have notified, at least 10 working days in advance,
+            the activity or transaction to the competent authority of the Member
+            State in which they are established. \n(b) goods originating in
+            Crimea or Sevastopol which have been made available to the Ukrainian
+            authorities for examination, for which compliance with the conditions
+            conferring entitlement to preferential origin has been verified
+            and for which a certificate of origin has been issued in accordance
+            with Regulation (EU) No 978/2012 and Regulation (EU) No 374/2014
+            or in accordance with the EU-Ukraine Association Agreement."
+          formatted_description: 'According to  the Council Regulation (EU)
+            No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
+            European Union goods originating in Crimea or Sevastopol.<br/>The
+            prohibition shall not apply in respect of: <br/>(a) the execution
+            until 26 September 2014, of trade contracts concluded before 25
+            June 2014, or of ancillary contracts necessary for the execution
+            of such contracts, provided that the natural or legal persons, entity
+            or body seeking to perform the contract have notified, at least
+            10 working days in advance, the activity or transaction to the competent
+            authority of the Member State in which they are established. <br/>(b)
+            goods originating in Crimea or Sevastopol which have been made available
+            to the Ukrainian authorities for examination, for which compliance
+            with the conditions conferring entitlement to preferential origin
+            has been verified and for which a certificate of origin has been
+            issued in accordance with Regulation (EU) No 978/2012 and Regulation
+            (EU) No 374/2014 or in accordance with the EU-Ukraine Association
+            Agreement.'
+        chapter:
+          goods_nomenclature_item_id: '0100000000'
+          description: LIVE ANIMALS
+          formatted_description: Live animals
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note: "* 1\\. This chapter covers all live animals except:\r\n
+            \ * (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+            of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+            and other products of heading 3002; and\r\n  * (c) animals of heading
+            9508."
+        section:
+          title: Live animals; animal products
+          numeral: I
+          position: 1
+          section_note: "* 1\\. Any reference in this section to a particular
+            genus or species of an animal, except where the context otherwise
+            requires, includes a reference to the young of that genus or species.\r\n*
+            2\\. Except where the context otherwise requires, throughout the
+            nomenclature any reference to 'dried' products also covers products
+            which have been dehydrated, evaporated or freeze-dried.\r\n"
+        commodities:
+        - description: Horses
+          number_indents: 1
+          goods_nomenclature_item_id: '0101210000'
+          leaf: false
+          goods_nomenclature_sid: 93797
+          formatted_description: Horses
+          description_plain: Horses
+          producline_suffix: '10'
+          parent_sid: 
+        - description: Pure-bred breeding animals
+          number_indents: 2
+          goods_nomenclature_item_id: '0101210000'
+          leaf: true
+          goods_nomenclature_sid: 93796
+          formatted_description: Pure-bred breeding animals
+          description_plain: Pure-bred breeding animals
+          producline_suffix: '80'
+          parent_sid: 93797
+          overview_measures: []
+        _response_info:
+          links:
+          - rel: self
+            href: "/trade-tariff/headings/0101.json"
+          - rel: chapter
+            href: "/trade-tariff/chapters/01"
+          - rel: section
+            href: "/trade-tariff/sections/1"
+
+    HeadingChanges:
+      description: |
+        All changes for a heading
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the heading change
+        model_name:
+          type: string
+          description: The `model_name` of the heading_change, which is the type of model that was changed.
+        operation:
+          type: string
+          description: The type of `operation` of the heading change. This enumerable value must be one of `["C", "D", "U", "X"]`.
+          enum:
+          - C
+          - D
+          - U
+          - X
+        operation_date:
+          type: string
+          description: The `operation_date` of the heading change, in date format, e.g., `2019-02-02`
+          format: date
+        record:
+          type: object
+          description: |
+            A [referenced_record](/reference.html#referencedrecord "see referenced record object") object.
+          properties:
+            id:
+              type: integer
+            origin:
+              type: string
+            import:
+              type: boolean
+            goods_nomenclature_item_id:
+              type: string
+            geographical_area:
+              type: object
+              properties:
+                id:
+                  type: string
+                description:
+                  type: string
+            measure_type:
+              type: object
+              properties:
+                id:
+                  type: string
+                description:
+                  type: string
+      required:
+      - oid
+      - model_name
+      - operation
+      - operation_date
+      - record
+      example:
+      - oid: 3371184
+        model_name: Measure
+        operation: U
+        operation_date: '2019-02-02'
+        record:
+          id: -494217
+          origin: uk
+          import: true
+          goods_nomenclature_item_id: 0102291020
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: AHC
+            description: Animal Health Certificate
+      - oid: 3371370
+        model_name: Measure
+        operation: U
+        operation_date: '2019-02-02'
+        record:
+          id: -494348
+          origin: uk
+          import: true
+          goods_nomenclature_item_id: 0102292950
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: CVD
+            description: Common Veterinary Entry Document (CVED)
+
+    Commodity:
+      description: |
+        Commodities are headings or subheadings.
+
+        A commodity has a specific code (the `goods_nomenclature_item_id`), which is unique.
+      type: object
+      properties:
+        producline_suffix:
+          type: string
+          description: The `producline_suffix` of the commodity.
+        description:
+          type: string
+          description: The `description` of the commodity.
+        number_indents:
+          type: integer
+          description: The `number_indents` of the commodity.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the commodity.
+        bti_url:
+          type: string
+          description: The `bti_url` of the heading, which is a link to more information.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the commodity.
+        description_plain:
+          type: string
+          description: The `description_plain` of the commodity.
+        consigned_from:
+          type: string
+          description: The `consigned_from` of the commodity.
+          x-nullable: true
+        basic_duty_rate:
+          type: string
+          description: The `basic_duty_rate` of the commodity.
+          x-nullable: true
+        meursing_code:
+          type: boolean
+          description: The `meursing_code` of the commodity.
+        declarable:
+          type: boolean
+          description: The `declarable` of the commodity.
+        section:
+          type: object
+          description: |
+            A [referenced_section](/reference.html#referencedsection "see referenced_section object") object.
+          properties: 
+            id:
+              type: integer
+            title:
+              type: string
+            numeral:
+              type: string
+            position:
+              type: integer
+            section_note:
+              type: string
+              x-nullable: true
+        chapter:
+          type: object
+          description: |
+            A [referenced_chapter](/reference.html#referencedchapter "see referenced_chapter object") object.
+          properties:
+            goods_nomenclature_item_id:
+              type: string
+            description:
+              type: string
+            formatted_description:
+              type: string
+              x-nullable: true
+            guides:
+              type: array
+              items:
+                title:
+                  type: string
+                url:
+                  type: string
+            chapter_note:
+              type: string
+        import_measures:
+          type: array
+          description: |
+            An array of [referenced_measure](/reference.html#referencedmeasure "see referenced_measure object") objects.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              origin:
+                type: string
+              effective_start_date:
+                type: string
+                format: date-time
+              effective_end_date:
+                type: string
+                format: date-time
+                x-nullable: true
+              import:
+                type: boolean
+              measure_conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    condition_code:
+                      type: string
+                    condition:
+                      type: string
+                    document_code:
+                      type: string
+                    requirement:
+                      type: string
+                    action:
+                      type: string
+                    duty_expression:
+                      type: string
+              excluded_countries:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+              footnotes:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      description:
+                        type: string
+                      formatted_description:
+                        type: string
+              order_number:
+                type: string
+                x-nullable: true
+              excise:
+                type: boolean
+              vat:
+                type: boolean
+              measure_type:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  description:
+                    type: string
+              duty_expression:
+                type: object
+                properties:
+                  base:
+                    type: string
+                  formatted_base:
+                    type: string
+              legal_acts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    validity_start_date:
+                      type: string
+                      format: date-time
+                    validity_end_date:
+                      type: string
+                      format: date-time
+                      x-nullable: true
+                    officialjournal_number:
+                      type: string
+                    officialjournal_page:
+                      type: integer
+                    published_date:
+                      type: string
+                      format: date
+                    regulation_code:
+                      type: string
+                    regulation_url:
+                      type: string
+              geographical_area:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  description:
+                    type: string
+        export_measures:
+          type: array
+          description: |
+            An array of [referenced_measure](/reference.html#referencedmeasure "see referenced_measure object") objects.
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              origin:
+                type: string
+              effective_start_date:
+                type: string
+                format: date-time
+              effective_end_date:
+                type: string
+                format: date-time
+                x-nullable: true
+              import:
+                type: boolean
+              measure_conditions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    condition_code:
+                      type: string
+                    condition:
+                      type: string
+                    document_code:
+                      type: string
+                    requirement:
+                      type: string
+                    action:
+                      type: string
+                    duty_expression:
+                      type: string
+              excluded_countries:
+                type: array
+                items:
+                  type: object
+                  properties: {}
+              footnotes:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      description:
+                        type: string
+                      formatted_description:
+                        type: string
+              order_number:
+                type: string
+                x-nullable: true
+              excise:
+                type: boolean
+              vat:
+                type: boolean
+              measure_type:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  description:
+                    type: string
+              duty_expression:
+                type: object
+                properties:
+                  base:
+                    type: string
+                  formatted_base:
+                    type: string
+              legal_acts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    validity_start_date:
+                      type: string
+                      format: date-time
+                    validity_end_date:
+                      type: string
+                      format: date-time
+                      x-nullable: true
+                    officialjournal_number:
+                      type: string
+                    officialjournal_page:
+                      type: integer
+                    published_date:
+                      type: string
+                      format: date
+                    regulation_code:
+                      type: string
+                    regulation_url:
+                      type: string
+              geographical_area:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  description:
+                    type: string
+        footnotes:
+          type: array
+          description: |
+            An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects.
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+              formatted_description:
+                type: string
+        heading:
+          type: object
+          description: |
+            A [referenced_heading](/reference.html#referencedheading "see referenced_heading object") object.
+          properties:
+            goods_nomenclature_item_id:
+              type: string
+            description:
+              type: string
+            formatted_description:
+              type: string
+            description_plain:
+              type: string
+        ancestors:
+          type: array
+          description: |
+            An array of [referenced_ancestor](/reference.html#referencedancestor "see referenced_ancestor object") object.
+          items:
+            type: object
+            properties:
+              producline_suffix:
+                type: string
+              description:
+                type: string
+              number_indents:
+                type: integer
+              goods_nomenclature_item_id:
+                type: string
+              formatted_description:
+                type: string
+              description_plain:
+                type: string
+        _response_info:
+          type: object
+          description:  |
+            A [\_response_info](/reference.html#referenced-responseinfo "see referenced _response_info object") object.
+          properties:
+            links:
+              type: array
+              items:
+                type: object
+                properties:
+                  rel:
+                    type: string
+                  href:
+                    type: string
+      example:
+        producline_suffix: '80'
+        description: Pure-bred breeding animals
+        number_indents: 2
+        goods_nomenclature_item_id: '0101210000'
+        bti_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0101210000&Expand=true
+        formatted_description: Pure-bred breeding animals
+        description_plain: Pure-bred breeding animals
+        consigned_from: 
+        basic_duty_rate: "<span title='0.0 '>0.00</span> %"
+        meursing_code: false
+        section:
+          title: Live animals; animal products
+          position: 1
+          numeral: I
+          section_note: "* 1\\. Any reference in this section to a particular
+            genus or species of an animal, except where the context otherwise
+            requires, includes a reference to the young of that genus or species.\r\n*
+            2\\. Except where the context otherwise requires, throughout the
+            nomenclature any reference to 'dried' products also covers products
+            which have been dehydrated, evaporated or freeze-dried.\r\n"
+        chapter:
+          goods_nomenclature_item_id: '0100000000'
+          description: LIVE ANIMALS
+          formatted_description: Live animals
+          guides:
+          - title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+          chapter_note: "* 1\\. This chapter covers all live animals except:\r\n
+            \ * (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+            of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+            and other products of heading 3002; and\r\n  * (c) animals of heading
+            9508."
+        declarable: true
+        import_measures:
+        - id: 3563221
+          origin: eu
+          effective_start_date: '2017-06-01T00:00:00.000Z'
+          effective_end_date: 
+          import: true
+          measure_conditions:
+          - condition_code: B
+            condition: 'B: Presentation of a certificate/licence/document'
+            document_code: C640
+            requirement: 'Other certificates: Common Veterinary Entry Document
+              (CVED) in accordance with Commission Regulation (EC) No. 282/2004,
+              used for veterinary checks on live animals'
+            action: Import/export allowed after control
+            duty_expression: ''
+          - condition_code: B
+            condition: 'B: Presentation of a certificate/licence/document'
+            document_code: ''
+            requirement: 
+            action: Import/export not allowed after control
+            duty_expression: ''
+          excluded_countries:
+          - geographical_area_id: AD
+            description: Andorra
+          - geographical_area_id: CH
+            description: Switzerland and Liechtenstein
+          - geographical_area_id: FO
+            description: Faroe Islands
+          - geographical_area_id: LI
+            description: Liechtenstein
+          - geographical_area_id: 'NO'
+            description: Norway
+          - geographical_area_id: SM
+            description: San Marino
+          footnotes:
+          - code: CD625
+            description: Import of live animals is subject to the presentation
+              of a CVED for animals in accordance with the conditions laid down
+              in Regulation (EC) No 282/2004 (OJ L49)
+            formatted_description: Import of live animals is subject to the
+              presentation of a CVED for animals in accordance with the conditions
+              laid down in Regulation (EC) No 282/2004 (OJ L49)
+          order_number: 
+          excise: false
+          vat: false
+          measure_type:
+            id: '410'
+            description: Veterinary control
+          duty_expression:
+            base: ''
+            formatted_base: ''
+          legal_acts:
+          - validity_start_date: '2012-04-01T00:00:00.000Z'
+            validity_end_date: 
+            officialjournal_number: L 116
+            officialjournal_page: 9
+            published_date: '2007-05-04'
+            regulation_code: D0275/07
+            regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
+          geographical_area:
+            id: '1008'
+            description: All third countries
+            children_geographical_areas:
+            - id: AD
+              description: Andorra
+            - id: AE
+              description: United Arab Emirates
+            - id: AF
+              description: Afghanistan
+            - id: AG
+              description: Antigua and Barbuda
+            - id: ZA
+              description: South Africa
+            - id: ZM
+              description: Zambia
+            - id: ZW
+              description: Zimbabwe
+        export_measures:
+        - id: 3540065
+          origin: eu
+          effective_start_date: '2017-02-04T00:00:00.000Z'
+          effective_end_date: 
+          import: false
+          measure_conditions:
+          - condition_code: Y
+            condition: 'Y: Other conditions'
+            document_code: C400
+            requirement: 'Other certificates: Presentation of the required "CITES"
+              certificate'
+            action: Import/export allowed after control
+            duty_expression: ''
+          - condition_code: Y
+            condition: 'Y: Other conditions'
+            document_code: ''
+            requirement: 
+            action: Import/export not allowed after control
+            duty_expression: ''
+          excluded_countries: []
+          footnotes:
+          - code: CD371
+            description: If the product is mentioned in the list annexed to
+              Regulation (EC) No 338/97 and its last amendments, an export authorization
+              must be presented.
+            formatted_description: If the product is mentioned in the list annexed
+              to Regulation (EC) No 338/97 and its last amendments, an export
+              authorization must be presented.
+          order_number: 
+          excise: false
+          vat: false
+          measure_type:
+            id: '715'
+            description: Export control - CITES
+          duty_expression:
+            base: ''
+            formatted_base: ''
+          legal_acts:
+          - validity_start_date: '2017-02-04T00:00:00.000Z'
+            validity_end_date: 
+            officialjournal_number: L 27
+            officialjournal_page: 1
+            published_date: '2017-02-01'
+            regulation_code: R0160/17
+            regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D27,YEAR_OJ%3D2017,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en
+          - validity_start_date: '1997-06-01T00:00:00.000Z'
+            validity_end_date: 
+            officialjournal_number: L 61
+            officialjournal_page: 1
+            published_date: '1997-03-03'
+            regulation_code: R0338/97
+            regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D61,YEAR_OJ%3D1997,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en
+          geographical_area:
+            id: '1008'
+            description: All third countries
+            children_geographical_areas:
+            - id: AD
+              description: Andorra
+            - id: AE
+              description: United Arab Emirates
+        footnotes:
+        - code: NC018
+          description: Entry under this subheading is subject to the conditions
+            laid down in the relevant provisions of the European Union (see
+            Regulation (EU) 2016/1012 of European Parliament and of the Council
+            (OJ L 171, 29.6.2016, p. 66); Commission Implementing Regulation
+            (EU) 2017/717 (OJ L 109, 26.4.2017, p. 9); Commission Implementing
+            Regulation (EU) 2015/262 (OJ L 59, 3.3.2015, p. 1)).
+          formatted_description: Entry under this subheading is subject to the
+            conditions laid down in the relevant provisions of the European
+            Union (see Regulation (EU) 2016/1012 of European Parliament and
+            of the Council (OJ L 171, 29.6.2016, p. 66); Commission Implementing
+            Regulation (EU) 2017/717 (OJ L 109, 26.4.2017, p. 9); Commission
+            Implementing Regulation (EU) 2015/262 (OJ L 59, 3.3.2015, p. 1)).
+        - code: TN701
+          description: "According to  the Council Regulation (EU) No 692/2014
+            (OJ L183, p. 9) it shall be prohibited to import into European Union
+            goods originating in Crimea or Sevastopol.\nThe prohibition shall
+            not apply in respect of: \n(a) the execution until 26 September
+            2014, of trade contracts concluded before 25 June 2014, or of ancillary
+            contracts necessary for the execution of such contracts, provided
+            that the natural or legal persons, entity or body seeking to perform
+            the contract have notified, at least 10 working days in advance,
+            the activity or transaction to the competent authority of the Member
+            State in which they are established. \n(b) goods originating in
+            Crimea or Sevastopol which have been made available to the Ukrainian
+            authorities for examination, for which compliance with the conditions
+            conferring entitlement to preferential origin has been verified
+            and for which a certificate of origin has been issued in accordance
+            with Regulation (EU) No 978/2012 and Regulation (EU) No 374/2014
+            or in accordance with the EU-Ukraine Association Agreement."
+          formatted_description: 'According to  the Council Regulation (EU)
+            No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
+            European Union goods originating in Crimea or Sevastopol.<br/>The
+            prohibition shall not apply in respect of: <br/>(a) the execution
+            until 26 September 2014, of trade contracts concluded before 25
+            June 2014, or of ancillary contracts necessary for the execution
+            of such contracts, provided that the natural or legal persons, entity
+            or body seeking to perform the contract have notified, at least
+            10 working days in advance, the activity or transaction to the competent
+            authority of the Member State in which they are established. <br/>(b)
+            goods originating in Crimea or Sevastopol which have been made available
+            to the Ukrainian authorities for examination, for which compliance
+            with the conditions conferring entitlement to preferential origin
+            has been verified and for which a certificate of origin has been
+            issued in accordance with Regulation (EU) No 978/2012 and Regulation
+            (EU) No 374/2014 or in accordance with the EU-Ukraine Association
+            Agreement.'
+        heading:
+          goods_nomenclature_item_id: '0101000000'
+          description: Live horses, asses, mules and hinnies
+          formatted_description: Live horses, asses, mules and hinnies
+          description_plain: Live horses, asses, mules and hinnies
+        ancestors:
+        - producline_suffix: '10'
+          description: Horses
+          number_indents: 1
+          goods_nomenclature_item_id: '0101210000'
+          formatted_description: Horses
+          description_plain: Horses
+        _response_info:
+          links:
+          - rel: self
+            href: "/trade-tariff/commodities/0101210000.json"
+          - rel: heading
+            href: "/trade-tariff/headings/0101"
+          - rel: chapter
+            href: "/trade-tariff/chapters/01"
+          - rel: section
+            href: "/trade-tariff/sections/1"
+
+    CommodityChanges:
+      description: |
+        All changes for a commodity
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the commodity change.
+        model_name:
+          type: string
+          description: The `model_name` of the commodity change, which is the type of model that was changed.
+        operation:
+          type: string
+          description: The `operation` of the commodity change.
+        operation_date:
+          type: string
+          description: The `operation_date` of the commodity change.
+          format: date
+        record:
+          type: object
+          description: |
+            A [referenced_record](/reference.html#referencedrecord "see referenced-record object") object.
+          properties:
+            id:
+              type: integer
+            origin:
+              type: string
+            import:
+              type: boolean
+            goods_nomenclature_item_id:
+              type: string
+            geographical_area:
+              type: object
+              properties:
+                id:
+                  type: string
+                description:
+                  type: string
+            measure_type:
+              type: object
+              properties:
+                id:
+                  type: string
+                description:
+                  type: string
+      required:
+      - id
+      example:
+      - oid: 3156915
+        model_name: Measure
+        operation: C
+        operation_date: '2018-11-20'
+        record:
+          id: 3658161
+          origin: eu
+          import: true
+          goods_nomenclature_item_id: '0101210000'
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: '103'
+            description: Third country duty
+      - oid: 3156855
+        model_name: Measure
+        operation: U
+        operation_date: '2018-11-20'
+        record:
+          id: 3210366
+          origin: eu
+          import: true
+          goods_nomenclature_item_id: '0101210000'
+          geographical_area:
+            id: '1011'
+            description: ERGA OMNES
+          measure_type:
+            id: '103'
+            description: Third country duty
+
+    MonetaryExchangeRates:
+      description: |
+        A dated list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
+      type: object
+      properties:
+        child_monetary_unit_code:
+          type: string
+          description: The `child_monetary_unit_code` of the monetary exchange rate. This is the currency that is being echanged to.
+        exchange_rate:
+          type: string
+          description: The `exchange_rate` of the monetary exchange rate. This is the exchange rate from EUR to GBP
+        operation_date:
+          type: string
+          description: The `operation_date` of the monetary exchange rate. Use `date` format, e.g., `2018-02-14`
+          format: date
+        validity_start_date:
+          type: string
+          description: The `validity_start_date` of the monetary exchange rate, or the date this rate takes effect. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+      example:
+      - child_monetary_unit_code: GBP
+        exchange_rate: '0.8349'
+        operation_date: '2014-01-30'
+        validity_start_date: '2014-01-01T00:00:00.000Z'
+      - child_monetary_unit_code: GBP
+        exchange_rate: '0.8221'
+        operation_date: '2014-02-27'
+        validity_start_date: '2014-02-01T00:00:00.000Z'
+      - child_monetary_unit_code: GBP
+        exchange_rate: '0.8226'
+        operation_date: '2014-03-28'
+        validity_start_date: '2014-03-01T00:00:00.000Z'
+
+    Updates:
+      description: |
+        A list of updates
+      type: object
+      properties:
+        pagination:
+          type: object
+          description: |
+            A [pagination](/reference.html#referencedpagination "see referenced pagination object") object.
+          properties:
+            page:
+              type: integer
+            per_page:
+              type: integer
+            total_count:
+              type: integer
+        updates:
+          type: array
+          description: |
+            An array of [update](/reference.html#referencedupdate "see referenced update object") objects.
+          items:
+            type: object
+            properties:
+              update_type:
+                type: string
+              state:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              filename:
+                type: string
+              applied_at:
+                type: string
+                format: date-time
+              filesize:
+                type: integer
+              exception_backtrace:
+                type: string
+                x-nullable: true
+              exception_queries:
+                type: string
+                x-nullable: true
+              exception_class:
+                type: string
+                x-nullable: true
+              file_presigned_url:
+                type: string
+              log_presigned_urls:
+                type: object
+                properties: {}
+              conformance_errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    model_name:
+                      type: string
+                    model_primary_key:
+                      type: array
+                      items:
+                        type: string
+                    model_values:
+                      type: object
+                      properties: {}
+                    model_conformance_errors:
+                      type: object
+                      additionalProperties:
+                        type: array
+                        items:
+                          type: string
+              presence_errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    model_name:
+                      type: string
+                    details:
+                      type: object
+                      properties:
+                        national:
+                          type: string
+                          x-nullable: true
+                        operation:
+                          type: string
+                        measure_sid:
+                          type: string
+                        ordernumber:
+                          type: string
+                          x-nullable: true
+                        stopped_flag:
+                          type: string
+                        invalidated_at:
+                          type: string
+                          x-nullable: true
+                        invalidated_by:
+                          type: string
+                          x-nullable: true
+                        operation_date:
+                          type: string
+                        transaction_id:
+                          type: string
+                        measure_type_id:
+                          type: string
+                        validity_end_date:
+                          type: string
+                        additional_code_id:
+                          type: string
+                          x-nullable: true
+                        additional_code_sid:
+                          type: string
+                          x-nullable: true
+                        reduction_indicator:
+                          type: string
+                          x-nullable: true
+                        validity_start_date:
+                          type: string
+                        geographical_area_id:
+                          type: string
+                        geographical_area_sid:
+                          type: string
+                        tariff_measure_number:
+                          type: string
+                          x-nullable: true
+                        goods_nomenclature_sid:
+                          type: string
+                        additional_code_type_id:
+                          type: string
+                          x-nullable: true
+                        goods_nomenclature_item_id:
+                          type: string
+                        justification_regulation_id:
+                          type: string
+                        justification_regulation_role:
+                          type: string
+                        export_refund_nomenclature_sid:
+                          type: string
+                          x-nullable: true
+                        measure_generating_regulation_id:
+                          type: string
+                        measure_generating_regulation_role:
+                          type: string
+      example:
+        pagination:
+          page: 1
+          per_page: 60
+          total_count: 4894
+        updates:
+        - update_type: TariffSynchronizer::TaricUpdate
+          state: A
+          created_at: '2019-02-24T20:22:52.064Z'
+          updated_at: '2019-02-24T20:35:24.340Z'
+          filename: 2019-02-21_TGB19035.xml
+          applied_at: '2019-02-24T20:35:24.340Z'
+          filesize: 931713
+          exception_backtrace: 
+          exception_queries: 
+          exception_class: 
+          file_presigned_url: data/taric/2019-02-21_TGB19035.xml
+          log_presigned_urls: {}
+          conformance_errors: []
+          presence_errors:
+          - model_name: Measure
+            details: '{"national": null, "operation": "update", "measure_sid":
+              "3686066", "ordernumber": null, "stopped_flag": "0", "invalidated_at":
+              null, "invalidated_by": null, "operation_date": "2019-02-21",
+              "transaction_id": "16564247", "measure_type_id": "490", "validity_end_date":
+              "2019-02-21", "additional_code_id": null, "additional_code_sid":
+              null, "reduction_indicator": null, "validity_start_date": "2019-02-21",
+              "geographical_area_id": "1011", "geographical_area_sid": "400",
+              "tariff_measure_number": null, "goods_nomenclature_sid": "30256",
+              "additional_code_type_id": null, "goods_nomenclature_item_id":
+              "0702000000", "justification_regulation_id": "R1708920", "justification_regulation_role":
+              "1", "export_refund_nomenclature_sid": null, "measure_generating_regulation_id":
+              "R1708920", "measure_generating_regulation_role": "1"}'
+          - model_name: Measure
+            details: '{"national": null, "operation": "update", "measure_sid":
+              "3686067", "ordernumber": null, "stopped_flag": "0", "invalidated_at":
+              null, "invalidated_by": null, "operation_date": "2019-02-21",
+              "transaction_id": "16564248", "measure_type_id": "490", "validity_end_date":
+              "2019-02-21", "additional_code_id": null, "additional_code_sid":
+              null, "reduction_indicator": null, "validity_start_date": "2019-02-21",
+              "geographical_area_id": "1011", "geographical_area_sid": "400",
+              "tariff_measure_number": null, "goods_nomenclature_sid": "67653",
+              "additional_code_type_id": null, "goods_nomenclature_item_id":
+              "0707000500", "justification_regulation_id": "R1708920", "justification_regulation_role":
+              "1", "export_refund_nomenclature_sid": null, "measure_generating_regulation_id":
+              "R1708920", "measure_generating_regulation_role": "1"}'
+        - update_type: TariffSynchronizer::TaricUpdate
+          state: A
+          created_at: '2019-02-24T20:22:51.204Z'
+          updated_at: '2019-02-24T20:34:28.437Z'
+          filename: 2019-02-12_TGB19028.xml
+          applied_at: '2019-02-24T20:34:28.437Z'
+          filesize: 1968337
+          exception_backtrace: 
+          exception_queries: 
+          exception_class: 
+          file_presigned_url: data/taric/2019-02-12_TGB19028.xml
+          log_presigned_urls: {}
+          conformance_errors:
+          - model_name: Footnote
+            model_primary_key:
+            - CD
+            - '829'
+            model_values:
+              footnote_id: '829'
+              footnote_type_id: CD
+              validity_start_date: '2019-02-13T00:00:00.000Z'
+              validity_end_date: 
+              national: 
+              oid: 6726
+              operation: C
+              operation_date: '2019-02-12'
+            model_conformance_errors:
+              FO4:
+              - |-
+                At least one description record is mandatory.
+                    The start date of the first description period must be equal to the start date of the footnote.
+                    No two associated description periods may have the same start date.
+                    The start date must be less than or equal to the end date of the footnote.
+              - |-
+                At least one description record is mandatory.
+                    The start date of the first description period must be equal to the start date of the footnote.
+                    No two associated description periods may have the same start date.
+                    The start date must be less than or equal to the end date of the footnote.
+          presence_errors: []
+        - update_type: TariffSynchronizer::ChiefUpdate
+          state: A
+          created_at: '2019-02-24T20:22:53.358Z'
+          updated_at: '2019-02-24T21:43:36.824Z'
+          filename: 2019-02-12_KBT009(19043).txt
+          applied_at: '2019-02-24T21:43:36.824Z'
+          filesize: 393437
+          exception_backtrace: 
+          exception_queries: 
+          exception_class: 
+          file_presigned_url: data/chief/2019-02-12_KBT009(19043).txt
+          log_presigned_urls: {}
+          conformance_errors: []
+          presence_errors: []
+        - update_type: TariffSynchronizer::ChiefUpdate
+          state: A
+          created_at: '2019-02-24T20:22:53.333Z'
+          updated_at: '2019-02-24T21:43:36.252Z'
+          filename: 2019-02-11_KBT009(19042).txt
+          applied_at: '2019-02-24T21:43:36.251Z'
+          filesize: 23597
+          exception_backtrace: 
+          exception_queries: 
+          exception_class: 
+          file_presigned_url: data/chief/2019-02-11_KBT009(19042).txt
+          log_presigned_urls: {}
+          conformance_errors: []
+          presence_errors: []
+        - update_type: TariffSynchronizer::TaricUpdate
+          state: A
+          created_at: '2019-02-24T20:22:51.105Z'
+          updated_at: '2019-02-24T20:34:10.537Z'
+          filename: 2019-02-11_TGB19027.xml
+          applied_at: '2019-02-24T20:34:10.537Z'
+          filesize: 2112345
+          exception_backtrace: 
+          exception_queries: 
+          exception_class: 
+          file_presigned_url: data/taric/2019-02-11_TGB19027.xml
+          log_presigned_urls: {}
+          conformance_errors:
+          - model_name: Measure
+            model_primary_key: 3685173
+            model_values:
+              measure_sid: 3685173
+              measure_type_id: '142'
+              geographical_area_id: JP
+              goods_nomenclature_item_id: '7002100000'
+              validity_start_date: '2019-02-01T00:00:00.000Z'
+              validity_end_date: '2020-01-31T00:00:00.000Z'
+              measure_generating_regulation_role: 1
+              measure_generating_regulation_id: D1819070
+              justification_regulation_role: 1
+              justification_regulation_id: D1819070
+              stopped_flag: false
+              geographical_area_sid: 156
+              goods_nomenclature_sid: 44415
+              ordernumber: 
+              additional_code_type_id: 
+              additional_code_id: 
+              additional_code_sid: 
+              reduction_indicator: 
+              export_refund_nomenclature_sid: 
+              national: 
+              tariff_measure_number: 
+              invalidated_by: 
+              invalidated_at: 
+              oid: 3224322
+              operation: C
+              operation_date: '2019-02-11'
+            model_conformance_errors:
+              ME27:
+              - The entered regulation may not be fully replaced.
+              - The entered regulation may not be fully replaced.
+          presence_errors: []
+
+    UpdatesLatest:
+      description: |
+        A list of the latest updates to the Tariff
+      type: object
+      properties:
+        filename:
+          type: string
+          description: The `filename` of the update.
+        update_type:
+          type: string
+          description: The `update_type` of the update.
+        state:
+          type: string
+          description: The `state` of the update.
+        issue_date:
+          type: string
+          description: The `issue_date` of the update. Use `date` format, e.g., `2018-02-14`
+          format: date
+        updated_at:
+          type: string
+          description: The `updated_at` timestamp of the update. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+        created_at:
+          type: string
+          description: The `created_at` timestamp of the update. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+        filesize:
+          type: integer
+          description: The `filesize`, in bytes, of the update.
+        applied_at:
+          type: string
+          description: The `applied_at` timestamp of the update. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+        last_error:
+          type: string
+          description: The `last_error` of the update.
+          x-nullable: true
+        last_error_at:
+          type: string
+          description: The `last_error_at` of the update.
+          x-nullable: true
+        exception_backtrace:
+          type: string
+          description: The `exception_backtrace` of the update.
+          x-nullable: true
+        exception_queries:
+          type: string
+          description: The `exception_queries` of the update.
+          x-nullable: true
+        exception_class:
+          type: string
+          description: The `exception_class` of the update.
+          x-nullable: true
+      example:
+      - filename: 2019-02-24_KBT009(19055).txt
+        update_type: TariffSynchronizer::ChiefUpdate
+        state: A
+        issue_date: '2019-02-24'
+        updated_at: '2019-02-24T21:44:07.591Z'
+        created_at: '2019-02-24T20:22:53.688Z'
+        filesize: 76154
+        applied_at: '2019-02-24T21:44:07.591Z'
+        last_error: 
+        last_error_at: 
+        exception_backtrace: 
+        exception_queries: 
+        exception_class: 
+      - filename: 2019-02-22_TGB19036.xml
+        update_type: TariffSynchronizer::TaricUpdate
+        state: A
+        issue_date: '2019-02-22'
+        updated_at: '2019-02-24T20:35:31.324Z'
+        created_at: '2019-02-24T20:22:52.158Z'
+        filesize: 480190
+        applied_at: '2019-02-24T20:35:31.324Z'
+        last_error: 
+        last_error_at: 
+        exception_backtrace: 
+        exception_queries: 
+        exception_class: 
+
+### Referenced objects
+
+    ReferencedSection:
+      description:
+        A section object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
+        title:
+          type: string
+          description: The `title` of the section.
+        numeral:
+          type: string
+          description: The `numeral` of the section, as a roman numeral
+        position:
+          type: integer
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
+        section_note:
+          type: string
+          description: The `section_note` of the section. Not all sections have a note.
+          x-nullable: true
+      example:
+          title: Live animals; animal products
+          numeral: I
+          position: 1
+          section_note: "* 1\\. Any reference in this section to a particular
+            genus or species of an animal, except where the context otherwise
+            requires, includes a reference to the young of that genus or species.\r\n*
+            2\\. Except where the context otherwise requires, throughout the
+            nomenclature any reference to 'dried' products also covers products
+            which have been dehydrated, evaporated or freeze-dried.\r\n"
+
+    ReferencedChapter:
+      description:
+        A chapter object referenced elsewhere.
+      type: object
+      required:
+      - goods_nomenclature_item_id
+      - description
+      - formatted_description
+      - guides
+      - chapter_note
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
+        description:
+          type: string
+          description: The `description` of the chapter.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the chapter.
+          x-nullable: true
+        headings_from:
+          type: string
+          description: The `headings_from` of the chapter, or the first heading in this chapter
+        headings_to:
+          type: string
+          description: The `headings_to` of the chapter, or the last heading in this chapter
+        guides:
+          type: array
+          description: |
+            An array of [guide](/reference.html#referencedguide "see referenced guide object") objects.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              url:
+                type: string
+        chapter_note:
+          type: string
+          description: The `chapter_note` of the chapter. Not all chapters have a note.
+        chapter_note_id:
+          type: integer
+          description: The `chapter_note_id` of the chapter. This is a unique identifier for a chapter_note.
+      example:
+        goods_nomenclature_item_id: '0100000000'
+        description: LIVE ANIMALS
+        formatted_description: Live animals
+        guides:
+        - title: Classification of goods
+          url: https://www.gov.uk/government/collections/classification-of-goods
+        chapter_note: "* 1\\. This chapter covers all live animals except:\r\n
+          \ * (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+          of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+          and other products of heading 3002; and\r\n  * (c) animals of heading
+          9508."
+
+    ReferencedRecord:
+      description:
+        A record that was involved in a chapter change.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the record.
+        origin:
+          type: string
+          description: The `origin` of the record.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the record.
+        import:
+          type: boolean
+          description: The boolean `import` of the record.
+        geographical_area:
+          type: object
+          description: |
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
+          properties:
+            id:
+              type: string
+            description:
+              type: string
+        measure_type:
+          type: object
+          description: |
+            A [referenced_measure_type](/reference.html#referencedgeomeasuretype "see referenced measure_type")
+          properties:
+            id:
+              type: string
+            description:
+              type: string
+      required:
+      - id
+      - origin
+      - goods_nomenclature_item_id
+      - geographical_area
+      - measure_type
+      example:
+        id: -494058
+        origin: uk
+        import: true
+        goods_nomenclature_item_id: '0105111100'
+        geographical_area:
+          id: '1011'
+          description: ERGA OMNES
+        measure_type:
+          id: CVD
+          description: Common Veterinary Entry Document (CVED)
+    
+    ReferencedHeading:
+      description:
+        A heading object referenced elsewhere.
+      type: object
+      properties:
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the heading. This is a unique identifier.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the heading. This is a unique identifier.
+        declarable:
+          type: boolean
+          description: Whether this heading is `declarable`.
+        description:
+          type: string
+          description: The text `description` of the heading.
+        producline_suffix:
+          type: string
+          description: The `producline_suffix` of the heading.
+        leaf:
+          type: boolean
+          description: Whether this heading is a `leaf`.
+        description_plain:
+          type: string
+          description: The `description_plain` of the heading.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the heading, which may be suitable for presentation to the end user.
+        children:
+          type: array
+          description: |
+            An array of [referenced_child](/reference.html#referencedchild "see referenced child object") objects.
+          items:
+            type: object
+      example:
+        goods_nomenclature_sid: 38055
+        goods_nomenclature_item_id: '3401000000'
+        declarable: false
+        description: Soap; organic surface-active products and preparations for use as soap,
+          in the form of bars, cakes, moulded pieces or shapes, whether or not containing
+          soap; organic surface-active products and preparations for washing the skin, in
+          the form of liquid or cream and put up for retail sale, whether or not containing
+          soap; paper, wadding, felt and nonwovens, impregnated, coated or covered with
+          soap or detergent
+        producline_suffix: '80'
+        leaf: true
+        description_plain: Soap; organic surface-active products and preparations for use
+          as soap, in the form of bars, cakes, moulded pieces or shapes, whether or not
+          containing soap; organic surface-active products and preparations for washing
+          the skin, in the form of liquid or cream and put up for retail sale, whether or
+          not containing soap; paper, wadding, felt and nonwovens, impregnated, coated or
+          covered with soap or detergent
+        formatted_description: Soap; organic surface-active products and preparations for
+          use as soap, in the form of bars, cakes, moulded pieces or shapes, whether or
+          not containing soap; organic surface-active products and preparations for washing
+          the skin, in the form of liquid or cream and put up for retail sale, whether or
+          not containing soap; paper, wadding, felt and nonwovens, impregnated, coated or
+          covered with soap or detergent
+        children: []
+
+    ReferencedCommodity:
+      description: |
+        A commodity object referenced elsewhere.
+      type: object
+      properties:
+        description:
+          type: string
+          description: The `description` of the commodity
+        number_indents:
+          type: integer
+          description: The `number_indents` of the commodity.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the commodity.
+        leaf:
+          type: boolean
+          description: Whether this commodity is a `leaf`.
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the commodity. This is a unique identifier.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the commodity, which may be suitable for presentation to the end user.
+        description_plain:
+          type: string
+          description: The `description_plain` of the commodity.
+        producline_suffix:
+          type: string
+          description: The `producline_suffix` of the commodity.
+        parent_sid:
+          type: string
+          description: The `parent_sid` of the commodity.
+          x-nullable: true
+      example:
+        description: Horses
+        number_indents: 1
+        goods_nomenclature_item_id: '0101210000'
+        leaf: false
+        goods_nomenclature_sid: 93797
+        formatted_description: Horses
+        description_plain: Horses
+        producline_suffix: '10'
+        parent_sid: 
+
+    ReferencedMeasure:
+      description: |
+        A measure object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the measure. This is a unique identifier.
+        origin:
+          type: string
+          description: The `origin` of the measure.
+        effective_start_date:
+          type: string
+          description: The `origin` of the measure. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+        effective_end_date:
+          type: string
+          description: The `origin` of the measure. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
+          format: date-time
+          x-nullable: true
+        import:
+          type: boolean
+          description: Whether the measure is an `import`.
+        order_number:
+          type: string
+          description: The `order_number` of the measure.
+          x-nullable: true
+        excise:
+          type: boolean
+          description: Whether the measure is subject to `excise`.
+        vat:
+          type: boolean
+          description: Whether the measure is subject to `vat`.
+        measure_conditions:
+          type: array
+          description: |
+            An array of [referenced_measure_condition](/reference.html#referencedmeasurecondition "see referenced measure condition object") objects.
+          items:
+            type: object
+        excluded_countries:
+          type: array
+          description: |
+            An array of [excluded_country](/reference.html#referencedexcludedcountry "see referenced duty expression object") objects.
+          items:
+            type: object
+        footnotes:
+          type: array
+          description: |
+            An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects.
+          items:
+            type: object
+        measure_type:
+          type: object
+          description: |
+            An array of [measure_type](/reference.html#referencedmeasuretype "see referenced measure type object") objects.
+        duty_expression:
+          type: object
+          description: |
+            A [duty_expression](/reference.html#referencedmeasuretype "see referenced duty expression object") object.
+        legal_acts:
+          type: array
+          description: |
+            An array of [legal_act](/reference.html#referencedlegalact "see referenced legal act object") objects.
+          items:
+            type: object
+        geographical_area:
+          type: object
+          description: |
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
+      example:
+        id: 3563221
+        origin: eu
+        effective_start_date: '2017-06-01T00:00:00.000Z'
+        effective_end_date: 
+        import: true
+        measure_conditions:
+        - condition_code: B
+          condition: 'B: Presentation of a certificate/licence/document'
+          document_code: C640
+          requirement: 'Other certificates: Common Veterinary Entry Document
+            (CVED) in accordance with Commission Regulation (EC) No. 282/2004,
+            used for veterinary checks on live animals'
+          action: Import/export allowed after control
+          duty_expression: ''
+        - condition_code: B
+          condition: 'B: Presentation of a certificate/licence/document'
+          document_code: ''
+          requirement: 
+          action: Import/export not allowed after control
+          duty_expression: ''
+        excluded_countries:
+        - geographical_area_id: AD
+          description: Andorra
+        - geographical_area_id: CH
+          description: Switzerland and Liechtenstein
+        - geographical_area_id: FO
+          description: Faroe Islands
+        - geographical_area_id: LI
+          description: Liechtenstein
+        - geographical_area_id: 'NO'
+          description: Norway
+        - geographical_area_id: SM
+          description: San Marino
+        footnotes:
+        - code: CD625
+          description: Import of live animals is subject to the presentation
+            of a CVED for animals in accordance with the conditions laid down
+            in Regulation (EC) No 282/2004 (OJ L49)
+          formatted_description: Import of live animals is subject to the
+            presentation of a CVED for animals in accordance with the conditions
+            laid down in Regulation (EC) No 282/2004 (OJ L49)
+        order_number: 
+        excise: false
+        vat: false
+        measure_type:
+          id: '410'
+          description: Veterinary control
+        duty_expression:
+          base: ''
+          formatted_base: ''
+        legal_acts:
+        - validity_start_date: '2012-04-01T00:00:00.000Z'
+          validity_end_date: 
+          officialjournal_number: L 116
+          officialjournal_page: 9
+          published_date: '2007-05-04'
+          regulation_code: D0275/07
+          regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
+        geographical_area:
+          id: '1008'
+          description: All third countries
+          children_geographical_areas:
+          - id: AD
+            description: Andorra
+          - id: AE
+            description: United Arab Emirates
+          - id: AF
+            description: Afghanistan
+          - id: AG
+            description: Antigua and Barbuda
+          - id: ZA
+            description: South Africa
+          - id: ZM
+            description: Zambia
+          - id: ZW
+            description: Zimbabwe
+
+    ReferencedFootnote:
+      description: |
+        A footnote object referenced elsewhere.
+      type: object
+      properties:
+        code:
+          type: string
+          description: The `code` for the footnote.
+        description:
+          type: string
+          description: The `description` for the footnote.
+        formatted_description:
+          type: string
+          description: The `formatted_description` for the footnote.
+      example:
+        - code: TN701
+          description: "According to  the Council Regulation (EU) No 692/2014
+            (OJ L183, p. 9) it shall be prohibited to import into European Union
+            goods originating in Crimea or Sevastopol.\nThe prohibition shall
+            not apply in respect of: \n(a) the execution until 26 September
+            2014, of trade contracts concluded before 25 June 2014, or of ancillary
+            contracts necessary for the execution of such contracts, provided
+            that the natural or legal persons, entity or body seeking to perform
+            the contract have notified, at least 10 working days in advance,
+            the activity or transaction to the competent authority of the Member
+            State in which they are established. \n(b) goods originating in
+            Crimea or Sevastopol which have been made available to the Ukrainian
+            authorities for examination, for which compliance with the conditions
+            conferring entitlement to preferential origin has been verified
+            and for which a certificate of origin has been issued in accordance
+            with Regulation (EU) No 978/2012 and Regulation (EU) No 374/2014
+            or in accordance with the EU-Ukraine Association Agreement."
+          formatted_description: 'According to  the Council Regulation (EU)
+            No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
+            European Union goods originating in Crimea or Sevastopol.<br/>The
+            prohibition shall not apply in respect of: <br/>(a) the execution
+            until 26 September 2014, of trade contracts concluded before 25
+            June 2014, or of ancillary contracts necessary for the execution
+            of such contracts, provided that the natural or legal persons, entity
+            or body seeking to perform the contract have notified, at least
+            10 working days in advance, the activity or transaction to the competent
+            authority of the Member State in which they are established. <br/>(b)
+            goods originating in Crimea or Sevastopol which have been made available
+            to the Ukrainian authorities for examination, for which compliance
+            with the conditions conferring entitlement to preferential origin
+            has been verified and for which a certificate of origin has been
+            issued in accordance with Regulation (EU) No 978/2012 and Regulation
+            (EU) No 374/2014 or in accordance with the EU-Ukraine Association
+            Agreement.'
+
+    ReferencedGuide:
+      description: |
+        A guide object referenced elsewhere.
+      type: Object
+      properties:
+        title:
+          type: string
+          description: The `title` for the guide.
+        url:
+          type: string
+          description: The `url` for the guide.
+      example:
+        title: Classification of goods
+        url: https://www.gov.uk/government/collections/classification-of-goods
+
+    Referenced_ResponseInfo:
+      description: |
+        A \_response_info object referenced elsewhere.
+      type: object
+      properties:
+        links:
+          type: array
+          description: |
+            An array of [link](/reference.html#referencedlink "see referenced link object") objects.
+          items:
+            type: object
+            properties:
+              $ref: '#/components/schemas/ReferencedLink/properties'
+      example:
+        links:
+        - rel: self
+          href: "/trade-tariff/headings/0101.json"
+        - rel: chapter
+          href: "/trade-tariff/chapters/01"
+        - rel: section
+          href: "/trade-tariff/sections/1"
+
+    ReferencedLink:
+      description: |
+        A link object referenced elsewhere.
+      type: Object
+      properties:
+        rel:
+          type: string
+          description: The `rel` for the link.
+        href:
+          type: string
+          description: The `href` for the link.
+      example:
+        rel: self
+        href: "/trade-tariff/headings/0101.json"
+
+    ReferencedPagination:
+      description: |
+        A pagination object referenced elsewhere.
+      type: Object
+      properties:
+        page:
+          type: integer
+          description: The current `page` number.
+        per_page:
+          type: integer
+          description: The number of items `per_page`.
+        total_count:
+          type: integer
+          description: The `total_count` of items that are paginated.
+      example:
+        pagination:
+          page: 1
+          per_page: 60
+          total_count: 4894
+
+    ReferencedUpdate:
+      description: |
+        An update object referenced elsewhere.
+      type: Object
+      properties:
+        update_type:
+          type: string
+          description: The `update_type` of the update.
+        state:
+          type: string
+          description: The `state` of the update.
+        created_at:
+          type: string
+          description: The `created_at` timestamp of the update.
+          format: date-time
+        updated_at:
+          type: string
+          description: The `updated_at` timestamp of the update.
+          format: date-time
+        filename:
+          type: string
+          description: The source `filename` of the update.
+        applied_at:
+          type: string
+          description: The `applied_at` timestamp of the update.
+          format: date-time
+        filesize:
+          type: integer
+          description: The `filesize` of the update.
+        exception_backtrace:
+          type: string
+        exception_backtrace:
+          description: The `exception_backtrace` of the update.
+          x-nullable: true
+        exception_queries:
+          type: string
+          description: The `exception_queries` of the update.
+          x-nullable: true
+        exception_class:
+          type: string
+          description: The `exception_class` of the update.
+          x-nullable: true
+        file_presigned_url:
+          type: string
+          description: The `file_presigned_url` of the update.
+        log_presigned_urls:
+          type: object
+          description: The `log_presigned_urls` of the update.
+          properties: {}
+        conformance_errors:
+          type: array
+          description:  |
+            An array of [conformance_error](/reference.html#referencedmodelconformanceerror "see referenced conformance_error object") objects.
+          items:
+            type: object
+            properties:
+              model_name:
+                type: string
+              model_primary_key:
+                type: array
+                items:
+                  type: string
+              model_values:
+                type: object
+                properties: {}
+              model_conformance_errors:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+        presence_errors:
+          type: array
+          description:  |
+            An array of [presence_error](/reference.html#referencedpresenceerror "see referenced presence_error object") objects.
+          items:
+            type: object
+            properties:
+              model_name:
+                type: string
+              details:
+                type: object
+                properties:
+                  national:
+                    type: string
+                    x-nullable: true
+                  operation:
+                    type: string
+                  measure_sid:
+                    type: string
+                  ordernumber:
+                    type: string
+                    x-nullable: true
+                  stopped_flag:
+                    type: string
+                  invalidated_at:
+                    type: string
+                    x-nullable: true
+                  invalidated_by:
+                    type: string
+                    x-nullable: true
+                  operation_date:
+                    type: string
+                  transaction_id:
+                    type: string
+                  measure_type_id:
+                    type: string
+                  validity_end_date:
+                    type: string
+                  additional_code_id:
+                    type: string
+                    x-nullable: true
+                  additional_code_sid:
+                    type: string
+                    x-nullable: true
+                  reduction_indicator:
+                    type: string
+                    x-nullable: true
+                  validity_start_date:
+                    type: string
+                  geographical_area_id:
+                    type: string
+                  geographical_area_sid:
+                    type: string
+                  tariff_measure_number:
+                    type: string
+                    x-nullable: true
+                  goods_nomenclature_sid:
+                    type: string
+                  additional_code_type_id:
+                    type: string
+                    x-nullable: true
+                  goods_nomenclature_item_id:
+                    type: string
+                  justification_regulation_id:
+                    type: string
+                  justification_regulation_role:
+                    type: string
+                  export_refund_nomenclature_sid:
+                    type: string
+                    x-nullable: true
+                  measure_generating_regulation_id:
+                    type: string
+                  measure_generating_regulation_role:
+                    type: string
+      example:
+      - update_type: TariffSynchronizer::TaricUpdate
+        state: A
+        created_at: '2019-02-24T20:22:51.105Z'
+        updated_at: '2019-02-24T20:34:10.537Z'
+        filename: 2019-02-11_TGB19027.xml
+        applied_at: '2019-02-24T20:34:10.537Z'
+        filesize: 2112345
+        exception_backtrace: 
+        exception_queries: 
+        exception_class: 
+        file_presigned_url: data/taric/2019-02-11_TGB19027.xml
+        log_presigned_urls: {}
+        conformance_errors:
+        - model_name: Measure
+          model_primary_key: 3685173
+          model_values:
+            measure_sid: 3685173
+            measure_type_id: '142'
+            geographical_area_id: JP
+            goods_nomenclature_item_id: '7002100000'
+            validity_start_date: '2019-02-01T00:00:00.000Z'
+            validity_end_date: '2020-01-31T00:00:00.000Z'
+            measure_generating_regulation_role: 1
+            measure_generating_regulation_id: D1819070
+            justification_regulation_role: 1
+            justification_regulation_id: D1819070
+            stopped_flag: false
+            geographical_area_sid: 156
+            goods_nomenclature_sid: 44415
+            ordernumber: 
+            additional_code_type_id: 
+            additional_code_id: 
+            additional_code_sid: 
+            reduction_indicator: 
+            export_refund_nomenclature_sid: 
+            national: 
+            tariff_measure_number: 
+            invalidated_by: 
+            invalidated_at: 
+            oid: 3224322
+            operation: C
+            operation_date: '2019-02-11'
+          model_conformance_errors:
+            ME27:
+            - The entered regulation may not be fully replaced.
+            - The entered regulation may not be fully replaced.
+        presence_errors: []
+
+    ReferencedConformanceErrors:
+      description: |
+        A conformance errors object referenced elsewhere.
+      type: Object
+      properties:
+        model_name:
+          type: string
+          description: The `model_name` of the model involved in the conformance error.
+        model_primary_key:
+          type: array
+          description: The `model_primary_key` of the model involved in the conformance error.
+          items:
+            type: string
+        model_values:
+          description: |
+            A [model_values](/reference.html#referencedmodelvalues "see referenced model_values object") object.
+          type: object
+          properties:
+            $ref: '#/components/schemas/ReferencedModelValues/properties'
+        model_conformance_errors:
+          type: object
+          description: |
+            A [model_conformance_error](/reference.html#referencedmodelconformanceerror "see referenced model_conformance_errors object") object.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      example:
+      - model_name: Footnote
+        model_primary_key:
+        - CD
+        - '829'
+        model_values:
+          footnote_id: '829'
+          footnote_type_id: CD
+          validity_start_date: '2019-02-13T00:00:00.000Z'
+          validity_end_date: 
+          national: 
+          oid: 6726
+          operation: C
+          operation_date: '2019-02-12'
+        model_conformance_errors:
+          FO4:
+          - |-
+            At least one description record is mandatory.
+                The start date of the first description period must be equal to the start date of the footnote.
+                No two associated description periods may have the same start date.
+                The start date must be less than or equal to the end date of the footnote.
+          - |-
+            At least one description record is mandatory.
+                The start date of the first description period must be equal to the start date of the footnote.
+                No two associated description periods may have the same start date.
+                The start date must be less than or equal to the end date of the footnote.
+
+    ReferencedGeographicalArea:
+      description: A geographical_area object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The `id` of the geographical area.
+        description:
+          type: string
+          description: The `description` of the geographical area.
+        children:
+          type: array
+          description: |
+            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
+          items: 
+            type: object
+      example:
+        id: '1008'
+        description: All third countries
+        children_geographical_areas:
+        - id: AD
+          description: Andorra
+        - id: AE
+          description: United Arab Emirates
+
+    ReferencedMeasureCondition:
+      description: A measure_condition object referenced elsewhere.
+      type: object
+      properties:
+        condition_code:
+          type: string
+          description: The `condition_code` for the measure condition.
+        condition:
+          type: string
+          description: The `condition` for the measure condition.
+        document_code:
+          type: string
+          description: The `document_code` for the measure condition.
+        requirement:
+          type: string
+          description: The `requirement` for the measure condition.
+        action:
+          type: string
+          description: The `action` for the measure condition.
+        duty_expression:
+          type: string
+          description: The `duty_expression` for the measure condition.
+      example:
+
+    ReferencedMeasureType:
+      description: A measure_type object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The `id` of the measure type.
+        description:
+          type: string
+          description: The `description` of the measure type.
+      example:
+        id: '410'
+        description: Veterinary control
+
+    ReferencedLegalAct:
+      description: A legal act object referenced elsewhere.
+      type: object
+      properties:
+        validity_start_date:
+          type: string
+          description: The `validity_start_date` of the legal act. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`.
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The `validity_start_date` of the legal act. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`.
+          format: date-time
+          x-nullable: true
+        officialjournal_number:
+          type: string
+          description: The `officialjournal_number` of the legal act.
+        officialjournal_page:
+          type: integer
+          description: The `officialjournal_page` of the legal act.
+        published_date:
+          type: string
+          description: The `validity_start_date` of the legal act. Use `date` format, e.g., `2014-01-01`.
+          format: date
+        regulation_code:
+          type: string
+          description: The `regulation_code` of the legal act.
+        regulation_url:
+          type: string
+          description: The `regulation_url` of the legal act.
+      example:
+        validity_start_date: '2012-04-01T00:00:00.000Z'
+        validity_end_date: 
+        officialjournal_number: L 116
+        officialjournal_page: 9
+        published_date: '2007-05-04'
+        regulation_code: D0275/07
+        regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
+
+    ReferencedExcludedCountry:
+      description: An excluded_country object referenced elsewhere.
+      type: object
+      properties:
+        geographical_area_id:
+          type: string
+          description: The `geographical_area_id` of the excluded country, which is a unique code for a geographical_area.
+        description:
+          type: string
+          description: The `description` of the excluded country, which is a name of a geographical_area.
+      example:
+        geographical_area_id: AD
+        description: Andorra
+
+    ReferencedDutyExpression:
+      description: A duty expression object referenced elsewhere.
+      type: object
+      properties:
+        base:
+          type: string
+          description: The `base` of the duty expression.
+        formatted_base:
+          type: string
+          description: The `formatted_base` of the duty expression.
+      example:
+        base: ''
+        formatted_base: ''
+
+    ReferencedModelConformanceError:
+      description: |
+        A model conformance errors object referenced elsewhere.
+        <br/>
+        This object's key is variable, it can change based on the model conformance error it refers to.
+      additionalProperties: true
+      type: array
+      description: |
+        This object's key is variable, it can change based on the model conformance error it refers to.
+      items:
+        type: string
+              
+      example:
+        FO4:
+        - |-
+          At least one description record is mandatory.
+          The start date of the first description period must be equal to the start date of the footnote.
+          No two associated description periods may have the same start date.
+          The start date must be less than or equal to the end date of the footnote.
+        - |-
+          At least one description record is mandatory.
+          The start date of the first description period must be equal to the start date of the footnote.
+          No two associated description periods may have the same start date.
+          The start date must be less than or equal to the end date of the footnote.
+
+    ReferencedModelValues:
+      description: |
+        A model values object referenced elsewhere.
+        <br/>
+        This object contains an instance of a model. The number and contents of the fields are variable.
+      additionalProperties: true
+      properties:
+        anonymous:
+          type: object
+          description: |
+            The number and contents of the fields are variable based on the model it describes.
+      example:
+        footnote_id: '829'
+        footnote_type_id: CD
+        validity_start_date: '2019-02-13T00:00:00.000Z'
+        validity_end_date: 
+        national: 
+        oid: 6726
+        operation: C
+        operation_date: '2019-02-12'
