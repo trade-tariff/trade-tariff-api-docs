@@ -72,8 +72,10 @@ The `import_measures` and `import_measures` fields contain information about mea
 
 ## Making use of content
 
+### Ruby on Rails
+
 It can be simple to make use of GOV.UK in your application. The example below
-illustrates a example utilising [Ruby on Rails](http://rubyonrails.org/)
+utilises [Ruby on Rails](http://rubyonrails.org/)
 with [Rest Client](https://github.com/rest-client/rest-client).
 
 
@@ -94,6 +96,25 @@ access the content on the API.
 We then use the API to access the content for [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000). In the response we access the `body` field from within the `details` object. We store this to a variable `commodity`.
 
 Finally we embed this in our own Ruby on Rails app and are ready to output to users.
+
+### node.js with Axios
+
+The example below uses [node.js](https://nodejs.org/) and the popular [Axios](https://github.com/axios/axios) module, a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)-based HTTP client for node.js and the browser. Here, we retreive a commondity and print its `formatted_description` to the console.
+
+```javascript
+const axios = require('axios');
+
+axios.get('https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json')
+     .then(response => {
+       console.log(response.data.formatted_description);
+      })
+     .catch(error => {
+       console.log(error);
+     });
+```
+
+Note the use of `.then()` to handle the Promise, and errors are handled by `.catch()`. Axios handles converting the JSON response to a javascript object.
+
 
 [commodity]: /reference.html#commodity
 [harmonized-system]: http://www.wcoomd.org/en/topics/nomenclature/overview/what-is-the-harmonized-system.aspx

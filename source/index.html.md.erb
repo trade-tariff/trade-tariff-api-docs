@@ -4,16 +4,6 @@ title: About - GOV.UK Tariff API
 
 # GOV.UK Tariff API
 
-<div class="phase-tag">
-  <p>
-    <strong class="phase-banner"><%= config[:tech_docs][:phase] %></strong>
-    <span>
-      This is a trial service. <a href="#beta-software">Find out what
-      this means</a>.
-    </span>
-  </p>
-</div>
-
 GOV.UK Tariff API makes it easy to access trade tariff data
 on [https://www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff).
 The data includes commodity codes, duty and VAT rates.
@@ -24,6 +14,8 @@ overview of the endpoints and the response format.
 
 ## What you can do with this API
 
+The data provided by this API is used on GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff).
+
 With the GOV.UK Tariff API, you can access Commodity codes, which [classify 
 goods](https://www.gov.uk/guidance/finding-commodity-codes-for-imports-or-exports)
 for import and export. Commodity codes allow you to:
@@ -33,15 +25,13 @@ for import and export. Commodity codes allow you to:
 - find out about duty reliefs and preferential rates
 - find out if import or export licenses are needed
 
-<%# This API is useful for applications that incorporate content from GOV.UK and
-for keeping that content up to date. It provides a more accessible and
-predictable interface than what can be achieved through scraping HTML pages. %>
+This API is useful for applications that incorporate content from GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff) and for keeping that content up to date. It is meant to provide a predictable and stable interface to UK.GOV tariff data.
 
-The data provided by this API is used on GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff).
+The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification [file](/v1/openapi.yaml) for the Tariff API. This file describes the Tariff API and provides example requests and responses.
 
 ## What you can't do with this API
 
-Not all features are implemented yet. Some items we would like to implement are:
+Not all features are implemented yet. Some features we would like to implement are:
 
 - Search by free-form text or `goods_nomenclature_item_id`
 - Scope API calls by date
@@ -66,23 +56,7 @@ For example, using the curl command line utility tool:
 curl https://trade-tariff.service.gov.uk/v1/sections.json
 ```
 
-## Beta software
-
-GOV.UK Tariff API is currently beta software and may be subject to changes
-and improvements as we learn from usage.
-
-<%# This means that you may use this software and build applications that utilise
-it. However as we learn from feedback we may make changes to the software.
-We will communicate those via our [mailing list](#keep-informed). %>
-
-<%# If you would like to share your feedback about GOV.UK Content API you can do so
-via [this survey](http://www.smartsurvey.co.uk/s/GPYGP). %>
-
 ## Keep informed
-
-<%# Join the [GOV.UK Content API mailing list][google-group] to be notified of
-announcements regarding this API. We will use this channel to communicate
-any breaking changes or updates to the support status of this API. %>
 
 There is a [discussion group](https://forum.trade-tariff.service.gov.uk/c/api) 
 for the GOV.UK Tariff API. We will use this channel to communicate any changes, 
@@ -109,26 +83,10 @@ Security (TLS) protocol, is used by the platform to provide secure connections.
 
 ### Security patches
 
-<%# We treat security vulnerabilities in the platform and library code in the GOV.UK
-Content API as our highest priority. The codebase will be updated as soon as
-possible when vulnerabilities are discovered or reported. %>
-
 We upgrade the framework and library code in GOV.UK Tariff API
 to the latest versions for security and feature enhancements.
 
-## Rate limiting
-
-<%# There is a maximum limit of 10 requests per second per client. If you exceed
-this your request won't be processed until the limit is no longer exceeded
-and you may see timeout errors. %>
-
-<%# We think this should be sufficient for all users of GOV.UK Content API but
-if you believe you need the limit increasing you can [contact support](#support). %>
-
 ## Support
-
-<%# GOV.UK Content API is currently in a [beta](https://www.gov.uk/help/beta)
-phase and may be subject to changes and improvements. %>
 
 If you experience any issues or have questions regarding GOV.UK Tariff API
 please:
