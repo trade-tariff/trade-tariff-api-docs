@@ -3,7 +3,7 @@ host: https://content-api.publishing.service.gov.uk
 
 # Header-related options
 show_govuk_logo: true
-service_name: Tariff API
+service_name: Trade Tariff API
 service_link: /
 # phase: Beta
 
@@ -14,7 +14,7 @@ header_links:
   Reference: /reference.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
-ga_tracking_id: UA-26179049-13
+ga_tracking_id: UA-97208357-3
 
 # Table of contents depth – how many levels to include in the table of contents.
 # If your ToC is too long, reduce this number and we'll only show higher-level
