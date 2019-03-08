@@ -3242,44 +3242,6 @@ components:
         id: '410'
         description: Veterinary control
 
-    ReferencedLegalAct:
-      description: A legal act object referenced elsewhere.
-      type: object
-      properties:
-        validity_start_date:
-          type: string
-          description: The `validity_start_date` of the legal act. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`.
-          format: date-time
-        validity_end_date:
-          type: string
-          description: The `validity_start_date` of the legal act. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`.
-          format: date-time
-          x-nullable: true
-        officialjournal_number:
-          type: string
-          description: The `officialjournal_number` of the legal act.
-        officialjournal_page:
-          type: integer
-          description: The `officialjournal_page` of the legal act.
-        published_date:
-          type: string
-          description: The `validity_start_date` of the legal act. Use `date` format, e.g., `2014-01-01`.
-          format: date
-        regulation_code:
-          type: string
-          description: The `regulation_code` of the legal act.
-        regulation_url:
-          type: string
-          description: The `regulation_url` of the legal act.
-      example:
-        validity_start_date: '2012-04-01T00:00:00.000Z'
-        validity_end_date: 
-        officialjournal_number: L 116
-        officialjournal_page: 9
-        published_date: '2007-05-04'
-        regulation_code: D0275/07
-        regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
-
     ReferencedExcludedCountry:
       description: An excluded_country object referenced elsewhere.
       type: object
