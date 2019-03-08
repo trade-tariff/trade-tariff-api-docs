@@ -4,7 +4,7 @@ title: Getting Started
 
 # Getting Started
 
-This guide introduces a number of key concepts in GOV.UK Tariff API through
+This guide introduces a number of key concepts in GOV.UK Trade Tariff API through
 the usage of examples. It utilises [curl](https://curl.haxx.se/) for
 interfacing with the API on the command line and is chosen due to the wide
 availability of curl, however you may prefer the structured output of
@@ -13,8 +13,8 @@ through [jq](https://stedolan.github.io/jq/).
 
 ## Accessing Content
 
-GOV.UK Tariff API is used to access content that is hosted on
-[www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff) (referred to as GOV.UK Tariff).
+GOV.UK Trade Tariff API is used to access content that is hosted on
+[www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff).
 For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:
 
 ```shell
@@ -74,7 +74,7 @@ The `import_measures` and `import_measures` fields contain information about mea
 
 ### Ruby on Rails
 
-It can be simple to make use of GOV.UK in your application. The example below
+It can be simple to make use of API in your application. The example below
 utilises [Ruby on Rails](http://rubyonrails.org/)
 with [Rest Client](https://github.com/rest-client/rest-client).
 
@@ -90,8 +90,8 @@ end
 content = "<h1>GOV.UK Tariff Information</h1><div>#{commodity}</div>"
 ```
 
-In this example we utilise the Rails cache layer so that we can infrequently
-access the content on the API.
+In this example we utilise the Rails cache so that we can infrequently can minimise the number of times we call the API. The Trade
+Tariff is updated daily so a cache of 1 day is recommended.
 
 We then use the API to access the content for [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000). In the response we access the `body` field from within the `details` object. We store this to a variable `commodity`.
 
