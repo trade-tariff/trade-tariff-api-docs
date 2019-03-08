@@ -2688,24 +2688,3 @@ components:
       example:
         base: ''
         formatted_base: ''
-
-    ReferencedModelValues:
-      description: |
-        A model values object referenced elsewhere.
-        <br/>
-        This object contains an instance of a model. The number and contents of the fields are variable.
-      additionalProperties: true
-      properties:
-        anonymous:
-          type: object
-          description: |
-            The number and contents of the fields are variable based on the model it describes.
-      example:
-        footnote_id: '829'
-        footnote_type_id: CD
-        validity_start_date: '2019-02-13T00:00:00.000Z'
-        validity_end_date: 
-        national: 
-        oid: 6726
-        operation: C
-        operation_date: '2019-02-12'
