@@ -465,59 +465,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v1/monetary_exchange_rates.json
 
-### Updates
-  /v1/updates.json:
-    get:
-      summary: Retrieves a list of updates
-      description: >
-        Retrieves a list of updates to the tariff
-      tags:
-      - Updates
-      produces:
-      - application/json
-      responses:
-        200:
-          description: Updates were found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Updates'
-              example:
-                $ref: '#/components/schemas/Updates/example'
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /v1/chapters.json:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/updates.json
-
-  /v1/updates/latest.json:
-    get:
-      summary: Retrieves list of recent updates
-      description: >
-        Retrieves a list of recent updates to the tariff
-      tags:
-      - Updates
-      produces:
-      - application/json
-      responses:
-        200:
-          description: Recent updates were found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdatesLatest'
-              example:
-                $ref: '#/components/schemas/UpdatesLatest/example'
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /v1/chapters.json:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/updates/latest.json
-
 components:
   schemas:
 
