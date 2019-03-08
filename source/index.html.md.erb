@@ -1,22 +1,22 @@
 ---
-title: About - GOV.UK Tariff API
+title: Trade Tariff API - GOV.UK
 ---
 
-# GOV.UK Tariff API
+# GOV.UK Trade Tariff API
 
-GOV.UK Tariff API makes it easy to access trade tariff data
-on [https://www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff).
+The GOV.UK Trade Tariff API makes it easy to access Trade Tariff data
+from [https://www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff).
 The data includes commodity codes, duty and VAT rates.
 
-GOV.UK Tariff API is accessed via [HTTP][] and returns data in a [JSON][]
+It is accessed via [HTTPS][] and returns data in a [JSON][]
 format. The [reference documentation](reference.html) provides a thorough
 overview of the endpoints and the response format.
 
 ## What you can do with this API
 
-The data provided by this API is used on GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff).
+The data provided by this API is used on [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff).
 
-With the GOV.UK Tariff API, you can access Commodity codes, which [classify 
+With the Trade Tariff API, you can access Commodity codes, which [classify 
 goods](https://www.gov.uk/guidance/finding-commodity-codes-for-imports-or-exports)
 for import and export. Commodity codes allow you to:
 
@@ -25,9 +25,9 @@ for import and export. Commodity codes allow you to:
 - find out about duty reliefs and preferential rates
 - find out if import or export licenses are needed
 
-This API is useful for applications that incorporate content from GOV.UK [Trade Tariff](https://www.gov.uk/trade-tariff) and for keeping that content up to date. It is meant to provide a predictable and stable interface to UK.GOV tariff data.
+This API is useful for applications that incorporate content from [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff) and for keeping that content up to date. It is meant to provide a predictable and stable interface to Trade Tariff data.
 
-The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification [file](/v1/openapi.yaml) for the Tariff API. This file describes the Tariff API and provides example requests and responses.
+The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification [file](/v1/openapi.yaml) for the Trade Tariff API. This file describes the API and provides example requests and responses.
 
 ## What you can't do with this API
 
@@ -59,18 +59,18 @@ curl https://trade-tariff.service.gov.uk/v1/sections.json
 ## Keep informed
 
 There is a [discussion group](https://forum.trade-tariff.service.gov.uk/c/api) 
-for the GOV.UK Tariff API. We will use this channel to communicate any changes, 
+for the GOV.UK Trade Tariff API. We will use this channel to communicate any changes, 
 updates, and status of the API.
 
 ## Authentication
 
-Usage of GOV.UK Tariff API does not require authentication.
+Usage of GOV.UK Trade Tariff API does not require authentication.
 
 ## Security and compliance
 
 ### Reporting vulnerabilities
 
-If you believe there is a security issue with GOV.UK Tariff API, please
+If you believe there is a security issue with GOV.UK Trade Tariff API, please
 [contact us immediately](#support).
 
 Please don’t disclose the suspected breach publicly until it has been fixed.
@@ -83,21 +83,17 @@ Security (TLS) protocol, is used by the platform to provide secure connections.
 
 ### Security patches
 
-We upgrade the framework and library code in GOV.UK Tariff API
+We upgrade the framework and library code in GOV.UK Trade Tariff API
 to the latest versions for security and feature enhancements.
 
 ## Support
 
-If you experience any issues or have questions regarding GOV.UK Tariff API
+If you experience any issues or have questions regarding GOV.UK Trade Tariff API
 please:
 
-- **If you are a government department:** Raise a ticket with [GOV.UK Support][]
-- **Otherwise:** [Contact GOV.UK][] with your query
+- **If you are a government department:** Raise a ticket with [Bit Zesty](mailto:support@bitzesty.com)
+- **Otherwise:** Use the [discussion group](https://forum.trade-tariff.service.gov.uk/c/api)
 
 
-[google-group]: https://groups.google.com/a/digital.cabinet-office.gov.uk/forum/#!forum/contentapi
-[National Archives]: http://webarchive.nationalarchives.gov.uk/*/https://www.gov.uk/
-[HTTP]: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+[HTTPS]: https://en.wikipedia.org/wiki/HTTPS
 [JSON]: https://en.wikipedia.org/wiki/JSON
-[GOV.UK Support]: https://support.publishing.service.gov.uk
-[Contact GOV.UK]: https://www.gov.uk/contact/govuk
