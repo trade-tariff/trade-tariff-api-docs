@@ -51,6 +51,12 @@ You should now be able to view a live preview at http://localhost:4567.
 
 Make changes in a branch and make a PR.
 
+### Cloudfoundry 
+
+tariff-api-dev in development space
+tariff-api-production in production space
+
+
 ## License
 
 [MIT License](LICENSE)
