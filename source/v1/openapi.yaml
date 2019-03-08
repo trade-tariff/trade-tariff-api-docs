@@ -13,7 +13,7 @@ info:
   version: '1'
 
 servers:
-  - url: https://trade-tariff.service.gov.uk
+  - url: https://www.trade-tariff.service.gov.uk
 
 paths:
 ### Sections
@@ -44,7 +44,7 @@ paths:
         /v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections.json
 
   /v1/sections/{position}.json:
     get:
@@ -87,7 +87,7 @@ paths:
         /v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/sections/1.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections/1.json
 
   /v1/sections/{section_id}/section_note.json:
     get:
@@ -127,7 +127,7 @@ paths:
         /v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/sections/1/section_note.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections/1/section_note.json
 
 ### Chapters
   /v1/chapters.json:
@@ -156,7 +156,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters.json
   
   /v1/chapters/{chapter_id}.json:
     get:
@@ -193,7 +193,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters/34.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters/34.json
 
   /v1/chapters/{chapter_id}/chapter_note.json:
     get:
@@ -233,7 +233,7 @@ paths:
         /v1/chapters/{chapter_id}/chapter_note.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters/34/chapter_note.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters/34/chapter_note.json
 
   /v1/chapters/{chapter_id}/changes.json:
     get:
@@ -271,7 +271,7 @@ paths:
         /v1/chapters/{chapter_id}/changes.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/chapters/01/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters/01/changes.json
 
 ### Headings
   /v1/headings/{heading_id}.json:
@@ -313,7 +313,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/headings/0101.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/headings/0101.json
 
   /v1/headings/{heading_id}/changes.json:
     get:
@@ -353,7 +353,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/headings/0101/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/headings/0101/changes.json
 
 ### Commodities
   /v1/commodities/{goods_nomenclature_item_id}.json:
@@ -395,7 +395,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000.json
 
   /v1/commodities/{goods_nomenclature_item_id}/changes.json:
     get:
@@ -436,7 +436,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/commodities/0101210000/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000/changes.json
 
 ### Monetary exchange rates
   /v1/monetary_exchange_rates.json:
@@ -463,7 +463,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/monetary_exchange_rates.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/monetary_exchange_rates.json
 
 ### Updates
   /v1/updates.json:
@@ -490,7 +490,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/updates.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/updates.json
 
   /v1/updates/latest.json:
     get:
@@ -516,7 +516,7 @@ paths:
         /v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://trade-tariff.service.gov.uk/v1/updates/latest.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/updates/latest.json
 
 components:
   schemas:
