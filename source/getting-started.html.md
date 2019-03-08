@@ -18,7 +18,7 @@ GOV.UK Tariff API is used to access content that is hosted on
 For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:
 
 ```shell
-curl https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json
+curl https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000.json
 ```
 
 This will return a [`commodity`][commodity] object. Within this object are
@@ -83,7 +83,7 @@ with [Rest Client](https://github.com/rest-client/rest-client).
 require "rest-client"
 
 commodity = Rails.cache.fetch("/v1/commodities/0101210000.json", expires_in: 1.day) do
-  response = RestClient.get("https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json", { content_type: "json" })
+  response = RestClient.get("https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000.json", { content_type: "json" })
   JSON.parse(response.body).dig("details", "body")
 end
 
@@ -104,7 +104,7 @@ The example below uses [node.js](https://nodejs.org/) and the popular [Axios](ht
 ```javascript
 const axios = require('axios');
 
-axios.get('https://trade-tariff.service.gov.uk/v1/commodities/0101210000.json')
+axios.get('https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000.json')
      .then(response => {
        console.log(response.data.formatted_description);
       })
