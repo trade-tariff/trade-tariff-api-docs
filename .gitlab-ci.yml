@@ -35,4 +35,4 @@ deploy_production:
     - CF_SPACE=production CF_APP=tariff-api-production ./bin/deploy
   when: manual
   only:
-  	- production
+  - production
