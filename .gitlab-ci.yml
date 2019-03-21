@@ -20,7 +20,7 @@ test:
     key: ${CI_JOB_NAME}-v2
     paths:
       - vendor/bundler
-
+      - node_modules/
 
 deploy_dev:
   stage: deploy
