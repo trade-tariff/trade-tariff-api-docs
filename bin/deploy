@@ -10,10 +10,7 @@ curl -X POST \
 --data-urlencode 'payload={"text": "'"Deploying $CF_APP.\n${GIT_MESSAGE}"'", "channel": "'"#$SLACK_CHANNEL"'", "username": "cf-deploy", "icon_emoji": ":cloud:", "fields": [{"title": "ENV", "value": "'"$CF_SPACE"'", "short": true}]}' \
 $SLACK_WEBHOOK
 
-# Fetch manifest
-cf create-app-manifest $CF_APP
-
-cf zero-downtime-push $CF_APP -f "$CF_APP"_manifest.yml
+cf push $CF_APP
 
 # Notify Slack deployment finished
 curl -X POST \

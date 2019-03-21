@@ -23,9 +23,6 @@ deploy_dev:
     - curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
     - sudo dpkg -i cf-cli_amd64.deb
     - cf -v
-    - curl -v -L -o autopilot https://github.com/contraband/autopilot/releases/download/0.0.3/autopilot-linux
-    - chmod +x autopilot
-    - cf install-plugin autopilot -f
     - CF_SPACE=development CF_APP=tariff-api-dev ./bin/deploy
   only:
     - master
@@ -36,9 +33,6 @@ deploy_production:
     - curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
     - sudo dpkg -i cf-cli_amd64.deb
     - cf -v
-    - curl -v -L -o autopilot https://github.com/contraband/autopilot/releases/download/0.0.3/autopilot-linux
-    - chmod +x autopilot
-    - cf install-plugin autopilot -f
     - CF_SPACE=production CF_APP=tariff-api-production ./bin/deploy
   when: manual
   only:
