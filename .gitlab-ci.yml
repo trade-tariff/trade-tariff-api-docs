@@ -11,7 +11,7 @@ test:
     - npm install
     - bundle install --path vendor/bundler --jobs=4 --retry=3
   script:
-    - ./generate.js source/v1/openapi.yaml
+    - ./generate.js source/v1/openapi.yaml source/reference.html.md.erb
     - bundle exec rake build API_SPEC=source/v1/openapi.yaml
   artifacts:
     paths:
