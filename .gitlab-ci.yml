@@ -11,6 +11,9 @@ test:
     - make requirements
   script:
     - make html API_SPEC=source/v1/openapi.yaml
+  artifacts:
+    paths:
+      - build
   cache:
     key: ${CI_JOB_NAME}-v2
     paths:
