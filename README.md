@@ -47,10 +47,6 @@ make server API_SPEC=source/v1/openapi.yaml
 
 You should now be able to view a live preview at http://localhost:4567.
 
-## Publishing changes
-
-Make changes in a branch and make a PR.
-
 
 ## License
 

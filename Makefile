@@ -15,9 +15,5 @@ html: requirements clean api
 server: html
 	bundle exec middleman server
 
-publish: requirements clean api
-	bundle exec rake publish
-
 all: html
 
-.PHONY: setup requirements clean api html server publish
