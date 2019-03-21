@@ -51,17 +51,6 @@ You should now be able to view a live preview at http://localhost:4567.
 
 Make changes in a branch and make a PR.
 
-### Cloudfoundry 
-
-make html API_SPEC=source/v1/openapi.yaml
-
-then 
-
-cf push app-name
-
-tariff-api-dev in development space
-tariff-api-production in production space
-
 
 ## License
 
