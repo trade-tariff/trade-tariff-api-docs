@@ -13,20 +13,106 @@ convert the [`openapi.yaml`][tariff-openapi] to Markdown.
 
 ## Updating content
 
-The `reference.html` page is built using the
-[`openapi.yaml`][tariff-openapi] file. To update content of this site,
-modify the files under `source` and the `source/v1/openapi.yaml` file
+To update content of this site, modify the files under `source` and the `source/v1/openapi.yaml` file.
 
-HTML pages are in the [`/source`][source-dir] of this repository and are
-authored using Markdown. You can make edits to these pages by making changes
-in a branch or fork of this project and then opening a pull request.
+HTML pages are in the [`/source`][source-dir] of this repository and are authored using Markdown. You can make edits to these pages by making changes in a branch and then opening a pull request.
+
+The [`/reference.html`](https://api.trade-tariff.service.gov.uk/#gov-uk-trade-tariff-api) page is built using the `source/v1/openapi.yaml` file, which is an [OAS 3.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md) document that describes the Trade Tariff API and is used to build the HTML documentation website.
+
+The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.
+
+### Updating the API Documentation
+
+To update the Trade Tariff API documentation, you may follow this general workflow:
+
+-  If the changes involve the content of the HTML pages ( `/index` and  `/getting_started`), edit the corresponding `.md` or `.md.erb` template under `source/*`.
+
+    -   edit `source/index.html.md.erb` or  `source/getting-started.html.md`
+    -   open or view [http://localhost:4567](http://localhost:4567) in a browser, the browser should automatically reload the page after changes are saved
+
+-  If the changes involve the API specification itself, edit the `source/v1/openapi.yaml` file. This file is used to build the HTML file `build/reference.html`.
+
+    -   edit `source/v1/openapi.yaml`
+    -   ```
+        make server API_SPEC=source/v1/openapi.yaml
+        ```
+    -   manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
+
+### Editing the `openapi.yaml` file
+
+An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON object, which may be represented either in JSON or YAML format. For this project, we are using the YAML format.
+
+#### Example from `openapi.yaml`
+
+```yaml
+paths:
+  /v1/sections.json:
+    get:
+      summary: Retrieves all sections
+      description: |
+        This resource represents _all sections_ in the Tariff.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+
+      tags:
+      - Sections
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Sections were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sections'
+              example:
+                $ref: '#/components/schemas/Sections/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v1/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections.json
+
+```
+
+The example above is rendered into HTML:
+
+![Example screen showing rendered HTML for /v1/sections.json](build/images/example-1.png "Logo Title Text 1")
+
+### Use of [`$ref`](https://swagger.io/specification/#documentStructure)
+
+The `openapi.yaml` file makes use of [`$ref`](https://swagger.io/specification/#documentStructure) to refer to connected parts of the specification. In the example above, [`$ref`](https://swagger.io/specification/#documentStructure) is used to refer to the schema and example response in another part of the document.
+
+Information on `$ref`: https://swagger.io/specification/#documentStructure
+
+### Links
+
+- OAS 3.0 Specification (https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#oasDocument)
+- Swagger, upon which OAS is based (https://swagger.io/specification/)
 
 ## Running documentation locally
 
+### Manual Build and Deploy
+
+Manual build and deploy is not necessary if automated deploy is used.
+
+1.  Build the documentation
+
+```
+bundle exec middleman build --clean
+```
+
+2.  Push to prod
+
+```
+cf push tariff-api-production
+```
+
 ### Installing dependencies
 
-Setting up the documentation requires Ruby and Node. Run the following to
-install the necessary dependencies:
+Setting up the documentation requires Ruby and Node. Run the following to install the necessary dependencies:
 
 ```
 make requirements
