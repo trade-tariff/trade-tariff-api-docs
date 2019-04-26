@@ -4,7 +4,7 @@ This is a microsite for providing documentation for the GOV.UK Tariff API.
 
 This documentation is built from source files in this repository and an
 [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification
-[file](/v1/openapi.yaml) for the Tariff API.
+[file](/v2/openapi.yaml) for the Tariff API.
 
 The framework for this documentation
 is provided by the [GOV.UK Tech Docs Template][tech-docs-template] and through
@@ -13,11 +13,11 @@ convert the [`openapi.yaml`][tariff-openapi] to Markdown.
 
 ## Updating content
 
-To update content of this site, modify the files under `source` and the `source/v1/openapi.yaml` file.
+To update content of this site, modify the files under `source` and the `source/v2/openapi.yaml` file.
 
 HTML pages are in the [`/source`][source-dir] of this repository and are authored using Markdown. You can make edits to these pages by making changes in a branch and then opening a pull request.
 
-The [`/reference.html`](https://api.trade-tariff.service.gov.uk/#gov-uk-trade-tariff-api) page is built using the `source/v1/openapi.yaml` file, which is an [OAS 3.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md) document that describes the Trade Tariff API and is used to build the HTML documentation website.
+The [`/reference.html`](https://api.trade-tariff.service.gov.uk/#gov-uk-trade-tariff-api) page is built using the `source/v2/openapi.yaml` file, which is an [OAS 3.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md) document that describes the Trade Tariff API and is used to build the HTML documentation website.
 
 The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.
 
@@ -30,11 +30,11 @@ To update the Trade Tariff API documentation, you may follow this general workfl
     -   edit `source/index.html.md.erb` or  `source/getting-started.html.md`
     -   open or view [http://localhost:4567](http://localhost:4567) in a browser, the browser should automatically reload the page after changes are saved
 
--  If the changes involve the API specification itself, edit the `source/v1/openapi.yaml` file. This file is used to build the HTML file `build/reference.html`.
+-  If the changes involve the API specification itself, edit the `source/v2/openapi.yaml` file. This file is used to build the HTML file `build/reference.html`.
 
-    -   edit `source/v1/openapi.yaml`
+    -   edit `source/v2/openapi.yaml`
     -   ```
-        make server API_SPEC=source/v1/openapi.yaml
+        make server API_SPEC=source/v2/openapi.yaml
         ```
     -   manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
@@ -46,7 +46,7 @@ An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON 
 
 ```yaml
 paths:
-  /v1/sections.json:
+  /v2/sections.json:
     get:
       summary: Retrieves all sections
       description: |
@@ -70,16 +70,16 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/sections.json:
+        /v2/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections.json
 
 ```
 
 The example above is rendered into HTML:
 
-![Example screen showing rendered HTML for /v1/sections.json](build/images/example-1.png "Logo Title Text 1")
+![Example screen showing rendered HTML for /v2/sections.json](build/images/example-1.png "Logo Title Text 1")
 
 ### Use of [`$ref`](https://swagger.io/specification/#documentStructure)
 
@@ -128,7 +128,7 @@ the browser will automatically refresh on HTML pages. However for changes to
 Type the following to start the server:
 
 ```
-make server API_SPEC=source/v1/openapi.yaml
+make server API_SPEC=source/v2/openapi.yaml
 ```
 
 You should now be able to view a live preview at http://localhost:4567.
@@ -140,6 +140,6 @@ You should now be able to view a live preview at http://localhost:4567.
 
 [forked-widdershins]: https://github.com/alphagov/widdershins
 [widdershins]: https://github.com/Mermade/widdershins
-[tariff-openapi]: https://gitlab.bitzesty.com/clients/trade-tariff/trade-tariff-api-docs/tree/master/source/v1/openapi.yaml
+[tariff-openapi]: https://gitlab.bitzesty.com/clients/trade-tariff/trade-tariff-api-docs/tree/master/source/v2/openapi.yaml
 [source-dir]: https://gitlab.bitzesty.com/clients/trade-tariff/trade-tariff-api-docs/tree/master/source
 [tech-docs-template]: https://github.com/alphagov/tech-docs-template

@@ -24,18 +24,14 @@ for import and export. Commodity codes allow you to:
 - check if there’s duty or VAT to pay
 - find out about duty reliefs and preferential rates
 - find out if import or export licenses are needed
+- Search by free-form text or `goods_nomenclature_item_id`
+- Scope some API calls by date, i.e. `/v2/goods_nomenclatures/*`
+- Provide resources for all headings and all commodities
+- Search for quota measures with criteria, including goods nomenclature, year, geographic area, etc.
 
 This API is useful for applications that incorporate content from [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff) and for keeping that content up to date. It is meant to provide a predictable and stable interface to Trade Tariff data.
 
-The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification [file](/v1/openapi.yaml) for the Trade Tariff API. This file describes the API and provides example requests and responses.
-
-## What you can't do with this API
-
-Not all features are implemented yet. Some features we would like to implement are:
-
-- Search by free-form text or `goods_nomenclature_item_id`
-- Scope API calls by date
-- Provide resources for all headings and all commodities
+The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification [file](/v2/openapi.yaml) for the Trade Tariff API. This file describes the API and provides example requests and responses.
 
 ## Quick start
 
@@ -46,14 +42,14 @@ To get started:
 
  1. Using a tool such as [curl](https://curl.haxx.se/),
     [Postman](https://www.getpostman.com/) or your web browser, make a GET
-    request to [`https://www.trade-tariff.service.gov.uk/v1/sections.json`](https://www.trade-tariff.service.gov.uk/v1/sections.json).
+    request to [`https://www.trade-tariff.service.gov.uk/v2/sections.json`](https://www.trade-tariff.service.gov.uk/v2/sections.json).
  2. You’ll receive a JSON response and the fields for this are
     explained in the [reference documentation](reference.html).
 
 For example, using the curl command line utility tool:
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/v1/sections.json
+curl https://www.trade-tariff.service.gov.uk/v2/sections.json
 ```
 
 ## Keep informed

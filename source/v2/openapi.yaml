@@ -1533,7 +1533,7 @@ components:
             description: LIVE ANIMALS
             number_indents: 0
             productline_suffix: "80"
-            href: /v1/chapters/01.json
+            href: /v2/chapters/01.json
         - id: "27810"
           type: goods_nomenclature
           attributes:
@@ -1542,7 +1542,7 @@ components:
             description: Live horses, asses, mules and hinnies
             number_indents: 0
             productline_suffix: "80"
-            href: /v1/headings/0101.json
+            href: /v2/headings/0101.json
         - id: "93797"
           type: goods_nomenclature
           attributes:
@@ -1551,7 +1551,7 @@ components:
             description: Horses
             number_indents: 0
             productline_suffix: "80"
-            href: /v1/commodities/0101210000.json
+            href: /v2/commodities/0101210000.json
       example2:
         data:
         - id: "27624"
@@ -1562,7 +1562,7 @@ components:
             description: Live horses, asses, mules and hinnies
             number_indents: 0
             productline_suffix: "80"
-            href: /v1/headings/0101.json
+            href: /v2/headings/0101.json
         - id: "93797"
           type: goods_nomenclature
           attributes:
@@ -1571,7 +1571,7 @@ components:
             description: Horses
             number_indents: 1
             productline_suffix: "10"
-            href: /v1/commodities/0101210000.json
+            href: /v2/commodities/0101210000.json
         - id: "93796"
           type: goods_nomenclature
           attributes:
@@ -1580,7 +1580,7 @@ components:
             description: Pure-bred breeding animals
             number_indents: 2
             productline_suffix: "80"
-            href: /v1/commodities/0101210000.json
+            href: /v2/commodities/0101210000.json
 
 ### Referenced objects
 
@@ -2074,4 +2074,4 @@ components:
         description: Meat of bovine animals, fresh or chilled
         number_indents: 0
         productline_suffix: "80"
-        href: /v1/headings/0201.json
+        href: /v2/headings/0201.json
