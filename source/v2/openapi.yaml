@@ -1027,22 +1027,6 @@ components:
                 id: "122"
                 type: measure_type
 
-
-          # model_name: Measure
-          # operation: U
-          # operation_date: '2019-02-02'
-          # record:
-          #   id: -494124
-          #   origin: uk
-          #   import: true
-          #   goods_nomenclature_item_id: 0103921100
-          #   geographical_area:
-          #     id: '1011'
-          #     description: ERGA OMNES
-          #   measure_type:
-          #     id: CVD
-          #     description: Common Veterinary Entry Document (CVED)
-
     Heading:
       description: |
         A heading in the tariff.
@@ -1230,7 +1214,8 @@ components:
           type: array
           description: Zero, one or many [referenced commodity objects](/reference.html#referencedcommodity "see referenced commodity object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), [referenced guide objects](/reference.html#referencedguide "see referenced guide object"), [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
           items:
-            $ref: '#/components/schemas/ReferencedCommodity'
+            type: object
+            # $ref: '#/components/schemas/ReferencedCommodity'
       example:
         data:
           id: "27777"
@@ -1603,11 +1588,6 @@ components:
       description:
         A section object referenced elsewhere.
       type: object
-      # required:
-      # - id
-      # - title
-      # - numeral
-      # - position
       properties:
         id:
           type: integer
@@ -1675,12 +1655,6 @@ components:
         headings_to:
           type: string
           description: The `headings_to` of the chapter, or the last heading in this chapter
-        # guides:
-        #   type: array
-        #   description: |
-        #     An array of [guide](/reference.html#referencedguide "see referenced guide object") objects.
-        #   items:
-        #     $ref: '#/components/schemas/ReferencedGuide'
         chapter_note:
           type: string
           description: The `chapter_note` of the chapter. Not all chapters have a note.
@@ -1696,15 +1670,36 @@ components:
         formatted_description: Live animals
         headings_from: "0101"
         headings_to: "0106"
-        guides:
-        - title: Classification of goods
-          url: https://www.gov.uk/government/collections/classification-of-goods
         chapter_note_id: 46
         chapter_note: "* 1\\. This chapter covers all live animals except:\r\n
           \ * (a) fish and crustaceans, molluscs and other aquatic invertebrates,
           of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
           and other products of heading 3002; and\r\n  * (c) animals of heading
           9508."
+        section_id: 1
+
+    ReferencedChapterChange:
+      description:
+        A chapter change object referenced elsewhere.
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the chapter change. This is a unique identifier.
+        model_name:
+          type: string
+          description: The `model_name` of the chapter change.
+        operation:
+          type: string
+          description: The `operation` of the chapter change.
+        operation_date:
+          type: string
+          description: The `operation_date` of the chapter change.
+      example:
+        oid: 3467145
+        model_name: Measure
+        operation: U
+        operation_date: '2019-04-18'
 
     ReferencedHeading:
       description:
@@ -1735,12 +1730,6 @@ components:
         formatted_description:
           type: string
           description: The `formatted_description` of the heading, which may be suitable for presentation to the end user.
-        # children:
-        #   type: array
-        #   description: |
-        #     An array of [referenced_child](/reference.html#referencedchild "see referenced child object") objects.
-        #   items:
-        #     type: object
         bti_url:
           type: string
           description: a URL for more information about this heading
@@ -1874,178 +1863,7 @@ components:
         import: true
         excise: false
         vat: false
-        # relationships:
-        #   duty_expression:
-        #     data:
-        #       id: 2982263-duty_expression
-        #       type: duty_expression
-        #   measure_type:
-        #     data:
-        #       id: "109"
-        #       type: measure_type
-        #   legal_acts:
-        #     data:
-        #     - id: R8726581
-        #       type: legal_act
-        #   measure_conditions:
-        #     data:
-        #     -
-        #   geographical_area:
-        #     data:
-        #       id:
-        #       type:
-        #   excluded_countries:
-        #     data:
-        #     -
-        #   footnotes:
-        #     data:
-        #     -
-        #   order_number:
-        #     data: null
-
-      # properties:
-      #   id:
-      #     type: integer
-      #     description: The `id` of the measure. This is a unique identifier.
-      #   origin:
-      #     type: string
-      #     description: The `origin` of the measure.
-      #   effective_start_date:
-      #     type: string
-      #     description: The `origin` of the measure. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
-      #     format: date-time
-      #   effective_end_date:
-      #     type: string
-      #     description: The `origin` of the measure. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
-      #     format: date-time
-      #     x-nullable: true
-      #   import:
-      #     type: boolean
-      #     description: Whether the measure is an `import`.
-      #   order_number:
-      #     type: string
-      #     description: The `order_number` of the measure.
-      #     x-nullable: true
-      #   excise:
-      #     type: boolean
-      #     description: Whether the measure is subject to `excise`.
-      #   vat:
-      #     type: boolean
-      #     description: Whether the measure is subject to `vat`.
-      #   measure_conditions:
-      #     type: array
-      #     description: |
-      #       An array of [referenced_measure_condition](/reference.html#referencedmeasurecondition "see referenced measure condition object") objects.
-      #     items:
-      #       type: object
-      #   excluded_countries:
-      #     type: array
-      #     description: |
-      #       An array of [excluded_country](/reference.html#referencedexcludedcountry "see referenced duty expression object") objects.
-      #     items:
-      #       type: object
-      #   footnotes:
-      #     type: array
-      #     description: |
-      #       An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects.
-      #     items:
-      #       type: object
-      #   measure_type:
-      #     type: object
-      #     description: |
-      #       An array of [measure_type](/reference.html#referencedmeasuretype "see referenced measure type object") objects.
-      #   duty_expression:
-      #     type: object
-      #     description: |
-      #       A [duty_expression](/reference.html#referencedmeasuretype "see referenced duty expression object") object.
-      #   legal_acts:
-      #     type: array
-      #     description: |
-      #       An array of [legal_act](/reference.html#referencedlegalact "see referenced legal act object") objects.
-      #     items:
-      #       type: object
-      #   geographical_area:
-      #     type: object
-      #     description: |
-      #       A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
-      # example:
-      #   id: 3563221
-      #   origin: eu
-      #   effective_start_date: '2017-06-01T00:00:00.000Z'
-      #   effective_end_date: 
-      #   import: true
-      #   measure_conditions:
-      #   - condition_code: B
-      #     condition: 'B: Presentation of a certificate/licence/document'
-      #     document_code: C640
-      #     requirement: 'Other certificates: Common Veterinary Entry Document
-      #       (CVED) in accordance with Commission Regulation (EC) No. 282/2004,
-      #       used for veterinary checks on live animals'
-      #     action: Import/export allowed after control
-      #     duty_expression: ''
-      #   - condition_code: B
-      #     condition: 'B: Presentation of a certificate/licence/document'
-      #     document_code: ''
-      #     requirement: 
-      #     action: Import/export not allowed after control
-      #     duty_expression: ''
-      #   excluded_countries:
-      #   - geographical_area_id: AD
-      #     description: Andorra
-      #   - geographical_area_id: CH
-      #     description: Switzerland and Liechtenstein
-      #   - geographical_area_id: FO
-      #     description: Faroe Islands
-      #   - geographical_area_id: LI
-      #     description: Liechtenstein
-      #   - geographical_area_id: 'NO'
-      #     description: Norway
-      #   - geographical_area_id: SM
-      #     description: San Marino
-      #   footnotes:
-      #   - code: CD625
-      #     description: Import of live animals is subject to the presentation
-      #       of a CVED for animals in accordance with the conditions laid down
-      #       in Regulation (EC) No 282/2004 (OJ L49)
-      #     formatted_description: Import of live animals is subject to the
-      #       presentation of a CVED for animals in accordance with the conditions
-      #       laid down in Regulation (EC) No 282/2004 (OJ L49)
-      #   order_number: 
-      #   excise: false
-      #   vat: false
-      #   measure_type:
-      #     id: '410'
-      #     description: Veterinary control
-      #   duty_expression:
-      #     base: ''
-      #     formatted_base: ''
-      #   legal_acts:
-      #   - validity_start_date: '2012-04-01T00:00:00.000Z'
-      #     validity_end_date: 
-      #     officialjournal_number: L 116
-      #     officialjournal_page: 9
-      #     published_date: '2007-05-04'
-      #     regulation_code: D0275/07
-      #     regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D116,YEAR_OJ%3D2007,PAGE_FIRST%3D0009&DB_COLL_OJ=oj-l&type=advanced&lang=en
-      #   geographical_area:
-      #     id: '1008'
-      #     description: All third countries
-      #     children_geographical_areas:
-      #     - id: AD
-      #       description: Andorra
-      #     - id: AE
-      #       description: United Arab Emirates
-      #     - id: AF
-      #       description: Afghanistan
-      #     - id: AG
-      #       description: Antigua and Barbuda
-      #     - id: ZA
-      #       description: South Africa
-      #     - id: ZM
-      #       description: Zambia
-      #     - id: ZW
-      #       description: Zimbabwe
-
+ 
     ReferencedFootnote:
       description: |
         A footnote object referenced elsewhere.
@@ -2120,21 +1938,15 @@ components:
           description: The `id` of the geographical area.
         description:
           type: string
-          description: The `description` of the geographical area.
-        children:
-          type: array
-          description: |
-            A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
-          items: 
-            type: object
+          description: The `type` of the geographical area.
+        geographical_area_id:
+          type: string
+          description: The `geographical_area_id` of the geographical area.
+
       example:
-        id: '1008'
-        description: All third countries
-        children_geographical_areas:
-        - id: AD
-          description: Andorra
-        - id: AE
-          description: United Arab Emirates
+        id: "1011"
+        description: ERGA OMNES
+        geographical_area_id: "1011"
 
     ReferencedMonetaryExchangeRate:
       description: A monetary_exchange_rate object referenced elsewhere.
