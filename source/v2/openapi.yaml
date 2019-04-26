@@ -13,11 +13,13 @@ info:
   version: '2'
 
 servers:
-  - url: https://www.trade-tariff.service.gov.uk
+  - url: https://www.trade-tariff.service.gov.uk/v2
+  # - url: https://staging.trade-tariff.service.gov.uk/v2
+  # - url: https://dev.trade-tariff.service.gov.uk/v2
 
 paths:
 ### Sections
-  /v2/sections.json:
+  /sections.json:
     get:
       summary: Retrieves all sections
       description: |
@@ -46,7 +48,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections.json
 
-  /v2/sections/{position}.json:
+  /sections/{position}.json:
     get:
       summary: Retreives a section by its position
       description: |
@@ -89,7 +91,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections/1.json
 
-  /v2/sections/{section_id}/section_note.json:
+  /sections/{section_id}/section_note.json:
     get:
       summary: Retreives a section's notes
       description: |
@@ -130,7 +132,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections/1/section_note.json
 
 ### Chapters
-  /v2/chapters.json:
+  /chapters.json:
     get:
       summary: Retrieves all chapters
       description: >
@@ -158,7 +160,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters.json
   
-  /v2/chapters/{chapter_id}.json:
+  /chapters/{chapter_id}.json:
     get:
       summary: Retrieves a chapter
       description: >
@@ -195,7 +197,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/34.json
 
-  /v2/chapters/{chapter_id}/chapter_note.json:
+  /chapters/{chapter_id}/chapter_note.json:
     get:
       summary: Retreives a chapter's notes
       description: >
@@ -235,7 +237,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/34/chapter_note.json
 
-  /v2/chapters/{chapter_id}/changes.json:
+  /chapters/{chapter_id}/changes.json:
     get:
       summary: Retreives a chapter's changes
       description: >
@@ -274,7 +276,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/01/changes.json
 
 ### Headings
-  /v2/headings/{heading_id}.json:
+  /headings/{heading_id}.json:
     get:
       summary: Retrieves a heading
       description: >
@@ -315,7 +317,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/headings/0101.json
 
-  /v2/headings/{heading_id}/changes.json:
+  /headings/{heading_id}/changes.json:
     get:
       summary: Retreives a heading's changes
       description: >
@@ -356,7 +358,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/headings/0101/changes.json
 
 ### Commodities
-  /v2/commodities/{goods_nomenclature_item_id}.json:
+  /commodities/{goods_nomenclature_item_id}.json:
     get:
       summary: Retrieves a commodity
       description: >
@@ -397,7 +399,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000.json
 
-  /v2/commodities/{goods_nomenclature_item_id}/changes.json:
+  /commodities/{goods_nomenclature_item_id}/changes.json:
     get:
       summary: Retreives a commodity's changes
       description: >
@@ -439,7 +441,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000/changes.json
 
 ### Monetary exchange rates
-  /v2/monetary_exchange_rates.json:
+  /monetary_exchange_rates.json:
     get:
       summary: Retrieves a list of monetary exchange rates
       description: >
@@ -466,7 +468,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/monetary_exchange_rates.json
 
 ### Quotas
-  /v2/quotas/search.json:
+  /quotas/search.json:
     get:
       summary: Retrieves a list of quota definitions
       description: >
@@ -545,7 +547,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/quotas/search.json?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
 
 ### Goods nomenclatures
-  /v2/goods_nomenclatures/section/{section_id}.json:
+  /goods_nomenclatures/section/{section_id}.json:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
       description: >
@@ -581,7 +583,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/section/1.json 
 
-  /v2/goods_nomenclatures/chapter/{chapter_id}.json:
+  /goods_nomenclatures/chapter/{chapter_id}.json:
     get:
       summary: Retrieves a list of goods nomenclatures in a chapter
       description: >
@@ -617,7 +619,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/chapter/01.json 
 
-  /v2/goods_nomenclatures/heading/{heading_id}.json:
+  /goods_nomenclatures/heading/{heading_id}.json:
     get:
       summary: Retrieves a list of goods nomenclatures in a heading
       description: >

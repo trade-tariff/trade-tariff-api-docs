@@ -6,8 +6,8 @@ clean:
 	rm -rf build
 
 api:
-	$(if ${API_SPEC},,$(error Must specify path to the OpenAPI spec file in API_SPEC))
-	./generate.js ${API_SPEC} source/reference.html.md.erb
+	./generate.js source/v1/openapi.yaml source/reference-v1.html.md.erb
+	./generate.js source/v2/openapi.yaml source/reference.html.md.erb
 
 html: requirements clean api
 	bundle exec rake build

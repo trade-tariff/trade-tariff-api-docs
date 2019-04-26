@@ -11,6 +11,12 @@ availability of curl, however you may prefer the structured output of
 using [HTTPie](https://httpie.org/) or piping the curl responses
 through [jq](https://stedolan.github.io/jq/).
 
+## API Version
+
+The most up-to-date version of this API is __version 2__ or `v2`.
+
+Documentation for __version 1__ (`v1`) is available at [https://api.trade-tariff.service.gov.uk/reference-v1.html](/reference-v1.html).
+
 ## Accessing Content
 
 GOV.UK Trade Tariff API is used to access content that is hosted on

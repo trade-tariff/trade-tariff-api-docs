@@ -1,5 +1,5 @@
 # Host to use for canonical URL generation (without trailing slash)
-host: https://content-api.publishing.service.gov.uk
+host: https://www.trade-tariff.service.gov.uk
 
 # Header-related options
 show_govuk_logo: true
@@ -12,6 +12,7 @@ header_links:
   About: /
   Getting Started: /getting-started.html
   Reference: /reference.html
+  V1 Reference: /reference-v1.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-97208357-3

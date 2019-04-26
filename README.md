@@ -38,6 +38,30 @@ To update the Trade Tariff API documentation, you may follow this general workfl
         ```
     -   manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
+### Support for multiple API versions
+
+As we release new versions of the API, we will continue to support older versions (until they're depricated).  Therefore, we should continue to publish that version's API reference and the corresponding `openapi.yaml` file.
+
+In order to do this, some modifications to the default Middleman templates and options are required:
+
+1.  create a new `openapi.yaml` file for the new API version and a directory in which to store it
+  ```
+  $ mkdir v2
+  $ touch v2/openapi.yaml
+  ```
+
+2.  edit `config/tech-docs.yml` - add new link in the header for old reference file, i.e.;
+  ```
+    V1 Reference: /reference-v1.html
+  ```
+
+3.  edit `Makefile` 
+  - add new task to generate old reference file
+  - rename previous reference file, add "-v1" (or whatever the old version number is) to the output filename
+    ```
+    ./generate.js source/v1/openapi.yaml source/reference-v1.html.md.erb
+    ```
+
 ### Editing the `openapi.yaml` file
 
 An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON object, which may be represented either in JSON or YAML format. For this project, we are using the YAML format.
