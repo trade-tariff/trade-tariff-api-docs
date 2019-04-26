@@ -10,7 +10,7 @@ info:
     [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
     published content as is presented on GOV.UK.
 
-  version: '1'
+  version: '2'
 
 servers:
   - url: https://www.trade-tariff.service.gov.uk
