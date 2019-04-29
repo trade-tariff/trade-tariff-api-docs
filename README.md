@@ -34,7 +34,7 @@ To update the Trade Tariff API documentation, you may follow this general workfl
 
     -   edit `source/v2/openapi.yaml`
     -   ```
-        make server API_SPEC=source/v2/openapi.yaml
+        make server
         ```
     -   manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
@@ -152,7 +152,7 @@ the browser will automatically refresh on HTML pages. However for changes to
 Type the following to start the server:
 
 ```
-make server API_SPEC=source/v2/openapi.yaml
+make serve
 ```
 
 You should now be able to view a live preview at http://localhost:4567.
