@@ -1,0 +1,2079 @@
+openapi: '3.0.0'
+
+info:
+  title: Trade Tariff Public API
+  description: |
+    The Trade Tariff Public API provides a simple and consistent way to request
+    [UK Trade Tariff](https://gov.uk/trade-tariff) content as structured data in a predictable format.
+
+    This API accepts HTTP requests and responds with
+    [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
+    published content as is presented on GOV.UK.
+
+  version: '2'
+
+servers:
+  - url: https://www.trade-tariff.service.gov.uk/v2
+  # - url: https://staging.trade-tariff.service.gov.uk/v2
+  # - url: https://dev.trade-tariff.service.gov.uk/v2
+
+paths:
+### Sections
+  /sections.json:
+    get:
+      summary: Retrieves all sections
+      description: |
+        This resource represents _all sections_ in the Tariff.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+
+      tags:
+      - Sections
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Sections were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sections'
+              example:
+                $ref: '#/components/schemas/Sections/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections.json
+
+  /sections/{position}.json:
+    get:
+      summary: Retreives a section by its position
+      description: |
+        This resource represents _a single section_ in the Tariff.
+
+        For this resource, `position` is used to uniquely identify a section and request it from the API.
+
+        There are 21 sections in the Tariff, and their positions range from 1 to 21.
+
+      tags:
+      - Sections
+      produces:
+      - application/json
+      parameters:
+        - name: 'position'
+          in: path
+          required: true
+          description: |
+            The `position` of the section to be retrieved
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      responses:
+        200:
+          description: Section was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Section'
+              example:
+                $ref: '#/components/schemas/Section/example'
+        404:
+          description: Section was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections/1.json
+
+  /sections/{section_id}/section_note.json:
+    get:
+      summary: Retreives a section's notes
+      description: |
+        This resource represents the notes for a particular section.
+
+        For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
+      tags:
+      - Sections
+      produces:
+      - application/json
+      parameters:
+        name: section_id
+        in: path
+        required: true
+        description: |
+          The `section_id` of the section.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A section's notes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionNote'
+              example:
+                $ref: '#/components/schemas/SectionNote/example'
+        404:
+          description: A section's notes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/sections.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections/1/section_note.json
+
+### Chapters
+  /chapters.json:
+    get:
+      summary: Retrieves all chapters
+      description: >
+        This resource represents all chapters in the Tariff.
+
+        Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Chapters were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chapters'
+              example:
+                $ref: '#/components/schemas/Chapters/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters.json
+  
+  /chapters/{chapter_id}.json:
+    get:
+      summary: Retrieves a chapter
+      description: >
+        Retrieves a chapter, given the first two (2) digits of its `goods_nomenclature_item_id`
+        <p>This should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+      - name: 'chapter_id'
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
+        schema:
+          type: string
+      responses:
+        200:
+          description: A chapter was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chapter'
+              example:
+                $ref: '#/components/schemas/Chapter/example'
+        404:
+          description: Chapter was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/34.json
+
+  /chapters/{chapter_id}/chapter_note.json:
+    get:
+      summary: Retreives a chapter's notes
+      description: >
+        This resource represents the note for a particular chapter.
+        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
+        <p>`chapter_id` should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+        name: chapter_id
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A chapter's notes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterNote'
+              example:
+                $ref: '#/components/schemas/ChapterNote/example'
+        404:
+          description: A chapter's notes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters/{chapter_id}/chapter_note.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/34/chapter_note.json
+
+  /chapters/{chapter_id}/changes.json:
+    get:
+      summary: Retreives a chapter's changes
+      description: >
+        This resource represents the changes for a particular chapter.
+        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
+        <p>`chapter_id` should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+        name: chapter_id
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter.
+        schema:
+          type: string
+      responses:
+        200:
+          description: A chapter's changes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterChanges'
+              example:
+                $ref: '#/components/schemas/ChapterChanges/example'
+        404:
+          description: A chapter's changes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters/{chapter_id}/changes.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/01/changes.json
+
+### Headings
+  /headings/{heading_id}.json:
+    get:
+      summary: Retrieves a heading
+      description: >
+        This resource represents a single heading.
+        For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
+        <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
+      tags:
+      - Headings
+      produces:
+      - application/json
+      parameters:
+      - name: 'heading_id'
+        in: path
+        required: true
+        description: |
+          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+        schema:
+          type: string
+          minimum: 4
+          maximum: 4
+          example: "0101"
+      responses:
+        200:
+          description: A heading was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Heading'
+              example:
+                $ref: '#/components/schemas/Heading/example'
+        404:
+          description: Commodity was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/headings/0101.json
+
+  /headings/{heading_id}/changes.json:
+    get:
+      summary: Retreives a heading's changes
+      description: >
+        This resource represents the changes for a particular heading.
+        For this resource, `heading_id` is used to uniquely identify a heading and request its changes from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
+        <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
+      tags:
+      - Headings
+      produces:
+      - application/json
+      parameters:
+        name: heading_id
+        in: path
+        required: true
+        description: |
+          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A heading's changes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeadingChanges'
+              example:
+                $ref: '#/components/schemas/HeadingChanges/example'
+        404:
+          description: A heading's changes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/headings/0101/changes.json
+
+### Commodities
+  /commodities/{goods_nomenclature_item_id}.json:
+    get:
+      summary: Retrieves a commodity
+      description: >
+        This resource represents a single commodity.
+        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
+        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+      tags:
+      - Commodities
+      produces:
+      - application/json
+      parameters:
+      - name: 'goods_nomenclature_item_id'
+        in: path
+        required: true
+        description: |
+          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+        schema:
+          type: string
+          minimum: 10
+          maximum: 10
+          example: "0102291020"
+      responses:
+        200:
+          description: A commodity was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Commodity'
+              example:
+                $ref: '#/components/schemas/Commodity/example'
+        404:
+          description: Commodity was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/chapters.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000.json
+
+  /commodities/{goods_nomenclature_item_id}/changes.json:
+    get:
+      summary: Retreives a commodity's changes
+      description: >
+        This resource represents a single commodity.
+        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
+        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+      tags:
+      - Commodities
+      produces:
+      - application/json
+      parameters:
+        name: goods_nomenclature_item_id
+        in: path
+        required: true
+        description: |
+          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+        schema:
+          type: integer
+          minimum: 10
+          maximum: 10
+          example: "0102291020"
+      responses:
+        200:
+          description: A commodity's changes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommodityChanges'
+              example:
+                $ref: '#/components/schemas/CommodityChanges/example'
+        404:
+          description: A commodity's changes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/commodities/{goods_nomenclature_item_id}/changes.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000/changes.json
+
+### Monetary exchange rates
+  /monetary_exchange_rates.json:
+    get:
+      summary: Retrieves a list of monetary exchange rates
+      description: >
+        Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
+      tags:
+      - Monetary Exchange Rates
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Monetary exchange rates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonetaryExchangeRates'
+              example:
+                $ref: '#/components/schemas/MonetaryExchangeRates/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/monetary_exchange_rates.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/monetary_exchange_rates.json
+
+### Quotas
+  /quotas/search.json:
+    get:
+      summary: Retrieves a list of quota definitions
+      description: >
+        Retrieves a list of quota definitions, optionally filtered by a variety of parameters.
+      tags:
+      - Quotas
+      produces:
+      - application/json
+      parameters:
+        - name: goods_nomenclature_item_id
+          in: path
+          required: false
+          description: |
+            Retrieve quotas only for goods with this `goods_nomenclature_item_id`
+          schema:
+            type: string
+        - name: geographical_area_id
+          in: path
+          required: false
+          description: |
+            Retrieve quotas only with this `geographical_area_id`
+          schema:
+            type: string
+        - name: order_number
+          in: path
+          required: false
+          description: |
+            Retrieve quotas only with this `order_number`
+          schema:
+            type: string
+        - name: critical
+          in: path
+          required: false
+          description: |
+            Retrieve quotas only with `critical` status equal to ['Y', 'N']
+          schema:
+            type: string
+            enum:
+            - Y
+            - N
+        - name: status
+          in: path
+          required: false
+          description: |
+            Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not blocked', 'not exhausted']
+          schema:
+            type: string
+            enum:
+            - blocked
+            - exhausted
+            - not blocked
+            - not exhausted
+        - name: year
+          in: path
+          required: false
+          description: |
+            Retrieve quotas only for this `year`, E.g. '2019'
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Quota definitions were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotaSearch'
+              example:
+                $ref: '#/components/schemas/QuotaSearch/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/quotas/search.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/quotas/search.json?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
+
+### Goods nomenclatures
+  /goods_nomenclatures/section/{section_id}.json:
+    get:
+      summary: Retrieves a list of goods nomenclatures in a section
+      description: >
+        Retrieves a list of all the goods nomenclatures in a section.
+      tags:
+      - GoodsNomenclatures
+      produces:
+      - application/json
+      - text/csv
+      parameters:
+        - name: as_of
+          in: path
+          required: false
+          description: |
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`.
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Goods nomenclatures were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodsNomenclatures'
+              example:
+                $ref: '#/components/schemas/GoodsNomenclatures/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/goods_nomenclatures/section/1.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/section/1.json 
+
+  /goods_nomenclatures/chapter/{chapter_id}.json:
+    get:
+      summary: Retrieves a list of goods nomenclatures in a chapter
+      description: >
+        Retrieves a list of all the goods nomenclatures in a chapter.
+      tags:
+      - GoodsNomenclatures
+      produces:
+      - application/json
+      - text/csv
+      parameters:
+        - name: as_of
+          in: path
+          required: false
+          description: |
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`.
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Goods nomenclatures were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodsNomenclatures'
+              example:
+                $ref: '#/components/schemas/GoodsNomenclatures/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/goods_nomenclatures/chapter/01.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/chapter/01.json 
+
+  /goods_nomenclatures/heading/{heading_id}.json:
+    get:
+      summary: Retrieves a list of goods nomenclatures in a heading
+      description: >
+        Retrieves a list of all the goods nomenclatures in a heading.
+      tags:
+      - GoodsNomenclatures
+      produces:
+      - application/json
+      - text/csv
+      parameters:
+        - name: as_of
+          in: path
+          required: false
+          description: |
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`.
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Goods nomenclatures were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodsNomenclatures'
+              example:
+                $ref: '#/components/schemas/GoodsNomenclatures/example2'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /v2/goods_nomenclatures/heading/0101.json:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/heading/0101.json 
+
+components:
+  schemas:
+
+    Sections:
+      description: |
+        The response will be a JSONCollection, and will contain an array of [referenced section objects](/reference.html#referencedsection "see referenced section object"), which are abbreviated versions of a full [section](/reference.html#section "see section object") object.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique identifier.
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `section`
+        data:attributes: 
+          type: array
+          description: A collection of [referenced section objects](/reference.html#referencedsection "see referenced section object")
+          items:
+            $ref: '#/components/schemas/ReferencedSection'
+      example:
+        data:
+        - id: 1
+          position: 1
+          title: Live animals; animal products
+          numeral: I
+          chapter_from: '01'
+          chapter_to: '05'
+          section_note_id: 1
+        - id: 2
+          position: 2
+          title: Vegetable products
+          numeral: II
+          chapter_from: '06'
+          chapter_to: '14'
+          section_note_id: 6
+        # - $ref: '#/components/schemas/ReferencedSection/example'
+
+    Section:
+      description: |
+        A section of the Tariff.
+
+        Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
+
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
+        data:type:
+          type: string
+          description: The type of object this is, e.g. `section`
+        data:attributes: 
+          description: The section's attributes, as a [referenced section object](/reference.html#referencedsection "see referenced section object")
+          $ref: '#/components/schemas/ReferencedSection'
+        data:relationships:
+          type: object
+          description: Objects and collections that are related to this section, e.g., a [referenced chapter](/reference.html#referencedchapter "see referenced chapter object")
+        included:
+          type: array
+          description: A collection of chapters that are included in the section [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
+          items:
+            $ref: '#/components/schemas/ReferencedChapter'
+          
+      example:
+        data:
+          id: "1"
+          type: section
+          attributes:
+            id: 1
+            numeral: I
+            title: Live animals; animal products
+            position: 1
+            chapter_from: '01'
+            chapter_to: '05'
+            section_note: "* 1\\. Any reference in this section to a particular
+              genus or species of an animal, except where the context otherwise
+              requires, includes a reference to the young of that genus or species.\r\n*
+              2\\. Except where the context otherwise requires, throughout the nomenclature
+              any reference to 'dried' products also covers products which have
+              been dehydrated, evaporated or freeze-dried.\r\n"
+          relationships:
+            chapters:
+              data:
+              - id: "27623"
+                type: chapter
+              - id: "27809"
+                type: chapter
+        included:
+        - id: "27623"
+          type: "chapter"
+          attributes:
+            goods_nomenclature_sid: 27623
+            goods_nomenclature_item_id: 0100000000
+            headings_from: 0101
+            headings_to: 0106
+            description: LIVE ANIMALS
+            formatted_description: Live animals
+            chapter_note_id: 46
+          relationships:
+            guides:
+              data:
+              - id: "23"
+                type: guide
+        - id: "27809"
+          type: "chapter"
+          attributes:
+            goods_nomenclature_sid: 27809
+            goods_nomenclature_item_id: 0200000000
+            headings_from: 0101
+            headings_to: 0106
+            description: MEAT AND EDIBLE MEAT OFFAL
+            formatted_description: Meat and edible meat offal
+            chapter_note_id: 47
+          relationships:
+            guides:
+              data:
+              - id: "23"
+                type: guide
+
+    SectionNote:
+      description: |
+        A note associated with a section of the Tariff.
+
+        A note provides textual about the section. Not all sections have a section note.
+
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the section_note.
+        section_id:
+          type: integer
+          description: The `section_id` of the sction_note. It may be used to uniquely identify a section_note and request it from the API.
+        content:
+          type: string
+          description: The `content` of the section_note. Not all sections have a note.
+      required:
+      - id
+      example:
+        id: 1
+        section_id: 1
+        content: "* 1\\. Any reference in this section to a particular genus
+          or species of an animal, except where the context otherwise requires,
+          includes a reference to the young of that genus or species.\r\n* 2\\.
+          Except where the context otherwise requires, throughout the nomenclature
+          any reference to 'dried' products also covers products which have
+          been dehydrated, evaporated or freeze-dried.\r\n"
+
+    Chapters:
+      description: |
+        An array of objects, which contain a reference to a full [chapter](/reference.html#chapter "see chapter object") object.
+
+        Each chapter has a `goods_nomenclature_item_id`, which is a unique identifier.
+
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the chapter. This is a unique identifier.
+        data:type:
+          type: string
+          description: The type of object this is, e.g. `chapter`.
+        data:attributes: 
+          type: array
+          description: A collection of [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
+          items:
+            $ref: '#/components/schemas/ReferencedChapter'
+      example:
+        data:
+        - id: "27623"
+          type: chapter
+          attributes:
+            goods_nomenclature_sid: '27623'
+            goods_nomenclature_item_id: '0100000000'
+            chapter_note_id: 46
+        - id: "27809"
+          type: chapter
+          attributes:
+            goods_nomenclature_sid: '27809'
+            goods_nomenclature_item_id: '0200000000'
+            chapter_note_id: 47
+        - id: "28373"
+          type: chapter
+          attributes:
+            goods_nomenclature_sid: '28373'
+            goods_nomenclature_item_id: '0300000000'
+            chapter_note_id: 48
+
+    Chapter:
+      description: |
+        A chapter in the Tariff.
+
+        Each chapter has a `goods_nomenclature_sid`, which is a unique identifier. Each chapter has a `goods_nomenclature_item_id`, which is a unique identifier.
+
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the chapter. It may be used to uniquely identify a chapter and request it's chapter_note from the API.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `chapter`
+        data:attributes: 
+          description: The chapter's attributes, as a [referenced chapter object](/reference.html#referencedchapter "see referenced chapter object")
+          $ref: '#/components/schemas/ReferencedChapter'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [referenced heading objects](/reference.html#referencedheading "see referenced heading object") and [referenced guide objects](/reference.html#referencedguide "see referenced guide object") that are related to this chapter. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced headings](/reference.html#referencedheading "see referenced heading object") and [referenced guides](/reference.html#referencedguide "see referenced guide object") child objects that are included in the chapter.
+          items:
+            type: object
+      required:
+      - id
+      example:
+        data:
+          id:
+          type:
+          attributes:
+            goods_nomenclature_sid: 27623
+            goods_nomenclature_item_id: '0100000000'
+            description: LIVE ANIMALS
+            formatted_description: Live animals
+            chapter_note_id: 46
+            chapter_note: "* 1\\. This chapter covers all live animals except:\r\n  * (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms and other products of heading 3002; and\r\n  * (c) animals of heading 9508."
+            section_id: 1
+          relationships:
+            section:
+              data:
+              - id: "1"
+                type: section
+            guide:
+              data:
+              - id: "23"
+                type: guide
+            headings:
+              data:
+              - id: "27624"
+                type: heading
+              - id: "27633"
+                type: heading
+        included:
+        - id: 23
+          type: guide
+          attributes:
+            title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+        - id: 27624
+          type: heading
+          attributes: 
+              goods_nomenclature_sid: 27624
+              goods_nomenclature_item_id: "0101000000"
+              declarable: false
+              description: "Live horses, asses, mules and hinnies"
+              producline_suffix: "80"
+              leaf: true
+              description_plain: "Live horses, asses, mules and hinnies"
+              formatted_description: "Live horses, asses, mules and hinnies"
+        - id: 27633
+          type: heading
+          attributes: 
+              goods_nomenclature_sid: 27633
+              goods_nomenclature_item_id: "0102000000"
+              declarable: false
+              description: "Live bovine animals"
+              producline_suffix: "80"
+              leaf: true
+              description_plain: "Live bovine animals"
+              formatted_description: "Live bovine animals"
+
+    ChapterNote:
+      description: |
+        A note associated with a chapter of the Tariff.
+
+        Not all chapters have a chapter note.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the chapter_note. This is a unique identifier.
+        chapter_id:
+          type: string
+          description: The `chapter_id` of the chapter_note.
+        section_id:
+          type: integer
+          description: The `section_id` of this chapter that has this note.
+        content:
+          type: string
+          description: The `content` of the chapter_note.
+      required:
+      - id
+      example:
+        id: 46
+        section_id: 1
+        chapter_id: '01'
+        content: "* 1\\. This chapter covers all live animals except:\r\n  *
+          (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+          of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+          and other products of heading 3002; and\r\n  * (c) animals of heading
+          9508."
+
+    ChapterChanges:
+      description: |
+        All changes for a chapter in the Tariff
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the chapter. It may be used to uniquely identify a chapter and request it's chapter_note from the API.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `chapter`
+        data:attributes: 
+          description: The attributes of a particular change in the tariff, as a [referenced chapter change object](/reference.html#referencedchapterchange "see referenced chapter change object")
+          $ref: '#/components/schemas/ReferencedChapterChange'
+        included:
+          type: array
+          description: Zero, one or many [referenced measures](/reference.html#referencedmeasure "see referenced measure object") child objects that are included in the chapter's changes.
+          items:
+            type: object
+      example:
+        data:
+        - oid: 3372028
+          model_name: Measure
+          operation: U
+          operation_date: '2019-02-02'
+          record:
+            id: -494058
+            origin: uk
+            import: true
+            goods_nomenclature_item_id: '0105111100'
+            geographical_area:
+              id: '1011'
+              description: ERGA OMNES
+            measure_type:
+              id: CVD
+              description: Common Veterinary Entry Document (CVED)
+        - oid: 3372029
+          model_name: Measure
+          operation: C
+          operation_date: '2019-02-02'
+          record:
+            id: -506560
+            origin: uk
+            import: true
+            goods_nomenclature_item_id: '0105111100'
+            geographical_area:
+              id: '1011'
+              description: ERGA OMNES
+            measure_type:
+              id: CVD
+              description: Common Veterinary Entry Document (CVED)
+        - oid: 3372190
+        included:
+        - id:
+          type:
+          attributes:
+            id: 3655130
+            orogin: eu
+            import: true
+            goods_nomenclature_item_id: "0104103000"
+          relationships:
+            geographical_area:
+              data:
+                id: "1011"
+                type: geographical_area
+            measure_type:
+              data:
+                id: "122"
+                type: measure_type
+
+    Heading:
+      description: |
+        A heading in the tariff.
+
+        A heading (or sub-heading) describes products more detail than do headings or sections.
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the heading. It may be used to uniquely identify a heading and request it's heading_note from the API.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `heading`
+        data:attributes: 
+          description: The heading's attributes, as a [referenced heading object](/reference.html#referencedheading "see referenced heading object")
+          $ref: '#/components/schemas/ReferencedHeading'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this heading. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedcommodity "see referenced commodity object") objects.
+          items:
+            type: object
+      example:
+        data:
+          id: "27810"
+          type: heading
+          attributes:
+            goods_nomenclature_item_id: '0101000000'
+            description: Live horses, asses, mules and hinnies
+            bit_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0201000000&Expand=true
+          relationships:
+            footnotes:
+              data:
+              - id: "701"
+                type: footnote
+            section:
+              data:
+                id: "1"
+                type: section
+            chapter:
+              data:
+                id: "27809"
+                type: chapter
+            commodities:
+              data:
+              - id: "27811"
+                type: commodity
+              - id: "104276"
+                type: commodity
+              - id: "104254"
+                type: commodity
+        included:
+        - id: "27809"
+          type: chapter
+          attributes:
+          - goods_nomenclature_item_id: "0200000000"
+            description: "MEAT AND EDIBLE MEAT OFFAL"
+            formatted_description: "Meat and edible meat offal"
+            chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
+          relationships:
+            guides:
+              data:
+              - id: "23"
+                type: guide
+        - id: "23"
+          type: guide
+          attributes:
+            title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+        - id: "27811"
+          type: commodity
+          attributes:
+          - description: "Carcases and half-carcases"
+            number_indents: 1
+            goods_nomenclature_item_id: "0201100000"
+            leaf: false
+            goods_nomenclature_sid: 27811,
+            formatted_description: "Carcases and half-carcases"
+            description_plain: "Carcases and half-carcases"
+            producline_suffix: "80"
+            parent_sid: null
+          relationships:
+            overview_measures:
+              data:
+
+    HeadingChanges:
+      description: |
+        All changes for a heading
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the heading. It may be used to uniquely identify a heading.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `heading`
+        data:attributes: 
+          description: The attributes of a particular change in the tariff, as a [referenced heading change object](/reference.html#referencedheadingchange "see referenced heading change object")
+          $ref: '#/components/schemas/ReferencedHeadingChange'
+        included:
+          type: array
+          description: Zero, one or many [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects](/reference.html#referencedgeographicalarea "see referenced geographical areas object"), or [referenced measure type objects](/reference.html#referencedmeasuretype "see referenced measure type object") that are included in the heading's changes.
+          items:
+            type: object
+      example:
+        data:
+        - id: "3154963"
+          type: change
+          attributes:
+            oid: 3154963
+            model_name: Measure
+            operation: C
+            operation_date: '2018-11-13'
+          relationships:
+            record:
+              data:
+                id: "3655746"
+                type: measure
+        - id: "3151909"
+          type: change
+          attributes:
+            oid: 3151909
+            model_name: Measure
+            operation: C
+            operation_date: '2018-11-02'
+          relationships:
+            record:
+              data:
+                id: "-470966"
+                type: measure
+        included:
+        - oid: 3371184
+          model_name: Measure
+          operation: U
+          operation_date: '2019-02-02'
+          record:
+            id: -494217
+            origin: uk
+            import: true
+            goods_nomenclature_item_id: 0102291020
+            geographical_area:
+              id: '1011'
+              description: ERGA OMNES
+            measure_type:
+              id: AHC
+              description: Animal Health Certificate
+        - oid: 3371370
+          model_name: Measure
+          operation: U
+          operation_date: '2019-02-02'
+          record:
+            id: -494348
+            origin: uk
+            import: true
+            goods_nomenclature_item_id: 0102292950
+            geographical_area:
+              id: '1011'
+              description: ERGA OMNES
+            measure_type:
+              id: CVD
+              description: Common Veterinary Entry Document (CVED)
+
+    Commodity:
+      description: |
+        Commodities are headings or subheadings.
+
+        A commodity has a specific code (the `goods_nomenclature_item_id`), which is unique.
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the commodity. It may be used to uniquely identify a commodity.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `commodity`
+        data:attributes: 
+          description: The commodity's attributes, as a [referenced commodity object](/reference.html#referencedcommodity "see referenced commodity object")
+          $ref: '#/components/schemas/ReferencedCommodity'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced section](/reference.html#referencedsection "see referenced section object") objects, [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced heading](/reference.html#referencedheading "see referenced heading object") objects, [referenced measure](/reference.html#referencedmeasure "see referenced measure object") objects, and [referenced footnote](/reference.html#referencedfootnote "see referenced footnote object") objects that are related to this heading. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced commodity objects](/reference.html#referencedcommodity "see referenced commodity object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), [referenced guide objects](/reference.html#referencedguide "see referenced guide object"), [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
+          items:
+            type: object
+            # $ref: '#/components/schemas/ReferencedCommodity'
+      example:
+        data:
+          id: "27777"
+          type: commodity
+          attributes:
+            producline_suffix: "80"
+            description: "Lambs (up to a year old)"
+            number_indents: 3
+            goods_nomenclature_item_id: "0104103000"
+            bti_url: "http://ec.europa.eu/taxation_customs/dds2/ebti/bti_consultation.jsp?Lang=en&nomenc=0104103000&Expand=true"
+            formatted_description: "Lambs (up to a year old)"
+            description_plain: "Lambs (up to a year old)"
+            consigned: null
+            consigned_from: null
+            basic_duty_rate: "<span title='80.5 EUR'>80.50</span> EUR / <abbr title='Hectokilogram'>100 kg</abbr>"
+            meursing_code: false
+            declarable: true
+          relationships:
+            footnotes:
+              data:
+              - id: "701"
+                type: footnoe
+            section:
+              data:
+                id: "1"
+                type: section
+            chapter:
+              data:
+                id: "27623"
+                type: chapter
+            heading:
+              data:
+                id: "27773"
+                type: heading
+            ancestors:
+              data:
+              - id: "27774"
+                type: commodity
+              - id: "27776"
+                type: commodity
+            import_measures:
+              data:
+              - id: "-480792"
+                type: measure
+              - id: "3619955"
+                type: measure
+              - id: "3563227"
+                type: measure
+              - id: "2046830"
+                type: measure
+            export_measures:
+              data:
+              - id: "3540076"
+                type: measure
+              - id: "2982602"
+                type: measure
+        included:
+        - id: "27774"
+          type: commodity
+          attributes:
+            producline_suffix: "80"
+            description: "Sheep"
+            number_indents: 1
+            goods_nomenclature_item_id: "0104100000"
+            formatted_description: "Sheep"
+            description_plain: "Sheep"
+        - id: "27623"
+          type: chapter
+          attributes:
+            goods_nomenclature_item_id: "0100000000"
+            description: "LIVE ANIMALS"
+            formatted_description: "Live animals"
+            chapter_note: "* 1\\. This chapter covers all live animals except:\r\n  * (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms and other products of heading 3002; and\r\n  * (c) animals of heading 9508."
+          relationships:
+            guides:
+              data:
+              - id: "23"
+                type: guide
+        - id: "3540076"
+          type: measure
+          attributes:
+            id: 3540076
+            origin: "eu"
+            effective_start_date: "2017-02-04T00:00:00.000Z"
+            effective_end_date: null
+            import: false
+            excise: false
+            vat: false
+          relationships:
+            duty_expression:
+              data:
+                id: "3540076-duty_expression"
+                type: duty_expression
+            measure_type:
+              data:
+                id: "715"
+                type: measure_type
+            legal_acts:
+              data:
+              - id: "R1701600"
+                type: legal_acts
+              - id: "R9703380"
+                type: legal_acts
+            measure_conditions:
+              data:
+              - id: "1134192"
+                type: measure_conditions
+              - id: "1134193"
+                type: measure_conditions
+              - id: "1134194"
+                type: measure_conditions
+            geographical_area:
+              data:
+                id: "1008"
+                type: geographical_area
+            excluded_countries:
+              data:
+            footnotes:
+              data:
+                id: "CD371"
+                type: footnotes
+            order_number:
+              data: null
+
+    CommodityChanges:
+      description: |
+        All changes for a commodity
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the commodity. It may be used to uniquely identify a commodity.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `commodity`
+        data:attributes: 
+          description: The attributes of a particular change in the tariff, as a [referenced commodity change object](/reference.html#referencedcommoditychange "see referenced commodity change object")
+          $ref: '#/components/schemas/ReferencedCommodityChange'
+        included:
+          type: array
+          description: Zero, one or many [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced measure_type objects](/reference.html#referencedmeasuretype "see referenced measure_type object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
+          items:
+            type: object
+      example:
+        data:
+        - id: "3128698"
+          type: change
+          attributes:
+            oid: 3128698
+            model_name: Measure
+            operation: C
+            operation_date: "2018-06-27"
+          relationships:
+            record:
+              data:
+                id: "3643279"
+                type: measure
+        - id: "3128315"
+          type: change
+          attributes:
+            oid: 3128315
+            model_name: Measure
+            operation: U
+            operation_date: "2018-01-31"
+          relationships:
+            record:
+              data:
+                id: 3596293
+                type: measure
+        included:
+        - id: "3643279"
+          type: measure
+          attributes:
+            id: 3643279
+            origin: eu
+            import: false
+            goods_nomenclature_item_id: "0101210000"
+          relationships:
+            geographical_area:
+              data:
+                id: KP
+                type: geographical_area
+            measure_type:
+              data:
+                id: "718"
+                type: measure_type
+
+    MonetaryExchangeRates:
+      description: |
+        A dated list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: the unique `id` of the monetary_exchange_rates
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `monetary_exchange_rates`
+        data:attributes: 
+          type: array
+          description: A collection of [referenced monetary exchange rates](/reference.html#referencedmonetaryexchangerate "see referenced monetary exchange rates object")
+          items:
+            $ref: '#/components/schemas/ReferencedMonetaryExchangeRate'
+      example:
+        data:
+        - id: "435"
+          type: "monetary_exchange_rate"
+          attributes:
+            child_monetary_unit_code: "GBP"
+            exchange_rate: "0.8349"
+            operation_date: "2014-01-30"
+            validity_start_date: "2014-01-01T00:00:00.000Z"
+        - id: "437"
+          type: "monetary_exchange_rate"
+          attributes:
+            child_monetary_unit_code: "GBP"
+            exchange_rate: "0.8221"
+            operation_date: "2014-02-27"
+            validity_start_date: "2014-02-01T00:00:00.000Z"
+        - id: "439"
+          type: "monetary_exchange_rate"
+          attributes:
+            child_monetary_unit_code: "GBP"
+            exchange_rate: "0.8226"
+            operation_date: "2014-03-28"
+            validity_start_date: "2014-03-01T00:00:00.000Z"
+
+    QuotaSearch:
+      description: |
+        Search for quota definitions with a variety of parameters
+      type: object
+      properties:
+        data:id: 
+          type: string
+          description: The `id` of the definition. It may be used to uniquely identify a definition.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `definition`
+        data:attributes: 
+          description: The definition's attributes, as a [referenced definition object](/reference.html#referenceddefinition "see referenced definition object")
+          $ref: '#/components/schemas/ReferencedDefinition'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), and [referenced footnote objects](/reference.html#referencedheading "see referenced footnote object") that are related to this heading. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced commodity objects](/reference.html#referencedcommodity "see referenced commodity object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), [referenced guide objects](/reference.html#referencedguide "see referenced guide object"), [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
+          items:
+            # $ref: '#/components/schemas/ReferencedCommodity'
+            type: object
+      example:
+        data:
+        - id: "12202"
+          type: definition
+          attributes:
+            quota_definition_sid: 12202
+            quota_order_number_id: "091784"
+            initial_volume: "36300000.0"
+            validity_start_date: "2018-12-01T00:00:00.000Z"
+            validity_end_date: "2019-05-31T00:00:00.000Z"
+            status: "Open"
+            description: "Commission Regulation (EU) No 449/2010 amending Council Regulation (EC) No 747/2001 and repealing Regulations (EC) No 2276/2003 (EC) No 995/2005 (EC) No 1002/2007 and (EC) No 1455/2007"
+            balance: "36300000.0"
+            measurement_unit: "Kilogram (kg)"
+            monetary_unit: null
+            measurement_unit_qualifier: null
+            last_allocation_date: null
+            suspension_period_start_date: null
+            suspension_period_end_date: null
+            blocking_period_start_date: null
+            blocking_period_end_date: null
+            goods_nomenclature_item_id: "0805102200"
+          relationships:
+            order_number:
+              data:
+                id: "091784"
+                type: order_number
+        included:
+        - id: "091784"
+          type: order_number
+          attributes:
+            number: "091784"
+          relationships:
+            geographical_area:
+              data:
+                id: EG
+                type: geographical_area
+        - id: EG
+          type: geographical_area
+          attributes:
+            id: EG
+            description: Egypt
+            geographical_area_id: EG
+
+    GoodsNomenclatures:
+      description: |
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: the unique `id` of the goods_nomenclature
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `goods_nomenclature`
+        data:attributes:
+          description: The goods_nomeclature's attributes, as a [referenced goods_nomenclature object](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object")
+          $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+      example:
+        data:
+        - id: "27623"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0100000000"
+            goods_nomenclature_sid: 27623
+            description: LIVE ANIMALS
+            number_indents: 0
+            productline_suffix: "80"
+            href: /v2/chapters/01.json
+        - id: "27810"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101000000"
+            goods_nomenclature_sid: 27624
+            description: Live horses, asses, mules and hinnies
+            number_indents: 0
+            productline_suffix: "80"
+            href: /v2/headings/0101.json
+        - id: "93797"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101210000"
+            goods_nomenclature_sid: 93797
+            description: Horses
+            number_indents: 0
+            productline_suffix: "80"
+            href: /v2/commodities/0101210000.json
+      example2:
+        data:
+        - id: "27624"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101000000"
+            goods_nomenclature_sid: 27624
+            description: Live horses, asses, mules and hinnies
+            number_indents: 0
+            productline_suffix: "80"
+            href: /v2/headings/0101.json
+        - id: "93797"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101210000"
+            goods_nomenclature_sid: 93797
+            description: Horses
+            number_indents: 1
+            productline_suffix: "10"
+            href: /v2/commodities/0101210000.json
+        - id: "93796"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101210000"
+            goods_nomenclature_sid: 93796
+            description: Pure-bred breeding animals
+            number_indents: 2
+            productline_suffix: "80"
+            href: /v2/commodities/0101210000.json
+
+### Referenced objects
+
+    ReferencedSection:
+      description:
+        A section object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
+        title:
+          type: string
+          description: The `title` of the section.
+        numeral:
+          type: string
+          description: The `numeral` of the section, as a roman numeral
+        position:
+          type: integer
+          description: The `position` of the section, or the order in which this section appears in the tariff. It may be used to uniquely identify a section and request it from the API.
+        chapter_from:
+          type: string
+          description: The `chapter_from` of the section, the first chapter of this section.
+        chapter_to:
+          type: string
+          description: The `chapter_to` of the section, the first chapter of this section.
+        section_note_id:
+          type: integer
+          description: The `section_note_id` of the section. Not all sections have a note.
+          x-nullable: true
+        section_note:
+          type: string
+          description: The `section_note_id` of the section. Not all sections have a note.
+          x-nullable: true
+      example:
+        id: 1
+        title: Live animals; animal products
+        numeral: I
+        position: 1
+        chapter_from: "01"
+        chapter_to: "05"
+        section_note_id: 1
+        section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species.\r\n* 2\\. Except where the context otherwise requires, throughout the nomenclature any reference to 'dried' products also covers products which have been dehydrated, evaporated or freeze-dried.\r\n"
+
+    ReferencedChapter:
+      description:
+        A chapter object referenced elsewhere.
+      type: object
+      # required:
+      # - goods_nomenclature_item_id
+      # - description
+      # - formatted_description
+      # - guides
+      # - chapter_note
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the chapter. This is a unique identifier.
+        description:
+          type: string
+          description: The `description` of the chapter.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the chapter.
+          x-nullable: true
+        headings_from:
+          type: string
+          description: The `headings_from` of the chapter, or the first heading in this chapter
+        headings_to:
+          type: string
+          description: The `headings_to` of the chapter, or the last heading in this chapter
+        chapter_note:
+          type: string
+          description: The `chapter_note` of the chapter. Not all chapters have a note.
+        chapter_note_id:
+          type: integer
+          description: The `chapter_note_id` of the chapter. This is a unique identifier for a chapter_note.
+        section_id:
+          type: integer
+          description: The `section_id` of the section containing this chapter.
+      example:
+        goods_nomenclature_item_id: '0100000000'
+        description: LIVE ANIMALS
+        formatted_description: Live animals
+        headings_from: "0101"
+        headings_to: "0106"
+        chapter_note_id: 46
+        chapter_note: "* 1\\. This chapter covers all live animals except:\r\n
+          \ * (a) fish and crustaceans, molluscs and other aquatic invertebrates,
+          of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
+          and other products of heading 3002; and\r\n  * (c) animals of heading
+          9508."
+        section_id: 1
+
+    ReferencedChapterChange:
+      description:
+        A chapter change object referenced elsewhere.
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the chapter change. This is a unique identifier.
+        model_name:
+          type: string
+          description: The `model_name` of the chapter change.
+        operation:
+          type: string
+          description: The `operation` of the chapter change.
+        operation_date:
+          type: string
+          description: The `operation_date` of the chapter change.
+      example:
+        oid: 3467145
+        model_name: Measure
+        operation: U
+        operation_date: '2019-04-18'
+
+    ReferencedHeading:
+      description:
+        A heading object referenced elsewhere.
+      type: object
+      properties:
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the heading. This is a unique identifier.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the heading. This is a unique identifier.
+        declarable:
+          type: boolean
+          description: Whether this heading is `declarable`.
+        description:
+          type: string
+          description: The text `description` of the heading.
+        producline_suffix:
+          type: string
+          description: The `producline_suffix` of the heading.
+        leaf:
+          type: boolean
+          description: Whether this heading is a `leaf`.
+        description_plain:
+          type: string
+          description: The `description_plain` of the heading.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the heading, which may be suitable for presentation to the end user.
+        bti_url:
+          type: string
+          description: a URL for more information about this heading
+      example:
+        goods_nomenclature_item_id: '0201000000'
+        description: Meat of bovine animals, fresh or chilled
+        bti_url: "http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0201000000&Expand=true"
+        formatted_description: Meat of bovine animals, fresh or chilled
+
+    ReferencedHeadingChange:
+      description:
+        A heading change object referenced elsewhere.
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the heading change. This is a unique identifier.
+        model_name:
+          type: string
+          description: The `model_name` of the heading change.
+        operation:
+          type: string
+          description: The `operation` of the heading change.
+        operation_date:
+          type: string
+          description: The `operation_date` of the heading change.
+      example:
+        oid: 3154963
+        model_name: Measure
+        operation: C
+        operation_date: "2018-11-13"
+
+    ReferencedCommodity:
+      description: |
+        A commodity object referenced elsewhere.
+      type: object
+      properties:
+        description:
+          type: string
+          description: The `description` of the commodity
+        number_indents:
+          type: integer
+          description: The `number_indents` of the commodity.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the commodity.
+        leaf:
+          type: boolean
+          description: Whether this commodity is a `leaf`.
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the commodity. This is a unique identifier.
+        formatted_description:
+          type: string
+          description: The `formatted_description` of the commodity, which may be suitable for presentation to the end user.
+        description_plain:
+          type: string
+          description: The `description_plain` of the commodity.
+        producline_suffix:
+          type: string
+          description: The `producline_suffix` of the commodity.
+        parent_sid:
+          type: string
+          description: The `parent_sid` of the commodity.
+          x-nullable: true
+      example:
+        description: Horses
+        number_indents: 1
+        goods_nomenclature_item_id: '0101210000'
+        leaf: false
+        goods_nomenclature_sid: 93797
+        formatted_description: Horses
+        description_plain: Horses
+        producline_suffix: '10'
+        parent_sid: 
+
+    ReferencedCommodityChange:
+      description:
+        A commodity change object referenced elsewhere.
+      type: object
+      properties:
+        oid:
+          type: integer
+          description: The `oid` of the commodity change. This is a unique identifier.
+        model_name:
+          type: string
+          description: The `model_name` of the commodity change.
+        operation:
+          type: string
+          description: The `operation` flag of the commodity change. This should be one of [true, false].
+        operation_date:
+          type: string
+          description: The `operation_date` of the commodity change.
+      example:
+        oid: 3128698
+        model_name: Measure
+        operation: C
+        operation_date: "2018-06-27"
+
+    ReferencedMeasure:
+      description: |
+        A measure object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The `id` of the measure.
+        origin:
+          type: string
+          description: The `origin` of the measure.
+        effective_start_date:
+          type: string
+          description: The `effective_start_date` of the measure.
+        effective_end_date:
+          type: string
+          description: The `effective_end_date` of the measure.
+        import:
+          type: boolean
+          description: The `imnport` flag of the measure.
+        excise:
+          type: boolean
+          description: The `excise` flag of the measure.
+        vat:
+          type: boolean
+          description: The `vat` flag of the measure.
+      example:
+        id: 2982263
+        origin: eu
+        effective_start_date: 2008-01-01T00:00:00.000Z
+        effective_end_date: null
+        import: true
+        excise: false
+        vat: false
+ 
+    ReferencedFootnote:
+      description: |
+        A footnote object referenced elsewhere.
+      type: object
+      properties:
+        code:
+          type: string
+          description: The `code` for the footnote.
+        description:
+          type: string
+          description: The `description` for the footnote.
+        formatted_description:
+          type: string
+          description: The `formatted_description` for the footnote.
+      example:
+        - code: TN701
+          description: "According to  the Council Regulation (EU) No 692/2014
+            (OJ L183, p. 9) it shall be prohibited to import into European Union
+            goods originating in Crimea or Sevastopol.\nThe prohibition shall
+            not apply in respect of: \n(a) the execution until 26 September
+            2014, of trade contracts concluded before 25 June 2014, or of ancillary
+            contracts necessary for the execution of such contracts, provided
+            that the natural or legal persons, entity or body seeking to perform
+            the contract have notified, at least 10 working days in advance,
+            the activity or transaction to the competent authority of the Member
+            State in which they are established. \n(b) goods originating in
+            Crimea or Sevastopol which have been made available to the Ukrainian
+            authorities for examination, for which compliance with the conditions
+            conferring entitlement to preferential origin has been verified
+            and for which a certificate of origin has been issued in accordance
+            with Regulation (EU) No 978/2012 and Regulation (EU) No 374/2014
+            or in accordance with the EU-Ukraine Association Agreement."
+          formatted_description: 'According to  the Council Regulation (EU)
+            No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
+            European Union goods originating in Crimea or Sevastopol.<br/>The
+            prohibition shall not apply in respect of: <br/>(a) the execution
+            until 26 September 2014, of trade contracts concluded before 25
+            June 2014, or of ancillary contracts necessary for the execution
+            of such contracts, provided that the natural or legal persons, entity
+            or body seeking to perform the contract have notified, at least
+            10 working days in advance, the activity or transaction to the competent
+            authority of the Member State in which they are established. <br/>(b)
+            goods originating in Crimea or Sevastopol which have been made available
+            to the Ukrainian authorities for examination, for which compliance
+            with the conditions conferring entitlement to preferential origin
+            has been verified and for which a certificate of origin has been
+            issued in accordance with Regulation (EU) No 978/2012 and Regulation
+            (EU) No 374/2014 or in accordance with the EU-Ukraine Association
+            Agreement.'
+
+    ReferencedGuide:
+      description: |
+        A guide object referenced elsewhere.
+      type: Object
+      properties:
+        title:
+          type: string
+          description: The `title` for the guide.
+        url:
+          type: string
+          description: The `url` for the guide.
+      example:
+        title: Classification of goods
+        url: https://www.gov.uk/government/collections/classification-of-goods
+
+    ReferencedGeographicalArea:
+      description: A geographical_area object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The `id` of the geographical area.
+        description:
+          type: string
+          description: The `type` of the geographical area.
+        geographical_area_id:
+          type: string
+          description: The `geographical_area_id` of the geographical area.
+
+      example:
+        id: "1011"
+        description: ERGA OMNES
+        geographical_area_id: "1011"
+
+    ReferencedMonetaryExchangeRate:
+      description: A monetary_exchange_rate object referenced elsewhere.
+      type: object
+      properties:
+        child_monetary_unit_code:
+          type: string
+          description: The `child_monetary_unit_code` of the monetary exchage rate. E.g., 'GBP'
+        exchange_rate:
+          type: string
+          description: The `exchange_rate`.
+        operation_date:
+          type: string
+          description: The `operation_date` of the monetary exchage rate.
+        validity_start_date:
+          type: string
+          description: The `validity_start_date` of the monetary exchage rate.
+      example:
+        child_monetary_unit_code: "GBP"
+        exchange_rate: "0.8349"
+        operation_date: "2014-01-30"
+        validity_start_date: "2014-01-01T00:00:00.000Z"
+
+    ReferencedDefinition:
+      description: A definition object referenced elsewhere.
+      type: object
+      properties:
+        quota_definition_sid:
+          type: integer
+          description: The `quota_definition_sid` of the definition. THis is a unique identifier
+        quota_order_number_id:
+          type: string
+          description: The `quota_order_number_id` of the definition.
+        initial_volume:
+          type: string
+          description: The `initial_volume` of the definition.
+        validity_start_date:
+          type: string
+          description: The `validity_start_date` of the definition.
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The `validity_end_date` of the definition.
+          format: date-time
+        status:
+          type: string
+          description: The `status` of the definition.
+        description:
+          type: string
+          description: The `description` of the definition.
+        balance:
+          type: string
+          description: The `balance` of the definition.
+        measurement_unit:
+          type: string
+          description: The `measurement_unit` of the definition.
+        monetary_unit:
+          type: string
+          description: The `monetary_unit` of the definition.
+        measurement_unit_qualifier:
+          type: string
+          description: The `measurement_unit_qualifier` of the definition.
+        last_allocation_date:
+          type: string
+          description: The `last_allocation_date` of the definition.
+        suspension_period_start_date:
+          type: string
+          description: The `suspension_period_start_date` of the definition.
+        suspension_period_end_date:
+          type: string
+          description: The `suspension_period_end_date` of the definition.
+        blocking_period_start_date:
+          type: string,
+          description: The `blocking_period_start_date` of the definition.
+        blocking_period_end_date:
+          type: string
+          description: The `blocking_period_end_date` of the definition.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the definition.
+      example:
+        quota_definition_sid: 12202
+        quota_order_number_id: "091784"
+        initial_volume: "36300000.0"
+        validity_start_date: "2018-12-01T00:00:00.000Z"
+        validity_end_date: "2019-05-31T00:00:00.000Z"
+        status: "Open"
+        description: "Commission Regulation (EU) No 449/2010 amending Council Regulation (EC) No 747/2001 and repealing Regulations (EC) No 2276/2003 (EC) No 995/2005 (EC) No 1002/2007 and (EC) No 1455/2007"
+        balance: "36300000.0"
+        measurement_unit: "Kilogram (kg)"
+        monetary_unit: null
+        measurement_unit_qualifier: null
+        last_allocation_date: null
+        suspension_period_start_date: null
+        suspension_period_end_date: null
+        blocking_period_start_date: null
+        blocking_period_end_date: null
+        goods_nomenclature_item_id: "0805102200"
+
+    ReferencedGoodsNomenclature:
+      description: A goods_nomenclature object referenced elsewhere.
+      type: object
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the goods nomenclature.
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+        description:
+          type: string
+          description: The `description` of the goods nomenclature.
+        number_indents:
+          type: integer
+          description: The `number_indents` of the goods nomenclature.
+        productline_suffix:
+          type: string
+          description: The `productline_suffix` of the goods nomenclature.
+        href:
+          type: string
+          description: The `href` of the goods nomenclature.
+      example:
+        goods_nomenclature_item_id: "0201000000"
+        goods_nomenclature_sid: 27810
+        description: Meat of bovine animals, fresh or chilled
+        number_indents: 0
+        productline_suffix: "80"
+        href: /v2/headings/0201.json

@@ -11,6 +11,12 @@ availability of curl, however you may prefer the structured output of
 using [HTTPie](https://httpie.org/) or piping the curl responses
 through [jq](https://stedolan.github.io/jq/).
 
+## API Version
+
+The most up-to-date version of this API is __version 2__ or `v2`.
+
+Documentation for __version 1__ (`v1`) is available at [https://api.trade-tariff.service.gov.uk/reference-v1.html](/reference-v1.html).
+
 ## Accessing Content
 
 GOV.UK Trade Tariff API is used to access content that is hosted on
@@ -18,7 +24,7 @@ GOV.UK Trade Tariff API is used to access content that is hosted on
 For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000.json
+curl https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000.json
 ```
 
 This will return a [`commodity`][commodity] object. Within this object are
@@ -47,7 +53,7 @@ Every [`commodity`][commodity] (e.g., heading and sub-heading) has a `goods_nome
 piece of content as some pieces of content
 [span multiple pages][multiple-pages]. -->
 
-### Measures
+<!-- ### Measures
 
 ```
 {
@@ -69,7 +75,7 @@ piece of content as some pieces of content
 ```
 
 The `import_measures` and `import_measures` fields contain information about measures that affect importing and exporting goods. These fields are arrays, containing a number of `measure` objects, and each of these objects is a single import or export measure that applies to a commodity.
-
+ -->
 ## Making use of content
 
 ### Ruby on Rails
