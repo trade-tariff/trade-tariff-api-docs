@@ -17,7 +17,7 @@ servers:
 
 paths:
 ### Sections
-  /v1/sections.json:
+  /api/v1/sections.json:
     get:
       summary: Retrieves all sections
       description: |
@@ -41,12 +41,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/sections.json:
+        /api/v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections.json
 
-  /v1/sections/{position}.json:
+  /api/v1/sections/{position}.json:
     get:
       summary: Retreives a section by its position
       description: |
@@ -84,12 +84,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/sections.json:
+        /api/v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections/1.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1.json
 
-  /v1/sections/{section_id}/section_note.json:
+  /api/v1/sections/{section_id}/section_note.json:
     get:
       summary: Retreives a section's notes
       description: |
@@ -124,13 +124,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/sections.json:
+        /api/v1/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/sections/1/section_note.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1/section_note.json
 
 ### Chapters
-  /v1/chapters.json:
+  /api/v1/chapters.json:
     get:
       summary: Retrieves all chapters
       description: >
@@ -153,12 +153,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters.json
   
-  /v1/chapters/{chapter_id}.json:
+  /api/v1/chapters/{chapter_id}.json:
     get:
       summary: Retrieves a chapter
       description: >
@@ -190,12 +190,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters/34.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34.json
 
-  /v1/chapters/{chapter_id}/chapter_note.json:
+  /api/v1/chapters/{chapter_id}/chapter_note.json:
     get:
       summary: Retreives a chapter's notes
       description: >
@@ -230,12 +230,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters/{chapter_id}/chapter_note.json:
+        /api/v1/chapters/{chapter_id}/chapter_note.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters/34/chapter_note.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34/chapter_note.json
 
-  /v1/chapters/{chapter_id}/changes.json:
+  /api/v1/chapters/{chapter_id}/changes.json:
     get:
       summary: Retreives a chapter's changes
       description: >
@@ -268,13 +268,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters/{chapter_id}/changes.json:
+        /api/v1/chapters/{chapter_id}/changes.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/chapters/01/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/01/changes.json
 
 ### Headings
-  /v1/headings/{heading_id}.json:
+  /api/v1/headings/{heading_id}.json:
     get:
       summary: Retrieves a heading
       description: >
@@ -310,12 +310,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/headings/0101.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101.json
 
-  /v1/headings/{heading_id}/changes.json:
+  /api/v1/headings/{heading_id}/changes.json:
     get:
       summary: Retreives a heading's changes
       description: >
@@ -350,13 +350,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/headings/0101/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101/changes.json
 
 ### Commodities
-  /v1/commodities/{goods_nomenclature_item_id}.json:
+  /api/v1/commodities/{goods_nomenclature_item_id}.json:
     get:
       summary: Retrieves a commodity
       description: >
@@ -392,12 +392,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000.json
 
-  /v1/commodities/{goods_nomenclature_item_id}/changes.json:
+  /api/v1/commodities/{goods_nomenclature_item_id}/changes.json:
     get:
       summary: Retreives a commodity's changes
       description: >
@@ -433,13 +433,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/commodities/0101210000/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000/changes.json
 
 ### Monetary exchange rates
-  /v1/monetary_exchange_rates.json:
+  /api/v1/monetary_exchange_rates.json:
     get:
       summary: Retrieves a list of monetary exchange rates
       description: >
@@ -460,10 +460,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v1/chapters.json:
+        /api/v1/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v1/monetary_exchange_rates.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/monetary_exchange_rates.json
 
 components:
   schemas:

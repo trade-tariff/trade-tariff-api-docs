@@ -13,9 +13,9 @@ info:
   version: '2'
 
 servers:
-  - url: https://www.trade-tariff.service.gov.uk/v2
-  # - url: https://staging.trade-tariff.service.gov.uk/v2
-  # - url: https://dev.trade-tariff.service.gov.uk/v2
+  - url: https://www.trade-tariff.service.gov.uk/api/v2
+  # - url: https://staging.trade-tariff.service.gov.uk/api/v2
+  # - url: https://dev.trade-tariff.service.gov.uk/api/v2
 
 paths:
 ### Sections
@@ -43,10 +43,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/sections.json:
+        /api/v2/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections.json
 
   /sections/{position}.json:
     get:
@@ -86,10 +86,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/sections.json:
+        /api/v2/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections/1.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1.json
 
   /sections/{section_id}/section_note.json:
     get:
@@ -126,10 +126,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/sections.json:
+        /api/v2/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections/1/section_note.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note.json
 
 ### Chapters
   /chapters.json:
@@ -155,10 +155,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters.json:
+        /api/v2/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters.json
   
   /chapters/{chapter_id}.json:
     get:
@@ -192,10 +192,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters.json:
+        /api/v2/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/34.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34.json
 
   /chapters/{chapter_id}/chapter_note.json:
     get:
@@ -232,10 +232,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters/{chapter_id}/chapter_note.json:
+        /api/v2/chapters/{chapter_id}/chapter_note.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/34/chapter_note.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note.json
 
   /chapters/{chapter_id}/changes.json:
     get:
@@ -270,10 +270,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters/{chapter_id}/changes.json:
+        /api/v2/chapters/{chapter_id}/changes.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/chapters/01/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/01/changes.json
 
 ### Headings
   /headings/{heading_id}.json:
@@ -312,10 +312,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters.json:
+        /api/v2/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/headings/0101.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101.json
 
   /headings/{heading_id}/changes.json:
     get:
@@ -352,10 +352,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters.json:
+        /api/v2/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/headings/0101/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101/changes.json
 
 ### Commodities
   /commodities/{goods_nomenclature_item_id}.json:
@@ -394,10 +394,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/chapters.json:
+        /api/v2/chapters.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000.json
 
   /commodities/{goods_nomenclature_item_id}/changes.json:
     get:
@@ -435,10 +435,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/commodities/{goods_nomenclature_item_id}/changes.json:
+        /api/v2/commodities/{goods_nomenclature_item_id}/changes.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/commodities/0101210000/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000/changes.json
 
 ### Monetary exchange rates
   /monetary_exchange_rates.json:
@@ -462,10 +462,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/monetary_exchange_rates.json:
+        /api/v2/monetary_exchange_rates.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/monetary_exchange_rates.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/monetary_exchange_rates.json
 
 ### Quotas
   /quotas/search.json:
@@ -541,10 +541,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/quotas/search.json:
+        /api/v2/quotas/search.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/quotas/search.json?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search.json?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
 
 ### Goods nomenclatures
   /goods_nomenclatures/section/{section_id}.json:
@@ -578,10 +578,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/goods_nomenclatures/section/1.json:
+        /api/v2/goods_nomenclatures/section/1.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/section/1.json 
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1.json 
 
   /goods_nomenclatures/chapter/{chapter_id}.json:
     get:
@@ -614,10 +614,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/goods_nomenclatures/chapter/01.json:
+        /api/v2/goods_nomenclatures/chapter/01.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/chapter/01.json 
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01.json 
 
   /goods_nomenclatures/heading/{heading_id}.json:
     get:
@@ -650,10 +650,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/goods_nomenclatures/heading/0101.json:
+        /api/v2/goods_nomenclatures/heading/0101.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/goods_nomenclatures/heading/0101.json 
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101.json 
 
 components:
   schemas:
@@ -1535,7 +1535,7 @@ components:
             description: LIVE ANIMALS
             number_indents: 0
             productline_suffix: "80"
-            href: /v2/chapters/01.json
+            href: /api/v2/chapters/01.json
         - id: "27810"
           type: goods_nomenclature
           attributes:
@@ -1544,7 +1544,7 @@ components:
             description: Live horses, asses, mules and hinnies
             number_indents: 0
             productline_suffix: "80"
-            href: /v2/headings/0101.json
+            href: /api/v2/headings/0101.json
         - id: "93797"
           type: goods_nomenclature
           attributes:
@@ -1553,7 +1553,7 @@ components:
             description: Horses
             number_indents: 0
             productline_suffix: "80"
-            href: /v2/commodities/0101210000.json
+            href: /api/v2/commodities/0101210000.json
       example2:
         data:
         - id: "27624"
@@ -1564,7 +1564,7 @@ components:
             description: Live horses, asses, mules and hinnies
             number_indents: 0
             productline_suffix: "80"
-            href: /v2/headings/0101.json
+            href: /api/v2/headings/0101.json
         - id: "93797"
           type: goods_nomenclature
           attributes:
@@ -1573,7 +1573,7 @@ components:
             description: Horses
             number_indents: 1
             productline_suffix: "10"
-            href: /v2/commodities/0101210000.json
+            href: /api/v2/commodities/0101210000.json
         - id: "93796"
           type: goods_nomenclature
           attributes:
@@ -1582,7 +1582,7 @@ components:
             description: Pure-bred breeding animals
             number_indents: 2
             productline_suffix: "80"
-            href: /v2/commodities/0101210000.json
+            href: /api/v2/commodities/0101210000.json
 
 ### Referenced objects
 
@@ -2076,4 +2076,4 @@ components:
         description: Meat of bovine animals, fresh or chilled
         number_indents: 0
         productline_suffix: "80"
-        href: /v2/headings/0201.json
+        href: /api/v2/headings/0201.json

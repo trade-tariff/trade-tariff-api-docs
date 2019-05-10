@@ -13,7 +13,7 @@ convert the [`openapi.yaml`][tariff-openapi] to Markdown.
 
 ## Updating content
 
-To update content of this site, modify the files under `source` and the `source/v2/openapi.yaml` file.
+To update content of this site, modify the files under `source` directory, i.e., the `source/v1/openapi.yaml` and `source/v2/openapi.yaml` files.
 
 HTML pages are in the [`/source`][source-dir] of this repository and are authored using Markdown. You can make edits to these pages by making changes in a branch and then opening a pull request.
 
@@ -34,7 +34,7 @@ To update the Trade Tariff API documentation, you may follow this general workfl
 
     -   edit `source/v2/openapi.yaml`
     -   ```
-        make server
+        make serve
         ```
     -   manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
@@ -70,7 +70,7 @@ An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON 
 
 ```yaml
 paths:
-  /v2/sections.json:
+  /api/v2/sections.json:
     get:
       summary: Retrieves all sections
       description: |
@@ -94,16 +94,16 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /v2/sections.json:
+        /api/api/v2/sections.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/v2/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections.json
 
 ```
 
 The example above is rendered into HTML:
 
-![Example screen showing rendered HTML for /v2/sections.json](build/images/example-1.png "Logo Title Text 1")
+![Example screen showing rendered HTML for /api/v2/sections.json](build/images/example-1.png "Example of Section onbject in the documentation")
 
 ### Use of [`$ref`](https://swagger.io/specification/#documentStructure)
 
