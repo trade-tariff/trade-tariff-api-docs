@@ -159,7 +159,7 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters.json
-  
+
   /chapters/{chapter_id}.json:
     get:
       summary: Retrieves a chapter
@@ -551,7 +551,7 @@ paths:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
       description: >
-        Retrieves a list of all the goods nomenclatures in a section.
+        Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
       tags:
       - GoodsNomenclatures
       produces:
@@ -581,13 +581,13 @@ paths:
         /api/v2/goods_nomenclatures/section/1.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1.json 
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1.json
 
   /goods_nomenclatures/chapter/{chapter_id}.json:
     get:
       summary: Retrieves a list of goods nomenclatures in a chapter
       description: >
-        Retrieves a list of all the goods nomenclatures in a chapter.
+        Retrieves a list of all the goods nomenclatures in a chapter allowing you to view the hierarchical tree for the chapter.
       tags:
       - GoodsNomenclatures
       produces:
@@ -617,13 +617,13 @@ paths:
         /api/v2/goods_nomenclatures/chapter/01.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01.json 
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01.json
 
   /goods_nomenclatures/heading/{heading_id}.json:
     get:
       summary: Retrieves a list of goods nomenclatures in a heading
       description: >
-        Retrieves a list of all the goods nomenclatures in a heading.
+        Retrieves a list of all the goods nomenclatures in a heading allowing you to view the hierarchical tree for the heading.
       tags:
       - GoodsNomenclatures
       produces:
@@ -653,7 +653,7 @@ paths:
         /api/v2/goods_nomenclatures/heading/0101.json:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101.json 
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101.json
 
 components:
   schemas:
@@ -665,13 +665,13 @@ components:
         Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique identifier.
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
         data:type:
           type: string
           description: the type of object this is, e.g. `section`
-        data:attributes: 
+        data:attributes:
           type: array
           description: A collection of [referenced section objects](/reference.html#referencedsection "see referenced section object")
           items:
@@ -702,13 +702,13 @@ components:
 
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the section. It may be used to uniquely identify a section and request it's section_note from the API.
         data:type:
           type: string
           description: The type of object this is, e.g. `section`
-        data:attributes: 
+        data:attributes:
           description: The section's attributes, as a [referenced section object](/reference.html#referencedsection "see referenced section object")
           $ref: '#/components/schemas/ReferencedSection'
         data:relationships:
@@ -719,7 +719,7 @@ components:
           description: A collection of chapters that are included in the section [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
           items:
             $ref: '#/components/schemas/ReferencedChapter'
-          
+
       example:
         data:
           id: "1"
@@ -819,7 +819,7 @@ components:
         data:type:
           type: string
           description: The type of object this is, e.g. `chapter`.
-        data:attributes: 
+        data:attributes:
           type: array
           description: A collection of [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
           items:
@@ -853,13 +853,13 @@ components:
 
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the chapter. It may be used to uniquely identify a chapter and request it's chapter_note from the API.
         data:type:
           type: string
           description: the type of object this is, e.g. `chapter`
-        data:attributes: 
+        data:attributes:
           description: The chapter's attributes, as a [referenced chapter object](/reference.html#referencedchapter "see referenced chapter object")
           $ref: '#/components/schemas/ReferencedChapter'
         data:relationships:
@@ -907,7 +907,7 @@ components:
             url: https://www.gov.uk/government/collections/classification-of-goods
         - id: 27624
           type: heading
-          attributes: 
+          attributes:
               goods_nomenclature_sid: 27624
               goods_nomenclature_item_id: "0101000000"
               declarable: false
@@ -918,7 +918,7 @@ components:
               formatted_description: "Live horses, asses, mules and hinnies"
         - id: 27633
           type: heading
-          attributes: 
+          attributes:
               goods_nomenclature_sid: 27633
               goods_nomenclature_item_id: "0102000000"
               declarable: false
@@ -964,13 +964,13 @@ components:
         All changes for a chapter in the Tariff
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the chapter. It may be used to uniquely identify a chapter and request it's chapter_note from the API.
         data:type:
           type: string
           description: the type of object this is, e.g. `chapter`
-        data:attributes: 
+        data:attributes:
           description: The attributes of a particular change in the tariff, as a [referenced chapter change object](/reference.html#referencedchapterchange "see referenced chapter change object")
           $ref: '#/components/schemas/ReferencedChapterChange'
         included:
@@ -1036,13 +1036,13 @@ components:
         A heading (or sub-heading) describes products more detail than do headings or sections.
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the heading. It may be used to uniquely identify a heading and request it's heading_note from the API.
         data:type:
           type: string
           description: the type of object this is, e.g. `heading`
-        data:attributes: 
+        data:attributes:
           description: The heading's attributes, as a [referenced heading object](/reference.html#referencedheading "see referenced heading object")
           $ref: '#/components/schemas/ReferencedHeading'
         data:relationships:
@@ -1121,13 +1121,13 @@ components:
         All changes for a heading
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the heading. It may be used to uniquely identify a heading.
         data:type:
           type: string
           description: the type of object this is, e.g. `heading`
-        data:attributes: 
+        data:attributes:
           description: The attributes of a particular change in the tariff, as a [referenced heading change object](/reference.html#referencedheadingchange "see referenced heading change object")
           $ref: '#/components/schemas/ReferencedHeadingChange'
         included:
@@ -1200,13 +1200,13 @@ components:
         A commodity has a specific code (the `goods_nomenclature_item_id`), which is unique.
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the commodity. It may be used to uniquely identify a commodity.
         data:type:
           type: string
           description: the type of object this is, e.g. `commodity`
-        data:attributes: 
+        data:attributes:
           description: The commodity's attributes, as a [referenced commodity object](/reference.html#referencedcommodity "see referenced commodity object")
           $ref: '#/components/schemas/ReferencedCommodity'
         data:relationships:
@@ -1347,13 +1347,13 @@ components:
         All changes for a commodity
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the commodity. It may be used to uniquely identify a commodity.
         data:type:
           type: string
           description: the type of object this is, e.g. `commodity`
-        data:attributes: 
+        data:attributes:
           description: The attributes of a particular change in the tariff, as a [referenced commodity change object](/reference.html#referencedcommoditychange "see referenced commodity change object")
           $ref: '#/components/schemas/ReferencedCommodityChange'
         included:
@@ -1416,7 +1416,7 @@ components:
         data:type:
           type: string
           description: the type of object this is, e.g. `monetary_exchange_rates`
-        data:attributes: 
+        data:attributes:
           type: array
           description: A collection of [referenced monetary exchange rates](/reference.html#referencedmonetaryexchangerate "see referenced monetary exchange rates object")
           items:
@@ -1450,13 +1450,13 @@ components:
         Search for quota definitions with a variety of parameters
       type: object
       properties:
-        data:id: 
+        data:id:
           type: string
           description: The `id` of the definition. It may be used to uniquely identify a definition.
         data:type:
           type: string
           description: the type of object this is, e.g. `definition`
-        data:attributes: 
+        data:attributes:
           description: The definition's attributes, as a [referenced definition object](/reference.html#referenceddefinition "see referenced definition object")
           $ref: '#/components/schemas/ReferencedDefinition'
         data:relationships:
@@ -1806,7 +1806,7 @@ components:
         formatted_description: Horses
         description_plain: Horses
         producline_suffix: '10'
-        parent_sid: 
+        parent_sid:
 
     ReferencedCommodityChange:
       description:
@@ -1865,7 +1865,7 @@ components:
         import: true
         excise: false
         vat: false
- 
+
     ReferencedFootnote:
       description: |
         A footnote object referenced elsewhere.
