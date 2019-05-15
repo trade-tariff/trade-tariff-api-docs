@@ -70,7 +70,7 @@ An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON 
 
 ```yaml
 paths:
-  /api/v2/sections.json:
+  /api/v2/sections:
     get:
       summary: Retrieves all sections
       description: |
@@ -94,16 +94,16 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/api/v2/sections.json:
+        /api/api/v2/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections
 
 ```
 
 The example above is rendered into HTML:
 
-![Example screen showing rendered HTML for /api/v2/sections.json](build/images/example-1.png "Example of Section onbject in the documentation")
+![Example screen showing rendered HTML for /api/v2/sections](build/images/example-1.png "Example of Section onbject in the documentation")
 
 ### Use of [`$ref`](https://swagger.io/specification/#documentStructure)
 

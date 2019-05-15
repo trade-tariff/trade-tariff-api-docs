@@ -17,7 +17,7 @@ Documentation for __version 1__ (`v1`) is available at [https://api.trade-tariff
 GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff). For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000.json
+curl https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 ```
 
 This will return a [`commodity`][commodity] object. Within this object are fields that describe the commodity itself, it import and export measures, footnotes, metadata and associations and other content.
@@ -77,8 +77,8 @@ It can be simple to make use of API in your application. The example below utili
 ```ruby
 require "rest-client"
 
-commodity = Rails.cache.fetch("/api/v1/commodities/0101210000.json", expires_in: 1.day) do
-  response = RestClient.get("https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000.json", { content_type: "json" })
+commodity = Rails.cache.fetch("/api/v1/commodities/0101210000", expires_in: 1.day) do
+  response = RestClient.get("https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000", { content_type: "json" })
   JSON.parse(response.body).dig("details", "body")
 end
 
@@ -98,7 +98,7 @@ The example below uses [node.js](https://nodejs.org/) and the popular [Axios](ht
 ```javascript
 const axios = require('axios');
 
-axios.get('https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000.json')
+axios.get('https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000')
      .then(response => {
        console.log(response.data.formatted_description);
       })

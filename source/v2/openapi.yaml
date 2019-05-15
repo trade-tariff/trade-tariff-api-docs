@@ -19,7 +19,7 @@ servers:
 
 paths:
 ### Sections
-  /sections.json:
+  /sections:
     get:
       summary: Retrieves all sections
       description: |
@@ -43,12 +43,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/sections.json:
+        /api/v2/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections
 
-  /sections/{position}.json:
+  /sections/{position}:
     get:
       summary: Retreives a section by its position
       description: |
@@ -86,53 +86,53 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/sections.json:
+        /api/v2/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1
 
-  /sections/{section_id}/section_note.json:
-    get:
-      summary: Retreives a section's notes
-      description: |
-        This resource represents the notes for a particular section.
+  # /sections/{section_id}/section_note:
+  #   get:
+  #     summary: Retreives a section's notes
+  #     description: |
+  #       This resource represents the notes for a particular section.
 
-        For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
-      tags:
-      - Sections
-      produces:
-      - application/json
-      parameters:
-        name: section_id
-        in: path
-        required: true
-        description: |
-          The `section_id` of the section.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
-      responses:
-        200:
-          description: A section's notes were found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SectionNote'
-              example:
-                $ref: '#/components/schemas/SectionNote/example'
-        404:
-          description: A section's notes were not found.
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/sections.json:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note.json
+  #       For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
+  #     tags:
+  #     - Sections
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #       name: section_id
+  #       in: path
+  #       required: true
+  #       description: |
+  #         The `section_id` of the section.
+  #       schema:
+  #         type: integer
+  #         minimum: 1
+  #         example: 1
+  #     responses:
+  #       200:
+  #         description: A section's notes were found.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/SectionNote'
+  #             example:
+  #               $ref: '#/components/schemas/SectionNote/example'
+  #       404:
+  #         description: A section's notes were not found.
+  #       5XX:
+  #         description: Unexpected error.
+  #     x-code-samples:
+  #       /api/v2/sections:
+  #         lang: shell
+  #         source: |-
+  #           curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note
 
 ### Chapters
-  /chapters.json:
+  /chapters:
     get:
       summary: Retrieves all chapters
       description: >
@@ -155,12 +155,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters.json:
+        /api/v2/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters
 
-  /chapters/{chapter_id}.json:
+  /chapters/{chapter_id}:
     get:
       summary: Retrieves a chapter
       description: >
@@ -192,52 +192,52 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters.json:
+        /api/v2/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34
 
-  /chapters/{chapter_id}/chapter_note.json:
-    get:
-      summary: Retreives a chapter's notes
-      description: >
-        This resource represents the note for a particular chapter.
-        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
-        <p>`chapter_id` should be a zero-padded string of two digits.</p>
-      tags:
-      - Chapters
-      produces:
-      - application/json
-      parameters:
-        name: chapter_id
-        in: path
-        required: true
-        description: |
-          The `chapter_id` of the chapter.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
-      responses:
-        200:
-          description: A chapter's notes were found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChapterNote'
-              example:
-                $ref: '#/components/schemas/ChapterNote/example'
-        404:
-          description: A chapter's notes were not found.
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/chapters/{chapter_id}/chapter_note.json:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note.json
+  # /chapters/{chapter_id}/chapter_note:
+  #   get:
+  #     summary: Retreives a chapter's notes
+  #     description: >
+  #       This resource represents the note for a particular chapter.
+  #       For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
+  #       <p>`chapter_id` should be a zero-padded string of two digits.</p>
+  #     tags:
+  #     - Chapters
+  #     produces:
+  #     - application/json
+  #     parameters:
+  #       name: chapter_id
+  #       in: path
+  #       required: true
+  #       description: |
+  #         The `chapter_id` of the chapter.
+  #       schema:
+  #         type: integer
+  #         minimum: 1
+  #         example: 1
+  #     responses:
+  #       200:
+  #         description: A chapter's notes were found.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/ChapterNote'
+  #             example:
+  #               $ref: '#/components/schemas/ChapterNote/example'
+  #       404:
+  #         description: A chapter's notes were not found.
+  #       5XX:
+  #         description: Unexpected error.
+  #     x-code-samples:
+  #       /api/v2/chapters/{chapter_id}/chapter_note:
+  #         lang: shell
+  #         source: |-
+  #           curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note
 
-  /chapters/{chapter_id}/changes.json:
+  /chapters/{chapter_id}/changes:
     get:
       summary: Retreives a chapter's changes
       description: >
@@ -270,13 +270,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters/{chapter_id}/changes.json:
+        /api/v2/chapters/{chapter_id}/changes:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/01/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/01/changes
 
 ### Headings
-  /headings/{heading_id}.json:
+  /headings/{heading_id}:
     get:
       summary: Retrieves a heading
       description: >
@@ -312,12 +312,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters.json:
+        /api/v2/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
 
-  /headings/{heading_id}/changes.json:
+  /headings/{heading_id}/changes:
     get:
       summary: Retreives a heading's changes
       description: >
@@ -352,13 +352,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters.json:
+        /api/v2/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101/changes
 
 ### Commodities
-  /commodities/{goods_nomenclature_item_id}.json:
+  /commodities/{goods_nomenclature_item_id}:
     get:
       summary: Retrieves a commodity
       description: >
@@ -394,12 +394,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters.json:
+        /api/v2/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 
-  /commodities/{goods_nomenclature_item_id}/changes.json:
+  /commodities/{goods_nomenclature_item_id}/changes:
     get:
       summary: Retreives a commodity's changes
       description: >
@@ -435,13 +435,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/commodities/{goods_nomenclature_item_id}/changes.json:
+        /api/v2/commodities/{goods_nomenclature_item_id}/changes:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000/changes.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000/changes
 
 ### Monetary exchange rates
-  /monetary_exchange_rates.json:
+  /monetary_exchange_rates:
     get:
       summary: Retrieves a list of monetary exchange rates
       description: >
@@ -462,13 +462,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/monetary_exchange_rates.json:
+        /api/v2/monetary_exchange_rates:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/monetary_exchange_rates.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/monetary_exchange_rates
 
 ### Quotas
-  /quotas/search.json:
+  /quotas/search:
     get:
       summary: Retrieves a list of quota definitions
       description: >
@@ -541,17 +541,50 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/quotas/search.json:
+        /api/v2/quotas/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search.json?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
 
 ### Goods nomenclatures
-  /goods_nomenclatures/section/{section_id}.json:
+  /goods_nomenclatures/section/{section_id}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
       description: >
         Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
+      description: |
+        Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
+
+        The resource is returned as JSON by default.
+        
+        Alternately, the client may request that the resource be returned as comma separated values (CSV).
+
+        In order to request CSV, the client should add the following HTTP header to the request:
+
+        ```
+        content-type:text/csv
+        ```
+
+        The response will contain some additional HTTP headers, i.e.:
+        
+        ```
+        content-type: text/csv
+        content-disposition: attachment; filename=goods_nomenclatures.csv
+        ```
+
+        Here is an example of a response as CSV:
+
+        ```
+        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href
+        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101
+        93797,0101210000,1,Horses,10,/api/v2/commodities/0101210000
+        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000
+        93798,0101290000,2,Other,80,/api/v2/commodities/0101290000
+        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000
+        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000
+        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000
+        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000
+        ```
       tags:
       - GoodsNomenclatures
       produces:
@@ -578,16 +611,47 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/goods_nomenclatures/section/1.json:
+        /api/v2/goods_nomenclatures/section/1:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1
 
-  /goods_nomenclatures/chapter/{chapter_id}.json:
+  /goods_nomenclatures/chapter/{chapter_id}:
     get:
       summary: Retrieves a list of goods nomenclatures in a chapter
-      description: >
+      description: |
         Retrieves a list of all the goods nomenclatures in a chapter allowing you to view the hierarchical tree for the chapter.
+
+        The resource is returned as JSON by default.
+        
+        Alternately, the client may request that the resource be returned as comma separated values (CSV).
+
+        In order to request CSV, the client should add the following HTTP header to the request:
+
+        ```
+        content-type:text/csv
+        ```
+
+        The response will contain some additional HTTP headers, i.e.:
+        
+        ```
+        content-type: text/csv
+        content-disposition: attachment; filename=goods_nomenclatures.csv
+        ```
+
+        Here is an example of a response as CSV:
+
+        ```
+        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href
+        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101
+        93797,0101210000,1,Horses,10,/api/v2/commodities/0101210000
+        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000
+        93798,0101290000,2,Other,80,/api/v2/commodities/0101290000
+        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000
+        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000
+        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000
+        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000
+        ```
       tags:
       - GoodsNomenclatures
       produces:
@@ -614,16 +678,47 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/goods_nomenclatures/chapter/01.json:
+        /api/v2/goods_nomenclatures/chapter/01:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01
 
-  /goods_nomenclatures/heading/{heading_id}.json:
+  /goods_nomenclatures/heading/{heading_id}:
     get:
       summary: Retrieves a list of goods nomenclatures in a heading
-      description: >
+      description: |
         Retrieves a list of all the goods nomenclatures in a heading allowing you to view the hierarchical tree for the heading.
+
+        The resource is returned as JSON by default.
+        
+        Alternately, the client may request that the resource be returned as comma separated values (CSV).
+
+        In order to request CSV, the client should add the following HTTP header to the request:
+
+        ```
+        content-type:text/csv
+        ```
+
+        The response will contain some additional HTTP headers, i.e.:
+        
+        ```
+        content-type: text/csv
+        content-disposition: attachment; filename=goods_nomenclatures.csv
+        ```
+
+        Here is an example of a response as CSV:
+
+        ```
+        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href
+        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101
+        93797,0101210000,1,Horses,10,/api/v2/commodities/0101210000
+        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000
+        93798,0101290000,2,Other,80,/api/v2/commodities/0101290000
+        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000
+        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000
+        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000
+        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000
+        ```
       tags:
       - GoodsNomenclatures
       produces:
@@ -650,10 +745,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/goods_nomenclatures/heading/0101.json:
+        /api/v2/goods_nomenclatures/heading/0101:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101.json
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101
 
 components:
   schemas:
@@ -1535,7 +1630,7 @@ components:
             description: LIVE ANIMALS
             number_indents: 0
             productline_suffix: "80"
-            href: /api/v2/chapters/01.json
+            href: /api/v2/chapters/01
         - id: "27810"
           type: goods_nomenclature
           attributes:
@@ -1544,7 +1639,7 @@ components:
             description: Live horses, asses, mules and hinnies
             number_indents: 0
             productline_suffix: "80"
-            href: /api/v2/headings/0101.json
+            href: /api/v2/headings/0101
         - id: "93797"
           type: goods_nomenclature
           attributes:
@@ -1553,7 +1648,7 @@ components:
             description: Horses
             number_indents: 0
             productline_suffix: "80"
-            href: /api/v2/commodities/0101210000.json
+            href: /api/v2/commodities/0101210000
       example2:
         data:
         - id: "27624"
@@ -1564,7 +1659,7 @@ components:
             description: Live horses, asses, mules and hinnies
             number_indents: 0
             productline_suffix: "80"
-            href: /api/v2/headings/0101.json
+            href: /api/v2/headings/0101
         - id: "93797"
           type: goods_nomenclature
           attributes:
@@ -1573,7 +1668,7 @@ components:
             description: Horses
             number_indents: 1
             productline_suffix: "10"
-            href: /api/v2/commodities/0101210000.json
+            href: /api/v2/commodities/0101210000
         - id: "93796"
           type: goods_nomenclature
           attributes:
@@ -1582,7 +1677,7 @@ components:
             description: Pure-bred breeding animals
             number_indents: 2
             productline_suffix: "80"
-            href: /api/v2/commodities/0101210000.json
+            href: /api/v2/commodities/0101210000
 
 ### Referenced objects
 
@@ -2076,4 +2171,4 @@ components:
         description: Meat of bovine animals, fresh or chilled
         number_indents: 0
         productline_suffix: "80"
-        href: /api/v2/headings/0201.json
+        href: /api/v2/headings/0201
