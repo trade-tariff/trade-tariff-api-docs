@@ -29,7 +29,7 @@ All requests to this API should be prefixed with the following URL:
 
 # Sections
 
-## GET /api/v1/sections.json
+## GET /api/v1/sections
 
 *Retrieves all sections*
 
@@ -40,7 +40,7 @@ Each section has a `position`, which is its numerical order within the Tariff, a
 This request does not require authentication.
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections
 ```
 ### Example Response
 
@@ -78,7 +78,7 @@ Status|Meaning|Description|Schema
 200|OK|Sections were found|[Sections](#schemasections)
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/sections/{position}.json
+## GET /api/v1/sections/{position}
 
 *Retreives a section by its position*
 
@@ -97,7 +97,7 @@ position|path|integer|true|The `position` of the section to be retrieved
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1
 ```
 ### Example Response
 
@@ -214,50 +214,9 @@ Status|Meaning|Description|Schema
 404|Not Found|Section was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/sections/{section_id}/section_note.json
-
-*Retreives a section's notes*
-
-This resource represents the notes for a particular section.
-
-For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
-
-This request does not require authentication.
-### Parameters
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-section_id|path|integer|true|The `section_id` of the section. 
-
-### Example Request
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1/section_note.json
-```
-### Example Response
-
-<details>
-<summary>Examples</summary>
- 
-```json
-{
-  "id": 1,
-  "section_id": 1,
-  "content": "* 1\\. Any reference in this section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species.\r\n* 2\\. Except where the context otherwise requires, throughout the nomenclature any reference to 'dried' products also covers products which have been dehydrated, evaporated or freeze-dried.\r\n"
-}
-```
-</details>
-
-### Responses
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A section's notes were found.|[SectionNote](#schemasectionnote)
-404|Not Found|A section's notes were not found.|None
-5XX|Unknown|Unexpected error.|None
-
 # Chapters
 
-## GET /api/v1/chapters.json
+## GET /api/v1/chapters
 
 *Retrieves all chapters*
 
@@ -266,7 +225,7 @@ This resource represents all chapters in the Tariff. Each chapter has a `goods_n
 This request does not require authentication.
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters
 ```
 ### Example Response
 
@@ -298,7 +257,7 @@ Status|Meaning|Description|Schema
 200|OK|Chapters were found|[Chapters](#schemachapters)
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/chapters/{chapter_id}.json
+## GET /api/v1/chapters/{chapter_id}
 
 *Retrieves a chapter*
 
@@ -313,7 +272,7 @@ chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34
 ```
 ### Example Response
 
@@ -390,47 +349,7 @@ Status|Meaning|Description|Schema
 404|Not Found|Chapter was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/chapters/{chapter_id}/chapter_note.json
-
-*Retreives a chapter's notes*
-
-This resource represents the note for a particular chapter. For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id` <p>`chapter_id` should be a zero-padded string of two digits.</p>
-
-This request does not require authentication.
-### Parameters
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-chapter_id|path|integer|true|The `chapter_id` of the chapter. 
-
-### Example Request
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34/chapter_note.json
-```
-### Example Response
-
-<details>
-<summary>Examples</summary>
- 
-```json
-{
-  "id": 46,
-  "section_id": 1,
-  "chapter_id": "01",
-  "content": "* 1\\. This chapter covers all live animals except:\r\n  * (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms and other products of heading 3002; and\r\n  * (c) animals of heading 9508."
-}
-```
-</details>
-
-### Responses
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A chapter's notes were found.|[ChapterNote](#schemachapternote)
-404|Not Found|A chapter's notes were not found.|None
-5XX|Unknown|Unexpected error.|None
-
-## GET /api/v1/chapters/{chapter_id}/changes.json
+## GET /api/v1/chapters/{chapter_id}/changes
 
 *Retreives a chapter's changes*
 
@@ -445,7 +364,7 @@ chapter_id|path|string|true|The `chapter_id` of the chapter.
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/01/changes.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/01/changes
 ```
 ### Example Response
 
@@ -528,7 +447,7 @@ Status|Meaning|Description|Schema
 
 # Headings
 
-## GET /api/v1/headings/{heading_id}.json
+## GET /api/v1/headings/{heading_id}
 
 *Retrieves a heading*
 
@@ -543,7 +462,7 @@ heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101
 ```
 ### Example Response
 
@@ -634,7 +553,7 @@ Status|Meaning|Description|Schema
 404|Not Found|Commodity was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/headings/{heading_id}/changes.json
+## GET /api/v1/headings/{heading_id}/changes
 
 *Retreives a heading's changes*
 
@@ -649,7 +568,7 @@ heading_id|path|integer|true|The `heading_id` of the heading to be retrieved, e.
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101/changes.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101/changes
 ```
 ### Example Response
 
@@ -712,7 +631,7 @@ Status|Meaning|Description|Schema
 
 # Commodities
 
-## GET /api/v1/commodities/{goods_nomenclature_item_id}.json
+## GET /api/v1/commodities/{goods_nomenclature_item_id}
 
 *Retrieves a commodity*
 
@@ -727,7 +646,7 @@ goods_nomenclature_item_id|path|string|true|The `goods_nomenclature_item_id` of 
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000
 ```
 ### Example Response
 
@@ -1021,7 +940,7 @@ Status|Meaning|Description|Schema
 404|Not Found|Commodity was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/commodities/{goods_nomenclature_item_id}/changes.json
+## GET /api/v1/commodities/{goods_nomenclature_item_id}/changes
 
 *Retreives a commodity's changes*
 
@@ -1036,7 +955,7 @@ goods_nomenclature_item_id|path|integer|true|The `goods_nomenclature_item_id` of
 
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000/changes.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000/changes
 ```
 ### Example Response
 
@@ -1099,7 +1018,7 @@ Status|Meaning|Description|Schema
 
 # Monetary Exchange Rates
 
-## GET /api/v1/monetary_exchange_rates.json
+## GET /api/v1/monetary_exchange_rates
 
 *Retrieves a list of monetary exchange rates*
 
@@ -1108,7 +1027,7 @@ Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
 This request does not require authentication.
 ### Example Request
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/monetary_exchange_rates.json
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/monetary_exchange_rates
 ```
 ### Example Response
 
