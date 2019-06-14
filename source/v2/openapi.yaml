@@ -556,7 +556,7 @@ paths:
         Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
 
         The resource is returned as JSON by default.
-        
+
         Alternately, the client may request that the resource be returned as comma separated values (CSV).
 
         In order to request CSV, the client should add the following HTTP header to the request:
@@ -566,7 +566,7 @@ paths:
         ```
 
         The response will contain some additional HTTP headers, i.e.:
-        
+
         ```
         content-type: text/csv
         content-disposition: attachment; filename=goods_nomenclatures.csv
@@ -623,7 +623,7 @@ paths:
         Retrieves a list of all the goods nomenclatures in a chapter allowing you to view the hierarchical tree for the chapter.
 
         The resource is returned as JSON by default.
-        
+
         Alternately, the client may request that the resource be returned as comma separated values (CSV).
 
         In order to request CSV, the client should add the following HTTP header to the request:
@@ -633,7 +633,7 @@ paths:
         ```
 
         The response will contain some additional HTTP headers, i.e.:
-        
+
         ```
         content-type: text/csv
         content-disposition: attachment; filename=goods_nomenclatures.csv
@@ -690,7 +690,7 @@ paths:
         Retrieves a list of all the goods nomenclatures in a heading allowing you to view the hierarchical tree for the heading.
 
         The resource is returned as JSON by default.
-        
+
         Alternately, the client may request that the resource be returned as comma separated values (CSV).
 
         In order to request CSV, the client should add the following HTTP header to the request:
@@ -700,7 +700,7 @@ paths:
         ```
 
         The response will contain some additional HTTP headers, i.e.:
-        
+
         ```
         content-type: text/csv
         content-disposition: attachment; filename=goods_nomenclatures.csv
@@ -1584,13 +1584,47 @@ components:
             suspension_period_end_date: null
             blocking_period_start_date: null
             blocking_period_end_date: null
-            goods_nomenclature_item_id: "0805102200"
           relationships:
             order_number:
               data:
                 id: "091784"
                 type: order_number
+            measures:
+              data:
+              - id: "3659283"
+                type: measure
+              - id: "3659284"
+                type: measure
+              - id: "3659285"
+                type: measure
         included:
+        - id: "3659283"
+          type: measure
+          attributes:
+            goods_nomenclature_item_id: "0805102200"
+          relationships:
+            geographical_area:
+              data:
+                id: EG
+                type: geographical_area
+        - id: "3659284"
+          type: measure
+          attributes:
+            goods_nomenclature_item_id: "0805102400"
+          relationships:
+            geographical_area:
+              data:
+                id: EG
+                type: geographical_area
+        - id: "3659285"
+          type: measure
+          attributes:
+            goods_nomenclature_item_id: "0805102800"
+          relationships:
+            geographical_area:
+              data:
+                id: EG
+                type: geographical_area
         - id: "091784"
           type: order_number
           attributes:
@@ -2121,9 +2155,6 @@ components:
         blocking_period_end_date:
           type: string
           description: The `blocking_period_end_date` of the definition.
-        goods_nomenclature_item_id:
-          type: string
-          description: The `goods_nomenclature_item_id` of the definition.
       example:
         quota_definition_sid: 12202
         quota_order_number_id: "091784"
@@ -2141,7 +2172,6 @@ components:
         suspension_period_end_date: null
         blocking_period_start_date: null
         blocking_period_end_date: null
-        goods_nomenclature_item_id: "0805102200"
 
     ReferencedGoodsNomenclature:
       description: A goods_nomenclature object referenced elsewhere.
