@@ -89,45 +89,45 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1
 
-  # /api/v1/sections/{section_id}/section_note:
-  #   get:
-  #     summary: Retreives a section's notes
-  #     description: |
-  #       This resource represents the notes for a particular section.
+  /api/v1/sections/{section_id}/section_note:
+    get:
+      summary: Retreives a section's notes
+      description: |
+        This resource represents the notes for a particular section.
 
-  #       For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
-  #     tags:
-  #     - Sections
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #       name: section_id
-  #       in: path
-  #       required: true
-  #       description: |
-  #         The `section_id` of the section.
-  #       schema:
-  #         type: integer
-  #         minimum: 1
-  #         example: 1
-  #     responses:
-  #       200:
-  #         description: A section's notes were found.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/SectionNote'
-  #             example:
-  #               $ref: '#/components/schemas/SectionNote/example'
-  #       404:
-  #         description: A section's notes were not found.
-  #       5XX:
-  #         description: Unexpected error.
-  #     x-code-samples:
-  #       /api/v1/sections:
-  #         lang: shell
-  #         source: |-
-  #           curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1/section_note
+        For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
+      tags:
+      - Sections
+      produces:
+      - application/json
+      parameters:
+        name: section_id
+        in: path
+        required: true
+        description: |
+          The `section_id` of the section.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A section's notes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionNote'
+              example:
+                $ref: '#/components/schemas/SectionNote/example'
+        404:
+          description: A section's notes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v1/sections:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1/section_note
 
 ### Chapters
   /api/v1/chapters:
@@ -195,45 +195,45 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34
 
-  # /api/v1/chapters/{chapter_id}/chapter_note:
-  #   get:
-  #     summary: Retreives a chapter's notes
-  #     description: >
-  #       This resource represents the note for a particular chapter.
-  #       For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
-  #       <p>`chapter_id` should be a zero-padded string of two digits.</p>
-  #     tags:
-  #     - Chapters
-  #     produces:
-  #     - application/json
-  #     parameters:
-  #       name: chapter_id
-  #       in: path
-  #       required: true
-  #       description: |
-  #         The `chapter_id` of the chapter.
-  #       schema:
-  #         type: integer
-  #         minimum: 1
-  #         example: 1
-  #     responses:
-  #       200:
-  #         description: A chapter's notes were found.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ChapterNote'
-  #             example:
-  #               $ref: '#/components/schemas/ChapterNote/example'
-  #       404:
-  #         description: A chapter's notes were not found.
-  #       5XX:
-  #         description: Unexpected error.
-  #     x-code-samples:
-  #       /api/v1/chapters/{chapter_id}/chapter_note:
-  #         lang: shell
-  #         source: |-
-  #           curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34/chapter_note
+  /api/v1/chapters/{chapter_id}/chapter_note:
+    get:
+      summary: Retreives a chapter's notes
+      description: >
+        This resource represents the note for a particular chapter.
+        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
+        <p>`chapter_id` should be a zero-padded string of two digits.</p>
+      tags:
+      - Chapters
+      produces:
+      - application/json
+      parameters:
+        name: chapter_id
+        in: path
+        required: true
+        description: |
+          The `chapter_id` of the chapter.
+        schema:
+          type: integer
+          minimum: 1
+          example: 1
+      responses:
+        200:
+          description: A chapter's notes were found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterNote'
+              example:
+                $ref: '#/components/schemas/ChapterNote/example'
+        404:
+          description: A chapter's notes were not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v1/chapters/{chapter_id}/chapter_note:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34/chapter_note
 
   /api/v1/chapters/{chapter_id}/changes:
     get:
