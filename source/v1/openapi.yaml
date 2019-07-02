@@ -157,7 +157,7 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters
-  
+
   /api/v1/chapters/{chapter_id}:
     get:
       summary: Retrieves a chapter
@@ -1210,7 +1210,7 @@ components:
           formatted_description: Horses
           description_plain: Horses
           producline_suffix: '10'
-          parent_sid: 
+          parent_sid:
         - description: Pure-bred breeding animals
           number_indents: 2
           goods_nomenclature_item_id: '0101210000'
@@ -1220,7 +1220,6 @@ components:
           description_plain: Pure-bred breeding animals
           producline_suffix: '80'
           parent_sid: 93797
-          overview_measures: []
         _response_info:
           links:
           - rel: self
@@ -1364,7 +1363,7 @@ components:
           type: object
           description: |
             A [referenced_section](/reference.html#referencedsection "see referenced_section object") object.
-          properties: 
+          properties:
             id:
               type: integer
             title:
@@ -1676,7 +1675,7 @@ components:
         bti_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0101210000&Expand=true
         formatted_description: Pure-bred breeding animals
         description_plain: Pure-bred breeding animals
-        consigned_from: 
+        consigned_from:
         basic_duty_rate: "<span title='0.0 '>0.00</span> %"
         meursing_code: false
         section:
@@ -1706,7 +1705,7 @@ components:
         - id: 3563221
           origin: eu
           effective_start_date: '2017-06-01T00:00:00.000Z'
-          effective_end_date: 
+          effective_end_date:
           import: true
           measure_conditions:
           - condition_code: B
@@ -1720,7 +1719,7 @@ components:
           - condition_code: B
             condition: 'B: Presentation of a certificate/licence/document'
             document_code: ''
-            requirement: 
+            requirement:
             action: Import/export not allowed after control
             duty_expression: ''
           excluded_countries:
@@ -1744,7 +1743,7 @@ components:
             formatted_description: Import of live animals is subject to the
               presentation of a CVED for animals in accordance with the conditions
               laid down in Regulation (EC) No 282/2004 (OJ L49)
-          order_number: 
+          order_number:
           excise: false
           vat: false
           measure_type:
@@ -1755,7 +1754,7 @@ components:
             formatted_base: ''
           legal_acts:
           - validity_start_date: '2012-04-01T00:00:00.000Z'
-            validity_end_date: 
+            validity_end_date:
             officialjournal_number: L 116
             officialjournal_page: 9
             published_date: '2007-05-04'
@@ -1783,7 +1782,7 @@ components:
         - id: 3540065
           origin: eu
           effective_start_date: '2017-02-04T00:00:00.000Z'
-          effective_end_date: 
+          effective_end_date:
           import: false
           measure_conditions:
           - condition_code: Y
@@ -1796,7 +1795,7 @@ components:
           - condition_code: Y
             condition: 'Y: Other conditions'
             document_code: ''
-            requirement: 
+            requirement:
             action: Import/export not allowed after control
             duty_expression: ''
           excluded_countries: []
@@ -1808,7 +1807,7 @@ components:
             formatted_description: If the product is mentioned in the list annexed
               to Regulation (EC) No 338/97 and its last amendments, an export
               authorization must be presented.
-          order_number: 
+          order_number:
           excise: false
           vat: false
           measure_type:
@@ -1819,14 +1818,14 @@ components:
             formatted_base: ''
           legal_acts:
           - validity_start_date: '2017-02-04T00:00:00.000Z'
-            validity_end_date: 
+            validity_end_date:
             officialjournal_number: L 27
             officialjournal_page: 1
             published_date: '2017-02-01'
             regulation_code: R0160/17
             regulation_url: http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D27,YEAR_OJ%3D2017,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en
           - validity_start_date: '1997-06-01T00:00:00.000Z'
-            validity_end_date: 
+            validity_end_date:
             officialjournal_number: L 61
             officialjournal_page: 1
             published_date: '1997-03-03'
@@ -2169,7 +2168,7 @@ components:
         measure_type:
           id: CVD
           description: Common Veterinary Entry Document (CVED)
-    
+
     ReferencedHeading:
       description:
         A heading object referenced elsewhere.
@@ -2273,7 +2272,7 @@ components:
         formatted_description: Horses
         description_plain: Horses
         producline_suffix: '10'
-        parent_sid: 
+        parent_sid:
 
     ReferencedMeasure:
       description: |
@@ -2348,7 +2347,7 @@ components:
         id: 3563221
         origin: eu
         effective_start_date: '2017-06-01T00:00:00.000Z'
-        effective_end_date: 
+        effective_end_date:
         import: true
         measure_conditions:
         - condition_code: B
@@ -2362,7 +2361,7 @@ components:
         - condition_code: B
           condition: 'B: Presentation of a certificate/licence/document'
           document_code: ''
-          requirement: 
+          requirement:
           action: Import/export not allowed after control
           duty_expression: ''
         excluded_countries:
@@ -2386,7 +2385,7 @@ components:
           formatted_description: Import of live animals is subject to the
             presentation of a CVED for animals in accordance with the conditions
             laid down in Regulation (EC) No 282/2004 (OJ L49)
-        order_number: 
+        order_number:
         excise: false
         vat: false
         measure_type:
@@ -2397,7 +2396,7 @@ components:
           formatted_base: ''
         legal_acts:
         - validity_start_date: '2012-04-01T00:00:00.000Z'
-          validity_end_date: 
+          validity_end_date:
           officialjournal_number: L 116
           officialjournal_page: 9
           published_date: '2007-05-04'
@@ -2559,7 +2558,7 @@ components:
           type: array
           description: |
             A [referenced_geographical_area](/reference.html#referencedgeographicalarea "see referenced geographical_area object") object.
-          items: 
+          items:
             type: object
       example:
         id: '1008'
