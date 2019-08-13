@@ -214,6 +214,47 @@ Status|Meaning|Description|Schema
 404|Not Found|Section was not found.|None
 5XX|Unknown|Unexpected error.|None
 
+## GET /api/v1/sections/{section_id}/section_note
+
+*Retreives a section's notes*
+
+This resource represents the notes for a particular section.
+
+For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
+
+This request does not require authentication.
+### Parameters
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+section_id|path|integer|true|The `section_id` of the section. 
+
+### Example Request
+```shell
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1/section_note
+```
+### Example Response
+
+<details>
+<summary>Examples</summary>
+ 
+```json
+{
+  "id": 1,
+  "section_id": 1,
+  "content": "* 1\\. Any reference in this section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species.\r\n* 2\\. Except where the context otherwise requires, throughout the nomenclature any reference to 'dried' products also covers products which have been dehydrated, evaporated or freeze-dried.\r\n"
+}
+```
+</details>
+
+### Responses
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|OK|A section's notes were found.|[SectionNote](#schemasectionnote)
+404|Not Found|A section's notes were not found.|None
+5XX|Unknown|Unexpected error.|None
+
 # Chapters
 
 ## GET /api/v1/chapters
@@ -347,6 +388,46 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|OK|A chapter was found.|[Chapter](#schemachapter)
 404|Not Found|Chapter was not found.|None
+5XX|Unknown|Unexpected error.|None
+
+## GET /api/v1/chapters/{chapter_id}/chapter_note
+
+*Retreives a chapter's notes*
+
+This resource represents the note for a particular chapter. For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id` <p>`chapter_id` should be a zero-padded string of two digits.</p>
+
+This request does not require authentication.
+### Parameters
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+chapter_id|path|integer|true|The `chapter_id` of the chapter. 
+
+### Example Request
+```shell
+curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34/chapter_note
+```
+### Example Response
+
+<details>
+<summary>Examples</summary>
+ 
+```json
+{
+  "id": 46,
+  "section_id": 1,
+  "chapter_id": "01",
+  "content": "* 1\\. This chapter covers all live animals except:\r\n  * (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms and other products of heading 3002; and\r\n  * (c) animals of heading 9508."
+}
+```
+</details>
+
+### Responses
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|OK|A chapter's notes were found.|[ChapterNote](#schemachapternote)
+404|Not Found|A chapter's notes were not found.|None
 5XX|Unknown|Unexpected error.|None
 
 ## GET /api/v1/chapters/{chapter_id}/changes
@@ -521,8 +602,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101
       "formatted_description": "Pure-bred breeding animals",
       "description_plain": "Pure-bred breeding animals",
       "producline_suffix": "80",
-      "parent_sid": 93797,
-      "overview_measures": []
+      "parent_sid": 93797
     }
   ],
   "_response_info": {
@@ -1585,8 +1665,7 @@ A heading (or sub-heading) describes products more detail than do chapters or se
       "formatted_description": "Pure-bred breeding animals",
       "description_plain": "Pure-bred breeding animals",
       "producline_suffix": "80",
-      "parent_sid": 93797,
-      "overview_measures": []
+      "parent_sid": 93797
     }
   ],
   "_response_info": {
