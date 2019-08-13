@@ -546,6 +546,135 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
 
+### Additional Codes
+  /additional_codes/search:
+    get:
+      summary: Retrieves a list of additional_codes, with associated measures and commodities.
+      description: >
+        Retrieves a list of additional_codes, filtered by parameters.
+      tags:
+      - Additional Codes
+      produces:
+      - application/json
+      parameters:
+        - name: code
+          in: query
+          required: false
+          description: |
+            Retrieve additional_codes with this exact `code`, or if additional_code's `code` begins with `code`.
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          description: |
+            Retrieve additional_codes with description that contains `description`
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: AdditionalCodes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalCodeSearch'
+              example:
+                $ref: '#/components/schemas/AdditionalCodeSearch/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/additional_codes/search:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005
+
+### Certificates
+  /certificates/search:
+    get:
+      summary: Retrieves a list of certificates, with associated measures and commodities.
+      description: >
+        Retrieves a list of certificates, filtered by parameters.
+      tags:
+      - Certificates
+      produces:
+      - application/json
+      parameters:
+        - name: code
+          in: query
+          required: false
+          description: |
+            Retrieve certificates with this exact `code` or the certificate's `code` begins with `code`.
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          description: |
+            Retrieve certificates with `description` that contains `description`.
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Certificates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateSearch'
+              example:
+                $ref: '#/components/schemas/CertificateSearch/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificates/search:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005
+
+### Footnotes
+  /footnotes/search:
+    get:
+      summary: Retrieves a list of footnotes, with associated measures and commodities.
+      description: >
+        Retrieves a list of footnotes, filtered by parameters.
+      tags:
+      - Footnotes
+      produces:
+      - application/json
+      parameters:
+        - name: code
+          in: query
+          required: false
+          description: |
+            Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`.
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          description: |
+            Retrieve footnotes with `description` that contains `description`.
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Footnotes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FootnoteSearch'
+              example:
+                $ref: '#/components/schemas/FootnoteSearch/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/footnotes/search:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=CD134
+
 ### Goods nomenclatures
   /goods_nomenclatures/section/{section_id}:
     get:
@@ -1641,6 +1770,149 @@ components:
             description: Egypt
             geographical_area_id: EG
 
+    AdditionalCodeSearch:
+      description: |
+        Search for additional_codes with parameters
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the additional_code. It may be used to uniquely identify an additional_code. For additional_codes, this value is `attributes:code`.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `additional_code`
+        data:attributes:
+          description: The additional_code's attributes, as a [referenced additional_code object](/reference.html#referencedadditional_code "see referenced additional_code object")
+          $ref: '#/components/schemas/ReferencedAdditionalCode'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this additional_code. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this additional_code. May include parent objects.
+          items:
+            type: object
+      example:
+        data:
+          id: "11486"
+          type: additional_code
+          attributes:
+            additional_code_type_id: "B"
+            additional_code: "067"
+            code: "B067"
+            description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
+            formatted_description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
+          relationships:
+            measures:
+              data:
+              - id: "3625236"
+                type: measure
+        included:
+        - id: "3625236"
+          type: measure
+          attributes:
+            id: "3625236"
+            validity_start_date: "2018-03-07T00:00:00.000Z"
+            validity_end_date: null
+
+    CertificateSearch:
+      description: |
+        Search for certificates with parameters
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the certificate. It may be used to uniquely identify a certificate. For certificates, this value is `attributes:certificate_type_code + attributes:certificate_code`.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `certificate`
+        data:attributes:
+          description: The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
+          $ref: '#/components/schemas/ReferencedCertificate'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
+          items:
+            type: object
+      example:
+        data:
+          id: "D005"
+          type: certificate
+          attributes:
+            certificate_type_code: "D"
+            certificate_code: "005"
+            description: "Commercial invoice within the framework of undertakings"
+          relationships:
+            measures:
+              data:
+              - id: "3118334"
+                type: measure
+        included:
+        - id: "3118334"
+          type: measure
+          attributes:
+            id: 3118334,
+            validity_start_date: "2010-01-01T00:00:00.000Z"
+            validity_end_date: null
+
+    FootnoteSearch:
+      description: |
+        Search for footnotes with parameters
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the footnote. It may be used to uniquely identify a footnote. For footnotes, this value is `attributes:code`.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `footnote`
+        data:attributes:
+          description: The footnote's attributes, as a [referenced footnote object](/reference.html#referencedfootnote "see referenced footnote object")
+          $ref: '#/components/schemas/ReferencedFootnote'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this footnote. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this footnote. May include parent objects.
+          items:
+            type: object
+      example:
+        data:
+          id: "05737"
+          type: footnote
+          attributes:
+            code: "05737"
+            description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
+            formatted_description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
+          relationships:
+            goods_nomenclature:
+              data:
+              - id: "34659"
+                type: goods_nomenclature
+            measures:
+              data:
+              - id: "3216444"
+                type: measure
+        included:
+        - id: "3216444"
+          type: measure
+          attributes:
+            id: "3216444"
+            validity_start_date: "2011-11-01T00:00:00.000Z"
+            validity_end_date: null
+        - id: "34659"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "2204101900"
+            goods_nomenclature_sid: 34658
+            description: "Other"
+            number_indents: 3
+            productline_suffix: "80"
+
     GoodsNomenclatures:
       description: |
       type: object
@@ -1979,7 +2251,7 @@ components:
           description: The `effective_end_date` of the measure.
         import:
           type: boolean
-          description: The `imnport` flag of the measure.
+          description: The `import` flag of the measure.
         excise:
           type: boolean
           description: The `excise` flag of the measure.
@@ -1995,6 +2267,52 @@ components:
         excise: false
         vat: false
 
+    ReferencedAdditionalCode:
+      description: |
+        An additional_code object referenced elsewhere.
+      type: object
+      properties:
+        additional_code_type_id:
+          type: string
+          description: The `additional_code_type_id` for the additional_code. 
+        additional_code:
+          type: string
+          description: The `additional_code` for the additional_code. 
+        code:
+          type: string
+          description: The `code` for the additional_code. Equal to `additional_code_type_id + additional_code`
+        description:
+          type: string
+          description: The `description` for the additional_code.
+        formatted_description:
+          type: string
+          description: The `formatted_description` for the additional_code.
+      example:
+          additional_code_type_id: "C"
+          additional_code: "371"
+          code: "C371"
+          description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+          formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+
+    ReferencedCertificate:
+      description: |
+        A certificate object referenced elsewhere.
+      type: object
+      properties:
+        certificate_type_code:
+          type: string
+          description: The `certificate_type_code` for the certificate. 
+        certificate_code:
+          type: string
+          description: The `certificate_code` for the certificate.
+        description:
+          type: string
+          description: The `description` for the certificate.
+      example:
+        certificate_type_code: "D"
+        certificate_code: "005"
+        description: "Commercial invoice within the framework of undertakings"
+
     ReferencedFootnote:
       description: |
         A footnote object referenced elsewhere.
@@ -2002,7 +2320,7 @@ components:
       properties:
         code:
           type: string
-          description: The `code` for the footnote.
+          description: The `code` for the footnote. 
         description:
           type: string
           description: The `description` for the footnote.
@@ -2010,40 +2328,13 @@ components:
           type: string
           description: The `formatted_description` for the footnote.
       example:
-        - code: TN701
+          code: TN701
           description: "According to  the Council Regulation (EU) No 692/2014
             (OJ L183, p. 9) it shall be prohibited to import into European Union
-            goods originating in Crimea or Sevastopol.\nThe prohibition shall
-            not apply in respect of: \n(a) the execution until 26 September
-            2014, of trade contracts concluded before 25 June 2014, or of ancillary
-            contracts necessary for the execution of such contracts, provided
-            that the natural or legal persons, entity or body seeking to perform
-            the contract have notified, at least 10 working days in advance,
-            the activity or transaction to the competent authority of the Member
-            State in which they are established. \n(b) goods originating in
-            Crimea or Sevastopol which have been made available to the Ukrainian
-            authorities for examination, for which compliance with the conditions
-            conferring entitlement to preferential origin has been verified
-            and for which a certificate of origin has been issued in accordance
-            with Regulation (EU) No 978/2012 and Regulation (EU) No 374/2014
-            or in accordance with the EU-Ukraine Association Agreement."
+            goods originating in Crimea or Sevastopol.\n..."
           formatted_description: 'According to  the Council Regulation (EU)
             No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
-            European Union goods originating in Crimea or Sevastopol.<br/>The
-            prohibition shall not apply in respect of: <br/>(a) the execution
-            until 26 September 2014, of trade contracts concluded before 25
-            June 2014, or of ancillary contracts necessary for the execution
-            of such contracts, provided that the natural or legal persons, entity
-            or body seeking to perform the contract have notified, at least
-            10 working days in advance, the activity or transaction to the competent
-            authority of the Member State in which they are established. <br/>(b)
-            goods originating in Crimea or Sevastopol which have been made available
-            to the Ukrainian authorities for examination, for which compliance
-            with the conditions conferring entitlement to preferential origin
-            has been verified and for which a certificate of origin has been
-            issued in accordance with Regulation (EU) No 978/2012 and Regulation
-            (EU) No 374/2014 or in accordance with the EU-Ukraine Association
-            Agreement.'
+            European Union goods originating in Crimea or Sevastopol.<br/>...'
 
     ReferencedGuide:
       description: |
