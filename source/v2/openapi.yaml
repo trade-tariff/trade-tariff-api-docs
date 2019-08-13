@@ -568,7 +568,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve additional_codes with description that begins with `description`
+            Retrieve additional_codes with description that contains `description`
           schema:
             type: string
 
@@ -588,6 +588,49 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005
+
+### Certificates
+  /certificates/search:
+    get:
+      summary: Retrieves a list of certificates, with associated measures and commodities.
+      description: >
+        Retrieves a list of certificates, filtered by parameters.
+      tags:
+      - Certificates
+      produces:
+      - application/json
+      parameters:
+        - name: code
+          in: query
+          required: false
+          description: |
+            Retrieve certificates with this exact `code` or the certificate's `code` begins with `code`.
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          description: |
+            Retrieve certificates with `description` that contains `description`.
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Certificates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateSearch'
+              example:
+                $ref: '#/components/schemas/CertificateSearch/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificates/search:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005
 
 ### Footnotes
   /footnotes/search:
@@ -631,49 +674,6 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=CD134
-
-### Certificates
-  /certificates/search:
-    get:
-      summary: Retrieves a list of certificates, with associated measures and commodities.
-      description: >
-        Retrieves a list of certificates, filtered by parameters.
-      tags:
-      - Certificates
-      produces:
-      - application/json
-      parameters:
-        - name: code
-          in: query
-          required: false
-          description: |
-            Retrieve certificates with this exact `code` or the certificate's `code` contains `code`.
-          schema:
-            type: string
-        - name: description
-          in: query
-          required: false
-          description: |
-            Retrieve certificates with `description` that contains `description`.
-          schema:
-            type: string
-
-      responses:
-        200:
-          description: Certificates were found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CertificateSearch'
-              example:
-                $ref: '#/components/schemas/CertificateSearch/example'
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/certificates/search:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005
 
 ### Goods nomenclatures
   /goods_nomenclatures/section/{section_id}:
@@ -1815,6 +1815,49 @@ components:
             validity_start_date: "2018-03-07T00:00:00.000Z"
             validity_end_date: null
 
+    CertificateSearch:
+      description: |
+        Search for certificates with parameters
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the certificate. It may be used to uniquely identify a certificate. For certificates, this value is `attributes:certificate_type_code + attributes:certificate_code`.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `certificate`
+        data:attributes:
+          description: The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
+          $ref: '#/components/schemas/ReferencedCertificate'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
+          items:
+            type: object
+      example:
+        data:
+          id: "D005"
+          type: certificate
+          attributes:
+            certificate_type_code: "D"
+            certificate_code: "005"
+            description: "Commercial invoice within the framework of undertakings"
+          relationships:
+            measures:
+              data:
+              - id: "3118334"
+                type: measure
+        included:
+        - id: "3118334"
+          type: measure
+          attributes:
+            id: 3118334,
+            validity_start_date: "2010-01-01T00:00:00.000Z"
+            validity_end_date: null
+
     FootnoteSearch:
       description: |
         Search for footnotes with parameters
@@ -1869,49 +1912,6 @@ components:
             description: "Other"
             number_indents: 3
             productline_suffix: "80"
-
-    CertificateSearch:
-      description: |
-        Search for certificates with parameters
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: The `id` of the certificate. It may be used to uniquely identify a certificate. For certificates, this value is `attributes:certificate_type_code + attributes:certificate_code`.
-        data:type:
-          type: string
-          description: the type of object this is, e.g. `certificate`
-        data:attributes:
-          description: The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
-          $ref: '#/components/schemas/ReferencedCertificate'
-        data:relationships:
-          type: object
-          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
-        included:
-          type: array
-          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
-          items:
-            type: object
-      example:
-        data:
-          id: "D005"
-          type: certificate
-          attributes:
-            certificate_type_code: "D"
-            certificate_code: "005"
-            description: "Commercial invoice within the framework of undertakings"
-          relationships:
-            measures:
-              data:
-              - id: "3118334"
-                type: measure
-        included:
-        - id: "3118334"
-          type: measure
-          attributes:
-            id: 3118334,
-            validity_start_date: "2010-01-01T00:00:00.000Z"
-            validity_end_date: null
 
     GoodsNomenclatures:
       description: |
@@ -2294,6 +2294,25 @@ components:
           description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
           formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
+    ReferencedCertificate:
+      description: |
+        A certificate object referenced elsewhere.
+      type: object
+      properties:
+        certificate_type_code:
+          type: string
+          description: The `certificate_type_code` for the certificate. 
+        certificate_code:
+          type: string
+          description: The `certificate_code` for the certificate.
+        description:
+          type: string
+          description: The `description` for the certificate.
+      example:
+        certificate_type_code: "D"
+        certificate_code: "005"
+        description: "Commercial invoice within the framework of undertakings"
+
     ReferencedFootnote:
       description: |
         A footnote object referenced elsewhere.
@@ -2316,25 +2335,6 @@ components:
           formatted_description: 'According to  the Council Regulation (EU)
             No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
             European Union goods originating in Crimea or Sevastopol.<br/>...'
-
-    ReferencedCertificate:
-      description: |
-        A certificate object referenced elsewhere.
-      type: object
-      properties:
-        certificate_type_code:
-          type: string
-          description: The `certificate_type_code` for the certificate. 
-        certificate_code:
-          type: string
-          description: The `certificate_code` for the certificate.
-        description:
-          type: string
-          description: The `description` for the certificate.
-      example:
-        certificate_type_code: "D"
-        certificate_code: "005"
-        description: "Commercial invoice within the framework of undertakings"
 
     ReferencedGuide:
       description: |
