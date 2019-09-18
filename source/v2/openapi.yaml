@@ -521,7 +521,7 @@ paths:
             - exhausted
             - not blocked
             - not exhausted
-        - name: year
+        - name: years
           in: path
           required: false
           description: |
@@ -544,7 +544,7 @@ paths:
         /api/v2/quotas/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&year=2018
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&years=2018
 
 ### Additional Codes
   /additional_codes/search:
