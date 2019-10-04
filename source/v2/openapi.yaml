@@ -1724,7 +1724,6 @@ components:
           type: object
           description:
           items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-            type: integer
       example:
         data:
         - id: "12202"
@@ -1834,7 +1833,6 @@ components:
           type: object
           description:
           items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-            type: integer
       example:
         data:
           id: "11486"
@@ -1889,7 +1887,6 @@ components:
           type: object
           description:
           items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-            type: integer
       example:
         data:
           id: "D005"
@@ -1942,7 +1939,6 @@ components:
           type: object
           description:
           items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-            type: integer
       example:
         data:
           id: "05737"
