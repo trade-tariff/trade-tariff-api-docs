@@ -472,7 +472,7 @@ paths:
     get:
       summary: Retrieves a list of quota definitions
       description: >
-        Retrieves a list of quota definitions, optionally filtered by a variety of parameters.
+        Retrieves a paginated list of quota definitions, optionally filtered by a variety of parameters.
       tags:
       - Quotas
       produces:
@@ -528,6 +528,13 @@ paths:
             Retrieve quotas only for this `year`, E.g. '2019'
           schema:
             type: string
+        - name: page
+          in: path
+          required: false
+          description: |
+            Retrieve search page with number
+          schema:
+            type: integer
 
       responses:
         200:
@@ -544,14 +551,14 @@ paths:
         /api/v2/quotas/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&years=2018
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&years=2018&page=1
 
 ### Additional Codes
   /additional_codes/search:
     get:
       summary: Retrieves a list of additional_codes, with associated measures and commodities.
       description: >
-        Retrieves a list of additional_codes, filtered by parameters.
+        Retrieves a paginated list of additional_codes, filtered by parameters.
       tags:
       - Additional Codes
       produces:
@@ -571,6 +578,13 @@ paths:
             Retrieve additional_codes with description that contains `description`
           schema:
             type: string
+        - name: page
+          in: path
+          required: false
+          description: |
+            Retrieve search page with number
+          schema:
+            type: integer
 
       responses:
         200:
@@ -587,14 +601,14 @@ paths:
         /api/v2/additional_codes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&page=1
 
 ### Certificates
   /certificates/search:
     get:
       summary: Retrieves a list of certificates, with associated measures and commodities.
       description: >
-        Retrieves a list of certificates, filtered by parameters.
+        Retrieves a paginated list of certificates, filtered by parameters.
       tags:
       - Certificates
       produces:
@@ -614,6 +628,13 @@ paths:
             Retrieve certificates with `description` that contains `description`.
           schema:
             type: string
+        - name: page
+          in: path
+          required: false
+          description: |
+            Retrieve search page with number
+          schema:
+            type: integer
 
       responses:
         200:
@@ -630,14 +651,14 @@ paths:
         /api/v2/certificates/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&page=1
 
 ### Footnotes
   /footnotes/search:
     get:
       summary: Retrieves a list of footnotes, with associated measures and commodities.
       description: >
-        Retrieves a list of footnotes, filtered by parameters.
+        Retrieves a paginated list of footnotes, filtered by parameters.
       tags:
       - Footnotes
       produces:
@@ -657,6 +678,13 @@ paths:
             Retrieve footnotes with `description` that contains `description`.
           schema:
             type: string
+        - name: page
+          in: path
+          required: false
+          description: |
+            Retrieve search page with number
+          schema:
+            type: integer
 
       responses:
         200:
@@ -673,7 +701,7 @@ paths:
         /api/v2/footnotes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=CD134
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=CD134&page=1
 
 ### Goods nomenclatures
   /goods_nomenclatures/section/{section_id}:
@@ -1692,6 +1720,11 @@ components:
           items:
             # $ref: '#/components/schemas/ReferencedCommodity'
             type: object
+        meta:pagination:
+          type: object
+          description:
+          items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
+            type: integer
       example:
         data:
         - id: "12202"
@@ -1769,6 +1802,11 @@ components:
             id: EG
             description: Egypt
             geographical_area_id: EG
+        meta:
+          pagination:
+            page: 1
+            per_page: 5
+            total_count: 1
 
     AdditionalCodeSearch:
       description: |
@@ -1792,6 +1830,11 @@ components:
           description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this additional_code. May include parent objects.
           items:
             type: object
+        meta:pagination:
+          type: object
+          description:
+          items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
+            type: integer
       example:
         data:
           id: "11486"
@@ -1814,6 +1857,11 @@ components:
             id: "3625236"
             validity_start_date: "2018-03-07T00:00:00.000Z"
             validity_end_date: null
+        meta:
+          pagination:
+            page: 1
+            per_page: 5
+            total_count: 1
 
     CertificateSearch:
       description: |
@@ -1837,6 +1885,11 @@ components:
           description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
           items:
             type: object
+        meta:pagination:
+          type: object
+          description:
+          items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
+            type: integer
       example:
         data:
           id: "D005"
@@ -1857,6 +1910,11 @@ components:
             id: 3118334,
             validity_start_date: "2010-01-01T00:00:00.000Z"
             validity_end_date: null
+        meta:
+          pagination:
+            page: 1
+            per_page: 5
+            total_count: 1
 
     FootnoteSearch:
       description: |
@@ -1880,6 +1938,11 @@ components:
           description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this footnote. May include parent objects.
           items:
             type: object
+        meta:pagination:
+          type: object
+          description:
+          items: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
+            type: integer
       example:
         data:
           id: "05737"
@@ -1912,6 +1975,11 @@ components:
             description: "Other"
             number_indents: 3
             productline_suffix: "80"
+        meta:
+          pagination:
+            page: 1
+            per_page: 5
+            total_count: 1
 
     GoodsNomenclatures:
       description: |
