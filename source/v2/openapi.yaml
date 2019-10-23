@@ -707,8 +707,6 @@ paths:
   /goods_nomenclatures/section/{section_id}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
-      description: >
-        Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
       description: |
         Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
 
@@ -906,6 +904,40 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101
+
+  /search_references:
+    get:
+      summary: Retrieves a list of search references by letter
+      description: |
+        Retrieves a list of search references by letter
+      tags:
+      - SearchReferences
+      produces:
+      - application/json
+      parameters:
+        - name: query[letter]
+          in: path
+          required: true
+          description: |
+            Retrieve search references started with  `query[letter]` letter.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Search references were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchReferences'
+              example:
+                $ref: '#/components/schemas/SearchReferences/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/search_references.json?query[letter]=c:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/search_references.json?query[letter]=c
 
 components:
   schemas:
@@ -2053,6 +2085,40 @@ components:
             productline_suffix: "80"
             href: /api/v2/commodities/0101210000
 
+    SearchReferences:
+      description: |
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: the unique `id` of the search_reference
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `search_reference`
+        data:attributes:
+          description: The search_reference's attributes, as a [referenced search_reference object](/reference.html#referencedsearchreference "see referenced search_reference object")
+          $ref: '#/components/schemas/ReferencedSearchReference'
+      example:
+        data:
+          - id: "888"
+            type: search_reference
+            attributes:
+              title: "cabinets, filing of base metal"
+              referenced_id: "8304"
+              referenced_class: "Heading"
+          - id: "886"
+            type: search_reference
+            attributes:
+              title: "cabinets (furniture)"
+              referenced_id: "9403"
+              referenced_class: "Heading"
+          - id: "887"
+            type: search_reference
+            attributes:
+              title: "cabinets (radio and television)"
+              referenced_id: "8529"
+              referenced_class: "Heading"
+
 ### Referenced objects
 
     ReferencedSection:
@@ -2561,3 +2627,21 @@ components:
         number_indents: 0
         productline_suffix: "80"
         href: /api/v2/headings/0201
+
+    ReferencedSearchReference:
+      description: A search_reference object referenced elsewhere.
+      type: object
+      properties:
+        title:
+          type: string
+          description: The `title` of referenced object.
+        referenced_id:
+          type: string
+          description: The `id` of the referenced object.
+        referenced_class:
+          type: string
+          description: The `type` of the referenced object.
+      example:
+        title: "cabinets, filing of base metal"
+        referenced_id: "8304"
+        referenced_class: "Heading"
