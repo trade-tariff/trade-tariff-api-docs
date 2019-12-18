@@ -939,6 +939,58 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/search_references.json?query[letter]=c
 
+### Geographical areas
+  /geographical_areas:
+    get:
+      summary: Retrieves a list of geographical areas
+      description: |
+        Retrieves a list of geographical areas
+      tags:
+      - GeographicalAreas
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Geographical areas were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeographicalAreas'
+              example:
+                $ref: '#/components/schemas/GeographicalAreas/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/geographical_areas:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas
+
+  /geographical_areas/contries:
+    get:
+      summary: Retrieves a list of contries
+      description: |
+        Retrieves a list of contries
+      tags:
+      - GeographicalAreas
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Contries were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeographicalAreas'
+              example:
+                $ref: '#/components/schemas/GeographicalAreas/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/geographical_areas:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/contries
 components:
   schemas:
 
@@ -2118,6 +2170,43 @@ components:
               title: "cabinets (radio and television)"
               referenced_id: "8529"
               referenced_class: "Heading"
+
+    GeographicalAreas:
+      description: |
+        Geographical areas.
+
+        A geographical area has a specific code (the `geographical_area_id`), which is unique.
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the geographical area. It may be used to uniquely identify a geographical area.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `geographical_area`
+        data:attributes:
+          description: The geographical area's attributes, as a [referenced geographical area object](/reference.html#referencedgeographicalarea "see referenced geographical area object")
+          $ref: '#/components/schemas/ReferencedGeographicalArea'
+        data:relationships:
+          type: object
+          description: Zero, one or many [referenced geographical area](/reference.html#referencedgeographicalarea "see referenced geographical area object") objects.
+        included:
+          type: array
+          description: Zero, one or many [referenced geographical area objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
+          items:
+            type: object
+            # $ref: '#/components/schemas/ReferencedGeographicalArea'
+      example:
+        data:
+          id: "GB"
+          type: geographical_area
+          attributes:
+            id: "GB"
+            description: "United Kingdom"
+          relationships:
+            children_geographical_areas:
+              data:
+        included:
 
 ### Referenced objects
 
