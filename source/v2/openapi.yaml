@@ -513,7 +513,7 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not blocked', 'not exhausted']
+            Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not_blocked', 'not_exhausted']
           schema:
             type: string
             enum:
@@ -1654,17 +1654,23 @@ components:
             legal_acts:
               data:
               - id: "R1701600"
-                type: legal_acts
+                type: legal_act
               - id: "R9703380"
-                type: legal_acts
+                type: legal_act
             measure_conditions:
               data:
               - id: "1134192"
-                type: measure_conditions
+                type: measure_condition
               - id: "1134193"
-                type: measure_conditions
+                type: measure_condition
               - id: "1134194"
-                type: measure_conditions
+                type: measure_condition
+            measure_components:
+              data:
+              - id: "3540076-01"
+                type: measure_component
+              - id: "3540076-02"
+                type: measure_component
             geographical_area:
               data:
                 id: "1008"
@@ -1674,9 +1680,30 @@ components:
             footnotes:
               data:
                 id: "CD371"
-                type: footnotes
+                type: footnote
             order_number:
               data: null
+        - id: "1134192"
+          type: measure_condition
+          attributes:
+            id: "1134192"
+            condition_code: "Y"
+            condition: "Y: Other conditions"
+            document_code: "N853"
+            requirement: "UN/EDIFACT certificates: Common Veterinary Entry Document (CVED) in accordance with Regulation (EC) No 136/2004, used for veterinary check on products"
+            action: "Import/export allowed after control"
+            duty_expression: ""
+        - id: "3540076-01"
+          type: measure_component
+          attributes:
+            id: "3540076-01"
+            duty_expression_id: "01"
+            duty_amount: 20.2
+            monetary_unit_code: "EUR"
+            monetary_unit_abbreviation: null
+            measurement_unit_code: "DTN"
+            duty_expression_description: "+ % or amount"
+            duty_expression_abbreviation: "+"
 
     CommodityChanges:
       description: |
