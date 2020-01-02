@@ -1015,19 +1015,21 @@ components:
       example:
         data:
         - id: 1
-          position: 1
-          title: Live animals; animal products
-          numeral: I
-          chapter_from: '01'
-          chapter_to: '05'
-          section_note_id: 1
+          type: section
+          attributes:
+            position: 1
+            title: Live animals; animal products
+            numeral: I
+            chapter_from: '01'
+            chapter_to: '05'
         - id: 2
-          position: 2
-          title: Vegetable products
-          numeral: II
-          chapter_from: '06'
-          chapter_to: '14'
-          section_note_id: 6
+          type: section
+          attributes:
+            position: 2
+            title: Vegetable products
+            numeral: II
+            chapter_from: '06'
+            chapter_to: '14'
         # - $ref: '#/components/schemas/ReferencedSection/example'
 
     Section:
@@ -1090,7 +1092,6 @@ components:
             headings_to: 0106
             description: LIVE ANIMALS
             formatted_description: Live animals
-            chapter_note_id: 46
           relationships:
             guides:
               data:
@@ -1105,12 +1106,16 @@ components:
             headings_to: 0106
             description: MEAT AND EDIBLE MEAT OFFAL
             formatted_description: Meat and edible meat offal
-            chapter_note_id: 47
           relationships:
             guides:
               data:
               - id: "23"
                 type: guide
+        - id: "23"
+          type: guide
+          attributes:
+            title: "Classification of goods"
+            url: "https://www.gov.uk/government/collections/classification-of-goods"
 
     SectionNote:
       description: |
