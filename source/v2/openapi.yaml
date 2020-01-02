@@ -1575,7 +1575,7 @@ components:
             footnotes:
               data:
               - id: "701"
-                type: footnoe
+                type: footnote
             section:
               data:
                 id: "1"
@@ -1620,6 +1620,25 @@ components:
             goods_nomenclature_item_id: "0104100000"
             formatted_description: "Sheep"
             description_plain: "Sheep"
+        - id: "701"
+          type: footnote
+          attributes:
+            code: "TR037"
+            description: "Guillotine blades"
+            formatted_description: "Guillotine blades"
+        - id: "1"
+          type: section
+          attributes:
+            numeral: "I"
+            title: "Live animals; animal products"
+            position: "1"
+        - id: "27773"
+          type: heading
+          attributes:
+            goods_nomenclature_item_id: "9950000000"
+            description: "Code used only in trading of... is less than €|200"
+            formatted_description: "Code used only in trading of... is less than €&nbsp;200"
+            description_plain: "Code used only in trading of... is less than € 200"
         - id: "27623"
           type: chapter
           attributes:
@@ -1704,6 +1723,10 @@ components:
             measurement_unit_code: "DTN"
             duty_expression_description: "+ % or amount"
             duty_expression_abbreviation: "+"
+        - id: ""
+          type: duty_expression
+          attributes:
+
 
     CommodityChanges:
       description: |
