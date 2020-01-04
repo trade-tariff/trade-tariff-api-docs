@@ -1172,19 +1172,16 @@ components:
           attributes:
             goods_nomenclature_sid: '27623'
             goods_nomenclature_item_id: '0100000000'
-            chapter_note_id: 46
         - id: "27809"
           type: chapter
           attributes:
             goods_nomenclature_sid: '27809'
             goods_nomenclature_item_id: '0200000000'
-            chapter_note_id: 47
         - id: "28373"
           type: chapter
           attributes:
             goods_nomenclature_sid: '28373'
             goods_nomenclature_item_id: '0300000000'
-            chapter_note_id: 48
 
     Chapter:
       description: |
@@ -1321,54 +1318,45 @@ components:
             type: object
       example:
         data:
-        - oid: 3372028
-          model_name: Measure
-          operation: U
-          operation_date: '2019-02-02'
-          record:
-            id: -494058
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: '0105111100'
-            geographical_area:
-              id: '1011'
-              description: ERGA OMNES
-            measure_type:
-              id: CVD
-              description: Common Veterinary Entry Document (CVED)
-        - oid: 3372029
-          model_name: Measure
-          operation: C
-          operation_date: '2019-02-02'
-          record:
-            id: -506560
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: '0105111100'
-            geographical_area:
-              id: '1011'
-              description: ERGA OMNES
-            measure_type:
-              id: CVD
-              description: Common Veterinary Entry Document (CVED)
-        - oid: 3372190
-        included:
-        - id:
-          type:
+        - id: 3372028
+          type: change
           attributes:
-            id: 3655130
-            orogin: eu
-            import: true
-            goods_nomenclature_item_id: "0104103000"
+            oid: 3372028
+            model_name: Measure
+            operation: U
+            operation_date: '2019-02-02'
           relationships:
-            geographical_area:
+            record:
               data:
-                id: "1011"
-                type: geographical_area
-            measure_type:
-              data:
-                id: "122"
-                type: measure_type
+                id: "-540193"
+                type: measure
+        included:
+          - id: "-540193"
+            type: measure
+            attributes:
+              id: -540193
+              origin: "uk"
+              import: true
+              goods_nomenclature_item_id: "3401300000"
+            relationships:
+              geographical_area:
+                data:
+                  id: "1011"
+                  type: geographical_area
+              measure_type:
+                data:
+                  id: "VTS"
+                  type: measure_type
+          - id: "1011"
+            type: geographical_area
+            attributes:
+              id: "1011"
+              description: "ERGA OMNES"
+          - id: "VTS"
+            type: measure_type
+            attributes:
+              id: "VTS"
+              description: "VAT standard rate"
 
     Heading:
       description: |
