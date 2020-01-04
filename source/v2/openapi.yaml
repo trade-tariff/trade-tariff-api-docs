@@ -1721,6 +1721,8 @@ components:
                 type: measure_component
               - id: "3540076-02"
                 type: measure_component
+            national_measurement_units:
+              data:
             geographical_area:
               data:
                 id: "1008"
@@ -1814,12 +1816,22 @@ components:
           relationships:
             geographical_area:
               data:
-                id: KP
+                id: "1008"
                 type: geographical_area
             measure_type:
               data:
                 id: "718"
                 type: measure_type
+        - id: "1008"
+          type: geographical_area
+          attributes:
+            id: "1008"
+            description: "All third countries"
+        - id: "718"
+          type: measure_type
+          attributes:
+            id: "718"
+            description: "Export control on luxury goods"
 
     MonetaryExchangeRates:
       description: |
@@ -2001,7 +2013,7 @@ components:
             type: integer
       example:
         data:
-          id: "11486"
+        - id: "11486"
           type: additional_code
           attributes:
             additional_code_type_id: "B"
@@ -2018,9 +2030,23 @@ components:
         - id: "3625236"
           type: measure
           attributes:
-            id: "3625236"
-            validity_start_date: "2018-03-07T00:00:00.000Z"
-            validity_end_date: null
+            id: 3625236
+            validity_start_date: "1991-07-01T00:00:00.000Z"
+            validity_end_date: "1992-03-31T00:00:00.000Z"
+            goods_nomenclature_item_id: "7317000000"
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "46392"
+                type: goods_nomenclature
+        - id: "46392"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "7317000000"
+            goods_nomenclature_sid: 46392
+            number_indents: 0
+            description: "Nails, tacks, drawing pins, corrugated nails, staples ..."
+            productline_suffix: "80"
         meta:
           pagination:
             page: 1
@@ -2062,18 +2088,35 @@ components:
             certificate_type_code: "D"
             certificate_code: "005"
             description: "Commercial invoice within the framework of undertakings"
+            formatted_description: "Commercial invoice within the framework of undertakings"
           relationships:
             measures:
               data:
-              - id: "3118334"
+              - id: "2124342"
+                type: measure
+              - id: "2250100"
                 type: measure
         included:
-        - id: "3118334"
+        - id: "2124342"
           type: measure
           attributes:
-            id: 3118334,
+            id: 2124342
             validity_start_date: "2010-01-01T00:00:00.000Z"
             validity_end_date: null
+            goods_nomenclature_item_id: "7307191010"
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "71692"
+                type: goods_nomenclature
+        - id: "71692"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "7307191010"
+            goods_nomenclature_sid: 71692
+            number_indents: 4
+            description: "Threaded malleable cast iron tube or pipe fittings"
+            productline_suffix: "80"
         meta:
           pagination:
             page: 1
@@ -2113,10 +2156,13 @@ components:
           type: footnote
           attributes:
             code: "05737"
+            footnote_type_id: "05"
+            footnote_id: "737"
             description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
             formatted_description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
+            extra_large_measures: false
           relationships:
-            goods_nomenclature:
+            goods_nomenclatures:
               data:
               - id: "34659"
                 type: goods_nomenclature
@@ -2131,6 +2177,12 @@ components:
             id: "3216444"
             validity_start_date: "2011-11-01T00:00:00.000Z"
             validity_end_date: null
+            "goods_nomenclature_item_id": "2204101900"
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "34659"
+                type: goods_nomenclature
         - id: "34659"
           type: goods_nomenclature
           attributes:
