@@ -1533,36 +1533,32 @@ components:
                 id: "-470966"
                 type: measure
         included:
-        - oid: 3371184
-          model_name: Measure
-          operation: U
-          operation_date: '2019-02-02'
-          record:
-            id: -494217
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: 0102291020
+        - id: 3655746
+          type: measure
+          attributes:
+            id: 3655746
+            origin: "eu"
+            import: false
+            goods_nomenclature_item_id: "0101210000"
+          relationships:
             geographical_area:
-              id: '1011'
-              description: ERGA OMNES
+              data:
+                id: "1008"
+                type: geographical_area
             measure_type:
-              id: AHC
-              description: Animal Health Certificate
-        - oid: 3371370
-          model_name: Measure
-          operation: U
-          operation_date: '2019-02-02'
-          record:
-            id: -494348
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: 0102292950
-            geographical_area:
-              id: '1011'
-              description: ERGA OMNES
-            measure_type:
-              id: CVD
-              description: Common Veterinary Entry Document (CVED)
+              data:
+                id: "715"
+                type: measure_type
+        - id: "1008"
+          type: geographical_area
+          attributes:
+            id: "1008"
+            description: "All third countries"
+        - id: "715"
+          type: measure_type
+          attributes:
+            id: "715"
+            description: "Export control - CITES"
 
     Commodity:
       description: |
@@ -1761,7 +1757,6 @@ components:
         - id: ""
           type: duty_expression
           attributes:
-
 
     CommodityChanges:
       description: |
