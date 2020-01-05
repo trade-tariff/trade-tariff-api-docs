@@ -525,9 +525,9 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve quotas only for this `year`, E.g. '2019'
+            Retrieve quotas only for this `years`, E.g. '2019'
           schema:
-            type: string
+            type: array
         - name: page
           in: path
           required: false
@@ -551,7 +551,7 @@ paths:
         /api/v2/quotas/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&years=2018&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&years\[\]=2018&page=1
 
 ### Additional Codes
   /additional_codes/search:
@@ -569,6 +569,13 @@ paths:
           required: false
           description: |
             Retrieve additional_codes with this exact `code`, or if additional_code's `code` begins with `code`.
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: |
+            Retrieve additional_codes with this exact `type` equal to `additional_code_type_id`.
           schema:
             type: string
         - name: description
@@ -601,7 +608,7 @@ paths:
         /api/v2/additional_codes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&type=B&page=1
 
 ### Certificates
   /certificates/search:
@@ -619,6 +626,13 @@ paths:
           required: false
           description: |
             Retrieve certificates with this exact `code` or the certificate's `code` begins with `code`.
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: |
+            Retrieve certificates with this exact `type` equal to `certificate_type_code`.
           schema:
             type: string
         - name: description
@@ -651,7 +665,7 @@ paths:
         /api/v2/certificates/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D&page=1
 
 ### Footnotes
   /footnotes/search:
@@ -669,6 +683,13 @@ paths:
           required: false
           description: |
             Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`.
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: |
+            Retrieve footnotes with this exact `type` equal to `footnote_type_id`.
           schema:
             type: string
         - name: description
@@ -701,7 +722,7 @@ paths:
         /api/v2/footnotes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=CD134&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD&page=1
 
 ### Goods nomenclatures
   /goods_nomenclatures/section/{section_id}:
