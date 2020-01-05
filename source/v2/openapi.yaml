@@ -358,23 +358,23 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101/changes
 
 ### Commodities
-  /commodities/{goods_nomenclature_item_id}:
+  /commodities/{id}:
     get:
       summary: Retrieves a commodity
       description: >
         This resource represents a single commodity.
-        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
-        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+        For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
+        <p>`id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
       produces:
       - application/json
       parameters:
-      - name: 'goods_nomenclature_item_id'
+      - name: 'id'
         in: path
         required: true
         description: |
-          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
         schema:
           type: string
           minimum: 10
@@ -394,28 +394,28 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters:
+        /api/v2/commodities/{id}:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 
-  /commodities/{goods_nomenclature_item_id}/changes:
+  /commodities/{id}/changes:
     get:
       summary: Retreives a commodity's changes
       description: >
         This resource represents a single commodity.
-        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
-        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+        For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
+        <p>`id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
       produces:
       - application/json
       parameters:
-        name: goods_nomenclature_item_id
+        name: id
         in: path
         required: true
         description: |
-          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
         schema:
           type: integer
           minimum: 10
@@ -435,7 +435,7 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/commodities/{goods_nomenclature_item_id}/changes:
+        /api/v2/commodities/{id}/changes:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000/changes
@@ -1212,8 +1212,8 @@ components:
       - id
       example:
         data:
-          id:
-          type:
+          id: "27623"
+          type: chapter
           attributes:
             goods_nomenclature_sid: 27623
             goods_nomenclature_item_id: '0100000000'
