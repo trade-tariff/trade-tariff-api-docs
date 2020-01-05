@@ -966,7 +966,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas
 
-  /geographical_areas/contries:
+  /geographical_areas/countries:
     get:
       summary: Retrieves a list of contries
       description: |
@@ -990,7 +990,7 @@ paths:
         /api/v2/geographical_areas:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/contries
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
 components:
   schemas:
 
@@ -2330,15 +2330,38 @@ components:
             # $ref: '#/components/schemas/ReferencedGeographicalArea'
       example:
         data:
-          id: "GB"
+        - id: "GB"
           type: geographical_area
           attributes:
             id: "GB"
             description: "United Kingdom"
+            geographical_area_id: "GB"
+          relationships:
+            children_geographical_areas:
+              data: []
+        - id: "2501"
+          type: geographical_area
+          attributes:
+            id: "2501"
+            description: "Countries not members of the WTO"
+            geographical_area_id: "2501"
           relationships:
             children_geographical_areas:
               data:
+              - id: "AD"
+                type: geographical_area
+              - id: "AI"
+                type: geographical_area
         included:
+        - id: "AD"
+          type: geographical_area
+          attributes:
+            id: "AD"
+            description: "Andorra"
+            geographical_area_id: "AD"
+          relationships:
+            children_geographical_areas:
+              data: []
 
 ### Referenced objects
 
