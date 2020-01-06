@@ -725,7 +725,7 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD&page=1
 
 ### Goods nomenclatures
-  /goods_nomenclatures/section/{section_id}:
+  /goods_nomenclatures/section/{position}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
       description: |
@@ -767,6 +767,15 @@ paths:
       - application/json
       - text/csv
       parameters:
+        - name: 'position'
+          in: path
+          required: true
+          description: |
+            The `position` of the section to be retrieved
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
         - name: as_of
           in: path
           required: false
@@ -834,6 +843,14 @@ paths:
       - application/json
       - text/csv
       parameters:
+        - name: 'chapter_id'
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
+          schema:
+            type: string
+            example: "01"
         - name: as_of
           in: path
           required: false
@@ -901,6 +918,16 @@ paths:
       - application/json
       - text/csv
       parameters:
+        - name: 'heading_id'
+          in: path
+          required: true
+          description: |
+            The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+          schema:
+            type: string
+            minimum: 4
+            maximum: 4
+            example: "0101"
         - name: as_of
           in: path
           required: false
