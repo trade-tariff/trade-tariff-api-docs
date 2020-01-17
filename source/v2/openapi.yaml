@@ -358,23 +358,23 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101/changes
 
 ### Commodities
-  /commodities/{goods_nomenclature_item_id}:
+  /commodities/{id}:
     get:
       summary: Retrieves a commodity
       description: >
         This resource represents a single commodity.
-        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
-        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+        For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
+        <p>`id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
       produces:
       - application/json
       parameters:
-      - name: 'goods_nomenclature_item_id'
+      - name: 'id'
         in: path
         required: true
         description: |
-          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
         schema:
           type: string
           minimum: 10
@@ -394,28 +394,28 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/chapters:
+        /api/v2/commodities/{id}:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 
-  /commodities/{goods_nomenclature_item_id}/changes:
+  /commodities/{id}/changes:
     get:
       summary: Retreives a commodity's changes
       description: >
         This resource represents a single commodity.
-        For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
-        <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
+        For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
+        <p>`id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
       produces:
       - application/json
       parameters:
-        name: goods_nomenclature_item_id
+        name: id
         in: path
         required: true
         description: |
-          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
         schema:
           type: integer
           minimum: 10
@@ -435,7 +435,7 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/commodities/{goods_nomenclature_item_id}/changes:
+        /api/v2/commodities/{id}/changes:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000/changes
@@ -513,7 +513,7 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not blocked', 'not exhausted']
+            Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not_blocked', 'not_exhausted']
           schema:
             type: string
             enum:
@@ -525,9 +525,9 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve quotas only for this `year`, E.g. '2019'
+            Retrieve quotas only for this `years`, E.g. '2019'
           schema:
-            type: string
+            type: array
         - name: page
           in: path
           required: false
@@ -551,7 +551,7 @@ paths:
         /api/v2/quotas/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not+blocked&years=2018&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&years\[\]=2018&page=1
 
 ### Additional Codes
   /additional_codes/search:
@@ -569,6 +569,13 @@ paths:
           required: false
           description: |
             Retrieve additional_codes with this exact `code`, or if additional_code's `code` begins with `code`.
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: |
+            Retrieve additional_codes with this exact `type` equal to `additional_code_type_id`.
           schema:
             type: string
         - name: description
@@ -601,7 +608,7 @@ paths:
         /api/v2/additional_codes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&type=B&page=1
 
 ### Certificates
   /certificates/search:
@@ -619,6 +626,13 @@ paths:
           required: false
           description: |
             Retrieve certificates with this exact `code` or the certificate's `code` begins with `code`.
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: |
+            Retrieve certificates with this exact `type` equal to `certificate_type_code`.
           schema:
             type: string
         - name: description
@@ -651,7 +665,7 @@ paths:
         /api/v2/certificates/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D&page=1
 
 ### Footnotes
   /footnotes/search:
@@ -669,6 +683,13 @@ paths:
           required: false
           description: |
             Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`.
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: |
+            Retrieve footnotes with this exact `type` equal to `footnote_type_id`.
           schema:
             type: string
         - name: description
@@ -701,10 +722,10 @@ paths:
         /api/v2/footnotes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=CD134&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD&page=1
 
 ### Goods nomenclatures
-  /goods_nomenclatures/section/{section_id}:
+  /goods_nomenclatures/section/{position}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
       description: |
@@ -746,6 +767,15 @@ paths:
       - application/json
       - text/csv
       parameters:
+        - name: 'position'
+          in: path
+          required: true
+          description: |
+            The `position` of the section to be retrieved
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
         - name: as_of
           in: path
           required: false
@@ -813,6 +843,14 @@ paths:
       - application/json
       - text/csv
       parameters:
+        - name: 'chapter_id'
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
+          schema:
+            type: string
+            example: "01"
         - name: as_of
           in: path
           required: false
@@ -880,6 +918,16 @@ paths:
       - application/json
       - text/csv
       parameters:
+        - name: 'heading_id'
+          in: path
+          required: true
+          description: |
+            The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+          schema:
+            type: string
+            minimum: 4
+            maximum: 4
+            example: "0101"
         - name: as_of
           in: path
           required: false
@@ -966,7 +1014,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas
 
-  /geographical_areas/contries:
+  /geographical_areas/countries:
     get:
       summary: Retrieves a list of contries
       description: |
@@ -990,7 +1038,7 @@ paths:
         /api/v2/geographical_areas:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/contries
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
 components:
   schemas:
 
@@ -1015,19 +1063,21 @@ components:
       example:
         data:
         - id: 1
-          position: 1
-          title: Live animals; animal products
-          numeral: I
-          chapter_from: '01'
-          chapter_to: '05'
-          section_note_id: 1
+          type: section
+          attributes:
+            position: 1
+            title: Live animals; animal products
+            numeral: I
+            chapter_from: '01'
+            chapter_to: '05'
         - id: 2
-          position: 2
-          title: Vegetable products
-          numeral: II
-          chapter_from: '06'
-          chapter_to: '14'
-          section_note_id: 6
+          type: section
+          attributes:
+            position: 2
+            title: Vegetable products
+            numeral: II
+            chapter_from: '06'
+            chapter_to: '14'
         # - $ref: '#/components/schemas/ReferencedSection/example'
 
     Section:
@@ -1090,7 +1140,6 @@ components:
             headings_to: 0106
             description: LIVE ANIMALS
             formatted_description: Live animals
-            chapter_note_id: 46
           relationships:
             guides:
               data:
@@ -1105,12 +1154,16 @@ components:
             headings_to: 0106
             description: MEAT AND EDIBLE MEAT OFFAL
             formatted_description: Meat and edible meat offal
-            chapter_note_id: 47
           relationships:
             guides:
               data:
               - id: "23"
                 type: guide
+        - id: "23"
+          type: guide
+          attributes:
+            title: "Classification of goods"
+            url: "https://www.gov.uk/government/collections/classification-of-goods"
 
     SectionNote:
       description: |
@@ -1167,19 +1220,16 @@ components:
           attributes:
             goods_nomenclature_sid: '27623'
             goods_nomenclature_item_id: '0100000000'
-            chapter_note_id: 46
         - id: "27809"
           type: chapter
           attributes:
             goods_nomenclature_sid: '27809'
             goods_nomenclature_item_id: '0200000000'
-            chapter_note_id: 47
         - id: "28373"
           type: chapter
           attributes:
             goods_nomenclature_sid: '28373'
             goods_nomenclature_item_id: '0300000000'
-            chapter_note_id: 48
 
     Chapter:
       description: |
@@ -1210,8 +1260,8 @@ components:
       - id
       example:
         data:
-          id:
-          type:
+          id: "27623"
+          type: chapter
           attributes:
             goods_nomenclature_sid: 27623
             goods_nomenclature_item_id: '0100000000'
@@ -1316,54 +1366,45 @@ components:
             type: object
       example:
         data:
-        - oid: 3372028
-          model_name: Measure
-          operation: U
-          operation_date: '2019-02-02'
-          record:
-            id: -494058
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: '0105111100'
-            geographical_area:
-              id: '1011'
-              description: ERGA OMNES
-            measure_type:
-              id: CVD
-              description: Common Veterinary Entry Document (CVED)
-        - oid: 3372029
-          model_name: Measure
-          operation: C
-          operation_date: '2019-02-02'
-          record:
-            id: -506560
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: '0105111100'
-            geographical_area:
-              id: '1011'
-              description: ERGA OMNES
-            measure_type:
-              id: CVD
-              description: Common Veterinary Entry Document (CVED)
-        - oid: 3372190
-        included:
-        - id:
-          type:
+        - id: 3372028
+          type: change
           attributes:
-            id: 3655130
-            orogin: eu
-            import: true
-            goods_nomenclature_item_id: "0104103000"
+            oid: 3372028
+            model_name: Measure
+            operation: U
+            operation_date: '2019-02-02'
           relationships:
-            geographical_area:
+            record:
               data:
-                id: "1011"
-                type: geographical_area
-            measure_type:
-              data:
-                id: "122"
-                type: measure_type
+                id: "-540193"
+                type: measure
+        included:
+          - id: "-540193"
+            type: measure
+            attributes:
+              id: -540193
+              origin: "uk"
+              import: true
+              goods_nomenclature_item_id: "3401300000"
+            relationships:
+              geographical_area:
+                data:
+                  id: "1011"
+                  type: geographical_area
+              measure_type:
+                data:
+                  id: "VTS"
+                  type: measure_type
+          - id: "1011"
+            type: geographical_area
+            attributes:
+              id: "1011"
+              description: "ERGA OMNES"
+          - id: "VTS"
+            type: measure_type
+            attributes:
+              id: "VTS"
+              description: "VAT standard rate"
 
     Heading:
       description: |
@@ -1397,6 +1438,7 @@ components:
             goods_nomenclature_item_id: '0101000000'
             description: Live horses, asses, mules and hinnies
             bit_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0201000000&Expand=true
+            formatted_description: "Live horses, asses, mules and hinnies"
           relationships:
             footnotes:
               data:
@@ -1422,7 +1464,7 @@ components:
         - id: "27809"
           type: chapter
           attributes:
-          - goods_nomenclature_item_id: "0200000000"
+            goods_nomenclature_item_id: "0200000000"
             description: "MEAT AND EDIBLE MEAT OFFAL"
             formatted_description: "Meat and edible meat offal"
             chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
@@ -1439,7 +1481,7 @@ components:
         - id: "27811"
           type: commodity
           attributes:
-          - description: "Carcases and half-carcases"
+            description: "Carcases and half-carcases"
             number_indents: 1
             goods_nomenclature_item_id: "0201100000"
             leaf: false
@@ -1451,6 +1493,47 @@ components:
           relationships:
             overview_measures:
               data:
+              - id: "2982599"
+                type: measure
+        - id: "2982599"
+          type: measure
+          attributes:
+            id: 2982599
+            vat: false
+          relationships:
+            duty_expression:
+              data:
+                id: "2982599-duty_expression"
+                type: duty_expression
+            measure_type:
+              data:
+                id: "109"
+                type: measure_type
+        - id: "2982599-duty_expression"
+          type: duty_expression
+          attributes:
+            base: "p/st"
+            formatted_base: "\u003cabbr title='Number of items'\u003ep/st\u003c/abbr\u003e"
+        - id: "109"
+          type: measure_type
+          attributes:
+            description: "Supplementary unit"
+            national: null
+            measure_type_series_id: null
+            id: "109"
+        - id: "701"
+          type: footnote
+          attributes:
+            code: "TN701"
+            description: "According to  the Council Regulation (EU) No 692/2014sons, entity or body..."
+            formatted_description: "According to  the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it shall be..."
+        - id: "1"
+          type: section
+          attributes:
+            numeral: "I"
+            title: "Live animals; animal products"
+            position: 1
+            section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
 
     HeadingChanges:
       description: |
@@ -1498,36 +1581,32 @@ components:
                 id: "-470966"
                 type: measure
         included:
-        - oid: 3371184
-          model_name: Measure
-          operation: U
-          operation_date: '2019-02-02'
-          record:
-            id: -494217
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: 0102291020
+        - id: 3655746
+          type: measure
+          attributes:
+            id: 3655746
+            origin: "eu"
+            import: false
+            goods_nomenclature_item_id: "0101210000"
+          relationships:
             geographical_area:
-              id: '1011'
-              description: ERGA OMNES
+              data:
+                id: "1008"
+                type: geographical_area
             measure_type:
-              id: AHC
-              description: Animal Health Certificate
-        - oid: 3371370
-          model_name: Measure
-          operation: U
-          operation_date: '2019-02-02'
-          record:
-            id: -494348
-            origin: uk
-            import: true
-            goods_nomenclature_item_id: 0102292950
-            geographical_area:
-              id: '1011'
-              description: ERGA OMNES
-            measure_type:
-              id: CVD
-              description: Common Veterinary Entry Document (CVED)
+              data:
+                id: "715"
+                type: measure_type
+        - id: "1008"
+          type: geographical_area
+          attributes:
+            id: "1008"
+            description: "All third countries"
+        - id: "715"
+          type: measure_type
+          attributes:
+            id: "715"
+            description: "Export control - CITES"
 
     Commodity:
       description: |
@@ -1575,7 +1654,7 @@ components:
             footnotes:
               data:
               - id: "701"
-                type: footnoe
+                type: footnote
             section:
               data:
                 id: "1"
@@ -1620,6 +1699,25 @@ components:
             goods_nomenclature_item_id: "0104100000"
             formatted_description: "Sheep"
             description_plain: "Sheep"
+        - id: "701"
+          type: footnote
+          attributes:
+            code: "TR037"
+            description: "Guillotine blades"
+            formatted_description: "Guillotine blades"
+        - id: "1"
+          type: section
+          attributes:
+            numeral: "I"
+            title: "Live animals; animal products"
+            position: "1"
+        - id: "27773"
+          type: heading
+          attributes:
+            goods_nomenclature_item_id: "9950000000"
+            description: "Code used only in trading of... is less than €|200"
+            formatted_description: "Code used only in trading of... is less than €&nbsp;200"
+            description_plain: "Code used only in trading of... is less than € 200"
         - id: "27623"
           type: chapter
           attributes:
@@ -1654,17 +1752,25 @@ components:
             legal_acts:
               data:
               - id: "R1701600"
-                type: legal_acts
+                type: legal_act
               - id: "R9703380"
-                type: legal_acts
+                type: legal_act
             measure_conditions:
               data:
               - id: "1134192"
-                type: measure_conditions
+                type: measure_condition
               - id: "1134193"
-                type: measure_conditions
+                type: measure_condition
               - id: "1134194"
-                type: measure_conditions
+                type: measure_condition
+            measure_components:
+              data:
+              - id: "3540076-01"
+                type: measure_component
+              - id: "3540076-02"
+                type: measure_component
+            national_measurement_units:
+              data:
             geographical_area:
               data:
                 id: "1008"
@@ -1674,9 +1780,33 @@ components:
             footnotes:
               data:
                 id: "CD371"
-                type: footnotes
+                type: footnote
             order_number:
               data: null
+        - id: "1134192"
+          type: measure_condition
+          attributes:
+            id: "1134192"
+            condition_code: "Y"
+            condition: "Y: Other conditions"
+            document_code: "N853"
+            requirement: "UN/EDIFACT certificates: Common Veterinary Entry Document (CVED) in accordance with Regulation (EC) No 136/2004, used for veterinary check on products"
+            action: "Import/export allowed after control"
+            duty_expression: ""
+        - id: "3540076-01"
+          type: measure_component
+          attributes:
+            id: "3540076-01"
+            duty_expression_id: "01"
+            duty_amount: 20.2
+            monetary_unit_code: "EUR"
+            monetary_unit_abbreviation: null
+            measurement_unit_code: "DTN"
+            duty_expression_description: "+ % or amount"
+            duty_expression_abbreviation: "+"
+        - id: ""
+          type: duty_expression
+          attributes:
 
     CommodityChanges:
       description: |
@@ -1734,12 +1864,22 @@ components:
           relationships:
             geographical_area:
               data:
-                id: KP
+                id: "1008"
                 type: geographical_area
             measure_type:
               data:
                 id: "718"
                 type: measure_type
+        - id: "1008"
+          type: geographical_area
+          attributes:
+            id: "1008"
+            description: "All third countries"
+        - id: "718"
+          type: measure_type
+          attributes:
+            id: "718"
+            description: "Export control on luxury goods"
 
     MonetaryExchangeRates:
       description: |
@@ -1921,7 +2061,7 @@ components:
             type: integer
       example:
         data:
-          id: "11486"
+        - id: "11486"
           type: additional_code
           attributes:
             additional_code_type_id: "B"
@@ -1938,9 +2078,23 @@ components:
         - id: "3625236"
           type: measure
           attributes:
-            id: "3625236"
-            validity_start_date: "2018-03-07T00:00:00.000Z"
-            validity_end_date: null
+            id: 3625236
+            validity_start_date: "1991-07-01T00:00:00.000Z"
+            validity_end_date: "1992-03-31T00:00:00.000Z"
+            goods_nomenclature_item_id: "7317000000"
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "46392"
+                type: goods_nomenclature
+        - id: "46392"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "7317000000"
+            goods_nomenclature_sid: 46392
+            number_indents: 0
+            description: "Nails, tacks, drawing pins, corrugated nails, staples ..."
+            productline_suffix: "80"
         meta:
           pagination:
             page: 1
@@ -1982,18 +2136,35 @@ components:
             certificate_type_code: "D"
             certificate_code: "005"
             description: "Commercial invoice within the framework of undertakings"
+            formatted_description: "Commercial invoice within the framework of undertakings"
           relationships:
             measures:
               data:
-              - id: "3118334"
+              - id: "2124342"
+                type: measure
+              - id: "2250100"
                 type: measure
         included:
-        - id: "3118334"
+        - id: "2124342"
           type: measure
           attributes:
-            id: 3118334,
+            id: 2124342
             validity_start_date: "2010-01-01T00:00:00.000Z"
             validity_end_date: null
+            goods_nomenclature_item_id: "7307191010"
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "71692"
+                type: goods_nomenclature
+        - id: "71692"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "7307191010"
+            goods_nomenclature_sid: 71692
+            number_indents: 4
+            description: "Threaded malleable cast iron tube or pipe fittings"
+            productline_suffix: "80"
         meta:
           pagination:
             page: 1
@@ -2033,10 +2204,13 @@ components:
           type: footnote
           attributes:
             code: "05737"
+            footnote_type_id: "05"
+            footnote_id: "737"
             description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
             formatted_description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
+            extra_large_measures: false
           relationships:
-            goods_nomenclature:
+            goods_nomenclatures:
               data:
               - id: "34659"
                 type: goods_nomenclature
@@ -2051,6 +2225,12 @@ components:
             id: "3216444"
             validity_start_date: "2011-11-01T00:00:00.000Z"
             validity_end_date: null
+            "goods_nomenclature_item_id": "2204101900"
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "34659"
+                type: goods_nomenclature
         - id: "34659"
           type: goods_nomenclature
           attributes:
@@ -2198,15 +2378,38 @@ components:
             # $ref: '#/components/schemas/ReferencedGeographicalArea'
       example:
         data:
-          id: "GB"
+        - id: "GB"
           type: geographical_area
           attributes:
             id: "GB"
             description: "United Kingdom"
+            geographical_area_id: "GB"
+          relationships:
+            children_geographical_areas:
+              data: []
+        - id: "2501"
+          type: geographical_area
+          attributes:
+            id: "2501"
+            description: "Countries not members of the WTO"
+            geographical_area_id: "2501"
           relationships:
             children_geographical_areas:
               data:
+              - id: "AD"
+                type: geographical_area
+              - id: "AI"
+                type: geographical_area
         included:
+        - id: "AD"
+          type: geographical_area
+          attributes:
+            id: "AD"
+            description: "Andorra"
+            geographical_area_id: "AD"
+          relationships:
+            children_geographical_areas:
+              data: []
 
 ### Referenced objects
 
