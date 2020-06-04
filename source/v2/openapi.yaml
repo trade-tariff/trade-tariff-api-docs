@@ -610,6 +610,33 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&type=B&page=1
 
+
+  /additional_code_types:
+    get:
+      summary: Retrieves a list of additional_code_types.
+      description: >
+        Retrieves a list of all additional_code_types without pagination and filtering.
+      tags:
+        - Additional Code Types
+      produces:
+        - application/json
+      responses:
+        200:
+          description: AdditionalCodeTypes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalCodeTypes'
+              example:
+                $ref: '#/components/schemas/AdditionalCodeTypes/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/additional_code_types:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_code_types
+
 ### Certificates
   /certificates/search:
     get:
@@ -667,6 +694,32 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D&page=1
 
+  /certificate_types:
+    get:
+      summary: Retrieves a list of certificate_types.
+      description: >
+        Retrieves a list of all certificate_types without pagination and filtering.
+      tags:
+        - Certificate Types
+      produces:
+        - application/json
+      responses:
+        200:
+          description: CertificateTypes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateTypes'
+              example:
+                $ref: '#/components/schemas/CertificateTypes/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificate_types:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificate_types
+
 ### Footnotes
   /footnotes/search:
     get:
@@ -723,6 +776,32 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD&page=1
+
+  /footnote_types:
+    get:
+      summary: Retrieves a list of footnote_types.
+      description: >
+        Retrieves a list of all footnote_types without pagination and filtering.
+      tags:
+        - Footnote Types
+      produces:
+        - application/json
+      responses:
+        200:
+          description: FootnoteTypes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FootnoteTypes'
+              example:
+                $ref: '#/components/schemas/FootnoteTypes/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/footnote_types:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnote_types
 
 ### Chemicals
   /chemicals/{cas}:
@@ -2194,6 +2273,33 @@ components:
             per_page: 5
             total_count: 1
 
+    AdditionalCodeTypes:
+      description: |
+        List of additional_code_types
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the additional_code_type. It may be used to uniquely identify an additional_code_type.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `additional_code_type`
+        data:attributes:
+          description: The additional_code_type's attributes, as a [referenced additional_code_type object](/reference.html#referencedadditional_code_type "see referenced additional_code_type object")
+          $ref: '#/components/schemas/ReferencedAdditionalCodeType'
+      example:
+        data:
+        - id: "B"
+          type: additional_code_type
+          attributes:
+            additional_code_type_id: "B"
+            description: "Anti-dumping/countervailing"
+        - id: "P"
+          type: additional_code_type
+          attributes:
+            additional_code_type_id: "B"
+            description: "Refund for basic products"
+
     CertificateSearch:
       description: |
         Search for certificates with parameters
@@ -2263,6 +2369,33 @@ components:
             page: 1
             per_page: 5
             total_count: 1
+
+    CertificateTypes:
+      description: |
+        List of certificate_types
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the certificate_type. It may be used to uniquely identify an certificate_type.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `certificate_type`
+        data:attributes:
+          description: The certificate_type's attributes, as a [referenced certificate_type object](/reference.html#referencedcertificate_type "see referenced certificate_type object")
+          $ref: '#/components/schemas/ReferencedCertificateType'
+      example:
+        data:
+        - id: "Z"
+          type: certificate_type
+          attributes:
+            certificate_type_code: "Z"
+            description: "More certificates"
+        - id: "X"
+          type: certificate_type
+          attributes:
+            certificate_type_code: "X"
+            description: "Export licence"
 
     FootnoteSearch:
       description: |
@@ -2337,6 +2470,33 @@ components:
             page: 1
             per_page: 5
             total_count: 1
+
+    FootnoteTypes:
+      description: |
+        List of footnote_types
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the footnote_type. It may be used to uniquely identify an footnote_type.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `footnote_type`
+        data:attributes:
+          description: The footnote_type's attributes, as a [referenced footnote_type object](/reference.html#referencedfootnote_type "see referenced footnote_type object")
+          $ref: '#/components/schemas/ReferencedFootnoteType'
+      example:
+        data:
+          - id: "WR"
+            type: footnote_type
+            attributes:
+              footnote_type_id: "WR"
+              description: "Wine reference"
+          - id: "TP"
+            type: footnote_type
+            attributes:
+              footnote_type_id: "TP"
+              description: "Dynamic footnote"
 
     Chemical:
       description: |
@@ -2998,6 +3158,20 @@ components:
           description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
           formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
+    ReferencedAdditionalCodeType:
+      description: An additional_code_type object referenced elsewhere.
+      type: object
+      properties:
+        additional_code_type_id:
+          type: string
+          description: The `additional_code_type_id` for the additional_code_type.
+        description:
+          type: string
+          description: The `description` for the additional_code_type.
+      example:
+        additional_code_type_id: "B"
+        description: "Refund for basic products"
+
     ReferencedCertificate:
       description: |
         A certificate object referenced elsewhere.
@@ -3016,6 +3190,20 @@ components:
         certificate_type_code: "D"
         certificate_code: "005"
         description: "Commercial invoice within the framework of undertakings"
+
+    ReferencedCertificateType:
+      description: An certificate_type object referenced elsewhere.
+      type: object
+      properties:
+        additional_code_type_id:
+          type: string
+          description: The `certificate_type_code` for the certificate_type.
+        description:
+          type: string
+          description: The `description` for the certificate_type.
+      example:
+        certificate_type_code: "X"
+        description: "Export licence"
 
     ReferencedFootnote:
       description: |
@@ -3039,6 +3227,20 @@ components:
           formatted_description: 'According to  the Council Regulation (EU)
             No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
             European Union goods originating in Crimea or Sevastopol.<br/>...'
+
+    ReferencedFootnoteType:
+      description: An footnote_type object referenced elsewhere.
+      type: object
+      properties:
+        additional_code_type_id:
+          type: string
+          description: The `footnote_type_id` for the footnote_type.
+        description:
+          type: string
+          description: The `description` for the footnote_type.
+      example:
+        footnote_type_id: "WR"
+        description: "Wine reference"
 
     ReferencedChemical:
       description: |
