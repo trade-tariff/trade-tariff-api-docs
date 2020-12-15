@@ -964,7 +964,8 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`.
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
             format: date
@@ -1039,7 +1040,8 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`.
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
             format: date
@@ -1116,7 +1118,8 @@ paths:
           in: path
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`.
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
             format: date
