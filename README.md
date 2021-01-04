@@ -40,7 +40,7 @@ To update the Trade Tariff API documentation, you may follow this general workfl
 
 ### Support for multiple API versions
 
-As we release new versions of the API, we will continue to support older versions (until they're depricated).  Therefore, we should continue to publish that version's API reference and the corresponding `openapi.yaml` file.
+As we release new versions of the API, we will continue to support older versions (until they're deprecated).  Therefore, we should continue to publish that version's API reference and the corresponding `openapi.yaml` file.
 
 In order to do this, some modifications to the default Middleman templates and options are required:
 
@@ -103,7 +103,7 @@ paths:
 
 The example above is rendered into HTML:
 
-![Example screen showing rendered HTML for /api/v2/sections](build/images/example-1.png "Example of Section onbject in the documentation")
+![Example screen showing rendered HTML for /api/v2/sections](build/images/example-1.png "Example of Section object in the documentation")
 
 ### Use of [`$ref`](https://swagger.io/specification/#documentStructure)
 
@@ -164,6 +164,6 @@ You should now be able to view a live preview at http://localhost:4567.
 
 [forked-widdershins]: https://github.com/alphagov/widdershins
 [widdershins]: https://github.com/Mermade/widdershins
-[tariff-openapi]: https://gitlab.bitzesty.com/clients/trade-tariff/trade-tariff-api-docs/tree/master/source/v2/openapi.yaml
-[source-dir]: https://gitlab.bitzesty.com/clients/trade-tariff/trade-tariff-api-docs/tree/master/source
+[tariff-openapi]: https://github.com/transformCore/trade-tariff-api-docs/tree/master/source/v2/openapi.yaml
+[source-dir]: https://github.com/transformCore/trade-tariff-api-docs/tree/master/source
 [tech-docs-template]: https://github.com/alphagov/tech-docs-template
