@@ -1,1 +1,19 @@
 @import 'govuk_tech_docs';
+
+h1.anchored-heading {
+    margin-top   : 1em !important;
+    margin-bottom: 0px !important;
+}
+
+.technical-documentation>h1:first-of-type {
+    margin-top   : 0px !important;
+    margin-bottom: 0.5em !important;
+}
+
+details {
+    margin-bottom: 1em;
+}
+
+code.sample {
+    font-size: 0.7em !important;
+}
