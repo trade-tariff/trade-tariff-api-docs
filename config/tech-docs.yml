@@ -11,7 +11,8 @@ service_link: /
 header_links:
   About: /
   Getting Started: /getting-started.html
-  API Docs: /reference.html
+  API Docs v1: /reference-v1.html
+  API Docs v2: /reference.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-97208357-3
