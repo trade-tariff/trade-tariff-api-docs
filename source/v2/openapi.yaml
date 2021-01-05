@@ -50,7 +50,7 @@ paths:
 
   /sections/{position}:
     get:
-      summary: Retreives a section by its position
+      summary: Retrieves a section by its position
       description: |
         This resource represents _a single section_ in the Tariff.
 
@@ -93,7 +93,7 @@ paths:
 
   /sections/{section_id}/section_note:
     get:
-      summary: Retreives a section's notes
+      summary: Retrieves a section's notes
       description: |
         This resource represents the notes for a particular section.
 
@@ -199,7 +199,7 @@ paths:
 
   /chapters/{chapter_id}/chapter_note:
     get:
-      summary: Retreives a chapter's notes
+      summary: Retrieves a chapter's notes
       description: >
         This resource represents the note for a particular chapter.
         For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
@@ -239,7 +239,7 @@ paths:
 
   /chapters/{chapter_id}/changes:
     get:
-      summary: Retreives a chapter's changes
+      summary: Retrieves a chapter's changes
       description: >
         This resource represents the changes for a particular chapter.
         For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
@@ -319,7 +319,7 @@ paths:
 
   /headings/{heading_id}/changes:
     get:
-      summary: Retreives a heading's changes
+      summary: Retrieves a heading's changes
       description: >
         This resource represents the changes for a particular heading.
         For this resource, `heading_id` is used to uniquely identify a heading and request its changes from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
@@ -401,7 +401,7 @@ paths:
 
   /commodities/{id}/changes:
     get:
-      summary: Retreives a commodity's changes
+      summary: Retrieves a commodity's changes
       description: >
         This resource represents a single commodity.
         For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
@@ -818,7 +818,7 @@ paths:
 ### Chemicals
   /chemicals/{cas}:
     get:
-      summary: Retreives a chemical by its CAS number.
+      summary: Retrieves a chemical by its CAS number.
       description: |
         This resource represents _a single chemical_ in the Tariff.
 
