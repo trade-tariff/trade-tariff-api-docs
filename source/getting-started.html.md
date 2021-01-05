@@ -10,6 +10,8 @@ This guide introduces a number of key concepts in GOV.UK Trade Tariff API throug
 
 The most up-to-date version of this API is __version 2__ or `v2`.
 
+Documentation for __version 2__ (`v2`) is available at [https://api.trade-tariff.service.gov.uk/reference.html](/reference.html).
+
 Documentation for __version 1__ (`v1`) is available at [https://api.trade-tariff.service.gov.uk/reference-v1.html](/reference-v1.html).
 
 ## Accessing Content
@@ -18,6 +20,13 @@ GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/
 
 ```shell
 curl https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
+```
+
+If you would like to view the equivalent data for the EU Tariff as applies to certain trades in
+Northern Ireland (known as the XI Tariff), then access via this API:
+
+```shell
+curl https://www.trade-tariff.service.gov.uk/xi/api/v2/commodities/0101210000
 ```
 
 This will return a [`commodity`][commodity] object. Within this object are fields that describe the commodity itself, it import and export measures, footnotes, metadata and associations and other content.
@@ -93,7 +102,7 @@ Finally we embed this in our own Ruby on Rails app and are ready to output to us
 
 ### node.js with Axios
 
-The example below uses [node.js](https://nodejs.org/) and the popular [Axios](https://github.com/axios/axios) module, a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)-based HTTP client for node.js and the browser. Here, we retreive a commodity and print its `formatted_description` to the console.
+The example below uses [node.js](https://nodejs.org/) and the popular [Axios](https://github.com/axios/axios) module, a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)-based HTTP client for node.js and the browser. Here, we retrieve a commodity and print its `formatted_description` to the console.
 
 ```javascript
 const axios = require('axios');
