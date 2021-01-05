@@ -5,6 +5,9 @@ info:
   description: |
     The Trade Tariff Public API provides a simple and consistent way to request
     [UK Trade Tariff](https://gov.uk/trade-tariff) content as structured data in a predictable format.
+    
+    From January 1st 2021, the API will also provide data on the EU Tariff as applies to certain
+    trades with Northern Ireland (known as the XI Tariff).
 
     This API accepts HTTP requests and responds with
     [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
@@ -14,6 +17,7 @@ info:
 
 servers:
   - url: https://www.trade-tariff.service.gov.uk
+  - url: https://www.trade-tariff.service.gov.uk/xi
 
 paths:
 ### Sections
@@ -48,7 +52,7 @@ paths:
 
   /api/v1/sections/{position}:
     get:
-      summary: Retreives a section by its position
+      summary: Retrieves a section by its position
       description: |
         This resource represents _a single section_ in the Tariff.
 
@@ -91,7 +95,7 @@ paths:
 
   /api/v1/sections/{section_id}/section_note:
     get:
-      summary: Retreives a section's notes
+      summary: Retrieves a section's notes
       description: |
         This resource represents the notes for a particular section.
 
@@ -197,7 +201,7 @@ paths:
 
   /api/v1/chapters/{chapter_id}/chapter_note:
     get:
-      summary: Retreives a chapter's notes
+      summary: Retrieves a chapter's notes
       description: >
         This resource represents the note for a particular chapter.
         For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
@@ -237,7 +241,7 @@ paths:
 
   /api/v1/chapters/{chapter_id}/changes:
     get:
-      summary: Retreives a chapter's changes
+      summary: Retrieves a chapter's changes
       description: >
         This resource represents the changes for a particular chapter.
         For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
@@ -317,7 +321,7 @@ paths:
 
   /api/v1/headings/{heading_id}/changes:
     get:
-      summary: Retreives a heading's changes
+      summary: Retrieves a heading's changes
       description: >
         This resource represents the changes for a particular heading.
         For this resource, `heading_id` is used to uniquely identify a heading and request its changes from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
@@ -399,7 +403,7 @@ paths:
 
   /api/v1/commodities/{goods_nomenclature_item_id}/changes:
     get:
-      summary: Retreives a commodity's changes
+      summary: Retrieves a commodity's changes
       description: >
         This resource represents a single commodity.
         For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API.
