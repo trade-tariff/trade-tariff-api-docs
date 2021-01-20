@@ -513,7 +513,9 @@ paths:
             }
             ```
           schema:
-            type: string
+            type: array
+            items:
+              type: string
         - name: page
           in: query
           required: false
@@ -905,6 +907,7 @@ paths:
         ```
       tags:
       - GoodsNomenclatures
+      - text/csv
       parameters:
         - name: 'position'
           in: path
@@ -979,6 +982,7 @@ paths:
         ```
       tags:
       - GoodsNomenclatures
+      - text/csv
       parameters:
         - name: 'chapter_id'
           in: path
@@ -1052,6 +1056,7 @@ paths:
         ```
       tags:
       - GoodsNomenclatures
+      - text/csv
       parameters:
         - name: 'heading_id'
           in: path
@@ -3251,7 +3256,7 @@ components:
       example:
         id: 1
         cas: "22199-08-2"
-        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver"
+        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN)"
 
     ReferencedChemicalName:
       description: |
@@ -3265,7 +3270,7 @@ components:
           type: string
           description: The `id` of the chemical related to this name.
       example:
-        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver"
+        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN)"
         chemical_id: 1
 
     ReferencedGuide:
