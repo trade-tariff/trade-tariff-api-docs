@@ -31,8 +31,6 @@ paths:
 
       tags:
       - Sections
-      produces:
-      - application/json
       responses:
         200:
           description: Sections were found
@@ -62,8 +60,6 @@ paths:
 
       tags:
       - Sections
-      produces:
-      - application/json
       parameters:
         - name: 'position'
           in: path
@@ -102,18 +98,16 @@ paths:
         For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
       tags:
       - Sections
-      produces:
-      - application/json
       parameters:
-        name: section_id
-        in: path
-        required: true
-        description: |
-          The `section_id` of the section.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
+        - name: section_id
+          in: path
+          required: true
+          description: |
+            The `section_id` of the section.
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
       responses:
         200:
           description: A section's notes were found.
@@ -143,8 +137,6 @@ paths:
         There are curently 97 chapters in the Tariff.
       tags:
       - Chapters
-      produces:
-      - application/json
       responses:
         200:
           description: Chapters were found
@@ -170,8 +162,6 @@ paths:
         <p>This should be a zero-padded string of two digits.</p>
       tags:
       - Chapters
-      produces:
-      - application/json
       parameters:
       - name: 'chapter_id'
         in: path
@@ -208,18 +198,16 @@ paths:
         <p>`chapter_id` should be a zero-padded string of two digits.</p>
       tags:
       - Chapters
-      produces:
-      - application/json
       parameters:
-        name: chapter_id
-        in: path
-        required: true
-        description: |
-          The `chapter_id` of the chapter.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
+        - name: chapter_id
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter.
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
       responses:
         200:
           description: A chapter's notes were found.
@@ -248,16 +236,14 @@ paths:
         <p>`chapter_id` should be a zero-padded string of two digits.</p>
       tags:
       - Chapters
-      produces:
-      - application/json
       parameters:
-        name: chapter_id
-        in: path
-        required: true
-        description: |
-          The `chapter_id` of the chapter.
-        schema:
-          type: string
+        - name: chapter_id
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter.
+          schema:
+            type: string
       responses:
         200:
           description: A chapter's changes were found.
@@ -287,8 +273,6 @@ paths:
         <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
       tags:
       - Headings
-      produces:
-      - application/json
       parameters:
       - name: 'heading_id'
         in: path
@@ -328,18 +312,16 @@ paths:
         <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
       tags:
       - Headings
-      produces:
-      - application/json
       parameters:
-        name: heading_id
-        in: path
-        required: true
-        description: |
-          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
+        - name: heading_id
+          in: path
+          required: true
+          description: |
+            The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
       responses:
         200:
           description: A heading's changes were found.
@@ -369,8 +351,6 @@ paths:
         <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
-      produces:
-      - application/json
       parameters:
       - name: 'goods_nomenclature_item_id'
         in: path
@@ -410,19 +390,17 @@ paths:
         <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
-      produces:
-      - application/json
       parameters:
-        name: goods_nomenclature_item_id
-        in: path
-        required: true
-        description: |
-          The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
-        schema:
-          type: integer
-          minimum: 10
-          maximum: 10
-          example: "0102291020"
+        - name: goods_nomenclature_item_id
+          in: path
+          required: true
+          description: |
+            The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 10
+            example: "0102291020"
       responses:
         200:
           description: A commodity's changes were found.
@@ -450,8 +428,6 @@ paths:
         Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
       tags:
       - Monetary Exchange Rates
-      produces:
-      - application/json
       responses:
         200:
           description: Monetary exchange rates were found
@@ -544,9 +520,6 @@ components:
         chapter_to:
           type: string
           description: The `chapter_to` of the section, the last chapter of this section.
-        chapter_to:
-          description: The `id` of the section.
-          x-nullable: true
         section_note:
           type: string
           description: The `section_note` of the section. Not all sections have a note.
@@ -1083,10 +1056,11 @@ components:
             guides:
               type: array
               items:
-                title:
-                  type: string
-                url:
-                  type: string
+                properties:
+                  title:
+                    type: string
+                  url:
+                    type: string
             chapter_note:
               type: string
         section:
@@ -1394,10 +1368,11 @@ components:
             guides:
               type: array
               items:
-                title:
-                  type: string
-                url:
-                  type: string
+                properties:
+                  title:
+                    type: string
+                  url:
+                    type: string
             chapter_note:
               type: string
         import_measures:
@@ -2478,7 +2453,7 @@ components:
     ReferencedGuide:
       description: |
         A guide object referenced elsewhere.
-      type: Object
+      type: object
       properties:
         title:
           type: string
@@ -2501,8 +2476,6 @@ components:
             An array of [link](/reference.html#referencedlink "see referenced link object") objects.
           items:
             type: object
-            properties:
-              $ref: '#/components/schemas/ReferencedLink/properties'
       example:
         links:
         - rel: self
@@ -2515,7 +2488,7 @@ components:
     ReferencedLink:
       description: |
         A link object referenced elsewhere.
-      type: Object
+      type: object
       properties:
         rel:
           type: string
@@ -2530,7 +2503,7 @@ components:
     ReferencedPagination:
       description: |
         A pagination object referenced elsewhere.
-      type: Object
+      type: object
       properties:
         page:
           type: integer
