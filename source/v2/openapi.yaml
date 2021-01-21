@@ -29,8 +29,6 @@ paths:
 
       tags:
       - Sections
-      produces:
-      - application/json
       responses:
         200:
           description: Sections were found
@@ -60,8 +58,6 @@ paths:
 
       tags:
       - Sections
-      produces:
-      - application/json
       parameters:
         - name: 'position'
           in: path
@@ -100,18 +96,16 @@ paths:
         For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
       tags:
       - Sections
-      produces:
-      - application/json
       parameters:
-        name: section_id
-        in: path
-        required: true
-        description: |
-          The `section_id` of the section.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
+        - name: section_id
+          in: path
+          required: true
+          description: |
+            The `section_id` of the section.
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
       responses:
         200:
           description: A section's notes were found.
@@ -141,8 +135,6 @@ paths:
         Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
       tags:
       - Chapters
-      produces:
-      - application/json
       responses:
         200:
           description: Chapters were found
@@ -168,8 +160,6 @@ paths:
         <p>This should be a zero-padded string of two digits.</p>
       tags:
       - Chapters
-      produces:
-      - application/json
       parameters:
       - name: 'chapter_id'
         in: path
@@ -206,18 +196,16 @@ paths:
         <p>`chapter_id` should be a zero-padded string of two digits.</p>
       tags:
       - Chapters
-      produces:
-      - application/json
       parameters:
-        name: chapter_id
-        in: path
-        required: true
-        description: |
-          The `chapter_id` of the chapter.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
+        - name: chapter_id
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter.
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
       responses:
         200:
           description: A chapter's notes were found.
@@ -246,16 +234,14 @@ paths:
         <p>`chapter_id` should be a zero-padded string of two digits.</p>
       tags:
       - Chapters
-      produces:
-      - application/json
       parameters:
-        name: chapter_id
-        in: path
-        required: true
-        description: |
-          The `chapter_id` of the chapter.
-        schema:
-          type: string
+        - name: chapter_id
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter.
+          schema:
+            type: string
       responses:
         200:
           description: A chapter's changes were found.
@@ -285,8 +271,6 @@ paths:
         <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
       tags:
       - Headings
-      produces:
-      - application/json
       parameters:
       - name: 'heading_id'
         in: path
@@ -326,18 +310,16 @@ paths:
         <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
       tags:
       - Headings
-      produces:
-      - application/json
       parameters:
-        name: heading_id
-        in: path
-        required: true
-        description: |
-          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
-        schema:
-          type: integer
-          minimum: 1
-          example: 1
+        - name: heading_id
+          in: path
+          required: true
+          description: |
+            The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
       responses:
         200:
           description: A heading's changes were found.
@@ -367,8 +349,6 @@ paths:
         <p>`id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
-      produces:
-      - application/json
       parameters:
       - name: 'id'
         in: path
@@ -408,19 +388,17 @@ paths:
         <p>`id` should be a string of ten (10) digits.</p>
       tags:
       - Commodities
-      produces:
-      - application/json
       parameters:
-        name: id
-        in: path
-        required: true
-        description: |
-          The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
-        schema:
-          type: integer
-          minimum: 10
-          maximum: 10
-          example: "0102291020"
+        - name: id
+          in: path
+          required: true
+          description: |
+            The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 10
+            example: "0102291020"
       responses:
         200:
           description: A commodity's changes were found.
@@ -448,8 +426,6 @@ paths:
         Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
       tags:
       - Monetary Exchange Rates
-      produces:
-      - application/json
       responses:
         200:
           description: Monetary exchange rates were found
@@ -475,32 +451,30 @@ paths:
         Retrieves a paginated list of quota definitions, optionally filtered by a variety of parameters.
       tags:
       - Quotas
-      produces:
-      - application/json
       parameters:
         - name: goods_nomenclature_item_id
-          in: path
+          in: query
           required: false
           description: |
             Retrieve quotas only for goods with this `goods_nomenclature_item_id`
           schema:
             type: string
         - name: geographical_area_id
-          in: path
+          in: query
           required: false
           description: |
             Retrieve quotas only with this `geographical_area_id`
           schema:
             type: string
         - name: order_number
-          in: path
+          in: query
           required: false
           description: |
             Retrieve quotas only with this `order_number`
           schema:
             type: string
         - name: critical
-          in: path
+          in: query
           required: false
           description: |
             Retrieve quotas only with `critical` status equal to ['Y', 'N']
@@ -510,7 +484,7 @@ paths:
             - Y
             - N
         - name: status
-          in: path
+          in: query
           required: false
           description: |
             Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not_blocked', 'not_exhausted']
@@ -522,7 +496,7 @@ paths:
             - not blocked
             - not exhausted
         - name: years
-          in: path
+          in: query
           required: false
           description: |
             Retrieve quotas only for this collection of `years`. Note: the array of years may be passed in via URL:
@@ -540,8 +514,10 @@ paths:
             ```
           schema:
             type: array
+            items:
+              type: string
         - name: page
-          in: path
+          in: query
           required: false
           description: |
             Retrieve search page with number
@@ -573,8 +549,6 @@ paths:
         Retrieves a paginated list of additional_codes, filtered by parameters.
       tags:
       - Additional Codes
-      produces:
-      - application/json
       parameters:
         - name: code
           in: query
@@ -598,7 +572,7 @@ paths:
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           required: false
           description: |
             Retrieve search page with number
@@ -630,8 +604,6 @@ paths:
         Retrieves a list of all additional_code_types without pagination and filtering.
       tags:
         - Additional Code Types
-      produces:
-        - application/json
       responses:
         200:
           description: AdditionalCodeTypes were found
@@ -657,8 +629,6 @@ paths:
         Retrieves a paginated list of certificates, filtered by parameters.
       tags:
       - Certificates
-      produces:
-      - application/json
       parameters:
         - name: code
           in: query
@@ -682,7 +652,7 @@ paths:
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           required: false
           description: |
             Retrieve search page with number
@@ -713,8 +683,6 @@ paths:
         Retrieves a list of all certificate_types without pagination and filtering.
       tags:
         - Certificate Types
-      produces:
-        - application/json
       responses:
         200:
           description: CertificateTypes were found
@@ -740,8 +708,6 @@ paths:
         Retrieves a paginated list of footnotes, filtered by parameters.
       tags:
       - Footnotes
-      produces:
-      - application/json
       parameters:
         - name: code
           in: query
@@ -765,7 +731,7 @@ paths:
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           required: false
           description: |
             Retrieve search page with number
@@ -796,8 +762,6 @@ paths:
         Retrieves a list of all footnote_types without pagination and filtering.
       tags:
         - Footnote Types
-      produces:
-        - application/json
       responses:
         200:
           description: FootnoteTypes were found
@@ -828,8 +792,6 @@ paths:
 
       tags:
       - Chemicals
-      produces:
-      - application/json
       parameters:
         - name: 'cas'
           in: path
@@ -837,7 +799,7 @@ paths:
           description: |
             The CAS number of the chemical to be retrieved
           schema:
-            type: String
+            type: string
             minimum: 1
             example: 22199-08-2
       responses:
@@ -866,8 +828,6 @@ paths:
         Retrieves a paginated list of chemicals, filtered by parameters.
       tags:
       - Chemicals
-      produces:
-      - application/json
       parameters:
         - name: cas
           in: query
@@ -884,7 +844,7 @@ paths:
           schema:
             type: string
         - name: page
-          in: path
+          in: query
           required: false
           description: |
             Retrieve search page with number
@@ -947,8 +907,6 @@ paths:
         ```
       tags:
       - GoodsNomenclatures
-      produces:
-      - application/json
       - text/csv
       parameters:
         - name: 'position'
@@ -961,7 +919,7 @@ paths:
             minimum: 1
             example: 1
         - name: as_of
-          in: path
+          in: query
           required: false
           description: |
             Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
@@ -1024,8 +982,6 @@ paths:
         ```
       tags:
       - GoodsNomenclatures
-      produces:
-      - application/json
       - text/csv
       parameters:
         - name: 'chapter_id'
@@ -1037,7 +993,7 @@ paths:
             type: string
             example: "01"
         - name: as_of
-          in: path
+          in: query
           required: false
           description: |
             Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
@@ -1100,8 +1056,6 @@ paths:
         ```
       tags:
       - GoodsNomenclatures
-      produces:
-      - application/json
       - text/csv
       parameters:
         - name: 'heading_id'
@@ -1115,7 +1069,7 @@ paths:
             maximum: 4
             example: "0101"
         - name: as_of
-          in: path
+          in: query
           required: false
           description: |
             Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
@@ -1131,7 +1085,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GoodsNomenclatures'
               example:
-                $ref: '#/components/schemas/GoodsNomenclatures/example2'
+                $ref: '#/components/schemas/GoodsNomenclatures/example'
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1147,11 +1101,9 @@ paths:
         Retrieves a list of search references by letter
       tags:
       - SearchReferences
-      produces:
-      - application/json
       parameters:
         - name: query[letter]
-          in: path
+          in: query
           required: true
           description: |
             Retrieve search references started with  `query[letter]` letter.
@@ -1182,8 +1134,6 @@ paths:
         Retrieves a list of geographical areas
       tags:
       - GeographicalAreas
-      produces:
-      - application/json
       responses:
         200:
           description: Geographical areas were found
@@ -1208,8 +1158,6 @@ paths:
         Retrieves a list of contries
       tags:
       - GeographicalAreas
-      produces:
-      - application/json
       responses:
         200:
           description: Contries were found
@@ -2747,35 +2695,6 @@ components:
             number_indents: 0
             productline_suffix: "80"
             href: /api/v2/commodities/0101210000
-      example2:
-        data:
-        - id: "27624"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101000000"
-            goods_nomenclature_sid: 27624
-            description: Live horses, asses, mules and hinnies
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/headings/0101
-        - id: "93797"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101210000"
-            goods_nomenclature_sid: 93797
-            description: Horses
-            number_indents: 1
-            productline_suffix: "10"
-            href: /api/v2/commodities/0101210000
-        - id: "93796"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101210000"
-            goods_nomenclature_sid: 93796
-            description: Pure-bred breeding animals
-            number_indents: 2
-            productline_suffix: "80"
-            href: /api/v2/commodities/0101210000
 
     SearchReferences:
       description: |
@@ -3337,7 +3256,7 @@ components:
       example:
         id: 1
         cas: "22199-08-2"
-        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver"
+        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN)"
 
     ReferencedChemicalName:
       description: |
@@ -3351,13 +3270,13 @@ components:
           type: string
           description: The `id` of the chemical related to this name.
       example:
-        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver"
+        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN)"
         chemical_id: 1
 
     ReferencedGuide:
       description: |
         A guide object referenced elsewhere.
-      type: Object
+      type: object
       properties:
         title:
           type: string
@@ -3459,7 +3378,7 @@ components:
           type: string
           description: The `suspension_period_end_date` of the definition.
         blocking_period_start_date:
-          type: string,
+          type: string
           description: The `blocking_period_start_date` of the definition.
         blocking_period_end_date:
           type: string
