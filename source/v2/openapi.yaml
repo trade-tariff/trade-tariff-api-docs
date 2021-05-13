@@ -516,6 +516,58 @@ paths:
             type: array
             items:
               type: string
+        - name: year
+          in: query
+          required: false
+          description: |
+            Retrieve quotas only for this specific `year`. Note: this, along with `month` and `day`, is part of a full date field, but the `year` part can be used on its own.
+            ```
+            /quotas/search?year=2019
+            ```
+            and via the body of a JSON request:
+            ```
+            {
+              "year": "2019"
+            }
+            ```
+          schema:
+            type: string
+        - name: month
+          in: query
+          required: false
+          description: |
+            Retrieve quotas only for this specific `month`. Note: this, along with `year` and `day`, is part of a full date field, and will be ignored if the other two parameters are missing.
+            ```
+            /quotas/search?year=2019&month=01&day=01
+            ```
+            and via the body of a JSON request:
+            ```
+            {
+              "year": "2019",
+              "month": "01",
+              "day": "01"
+            }
+            ```
+          schema:
+            type: string
+        - name: day
+          in: query
+          required: false
+          description: |
+            Retrieve quotas only for this specific `day`. Note: this, along with `year` and `month`, is part of a full date field, and will be ignored if the other two parameters are missing.
+            ```
+            /quotas/search?year=2019&month=01&day=01
+            ```
+            and via the body of a JSON request:
+            ```
+            {
+              "year": "2019",
+              "month": "01",
+              "day": "01"
+            }
+            ```
+          schema:
+            type: string
         - name: page
           in: query
           required: false
@@ -3135,10 +3187,10 @@ components:
       properties:
         additional_code_type_id:
           type: string
-          description: The `additional_code_type_id` for the additional_code. 
+          description: The `additional_code_type_id` for the additional_code.
         additional_code:
           type: string
-          description: The `additional_code` for the additional_code. 
+          description: The `additional_code` for the additional_code.
         code:
           type: string
           description: The `code` for the additional_code. Equal to `additional_code_type_id + additional_code`
@@ -3176,7 +3228,7 @@ components:
       properties:
         certificate_type_code:
           type: string
-          description: The `certificate_type_code` for the certificate. 
+          description: The `certificate_type_code` for the certificate.
         certificate_code:
           type: string
           description: The `certificate_code` for the certificate.
@@ -3209,7 +3261,7 @@ components:
       properties:
         code:
           type: string
-          description: The `code` for the footnote. 
+          description: The `code` for the footnote.
         description:
           type: string
           description: The `description` for the footnote.
@@ -3335,7 +3387,7 @@ components:
       properties:
         quota_definition_sid:
           type: integer
-          description: The `quota_definition_sid` of the definition. THis is a unique identifier
+          description: The `quota_definition_sid` of the definition. This is a unique identifier
         quota_order_number_id:
           type: string
           description: The `quota_order_number_id` of the definition.
