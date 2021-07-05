@@ -1226,6 +1226,43 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
+
+### Changes
+  /changes:
+    get:
+      summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
+      description: |
+        Retrieves a list of goods nomenclature objects that have changed since the previous day
+      tags:
+      - Changes
+      parameters:
+        - name: 'as_of'
+          in: path
+          required: false
+          default: current date
+          description: |
+            Retrieve changes as they existed between the `as_of` date and the previous day. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: The date is correct and a (potentially empty) list of changes will be returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Change'
+              example:
+                $ref: '#/components/schemas/Change/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/changes:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-01-01
+
 components:
   schemas:
 
@@ -3500,3 +3537,59 @@ components:
         title: "cabinets, filing of base metal"
         referenced_id: "8304"
         referenced_class: "Heading"
+
+    Change:
+      description: A search_reference object referenced elsewhere.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+        type:
+          type: string
+          description: Always 'change'.
+        attributes:
+          type: object
+          description: The changed goods nomenclature attributes.
+          $ref: '#/components/schemas/Change:Attributes'
+      example:
+        id: "106193"
+        type: "change"
+        attributes:
+          goods_nomenclature_sid: "106193"
+          goods_nomenclature_item_id: "7606129292"
+          productline_suffix: "10"
+          end_line: false
+          change_type: "commodity"
+          change_date: "2021-04-13"
+
+    Change:Attributes:
+      type: object
+      description: The changed goods nomenclature attributes
+      properties:
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the goods nomenclature.
+        productline_suffix:
+          type: string
+          description: The `producline_suffix` of the commodity.
+        end_line:
+          type: boolean
+          description: If the goods nomenclature is an end line commodity
+        change_type:
+          type: string
+          description: Type of change. It can be one of [commodity, measure]
+        change_date:
+          type: date
+          description: Date of the change.
+      example:
+        goods_nomenclature_sid: "106193"
+        goods_nomenclature_item_id: "7606129292"
+        productline_suffix: "10"
+        end_line: false
+        change_type: "commodity"
+        change_date: "2021-04-13"
+
