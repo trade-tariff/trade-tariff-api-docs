@@ -3059,7 +3059,7 @@ components:
         attributes:
           type: object
           description: The changed goods nomenclature attributes.
-          $ref: '#/components/schemas/Change:Attributes'
+          $ref: '#/components/schemas/ChangeAttributes'
       example:
         id: "106193"
         type: "change"
