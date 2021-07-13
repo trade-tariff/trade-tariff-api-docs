@@ -825,7 +825,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
@@ -899,7 +899,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
@@ -975,7 +975,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
@@ -1089,7 +1089,7 @@ paths:
           required: false
           default: current date
           description: |
-            Retrieve changes as they existed between the `as_of` date and the previous day. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve changes as they existed between the `as_of` date and the previous day. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
