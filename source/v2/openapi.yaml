@@ -14,11 +14,8 @@ info:
 
 servers:
   - url: https://www.trade-tariff.service.gov.uk/api/v2
-  # - url: https://staging.trade-tariff.service.gov.uk/api/v2
-  # - url: https://dev.trade-tariff.service.gov.uk/api/v2
 
 paths:
-### Sections
   /sections:
     get:
       summary: Retrieves all sections
@@ -125,7 +122,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note
 
-### Chapters
   /chapters:
     get:
       summary: Retrieves all chapters
@@ -225,43 +221,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note
 
-  /chapters/{chapter_id}/changes:
-    get:
-      summary: Retrieves a chapter's changes
-      description: >
-        This resource represents the changes for a particular chapter.
-        For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
-        <p>`chapter_id` should be a zero-padded string of two digits.</p>
-      tags:
-      - Chapters
-      parameters:
-        - name: chapter_id
-          in: path
-          required: true
-          description: |
-            The `chapter_id` of the chapter.
-          schema:
-            type: string
-      responses:
-        200:
-          description: A chapter's changes were found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChapterChanges'
-              example:
-                $ref: '#/components/schemas/ChapterChanges/example'
-        404:
-          description: A chapter's changes were not found.
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/chapters/{chapter_id}/changes:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/01/changes
-
-### Headings
   /headings/{heading_id}:
     get:
       summary: Retrieves a heading
@@ -301,45 +260,7 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
 
-  /headings/{heading_id}/changes:
-    get:
-      summary: Retrieves a heading's changes
-      description: >
-        This resource represents the changes for a particular heading.
-        For this resource, `heading_id` is used to uniquely identify a heading and request its changes from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
-        <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
-      tags:
-      - Headings
-      parameters:
-        - name: heading_id
-          in: path
-          required: true
-          description: |
-            The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
-          schema:
-            type: integer
-            minimum: 1
-            example: 1
-      responses:
-        200:
-          description: A heading's changes were found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HeadingChanges'
-              example:
-                $ref: '#/components/schemas/HeadingChanges/example'
-        404:
-          description: A heading's changes were not found.
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/chapters:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101/changes
 
-### Commodities
   /commodities/{id}:
     get:
       summary: Retrieves a commodity
@@ -379,71 +300,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 
-  /commodities/{id}/changes:
-    get:
-      summary: Retrieves a commodity's changes
-      description: >
-        This resource represents a single commodity.
-        For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
-        <p>`id` should be a string of ten (10) digits.</p>
-      tags:
-      - Commodities
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: |
-            The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
-          schema:
-            type: integer
-            minimum: 10
-            maximum: 10
-            example: "0102291020"
-      responses:
-        200:
-          description: A commodity's changes were found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommodityChanges'
-              example:
-                $ref: '#/components/schemas/CommodityChanges/example'
-        404:
-          description: A commodity's changes were not found.
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/commodities/{id}/changes:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000/changes
-
-### Monetary exchange rates
-  /monetary_exchange_rates:
-    get:
-      summary: Retrieves a list of monetary exchange rates
-      description: >
-        Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
-      tags:
-      - Monetary Exchange Rates
-      responses:
-        200:
-          description: Monetary exchange rates were found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MonetaryExchangeRates'
-              example:
-                $ref: '#/components/schemas/MonetaryExchangeRates/example'
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/monetary_exchange_rates:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/monetary_exchange_rates
-
-### Quotas
   /quotas/search:
     get:
       summary: Retrieves a list of quota definitions
@@ -593,7 +449,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&years[]=2018&years[]=2019&page=1
 
-### Additional Codes
   /additional_codes/search:
     get:
       summary: Retrieves a list of additional_codes, with associated measures and commodities.
@@ -673,7 +528,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_code_types
 
-### Certificates
   /certificates/search:
     get:
       summary: Retrieves a list of certificates, with associated measures and commodities.
@@ -752,7 +606,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificate_types
 
-### Footnotes
   /footnotes/search:
     get:
       summary: Retrieves a list of footnotes, with associated measures and commodities.
@@ -831,7 +684,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnote_types
 
-### Chemicals
   /chemicals/{cas}:
     get:
       summary: Retrieves a chemical by its CAS number.
@@ -920,7 +772,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemicals/search?name=benzene
 
-### Goods nomenclatures
   /goods_nomenclatures/section/{position}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
@@ -974,7 +825,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
@@ -1048,7 +899,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
@@ -1124,7 +975,7 @@ paths:
           in: query
           required: false
           description: |
-            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DDD`. While this is not a required field it is advised to include it with all requests even
+            Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
           schema:
             type: string
@@ -1178,7 +1029,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/search_references.json?query[letter]=c
 
-### Geographical areas
   /geographical_areas:
     get:
       summary: Retrieves a list of geographical areas
@@ -1226,6 +1076,41 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
+  /changes:
+    get:
+      summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
+      description: |
+        Retrieves a list of goods nomenclature objects that have changed since the previous day
+      tags:
+      - Changes
+      parameters:
+        - name: 'as_of'
+          in: path
+          required: false
+          default: current date
+          description: |
+            Retrieve changes as they existed between the `as_of` date and the previous day. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: The date is correct and a (potentially empty) list of changes will be returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Change'
+              example:
+                $ref: '#/components/schemas/Change/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/changes:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-01-01
+
 components:
   schemas:
 
@@ -1532,67 +1417,6 @@ components:
           and other products of heading 3002; and\r\n  * (c) animals of heading
           9508."
 
-    ChapterChanges:
-      description: |
-        All changes for a chapter in the Tariff
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: The `id` of the chapter. It may be used to uniquely identify a chapter and request it's chapter_note from the API.
-        data:type:
-          type: string
-          description: the type of object this is, e.g. `chapter`
-        data:attributes:
-          description: The attributes of a particular change in the tariff, as a [referenced chapter change object](/reference.html#referencedchapterchange "see referenced chapter change object")
-          $ref: '#/components/schemas/ReferencedChapterChange'
-        included:
-          type: array
-          description: Zero, one or many [referenced measures](/reference.html#referencedmeasure "see referenced measure object") child objects that are included in the chapter's changes.
-          items:
-            type: object
-      example:
-        data:
-        - id: 3372028
-          type: change
-          attributes:
-            oid: 3372028
-            model_name: Measure
-            operation: U
-            operation_date: '2019-02-02'
-          relationships:
-            record:
-              data:
-                id: "-540193"
-                type: measure
-        included:
-          - id: "-540193"
-            type: measure
-            attributes:
-              id: -540193
-              origin: "uk"
-              import: true
-              goods_nomenclature_item_id: "3401300000"
-            relationships:
-              geographical_area:
-                data:
-                  id: "1011"
-                  type: geographical_area
-              measure_type:
-                data:
-                  id: "VTS"
-                  type: measure_type
-          - id: "1011"
-            type: geographical_area
-            attributes:
-              id: "1011"
-              description: "ERGA OMNES"
-          - id: "VTS"
-            type: measure_type
-            attributes:
-              id: "VTS"
-              description: "VAT standard rate"
-
     Heading:
       description: |
         A heading in the tariff.
@@ -1728,79 +1552,6 @@ components:
             title: "Live animals; animal products"
             position: 1
             section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
-
-    HeadingChanges:
-      description: |
-        All changes for a heading
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: The `id` of the heading. It may be used to uniquely identify a heading.
-        data:type:
-          type: string
-          description: the type of object this is, e.g. `heading`
-        data:attributes:
-          description: The attributes of a particular change in the tariff, as a [referenced heading change object](/reference.html#referencedheadingchange "see referenced heading change object")
-          $ref: '#/components/schemas/ReferencedHeadingChange'
-        included:
-          type: array
-          description: Zero, one or many [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects](/reference.html#referencedgeographicalarea "see referenced geographical areas object"), or [referenced measure type objects](/reference.html#referencedmeasuretype "see referenced measure type object") that are included in the heading's changes.
-          items:
-            type: object
-      example:
-        data:
-        - id: "3154963"
-          type: change
-          attributes:
-            oid: 3154963
-            model_name: Measure
-            operation: C
-            operation_date: '2018-11-13'
-          relationships:
-            record:
-              data:
-                id: "3655746"
-                type: measure
-        - id: "3151909"
-          type: change
-          attributes:
-            oid: 3151909
-            model_name: Measure
-            operation: C
-            operation_date: '2018-11-02'
-          relationships:
-            record:
-              data:
-                id: "-470966"
-                type: measure
-        included:
-        - id: 3655746
-          type: measure
-          attributes:
-            id: 3655746
-            origin: "eu"
-            import: false
-            goods_nomenclature_item_id: "0101210000"
-          relationships:
-            geographical_area:
-              data:
-                id: "1008"
-                type: geographical_area
-            measure_type:
-              data:
-                id: "715"
-                type: measure_type
-        - id: "1008"
-          type: geographical_area
-          attributes:
-            id: "1008"
-            description: "All third countries"
-        - id: "715"
-          type: measure_type
-          attributes:
-            id: "715"
-            description: "Export control - CITES"
 
     Commodity:
       description: |
@@ -2001,119 +1752,6 @@ components:
         - id: ""
           type: duty_expression
           attributes:
-
-    CommodityChanges:
-      description: |
-        All changes for a commodity
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: The `id` of the commodity. It may be used to uniquely identify a commodity.
-        data:type:
-          type: string
-          description: the type of object this is, e.g. `commodity`
-        data:attributes:
-          description: The attributes of a particular change in the tariff, as a [referenced commodity change object](/reference.html#referencedcommoditychange "see referenced commodity change object")
-          $ref: '#/components/schemas/ReferencedCommodityChange'
-        included:
-          type: array
-          description: Zero, one or many [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced measure_type objects](/reference.html#referencedmeasuretype "see referenced measure_type object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
-          items:
-            type: object
-      example:
-        data:
-        - id: "3128698"
-          type: change
-          attributes:
-            oid: 3128698
-            model_name: Measure
-            operation: C
-            operation_date: "2018-06-27"
-          relationships:
-            record:
-              data:
-                id: "3643279"
-                type: measure
-        - id: "3128315"
-          type: change
-          attributes:
-            oid: 3128315
-            model_name: Measure
-            operation: U
-            operation_date: "2018-01-31"
-          relationships:
-            record:
-              data:
-                id: 3596293
-                type: measure
-        included:
-        - id: "3643279"
-          type: measure
-          attributes:
-            id: 3643279
-            origin: eu
-            import: false
-            goods_nomenclature_item_id: "0101210000"
-          relationships:
-            geographical_area:
-              data:
-                id: "1008"
-                type: geographical_area
-            measure_type:
-              data:
-                id: "718"
-                type: measure_type
-        - id: "1008"
-          type: geographical_area
-          attributes:
-            id: "1008"
-            description: "All third countries"
-        - id: "718"
-          type: measure_type
-          attributes:
-            id: "718"
-            description: "Export control on luxury goods"
-
-    MonetaryExchangeRates:
-      description: |
-        A dated list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: the unique `id` of the monetary_exchange_rates
-        data:type:
-          type: string
-          description: the type of object this is, e.g. `monetary_exchange_rates`
-        data:attributes:
-          type: array
-          description: A collection of [referenced monetary exchange rates](/reference.html#referencedmonetaryexchangerate "see referenced monetary exchange rates object")
-          items:
-            $ref: '#/components/schemas/ReferencedMonetaryExchangeRate'
-      example:
-        data:
-        - id: "435"
-          type: "monetary_exchange_rate"
-          attributes:
-            child_monetary_unit_code: "GBP"
-            exchange_rate: "0.8349"
-            operation_date: "2014-01-30"
-            validity_start_date: "2014-01-01T00:00:00.000Z"
-        - id: "437"
-          type: "monetary_exchange_rate"
-          attributes:
-            child_monetary_unit_code: "GBP"
-            exchange_rate: "0.8221"
-            operation_date: "2014-02-27"
-            validity_start_date: "2014-02-01T00:00:00.000Z"
-        - id: "439"
-          type: "monetary_exchange_rate"
-          attributes:
-            child_monetary_unit_code: "GBP"
-            exchange_rate: "0.8226"
-            operation_date: "2014-03-28"
-            validity_start_date: "2014-03-01T00:00:00.000Z"
 
     QuotaSearch:
       description: |
@@ -2842,8 +2480,6 @@ components:
             children_geographical_areas:
               data: []
 
-### Referenced objects
-
     ReferencedSection:
       description:
         A section object referenced elsewhere.
@@ -2938,29 +2574,6 @@ components:
           9508."
         section_id: 1
 
-    ReferencedChapterChange:
-      description:
-        A chapter change object referenced elsewhere.
-      type: object
-      properties:
-        oid:
-          type: integer
-          description: The `oid` of the chapter change. This is a unique identifier.
-        model_name:
-          type: string
-          description: The `model_name` of the chapter change.
-        operation:
-          type: string
-          description: The `operation` of the chapter change.
-        operation_date:
-          type: string
-          description: The `operation_date` of the chapter change.
-      example:
-        oid: 3467145
-        model_name: Measure
-        operation: U
-        operation_date: '2019-04-18'
-
     ReferencedHeading:
       description:
         A heading object referenced elsewhere.
@@ -2998,29 +2611,6 @@ components:
         description: Meat of bovine animals, fresh or chilled
         bti_url: "http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0201000000&Expand=true"
         formatted_description: Meat of bovine animals, fresh or chilled
-
-    ReferencedHeadingChange:
-      description:
-        A heading change object referenced elsewhere.
-      type: object
-      properties:
-        oid:
-          type: integer
-          description: The `oid` of the heading change. This is a unique identifier.
-        model_name:
-          type: string
-          description: The `model_name` of the heading change.
-        operation:
-          type: string
-          description: The `operation` of the heading change.
-        operation_date:
-          type: string
-          description: The `operation_date` of the heading change.
-      example:
-        oid: 3154963
-        model_name: Measure
-        operation: C
-        operation_date: "2018-11-13"
 
     ReferencedHeadingCommodity:
       description: |
@@ -3121,29 +2711,6 @@ components:
         basic_duty_rate: "\u003cspan title='0.0 '\u003e0.00\u003c/span\u003e %"
         meursing_code: false
         declarable: true
-
-    ReferencedCommodityChange:
-      description:
-        A commodity change object referenced elsewhere.
-      type: object
-      properties:
-        oid:
-          type: integer
-          description: The `oid` of the commodity change. This is a unique identifier.
-        model_name:
-          type: string
-          description: The `model_name` of the commodity change.
-        operation:
-          type: string
-          description: The `operation` flag of the commodity change. This should be one of [true, false].
-        operation_date:
-          type: string
-          description: The `operation_date` of the commodity change.
-      example:
-        oid: 3128698
-        model_name: Measure
-        operation: C
-        operation_date: "2018-06-27"
 
     ReferencedMeasure:
       description: |
@@ -3359,28 +2926,6 @@ components:
         description: ERGA OMNES
         geographical_area_id: "1011"
 
-    ReferencedMonetaryExchangeRate:
-      description: A monetary_exchange_rate object referenced elsewhere.
-      type: object
-      properties:
-        child_monetary_unit_code:
-          type: string
-          description: The `child_monetary_unit_code` of the monetary exchage rate. E.g., 'GBP'
-        exchange_rate:
-          type: string
-          description: The `exchange_rate`.
-        operation_date:
-          type: string
-          description: The `operation_date` of the monetary exchage rate.
-        validity_start_date:
-          type: string
-          description: The `validity_start_date` of the monetary exchage rate.
-      example:
-        child_monetary_unit_code: "GBP"
-        exchange_rate: "0.8349"
-        operation_date: "2014-01-30"
-        validity_start_date: "2014-01-01T00:00:00.000Z"
-
     ReferencedDefinition:
       description: A definition object referenced elsewhere.
       type: object
@@ -3500,3 +3045,58 @@ components:
         title: "cabinets, filing of base metal"
         referenced_id: "8304"
         referenced_class: "Heading"
+
+    Change:
+      description: Indicates a change to a given goods nomenclature.
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+        type:
+          type: string
+          description: Always 'change'.
+        attributes:
+          type: object
+          description: The changed goods nomenclature attributes.
+          $ref: '#/components/schemas/ChangeAttributes'
+      example:
+        id: "106193"
+        type: "change"
+        attributes:
+          goods_nomenclature_sid: "106193"
+          goods_nomenclature_item_id: "7606129292"
+          productline_suffix: "10"
+          end_line: false
+          change_type: "commodity"
+          change_date: "2021-04-13"
+
+    ChangeAttributes:
+      type: object
+      description: The changed goods nomenclature attributes
+      properties:
+        goods_nomenclature_sid:
+          type: integer
+          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of the goods nomenclature.
+        productline_suffix:
+          type: string
+          description: The `producline_suffix` of the commodity.
+        end_line:
+          type: boolean
+          description: If the goods nomenclature is an end line commodity
+        change_type:
+          type: string
+          description: Type of change. It can be one of [commodity, measure]
+        change_date:
+          type: date
+          description: Date of the change.
+      example:
+        goods_nomenclature_sid: "106193"
+        goods_nomenclature_item_id: "7606129292"
+        productline_suffix: "10"
+        end_line: false
+        change_type: "commodity"
+        change_date: "2021-04-13"
