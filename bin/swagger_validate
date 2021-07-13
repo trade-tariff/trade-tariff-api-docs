@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require 'openapi3_parser'
+
+files = %w[
+  source/v2/openapi.yaml,
+  source/v1/openapi.yaml,
+]
+
+files.each do |file|
+  swagger_file = Openapi3Parser.load(file)
+
+  unless swagger_file.valid?
+    puts swagger_file.errors
+    exit 1
+  end
+end
+
+exit 0

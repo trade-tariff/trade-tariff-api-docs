@@ -1076,7 +1076,7 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
-  /changes:
+  /changes/{as_of}:
     get:
       summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
       description: |
@@ -1086,11 +1086,9 @@ paths:
       parameters:
         - name: 'as_of'
           in: path
-          required: false
-          default: current date
+          required: true
           description: |
-            Retrieve changes as they existed between the `as_of` date and the previous day. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
-            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+            Retrieve changes as they existed between the `as_of` date and the previous day.
           schema:
             type: string
             format: date
@@ -3091,8 +3089,9 @@ components:
           type: string
           description: Type of change. It can be one of [commodity, measure]
         change_date:
-          type: date
+          type: string
           description: Date of the change.
+          format: date
       example:
         goods_nomenclature_sid: "106193"
         goods_nomenclature_item_id: "7606129292"
