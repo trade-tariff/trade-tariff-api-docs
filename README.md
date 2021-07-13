@@ -25,42 +25,45 @@ The OpenAPI Specification (OAS) defines a standard, language-agnostic interface 
 
 To update the Trade Tariff API documentation, you may follow this general workflow:
 
--  If the changes involve the content of the HTML pages ( `/index` and  `/getting_started`), edit the corresponding `.md` or `.md.erb` template under `source/*`.
+- If the changes involve the content of the HTML pages ( `/index` and `/getting_started`), edit the corresponding `.md` or `.md.erb` template under `source/*`.
 
-    -   edit `source/index.html.md.erb` or  `source/getting-started.html.md`
-    -   open or view [http://localhost:4567](http://localhost:4567) in a browser, the browser should automatically reload the page after changes are saved
+  - edit `source/index.html.md.erb` or `source/getting-started.html.md`
+  - open or view [http://localhost:4567](http://localhost:4567) in a browser, the browser should automatically reload the page after changes are saved
 
--  If the changes involve the API specification itself, edit the `source/v2/openapi.yaml` file. This file is used to build the HTML file `build/reference.html`.
+- If the changes involve the API specification itself, edit the `source/v2/openapi.yaml` file. This file is used to build the HTML file `build/reference.html`.
 
-    -   edit `source/v2/openapi.yaml`
-    -   ```
-        make serve
-        ```
-    -   manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
+  - edit `source/v2/openapi.yaml`
+  - ```
+    make serve
+    ```
+  - manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
 ### Support for multiple API versions
 
-As we release new versions of the API, we will continue to support older versions (until they're deprecated).  Therefore, we should continue to publish that version's API reference and the corresponding `openapi.yaml` file.
+As we release new versions of the API, we will continue to support older versions (until they're deprecated). Therefore, we should continue to publish that version's API reference and the corresponding `openapi.yaml` file.
 
 In order to do this, some modifications to the default Middleman templates and options are required:
 
 1.  create a new `openapi.yaml` file for the new API version and a directory in which to store it
-  ```
-  $ mkdir v2
-  $ touch v2/openapi.yaml
-  ```
+
+```
+$ mkdir v2
+$ touch v2/openapi.yaml
+```
 
 2.  edit `config/tech-docs.yml` - add new link in the header for old reference file, i.e.;
-  ```
-    V1 Reference: /reference-v1.html
-  ```
 
-3.  edit `Makefile` 
-  - add new task to generate old reference file
-  - rename previous reference file, add "-v1" (or whatever the old version number is) to the output filename
-    ```
-    ./generate.js source/v1/openapi.yaml source/reference-v1.html.md.erb
-    ```
+```
+  V1 Reference: /reference-v1.html
+```
+
+3.  edit `Makefile`
+
+- add new task to generate old reference file
+- rename previous reference file, add "-v1" (or whatever the old version number is) to the output filename
+  ```
+  ./generate.js source/v1/openapi.yaml source/reference-v1.html.md.erb
+  ```
 
 ### Editing the `openapi.yaml` file
 
@@ -79,18 +82,18 @@ paths:
         Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
 
       tags:
-      - Sections
+        - Sections
       produces:
-      - application/json
+        - application/json
       responses:
         200:
           description: Sections were found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Sections'
+                $ref: "#/components/schemas/Sections"
               example:
-                $ref: '#/components/schemas/Sections/example'
+                $ref: "#/components/schemas/Sections/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -98,7 +101,6 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections
-
 ```
 
 The example above is rendered into HTML:
@@ -156,7 +158,6 @@ make serve
 ```
 
 You should now be able to view a live preview at http://localhost:4567.
-
 
 ## License
 
