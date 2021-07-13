@@ -122,7 +122,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note
 
-### Chapters
   /chapters:
     get:
       summary: Retrieves all chapters
@@ -222,7 +221,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note
 
-### Headings
   /headings/{heading_id}:
     get:
       summary: Retrieves a heading
@@ -263,7 +261,6 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
 
 
-### Commodities
   /commodities/{id}:
     get:
       summary: Retrieves a commodity
@@ -303,7 +300,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 
-### Quotas
   /quotas/search:
     get:
       summary: Retrieves a list of quota definitions
@@ -453,7 +449,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&years[]=2018&years[]=2019&page=1
 
-### Additional Codes
   /additional_codes/search:
     get:
       summary: Retrieves a list of additional_codes, with associated measures and commodities.
@@ -533,7 +528,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_code_types
 
-### Certificates
   /certificates/search:
     get:
       summary: Retrieves a list of certificates, with associated measures and commodities.
@@ -612,7 +606,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificate_types
 
-### Footnotes
   /footnotes/search:
     get:
       summary: Retrieves a list of footnotes, with associated measures and commodities.
@@ -691,7 +684,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnote_types
 
-### Chemicals
   /chemicals/{cas}:
     get:
       summary: Retrieves a chemical by its CAS number.
@@ -780,7 +772,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemicals/search?name=benzene
 
-### Goods nomenclatures
   /goods_nomenclatures/section/{position}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
@@ -1038,7 +1029,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/search_references.json?query[letter]=c
 
-### Geographical areas
   /geographical_areas:
     get:
       summary: Retrieves a list of geographical areas
@@ -1086,8 +1076,6 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
-
-### Changes
   /changes:
     get:
       summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
@@ -2492,8 +2480,6 @@ components:
             children_geographical_areas:
               data: []
 
-### Referenced objects
-
     ReferencedSection:
       description:
         A section object referenced elsewhere.
@@ -3061,7 +3047,7 @@ components:
         referenced_class: "Heading"
 
     Change:
-      description: A search_reference object referenced elsewhere.
+      description: Indicates a change to a given goods nomenclature.
       type: object
       properties:
         id:
@@ -3085,7 +3071,7 @@ components:
           change_type: "commodity"
           change_date: "2021-04-13"
 
-    Change:Attributes:
+    ChangeAttributes:
       type: object
       description: The changed goods nomenclature attributes
       properties:
@@ -3114,4 +3100,3 @@ components:
         end_line: false
         change_type: "commodity"
         change_date: "2021-04-13"
-

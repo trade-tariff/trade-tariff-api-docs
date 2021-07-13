@@ -13,16 +13,20 @@ highlight_theme: darkula
 The Trade Tariff Public API provides a simple and consistent way to request
 [UK Trade Tariff](https://gov.uk/trade-tariff) content as structured data in a predictable format.
 
+From January 1st 2021, the API will also provide data on the EU Tariff as applies to certain
+trades with Northern Ireland (known as the XI Tariff).
+
 This API accepts HTTP requests and responds with
 [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
 published content as is presented on GOV.UK.
 
 
-## Base URL
+## Base URLs
 
-All requests to this API should be prefixed with the following URL:
+* <a href="https://www.trade-tariff.service.gov.uk">https://www.trade-tariff.service.gov.uk</a>
 
-**https://www.trade-tariff.service.gov.uk**
+* <a href="https://www.trade-tariff.service.gov.uk/xi">https://www.trade-tariff.service.gov.uk/xi</a>
+
 
 
 
@@ -80,7 +84,7 @@ Status|Meaning|Description|Schema
 
 ## GET /api/v1/sections/{position}
 
-*Retreives a section by its position*
+*Retrieves a section by its position*
 
 This resource represents _a single section_ in the Tariff.
 
@@ -216,7 +220,7 @@ Status|Meaning|Description|Schema
 
 ## GET /api/v1/sections/{section_id}/section_note
 
-*Retreives a section's notes*
+*Retrieves a section's notes*
 
 This resource represents the notes for a particular section.
 
@@ -392,7 +396,7 @@ Status|Meaning|Description|Schema
 
 ## GET /api/v1/chapters/{chapter_id}/chapter_note
 
-*Retreives a chapter's notes*
+*Retrieves a chapter's notes*
 
 This resource represents the note for a particular chapter. For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id` <p>`chapter_id` should be a zero-padded string of two digits.</p>
 
@@ -428,102 +432,6 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|OK|A chapter's notes were found.|[ChapterNote](#schemachapternote)
 404|Not Found|A chapter's notes were not found.|None
-5XX|Unknown|Unexpected error.|None
-
-## GET /api/v1/chapters/{chapter_id}/changes
-
-*Retreives a chapter's changes*
-
-This resource represents the changes for a particular chapter. For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id` <p>`chapter_id` should be a zero-padded string of two digits.</p>
-
-This request does not require authentication.
-### Parameters
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-chapter_id|path|string|true|The `chapter_id` of the chapter. 
-
-### Example Request
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/01/changes
-```
-### Example Response
-
-<details>
-<summary>Examples</summary>
- 
-```json
-[
-  {
-    "oid": 3372028,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494058,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0105111100",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  },
-  {
-    "oid": 3372029,
-    "model_name": "Measure",
-    "operation": "C",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -506560,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0105111100",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  },
-  {
-    "oid": 3372190,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494124,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0103921100",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  }
-]
-```
-</details>
-
-### Responses
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A chapter's changes were found.|[ChapterChanges](#schemachapterchanges)
-404|Not Found|A chapter's changes were not found.|None
 5XX|Unknown|Unexpected error.|None
 
 # Headings
@@ -631,82 +539,6 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|OK|A heading was found.|[Heading](#schemaheading)
 404|Not Found|Commodity was not found.|None
-5XX|Unknown|Unexpected error.|None
-
-## GET /api/v1/headings/{heading_id}/changes
-
-*Retreives a heading's changes*
-
-This resource represents the changes for a particular heading. For this resource, `heading_id` is used to uniquely identify a heading and request its changes from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id` <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
-
-This request does not require authentication.
-### Parameters
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-heading_id|path|integer|true|The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits. 
-
-### Example Request
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101/changes
-```
-### Example Response
-
-<details>
-<summary>Examples</summary>
- 
-```json
-[
-  {
-    "oid": 3371184,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494217,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0102291020",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "AHC",
-        "description": "Animal Health Certificate"
-      }
-    }
-  },
-  {
-    "oid": 3371370,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494348,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0102292950",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  }
-]
-```
-</details>
-
-### Responses
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A heading's changes were found.|[HeadingChanges](#schemaheadingchanges)
-404|Not Found|A heading's changes were not found.|None
 5XX|Unknown|Unexpected error.|None
 
 # Commodities
@@ -1020,131 +852,6 @@ Status|Meaning|Description|Schema
 404|Not Found|Commodity was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /api/v1/commodities/{goods_nomenclature_item_id}/changes
-
-*Retreives a commodity's changes*
-
-This resource represents a single commodity. For this resource, `goods_nomenclature_item_id` is used to uniquely identify a commodity and request it from the API. <p>`goods_nomenclature_item_id` should be a string of ten (10) digits.</p>
-
-This request does not require authentication.
-### Parameters
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-goods_nomenclature_item_id|path|integer|true|The `goods_nomenclature_item_id` of the commodity to be retrieved. This should be a string of ten (10) digits. 
-
-### Example Request
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000/changes
-```
-### Example Response
-
-<details>
-<summary>Examples</summary>
- 
-```json
-[
-  {
-    "oid": 3156915,
-    "model_name": "Measure",
-    "operation": "C",
-    "operation_date": "2018-11-20",
-    "record": {
-      "id": 3658161,
-      "origin": "eu",
-      "import": true,
-      "goods_nomenclature_item_id": "0101210000",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "103",
-        "description": "Third country duty"
-      }
-    }
-  },
-  {
-    "oid": 3156855,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2018-11-20",
-    "record": {
-      "id": 3210366,
-      "origin": "eu",
-      "import": true,
-      "goods_nomenclature_item_id": "0101210000",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "103",
-        "description": "Third country duty"
-      }
-    }
-  }
-]
-```
-</details>
-
-### Responses
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A commodity's changes were found.|[CommodityChanges](#schemacommoditychanges)
-404|Not Found|A commodity's changes were not found.|None
-5XX|Unknown|Unexpected error.|None
-
-# Monetary Exchange Rates
-
-## GET /api/v1/monetary_exchange_rates
-
-*Retrieves a list of monetary exchange rates*
-
-Retrieves a list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
-
-This request does not require authentication.
-### Example Request
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/monetary_exchange_rates
-```
-### Example Response
-
-<details>
-<summary>Examples</summary>
- 
-```json
-[
-  {
-    "child_monetary_unit_code": "GBP",
-    "exchange_rate": "0.8349",
-    "operation_date": "2014-01-30",
-    "validity_start_date": "2014-01-01T00:00:00.000Z"
-  },
-  {
-    "child_monetary_unit_code": "GBP",
-    "exchange_rate": "0.8221",
-    "operation_date": "2014-02-27",
-    "validity_start_date": "2014-02-01T00:00:00.000Z"
-  },
-  {
-    "child_monetary_unit_code": "GBP",
-    "exchange_rate": "0.8226",
-    "operation_date": "2014-03-28",
-    "validity_start_date": "2014-03-01T00:00:00.000Z"
-  }
-]
-```
-</details>
-
-### Responses
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|Monetary exchange rates were found|[MonetaryExchangeRates](#schemamonetaryexchangerates)
-5XX|Unknown|Unexpected error.|None
-
 # Objects
 
 ## Sections
@@ -1320,7 +1027,7 @@ position|integer|false|The `position` of the section, or the order in which this
 title|string|false|The `title` of the section.
 numeral|string|false|The `numeral` of the section, as a roman numeral
 chapter_from|string|false|The `chapter_from` of the section, the first chapter of this section.
-chapter_to|Unknown|false|The `id` of the section.
+chapter_to|string|false|The `chapter_to` of the section, the last chapter of this section.
 section_note|string|false|The `section_note` of the section. Not all sections have a note.
 chapters|[object]|false|An array of [ReferencedChapter](/reference.html#referencedchapter "see ReferencedChapter object") objects. 
 
@@ -1514,93 +1221,6 @@ chapter_id|string|false|The `chapter_id` of the chapter_note.
 section_id|integer|false|The `section_id` of this chapter that has this note.
 content|string|false|The `content` of the chapter_note.
 
-## ChapterChanges
-
-<a name="schemachapterchanges"></a>
-
-All changes for a chapter in the Tariff
-
-<details>
-
-<summary>Sample JSON</summary>
-
-```json
-[
-  {
-    "oid": 3372028,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494058,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0105111100",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  },
-  {
-    "oid": 3372029,
-    "model_name": "Measure",
-    "operation": "C",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -506560,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0105111100",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  },
-  {
-    "oid": 3372190,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494124,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0103921100",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  }
-]
-```
-
-</details>
-
-### Fields
-
-Name|Type|Required|Description
----|---|---|---|
-oid|integer|false|The `oid` of the chapter_change, which is a unique identifier of the change.
-model_name|string|false|The `model_name` of the chapter_change, whcih is the type of model that was changed.
-operation|string|false|The `operation` of the chapter_change. This enumerable value must be one of `["C", "D", "U", "X"]`.
-operation_date|string(date)|false|The `operation_date` of the chapter_change, e.g. `2019-02-14`
-record|object|false|A [record](/reference.html#referencedrecord "see referenced record object") object. 
-
 ## Heading
 
 <a name="schemaheading"></a>
@@ -1702,73 +1322,6 @@ section|object|false|A [section](/reference.html#referencedsection "see referenc
 \_response_info|object|false|A [\_response_info](/reference.html#referenced-responseinfo "see referenced _response_info object") object. 
 footnotes|[object]|false|An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects. 
 commodities|[object]|false|An array of [commodity](/reference.html#referencedcommodity "see referenced commodity object") objects. 
-
-## HeadingChanges
-
-<a name="schemaheadingchanges"></a>
-
-All changes for a heading
-
-<details>
-
-<summary>Sample JSON</summary>
-
-```json
-[
-  {
-    "oid": 3371184,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494217,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0102291020",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "AHC",
-        "description": "Animal Health Certificate"
-      }
-    }
-  },
-  {
-    "oid": 3371370,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2019-02-02",
-    "record": {
-      "id": -494348,
-      "origin": "uk",
-      "import": true,
-      "goods_nomenclature_item_id": "0102292950",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "CVD",
-        "description": "Common Veterinary Entry Document (CVED)"
-      }
-    }
-  }
-]
-```
-
-</details>
-
-### Fields
-
-Name|Type|Required|Description
----|---|---|---|
-oid|integer|true|The `oid` of the heading change
-model_name|string|true|The `model_name` of the heading_change, which is the type of model that was changed.
-operation|string|true|The type of `operation` of the heading change. This enumerable value must be one of `["C", "D", "U", "X"]`.
-operation_date|string(date)|true|The `operation_date` of the heading change, in date format, e.g., `2019-02-02`
-record|object|true|A [referenced_record](/reference.html#referencedrecord "see referenced record object") object. 
 
 ## Commodity
 
@@ -2085,117 +1638,6 @@ import_measures|[object]|false|An array of [referenced_measure](/reference.html#
 export_measures|[object]|false|An array of [referenced_measure](/reference.html#referencedmeasure "see referenced_measure object") objects. 
 footnotes|[object]|false|An array of [footnote](/reference.html#referencedfootnote "see referenced footnote object") objects. 
 ancestors|[object]|false|An array of [referenced_ancestor](/reference.html#referencedancestor "see referenced_ancestor object") object. 
-
-## CommodityChanges
-
-<a name="schemacommoditychanges"></a>
-
-All changes for a commodity
-
-<details>
-
-<summary>Sample JSON</summary>
-
-```json
-[
-  {
-    "oid": 3156915,
-    "model_name": "Measure",
-    "operation": "C",
-    "operation_date": "2018-11-20",
-    "record": {
-      "id": 3658161,
-      "origin": "eu",
-      "import": true,
-      "goods_nomenclature_item_id": "0101210000",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "103",
-        "description": "Third country duty"
-      }
-    }
-  },
-  {
-    "oid": 3156855,
-    "model_name": "Measure",
-    "operation": "U",
-    "operation_date": "2018-11-20",
-    "record": {
-      "id": 3210366,
-      "origin": "eu",
-      "import": true,
-      "goods_nomenclature_item_id": "0101210000",
-      "geographical_area": {
-        "id": "1011",
-        "description": "ERGA OMNES"
-      },
-      "measure_type": {
-        "id": "103",
-        "description": "Third country duty"
-      }
-    }
-  }
-]
-```
-
-</details>
-
-### Fields
-
-Name|Type|Required|Description
----|---|---|---|
-oid|integer|false|The `oid` of the commodity change.
-model_name|string|false|The `model_name` of the commodity change, which is the type of model that was changed.
-operation|string|false|The `operation` of the commodity change.
-operation_date|string(date)|false|The `operation_date` of the commodity change.
-record|object|false|A [referenced_record](/reference.html#referencedrecord "see referenced-record object") object. 
-
-## MonetaryExchangeRates
-
-<a name="schemamonetaryexchangerates"></a>
-
-A dated list of monetary exchange rates, from Euro (&euro;) to GPB (&pound;)
-
-<details>
-
-<summary>Sample JSON</summary>
-
-```json
-[
-  {
-    "child_monetary_unit_code": "GBP",
-    "exchange_rate": "0.8349",
-    "operation_date": "2014-01-30",
-    "validity_start_date": "2014-01-01T00:00:00.000Z"
-  },
-  {
-    "child_monetary_unit_code": "GBP",
-    "exchange_rate": "0.8221",
-    "operation_date": "2014-02-27",
-    "validity_start_date": "2014-02-01T00:00:00.000Z"
-  },
-  {
-    "child_monetary_unit_code": "GBP",
-    "exchange_rate": "0.8226",
-    "operation_date": "2014-03-28",
-    "validity_start_date": "2014-03-01T00:00:00.000Z"
-  }
-]
-```
-
-</details>
-
-### Fields
-
-Name|Type|Required|Description
----|---|---|---|
-child_monetary_unit_code|string|false|The `child_monetary_unit_code` of the monetary exchange rate. This is the currency that is being echanged to.
-exchange_rate|string|false|The `exchange_rate` of the monetary exchange rate. This is the exchange rate from EUR to GBP
-operation_date|string(date)|false|The `operation_date` of the monetary exchange rate. Use `date` format, e.g., `2018-02-14`
-validity_start_date|string(date-time)|false|The `validity_start_date` of the monetary exchange rate, or the date this rate takes effect. Use `date-time` format, e.g., `2014-01-01T00:00:00.000Z`
 
 ## ReferencedSection
 
