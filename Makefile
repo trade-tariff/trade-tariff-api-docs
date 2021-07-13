@@ -17,3 +17,6 @@ serve: html
 
 all: html
 
+validate:
+	bin/swagger_validate
+

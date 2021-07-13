@@ -183,6 +183,7 @@ PLATFORMS
 DEPENDENCIES
   govuk_tech_docs
   middleman-gh-pages (~> 0.3.1)
+  openapi3_parser
 
 RUBY VERSION
    ruby 2.7.4p191
