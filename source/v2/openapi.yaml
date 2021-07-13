@@ -1081,6 +1081,8 @@ paths:
       summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
       description: |
         Retrieves a list of goods nomenclature objects that have changed since the previous day
+
+        Changes only go back 30 days
       tags:
       - Changes
       parameters:
