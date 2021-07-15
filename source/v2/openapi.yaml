@@ -351,27 +351,6 @@ paths:
             - exhausted
             - not blocked
             - not exhausted
-        - name: years
-          in: query
-          required: false
-          description: |
-            Retrieve quotas only for this collection of `years`. Note: the array of years may be passed in via URL:
-            ```
-            /quotas/search?years[]=2018&years[]=2019
-            ```
-            and via the body of a JSON request:
-            ```
-            {
-              "years": [
-                "2018",
-                "2019"
-              ]
-            }
-            ```
-          schema:
-            type: array
-            items:
-              type: string
         - name: year
           in: query
           required: false
@@ -447,7 +426,7 @@ paths:
         /api/v2/quotas/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&years[]=2018&years[]=2019&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1
 
   /additional_codes/search:
     get:
