@@ -1664,6 +1664,7 @@ components:
             import: false
             excise: false
             vat: false
+            reduction_indicator: null
           relationships:
             duty_expression:
               data:
@@ -2717,6 +2718,9 @@ components:
         vat:
           type: boolean
           description: The `vat` flag of the measure.
+        reduction_indicator:
+          type: integer
+          description: The reduction indicator is used to match a preferential duty with a Meursing additional code duty. Can be an integer or null.
       example:
         id: 2982263
         origin: eu
@@ -2725,6 +2729,7 @@ components:
         import: true
         excise: false
         vat: false
+        reduction_indicator: null
 
     ReferencedAdditionalCode:
       description: |
