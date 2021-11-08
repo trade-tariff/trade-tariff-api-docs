@@ -6,7 +6,6 @@ clean:
 	rm -rf build
 
 api:
-	./generate.js source/v1/openapi.yaml source/reference-v1.html.md.erb
 	./generate.js source/v2/openapi.yaml source/reference.html.md.erb
 
 html: requirements clean api

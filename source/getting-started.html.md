@@ -8,11 +8,9 @@ This guide introduces a number of key concepts in GOV.UK Trade Tariff API throug
 
 ## API Version
 
-The most up-to-date version of this API is __version 2__ or `v2`.
+The most up-to-date version of this API is __version 2__ or `v2`. __Version 1__ is **deprecated**.
 
-Documentation for __version 2__ (`v2`) is available at [https://api.trade-tariff.service.gov.uk/reference.html](/reference.html).
-
-Documentation for __version 1__ (`v1`) is available at [https://api.trade-tariff.service.gov.uk/reference-v1.html](/reference-v1.html).
+Documentation is available at [https://api.trade-tariff.service.gov.uk/reference.html](/reference.html).
 
 ## Accessing Content
 
