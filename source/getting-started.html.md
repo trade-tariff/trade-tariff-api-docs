@@ -6,14 +6,6 @@ title: Getting Started
 
 This guide introduces a number of key concepts in GOV.UK Trade Tariff API through the usage of examples. It utilises [curl](https://curl.haxx.se/) for interfacing with the API on the command line and is chosen due to the wide availability of curl, however you may prefer the structured output of using [HTTPie](https://httpie.org/) or piping the curl responses through [jq](https://stedolan.github.io/jq/).
 
-## API Version
-
-The most up-to-date version of this API is __version 2__ or `v2`.
-
-Documentation for __version 2__ (`v2`) is available at [https://api.trade-tariff.service.gov.uk/reference.html](/reference.html).
-
-Documentation for __version 1__ (`v1`) is available at [https://api.trade-tariff.service.gov.uk/reference-v1.html](/reference-v1.html).
-
 ## Accessing Content
 
 GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff). For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:

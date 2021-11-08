@@ -13,7 +13,7 @@ convert the [`openapi.yaml`][tariff-openapi] to Markdown.
 
 ## Updating content
 
-To update content of this site, modify the files under `source` directory, i.e., the `source/v1/openapi.yaml` and `source/v2/openapi.yaml` files.
+To update content of this site, modify the files under `source` directory, i.e., `source/v2/openapi.yaml`.
 
 HTML pages are in the [`/source`][source-dir] of this repository and are authored using Markdown. You can make edits to these pages by making changes in a branch and then opening a pull request.
 
@@ -54,7 +54,7 @@ $ touch v2/openapi.yaml
 2.  edit `config/tech-docs.yml` - add new link in the header for old reference file, i.e.;
 
 ```
-  V1 Reference: /reference-v1.html
+ Reference: /reference.html
 ```
 
 3.  edit `Makefile`
