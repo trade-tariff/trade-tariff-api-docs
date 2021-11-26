@@ -1089,6 +1089,50 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-01-01
+  /rules_of_origin_schemes/{subheading}/{country_code}:
+    get:
+      summary: Retrieves relevant Rules of Origin schemes and rules
+      description: |
+        Retrieves a list of Schemes and corresponding rules which apply to the
+        supplied heading and country codes
+      tags:
+      - Rules of Origin
+      parameters:
+        - name: subheading
+          in: path
+          required: true
+          description: The 6 digit subheading of the goods being traded
+          schema:
+            type: string
+            minimum: 6
+            maximum: 6
+            example: "392113"
+        - name: 'country_code'
+          in: path
+          required: true
+          description: Two letter country code for the country you are trading with
+          schema:
+            type: string
+            minimum: 2
+            maximum: 2
+            example: "FR"
+      responses:
+        200:
+          description:
+            An array of Schemes, with the relevant rules and other data nested under the scheme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RulesOfOriginScheme'
+              example:
+                $ref: '#/components/schemes/RulesOfOriginScheme/example'
+        5XX:
+          description: Unexpected error - likely missing or incorrect params
+      x-code-samples:
+        /api/v2/rules_of_origin:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/rules_of_origin_schemes/392113/FR
 
 components:
   schemas:
@@ -3085,3 +3129,208 @@ components:
         end_line: false
         change_type: "commodity"
         change_date: "2021-04-13"
+
+    RulesOfOriginScheme:
+      type: object
+      description: A scheme of lower or preferential tariffs
+      properties:
+        scheme_code:
+          type: string
+          description: A code used to represent the scheme
+        title:
+          type: string
+          description: The title of the scheme
+        countries:
+          type: array
+          description: A list of 2 letter country codes which the scheme applies to
+          items:
+            type: string
+        footnote:
+          type: string
+          description: A footnote of further information relating to the scheme
+        unilateral:
+          type: boolean
+          description: Is the scheme unilateral or multilateral
+        fta_intro:
+          type: string
+          description: Free trade agreement introductory text, in markdown format
+        introductory_notes:
+          type: string
+          description: Introductory notes for the scheme, in markdown format
+        rules:
+          type: array
+          description: A collection of [product-specific rules](#rulesoforiginrule) a product must fulfil
+          items:
+            $ref: '#/components/schemas/RulesOfOriginRule'
+        links:
+          type: array
+          description: A collection of [links](#rulesoforiginlink) with further information relating to the scheme
+          items:
+            $ref: '#/components/schemas/RulesOfOriginLink'
+        proofs:
+          type: array
+          description: A collection of [proofs of origin](#rulesoforiginproof) necessary to claim preferential tariff treatment
+          items:
+            $ref: '#/components/schemas/RulesOfOriginProof'
+      example:
+        data:
+        - id: eu
+          type: rules_of_origin_scheme
+          attributes:
+            scheme_code: eu
+            title: UK / EU Trade and Co-operation Agreement
+            countries:
+            - EU
+            - AT
+            - BE
+            - BG
+            - CY
+            - CZ
+            - DE
+            - DK
+            - EE
+            - ES
+            - FI
+            - FR
+            - GR
+            - HR
+            - HU
+            - IE
+            - IT
+            - LT
+            - LU
+            - LV
+            - MT
+            - NL
+            - PL
+            - PT
+            - RO
+            - SE
+            - SI
+            - SK
+            - SM
+            - AD
+            footnote:
+            unilateral:
+            fta_intro: |-
+              ### UK / EU Trade and Co-operation Agreement
+
+              The UK moved to trading based on a new Free Trade Agreement (FTA) - the Trade and Cooperation Agreement (TCA) between the UK and the EU.
+
+              To import / export tariff-free under the TCA, goods must meet the UK-EU preferential rules of origin. This means that there must be a qualifying level of processing in the country of export to access zero tariffs. This applies to EU origin goods imported and moving through the UK from a Member State to another EU Member State, as well as goods imported from the Rest of World.
+
+              These rules are set out in the TCA and determine the origin of goods based on where the products or materials (or inputs) used in their production come from. Their purpose is to ensure that preferential tariffs are only given to goods that originate in the UK or EU and not from third countries (those apart from UK and the EU Member States).
+
+              #### Andorra and San Marino
+              Andorra and San Marino are part of customs unions with the EU. The UK has agreed with the EU that all products originating in San Marino and all non-agricultural products (chapters 25-97) originating in Andorra are to be treated as originating in the EU under the UK-EU Trade and Cooperation Agreement as long as Andorra and San Marino apply to UK products the same preferences that the EU applies to them. These products benefit from zero tariffs, where they meet the relevant rules of origin. Trade with Andorra of agricultural products (chapters 01-24) is not in scope of the UK-EU Trade and Cooperation Agreement and takes place under WTO terms.
+            introductory_notes: "### Note 1 - General principles\n\n1. This Annex sets out
+              the general rules for the applicable requirements of Annex ORIG-2 \\[Product-specific
+              rules of origin\\] as provided for in point (c) of Article ORIG 3(1) \\[General
+              requirements\\] of this Agreement."
+          relationships:
+            rules:
+              data:
+              - id: '10000096'
+                type: rules_of_origin_rule
+            links:
+              data:
+              - id: fd431ebe2833f8753e90e93cbbe64ef4
+                type: rules_of_origin_link
+              - id: 71ce11df10c4c03e61ce0702f3802ce7
+                type: rules_of_origin_link
+            proofs:
+              data:
+              - id: 506eb2e258484e97bc25568b864c4fd0
+                type: rules_of_origin_proof
+              - id: 724fc25dcaf6a7d21e9015f065344a52
+                type: rules_of_origin_proof
+        included:
+        - id: fd431ebe2833f8753e90e93cbbe64ef4
+          type: rules_of_origin_link
+          attributes:
+            text: Check your goods meet the rules of origin
+            url: https://www.gov.uk/guidance/check-your-goods-meet-the-rules-of-origin
+        - id: 71ce11df10c4c03e61ce0702f3802ce7
+          type: rules_of_origin_link
+          attributes:
+            text: 'UK/EU and EAEC: Trade and Cooperation Agreement'
+            url: https://www.gov.uk/government/publications/ukeu-and-eaec-trade-and-cooperation-agreement-ts-no82021
+        - id: 506eb2e258484e97bc25568b864c4fd0
+          type: rules_of_origin_proof
+          attributes:
+            summary: Statement on origin
+            subtext: ''
+            url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration
+        - id: 724fc25dcaf6a7d21e9015f065344a52
+          type: rules_of_origin_proof
+          attributes:
+            summary: Importer's knowledge
+            subtext: ''
+            url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#importers-knowledge
+        - id: '10000096'
+          type: rules_of_origin_rule
+          attributes:
+            id_rule: 10000096
+            heading: 39.21-39.22
+            description: |-
+              3921: Other plates, sheets, film, foil and strip, of plastics
+
+              3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics
+            rule: |-
+              A change from any other heading  - CTH;
+              or
+              Maximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}
+
+    RulesOfOriginLink:
+      type: object
+      description: A URL link for further information relating to a RulesOfOriginScheme
+      properties:
+        text:
+          type: string
+          description: A description of the link
+        url:
+          type: string
+          description: The url for the link
+      example:
+        text: "Check your goods meet the rules of origin"
+        url: "https://www.gov.uk/guidance/check-your-goods-meet-the-rules-of-origin"
+
+    RulesOfOriginProof:
+      type: object
+      description: |
+        A proof of origin necessary to claim preferential tariff treatment
+      properties:
+        summary:
+          type: string
+          description: A summary description of the necessary proof of origin
+        subtext:
+          type: string
+          description: Additional information relating to the necessary proof of origin
+        url:
+          type: string
+          description: A URL linking to further information for the necessary proof of origin
+        example:
+          summary: "Statement on origin"
+          subtext: ""
+          url: "https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration"
+
+    RulesOfOriginRule:
+      type: object
+      description: |
+        A product-specific rule the product must fulfil to be considered originating from the origin location
+      properties:
+        heading:
+          type: string
+          description: The heading this rule applies to
+        description:
+          type: string
+          description: The description of the heading this rule applies to
+        rule:
+          type: string
+          description: The product-specific rule to be fulfilled, in markdown format
+      example:
+        heading: "39.21-39.22"
+        description: "3921: Other plates, sheets, film, foil and strip, of plastics\n\n3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics"
+        rule: "A change from any other heading  - CTH;\nor\nMaximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}"
+
+    
