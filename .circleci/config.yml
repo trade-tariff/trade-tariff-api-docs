@@ -1,0 +1,107 @@
+version: 2.1
+
+orbs:
+  queue: eddiewebb/queue@1.6.4
+
+commands:
+  cf_install:
+    parameters:
+      space:
+        type: string
+    steps:
+      - run:
+          name: Setup CF CLI
+          command: |
+            curl -L -o cf.deb --retry 3 'https://packages.cloudfoundry.org/stable?release=debian64&version=7.4.0&source=github-rel'
+            file cf.deb
+            sudo dpkg -i cf.deb
+            cf -v
+            cf api "$CF_ENDPOINT"
+            cf auth "$CF_USER" "$CF_PASSWORD"
+            cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
+            cf install-plugin app-autoscaler-plugin -r CF-Community -f
+            cf target -o "$CF_ORG" -s "<< parameters.space >>"
+
+  cf_deploy_static:
+    parameters:
+      app_name:
+        type: string
+      space:
+        type: string
+    steps:
+      - cf_install:
+          space: << parameters.space >>
+      - run:
+          name: Deploy Static Site to GovUK PaaS
+          command: cf push "<< parameters.app_name >>"
+
+jobs:
+  build:
+    docker:
+      - image: 'cimg/ruby:3.1.0-node'
+        environment:
+          BUNDLE_JOBS: "3"
+          BUNDLE_RETRY: "3"
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: Build static site
+          command: make html
+      - persist_to_workspace:
+          root: build
+          paths:
+            - .
+  deploy_dev:
+    docker:
+      - image: 'cimg/ruby:3.1.0-node'
+    resource_class: small
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - queue/until_front_of_line:
+          time: '10'
+          consider-branch: false
+          dont-quit: true
+      - cf_deploy_static:
+          app_name: ${CF_APP}-dev
+          space: development
+
+  deploy_production:
+    docker:
+      - image: 'cimg/ruby:3.1.0-node'
+    resource_class: small
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - queue/until_front_of_line:
+          time: '10'
+          consider-branch: true
+          dont-quit: true
+      - cf_deploy_static:
+          app_name: ${CF_APP}-production
+          space: production
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build
+      - deploy_dev:
+          context: trade-tariff
+          filters:
+            branches:
+              ignore:
+                - main
+          requires:
+            - build
+      - deploy_production:
+          context: trade-tariff
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - build
