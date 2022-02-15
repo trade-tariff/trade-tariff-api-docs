@@ -11,6 +11,7 @@ service_link: /
 header_links:
   About: /
   Getting Started: /getting-started.html
+  News: /news.html
   API Docs: /reference.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)

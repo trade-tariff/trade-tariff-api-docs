@@ -1,0 +1,13 @@
+---
+title: News
+---
+# News
+
+Recent changes to the Trade Tariff API
+
+<% data.news.each.with_index do |news_item, index| %>
+<%= '---' if index > 0 %>
+## <span class="govuk-caption-l"><%= news_item.date.strftime('%-d %B %Y') %></span> <span class="govuk-visually-hidden">-</span> <%= news_item.title %>
+<%= news_item.content %>
+<% end %>
+
