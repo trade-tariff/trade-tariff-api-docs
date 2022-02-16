@@ -585,6 +585,41 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificate_types
 
+  /measure_types:
+    get:
+      summary: Retrieves a list of measure types.
+      description: >
+        Retrieves a list of all measure_types.
+      tags:
+        - Certificate Types
+      parameters:
+        - name: as_of
+          in: query
+          required: false
+          description: |
+            Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+
+      responses:
+        200:
+          description: MeasureTypes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasureTypes'
+              example:
+                $ref: '#/components/schemas/MeasureTypes/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificate_types:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_types
+
   /footnotes/search:
     get:
       summary: Retrieves a list of footnotes, with associated measures and commodities.
@@ -2080,6 +2115,60 @@ components:
           attributes:
             certificate_type_code: "X"
             description: "Export licence"
+
+    MeasureTypes:
+      description: |
+        List of measure type
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the measure_type.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `measure_type`
+        data:attributes:
+          description: The measure_type's attributes, as a [referenced measure_type object](/reference.html#referencedmeasuretype "see referenced measure_type object")
+          $ref: '#/components/schemas/ReferencedMeasureType'
+
+    ReferencedMeasureType:
+      description: A measure_type object referenced elsewhere.
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description for the measure type.
+        measure_type_series_description:
+          type: string
+          description: The description of the measure type series.
+        validity_start_date:
+          type: date
+          description: The validity start date of the measure type.
+        validity_end_date:
+          type: date
+          description: The validity end date of the measure type.
+        measure_type_series_id:
+          type: char
+          description: A single char representing measure type series.
+        measure_component_applicable_code:
+          type: integer
+          description: The applicable code of the measure.
+        order_number_capture_code:
+          type: integer
+          description: The order number of capture code.
+        trade_movement_code:
+          type: integer
+          description: The code of trade movement.
+      example:
+        description: "Supplementary unit import"
+        measure_type_series_id: "O"
+        measure_component_applicable_code: 1
+        order_number_capture_code: 2
+        trade_movement_code: 0
+        validity_end_date: null
+        validity_start_date: "1972-01-01T00:00:00.000Z"
+        id: "110"
+        measure_type_series_description: "Supplementary unit"
 
     FootnoteSearch:
       description: |
