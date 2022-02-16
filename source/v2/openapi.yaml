@@ -620,6 +620,39 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_types
 
+  /measure_actions:
+    get:
+      summary: Retrieves a list of the measure actions.
+      tags:
+        - Measure Actions
+      parameters:
+        - name: as_of
+          in: query
+          required: false
+          description: |
+            Retrieve the measure_actions as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+
+      responses:
+        200:
+          description: MeasureTypes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasureActions'
+              example:
+                $ref: '#/components/schemas/MeasureActions/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificate_types:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_actions
+
   /footnotes/search:
     get:
       summary: Retrieves a list of footnotes, with associated measures and commodities.
@@ -2169,6 +2202,46 @@ components:
         validity_start_date: "1972-01-01T00:00:00.000Z"
         id: "110"
         measure_type_series_description: "Supplementary unit"
+
+    MeasureActions:
+      description: List of measure actions
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the measure_action.
+        data:type:
+          type: string
+          description: the type of object (`measure_action`)
+        data:attributes:
+          description: The measure_action's attributes, as a [referenced measure_action object](/reference.html#referencedmeasureaction "see referenced measure_action object")
+          $ref: '#/components/schemas/ReferencedMeasureAction'
+      example:
+        data:
+          - id: "1"
+            type: measure_action
+            attributes:
+              description: "Import allowed"
+              validity_end_date: null
+              validity_start_date: "1972-01-01T00:00:00.000Z"
+
+    ReferencedMeasureAction:
+      description: A measure_action object referenced elsewhere.
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description for the measure action.
+        validity_start_date:
+          type: date
+          description: The validity start date of the measure action.
+        validity_end_date:
+          type: date
+          description: The validity end date of the measure action.
+      example:
+        description: "measure_action"
+        validity_end_date: null
+        validity_start_date: "1972-01-01T00:00:00.000Z"
 
     FootnoteSearch:
       description: |
