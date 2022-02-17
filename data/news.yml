@@ -1,12 +1,1 @@
-- date: 2021-12-20
-  title: Added Rules of Origin API
-  content: |
-    Added a Rules of Origin api for rules relating to importing a commodity from
-    a particular country. This covers
-
-    * applicable schemes
-    * relevant rules within those schemes
-    * necessary proofs of origin
-    * any relevant links
-
-    [More info](/reference.html#rules-of-origin)
+../NEWS.yml
