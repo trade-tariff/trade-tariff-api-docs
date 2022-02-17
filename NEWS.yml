@@ -1,12 +1,12 @@
 - date: 2021-12-20
-  title: Added Rules of Origin API
+  title: Addition of "Rules of Origin" API
   content: |
-    Added a Rules of Origin api for rules relating to importing a commodity from
-    a particular country. This covers
+    Addition of "Rules of Origin" API to illustrate the rules of origin
+    applicable to the import of goods under preferential tariff regimes.
+    This covers:
 
-    * applicable schemes
-    * relevant rules within those schemes
-    * necessary proofs of origin
-    * any relevant links
+    * product-specific rules applicable to each rules of origin scheme
+    * proofs of origin
+    * any relevant links and background information on the trading relationship
 
-    [More info](/reference.html#rules-of-origin)
+    [Rules of Origin API Documentation](/reference.html#rules-of-origin)
