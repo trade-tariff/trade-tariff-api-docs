@@ -687,6 +687,39 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_actions
 
+  /measure_condition_codes:
+    get:
+      summary: Retrieves a list of the measure condition codes.
+      tags:
+        - Measure Condition Codes
+      parameters:
+        - name: as_of
+          in: query
+          required: false
+          description: |
+            Retrieve the measure_condition_codes as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+
+      responses:
+        200:
+          description: measure_condition_codes were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasureConditionCodes'
+              example:
+                $ref: '#/components/schemas/MeasureConditionCodes/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificate_types:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_condition_codes
+
   /footnotes/search:
     get:
       summary: Retrieves a list of footnotes, with associated measures and commodities.
@@ -2306,6 +2339,46 @@ components:
         description: "measure_action"
         validity_end_date: null
         validity_start_date: "1972-01-01T00:00:00.000Z"
+
+    MeasureConditionCodes:
+      description: List of measure condition codes
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the measure_condition_code.
+        data:type:
+          type: string
+          description: the type of object (`measure_condition_code`)
+        data:attributes:
+          description: The measure_condition_code's attributes, as a [referenced measure_action object](/reference.html#referencedmeasureconditioncode "see referenced_condition_code object")
+          $ref: '#/components/schemas/ReferencedMeasureConditionCode'
+      example:
+        data:
+          - id: "1"
+            type: measure_condition_code
+            attributes:
+              description: "Presentation of a certificate/licence/document"
+              validity_end_date: null
+              validity_start_date: "1993-01-01T00:00:00.000Z"
+
+    ReferencedMeasureConditionCode:
+      description: A measure_condition_code object referenced elsewhere.
+      type: object
+      properties:
+        description:
+          type: string
+          description: The description for the measure condition code.
+        validity_start_date:
+          type: date
+          description: The validity start date of the measure condition code.
+        validity_end_date:
+          type: date
+          description: The validity end date of the measure condition code.
+      example:
+        description: "Presentation of a certificate/licence/document"
+        validity_end_date: null
+        validity_start_date: "1993-01-01T00:00:00.000Z"
 
     FootnoteSearch:
       description: |
