@@ -14,7 +14,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
   xml.subtitle "API News"
   xml.updated data.news.map(&:date).max.iso8601 unless data.news.empty?
 
-  data.news.each do |news_item|
+  data.news.sort_by(&:date).each do |news_item|
     xml.entry do
       xml.id "tag:#{site_domain},2005:News/#{news_item.date.strftime('%Y-%m-%d')}"
       xml.link "rel" => "alternate", "href" => URI.join(site_url, '/news.html')
