@@ -507,6 +507,40 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_code_types
 
+  /certificates:
+    get:
+      summary: Retrieves the list of certificates, with associated description and type description.
+      description: >
+        Retrieves a paginated list of certificates, filtered by `as_of param, if present.
+      tags:
+      - Certificates
+      parameters:
+        - name: as_of
+          in: query
+          required: false
+          description: |
+            Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Certificates were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Certificates'
+              example:
+                $ref: '#/components/schemas/Certificates/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/certificates/search:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates
+
   /certificates/search:
     get:
       summary: Retrieves a list of certificates, with associated measures and commodities.
@@ -2051,6 +2085,36 @@ components:
           attributes:
             additional_code_type_id: "B"
             description: "Refund for basic products"
+
+    Certificates:
+      description: List of the certificates
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the certificate. This value is equal to `attributes:certificate_type_code + attributes:certificate_code`.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `certificate`
+        data:attributes:
+          description: The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
+          $ref: '#/components/schemas/ReferencedCertificate'
+      example:
+        data:
+          id: "D005"
+          type: certificate
+          attributes:
+            certificate_type_code: "D"
+            certificate_code: "005"
+            description: "Commercial invoice within the framework of undertakings"
+            formatted_description: "Commercial invoice within the framework of undertakings"
+          relationships:
+            measures:
+              data:
+              - id: "2124342"
+                type: measure
+              - id: "2250100"
+                type: measure
 
     CertificateSearch:
       description: |
