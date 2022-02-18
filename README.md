@@ -38,6 +38,8 @@ To update the Trade Tariff API documentation, you may follow this general workfl
     ```
   - manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
+- It is also useful to add an entry in the `NEWS.yml` file, this information will be published on the Latest News page for users viewing these docs. It will also be added to the `/feed.xml` atom feed for anyone subscribing for updates.
+
 ### Support for multiple API versions
 
 As we release new versions of the API, we will continue to support older versions (until they're deprecated). Therefore, we should continue to publish that version's API reference and the corresponding `openapi.yaml` file.
@@ -158,6 +160,18 @@ make serve
 ```
 
 You should now be able to view a live preview at http://localhost:4567.
+
+## Publishing documentation
+
+### Development
+
+Any changes pushed to GitHub on a branch (eg, a Pull Request) will be deployed 
+automatically to the [Development URL](https://tariff-api-dev.london.cloudapps.digital)
+
+### Production
+
+Any changes to `main` on GitHub will be deployed automatically to our published docs 
+at [api.trade-tariff.service.gov.uk](https://api.trade-tariff.service.gov.uk) 
 
 ## License
 

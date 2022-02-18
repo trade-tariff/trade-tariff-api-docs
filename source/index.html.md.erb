@@ -1,6 +1,9 @@
 ---
 title: Trade Tariff API - GOV.UK
 ---
+<% content_for :head do %>
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Latest News Atom feed" />
+<% end %>
 
 # GOV.UK Trade Tariff API
 
@@ -60,6 +63,12 @@ Usage of GOV.UK Trade Tariff API does not require authentication.
 
 The GOV.UK Trade Tariff is updated on a daily basis, however to reduce the number of API calls please consider caching 
 requests for 24 hours.
+
+## API updates
+
+Changes to the API are documented on the [Latest News](/news.html) page
+
+They are also available as a feed to subscribe to at the [API News feed](/feed.xml)
 
 ## Security and compliance
 
