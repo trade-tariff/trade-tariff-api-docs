@@ -1,9 +1,8 @@
 <details>
-
-<summary>Sample JSON</summary>
-
-```json
-{{=JSON.stringify(data.schema,null,2)}}
-```
-
+  <summary>Sample JSON</summary>
+  <pre>
+    <code>
+    {{=JSON.stringify(data.schema,null,2)}}
+    </code>
+  </pre>
 </details>
