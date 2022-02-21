@@ -672,7 +672,7 @@ paths:
 
       responses:
         200:
-          description: MeasureTypes were found
+          description: MeasureActions were found
           content:
             application/json:
               schema:
@@ -1260,7 +1260,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/RulesOfOriginScheme'
               example:
-                $ref: '#/components/schemes/RulesOfOriginScheme/example'
+                $ref: '#/components/schemas/RulesOfOriginScheme/example'
         5XX:
           description: Unexpected error - likely missing or incorrect params
       x-code-samples:
@@ -2260,6 +2260,19 @@ components:
         data:attributes:
           description: The measure_type's attributes, as a [referenced measure_type object](/reference.html#referencedmeasuretype "see referenced measure_type object")
           $ref: '#/components/schemas/ReferencedMeasureType'
+      example:
+        data:
+          - id: "1"
+            type: measure_type
+            attributes:
+              description: "Supplementary unit import"
+              measure_type_series_description: "Supplementary unit"
+              validity_end_date: null
+              validity_start_date: "1972-01-01T00:00:00.000Z"
+              measure_type_series_id: "O"
+              measure_component_applicable_code: 1
+              order_number_capture_code: 2
+              trade_movement_code: 0
 
     ReferencedMeasureType:
       description: A measure_type object referenced elsewhere.
@@ -2272,14 +2285,17 @@ components:
           type: string
           description: The description of the measure type series.
         validity_start_date:
-          type: date
+          type: string
           description: The validity start date of the measure type.
+          format: date-time
         validity_end_date:
-          type: date
+          type: string
           description: The validity end date of the measure type.
+          format: date-time
         measure_type_series_id:
-          type: char
+          type: string
           description: A single char representing measure type series.
+          format: byte
         measure_component_applicable_code:
           type: integer
           description: The applicable code of the measure.
@@ -2330,11 +2346,13 @@ components:
           type: string
           description: The description for the measure action.
         validity_start_date:
-          type: date
+          type: string
           description: The validity start date of the measure action.
+          format: date-time
         validity_end_date:
-          type: date
+          type: string
           description: The validity end date of the measure action.
+          format: date-time
       example:
         description: "measure_action"
         validity_end_date: null
@@ -2370,11 +2388,13 @@ components:
           type: string
           description: The description for the measure condition code.
         validity_start_date:
-          type: date
+          type: string
           description: The validity start date of the measure condition code.
+          format: date-time
         validity_end_date:
-          type: date
+          type: string
           description: The validity end date of the measure condition code.
+          format: date-time
       example:
         description: "Presentation of a certificate/licence/document"
         validity_end_date: null
@@ -3608,10 +3628,10 @@ components:
         url:
           type: string
           description: A URL linking to further information for the necessary proof of origin
-        example:
-          summary: "Statement on origin"
-          subtext: ""
-          url: "https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration"
+      example:
+        summary: "Statement on origin"
+        subtext: ""
+        url: "https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration"
 
     RulesOfOriginRule:
       type: object
