@@ -656,8 +656,8 @@ paths:
 
   /quota_order_numbers:
     get:
-      summary: Retrieves a list of quota definitions number
-      description: Retrieves a list of quota definitions number with the quota definitions.
+      summary: Retrieves a list of active quotas
+      description: Retrieves a list of active quotas and their definitions.
       tags:
         - Quota Order Numbers
       parameters:

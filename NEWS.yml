@@ -1,3 +1,22 @@
+- date: 2022-02-25
+  title: New API enpoints
+  content: |
+    The following new API enpoints have been released:
+
+    * [/measure_actions](https://www.trade-tariff.service.gov.uk/api/v2/measure_actions)
+    * [/certificates](https://www.trade-tariff.service.gov.uk/api/v2/certificates)
+    * [/quota_order_numbers](https://www.trade-tariff.service.gov.uk/api/v2/quota_order_numbers)
+    * [/measure_types](https://www.trade-tariff.service.gov.uk/api/v2/measure_types)
+    * [/measure_condition_codes](https://www.trade-tariff.service.gov.uk/api/v2/measure_condition_codes)
+
+    API Documentation:
+
+    * [Certificates](/reference.html#certificates)
+    * [Quota order numbers](/reference.html#quota_order_numbers)
+    * [Measure types](/reference.html#measure_types)
+    * [Measure condition codes ](/reference.html#measure_condition_codes)
+    * [Measure actions](/reference.html#measure_actions)
+
 - date: 2021-12-20
   title: Addition of "Rules of Origin" API
   content: |
