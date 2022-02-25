@@ -654,6 +654,40 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_types
 
+  /quota_order_numbers:
+    get:
+      summary: Retrieves a list of quota definitions number
+      description: Retrieves a list of quota definitions number with the quota definitions.
+      tags:
+        - Quota Order Numbers
+      parameters:
+        - name: as_of
+          in: query
+          required: false
+          description: |
+            Retrieve the quota_order_numbers as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+
+      responses:
+        200:
+          description: QuotaOrderNumbers were found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuotaOrderNumbers'
+              example:
+                $ref: '#/components/schemas/QuotaOrderNumbers/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/quota_order_numbers:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quota_order_numbers
+
   /measure_actions:
     get:
       summary: Retrieves a list of the measure actions.
@@ -3449,6 +3483,61 @@ components:
         change_type: "commodity"
         change_date: "2021-04-13"
 
+    QuotaOrderNumbers:
+      description: List of quota order number
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the quota_order_number.
+        data:type:
+          type: string
+          description: the type of object this is, e.g. `quota_order_number`
+        data:attributes:
+          description: The quota_order_number's attributes, as a [referenced quota_order_number object](/reference.html#referencedquotaordernumber "see referenced quota_order_number object")
+          $ref: '#/components/schemas/ReferencedQuotaOrderNumber'
+        data:relationships:
+          type: object
+          description: Has One [ReferencedQuotaDefinition](/reference.html#referencedquotadefinition)
+      example:
+        data:
+          - id: "097014"
+            type: "quota_order_number"
+            attributes:
+              quota_order_number_sid: "Supplementary unit import"
+              validity_end_date: "2021-08-01T00:00:00.000Z"
+              validity_start_date: "2022-07-31T00:00:00.000Z"
+
+    ReferencedQuotaOrderNumber:
+      description: A quota_order_number object referenced elsewhere.
+      type: object
+      properties:
+        quota_order_number_sid:
+          type: string
+          description: Unique identifier for quota_order_number.
+        validity_start_date:
+          type: string
+          description: The validity start date of the quota_order_number.
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The validity end date of the quota_order_number.
+          format: date-time
+      example:
+          quota_order_number_sid: "2750"
+          validity_start_date: "2021-08-01T00:00:00.000Z"
+          validity_end_date: "2022-07-31T00:00:00.000Z"
+
+    ReferencedQuotaDefinition:
+      type: object
+      description: A Quota Definition. It has one-to-one relationship with QuotaOrderNumber.
+      properties:
+        id:
+          type: string
+          description: The unique `id` of the quota definition.
+        type:
+          type: string
+          description: the type of object ('quota_definition')
     RulesOfOriginScheme:
       type: object
       description: A scheme of lower or preferential tariffs
@@ -3651,5 +3740,3 @@ components:
         heading: "39.21-39.22"
         description: "3921: Other plates, sheets, film, foil and strip, of plastics\n\n3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics"
         rule: "A change from any other heading  - CTH;\nor\nMaximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}"
-
-    
