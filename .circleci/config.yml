@@ -38,7 +38,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: 'cimg/ruby:3.1.0-node'
+      - image: 'cimg/ruby:3.1.1-node'
         environment:
           BUNDLE_JOBS: "3"
           BUNDLE_RETRY: "3"
@@ -54,7 +54,7 @@ jobs:
             - .
   deploy_dev:
     docker:
-      - image: 'cimg/ruby:3.1.0-node'
+      - image: 'cimg/ruby:3.1.1-node'
     resource_class: small
     steps:
       - checkout
@@ -70,7 +70,7 @@ jobs:
 
   deploy_production:
     docker:
-      - image: 'cimg/ruby:3.1.0-node'
+      - image: 'cimg/ruby:3.1.1-node'
     resource_class: small
     steps:
       - checkout
