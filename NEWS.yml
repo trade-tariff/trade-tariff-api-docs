@@ -1,7 +1,7 @@
 - date: 2022-02-25
-  title: New API enpoints
+  title: New API endpoints
   content: |
-    The following new API enpoints have been released:
+    The following new API endpoints have been released:
 
     * [/measure_actions](https://www.trade-tariff.service.gov.uk/api/v2/measure_actions)
     * [/certificates](https://www.trade-tariff.service.gov.uk/api/v2/certificates)
