@@ -1164,9 +1164,10 @@ paths:
       parameters:
         - name: query[letter]
           in: query
-          required: true
+          required: false
           description: |
             Retrieve search references started with  `query[letter]` letter.
+            Without a query parameter all search references are returned in the response.
           schema:
             type: string
       responses:
@@ -2793,18 +2794,21 @@ components:
               title: "cabinets, filing of base metal"
               referenced_id: "8304"
               referenced_class: "Heading"
+              productline_suffix: "80"
           - id: "886"
             type: search_reference
             attributes:
               title: "cabinets (furniture)"
               referenced_id: "9403"
               referenced_class: "Heading"
+              productline_suffix: "80"
           - id: "887"
             type: search_reference
             attributes:
               title: "cabinets (radio and television)"
               referenced_id: "8529"
               referenced_class: "Heading"
+              productline_suffix: "80"
 
     GeographicalAreas:
       description: |
@@ -3431,10 +3435,14 @@ components:
         referenced_class:
           type: string
           description: The `type` of the referenced object.
+        productline_suffix:
+          type: string
+          description: The `producline_suffix` of the commodity.
       example:
         title: "cabinets, filing of base metal"
         referenced_id: "8304"
         referenced_class: "Heading"
+        productline_suffix: "80"
 
     Change:
       description: Indicates a change to a given goods nomenclature.
