@@ -1,0 +1,124 @@
+openapi: '3.0.0'
+
+servers:
+  - url: https://www.trade-tariff.service.gov.uk/uk/api/beta
+  - url: https://www.trade-tariff.service.gov.uk/xi/api/beta
+
+info:
+  title: Trade Tariff Public Beta Search API
+  description: |
+    The HMRC Online Trade Tariff search API has been developed to provide access to third parties to utilise the Tariff's built-in search functionality. This API is also used by the Trade Tariff itself, so that the results accessible via the API equate to those accessible via the interface.
+
+    The search service is current in BETA.
+
+    Search is designed to provide access for end-users to find commodity codes using free text search terms, fully-qualified commodity codes and partial commodity codes. There is a version of the search for UK data and a separate version for XI (Northern Ireland). Both the UK and the XI versions operate in an identical fashion and feature the same data structures, however the data is in certain places slightly different, as the UK commodity code base is on occasion not identical to the XI equivalent (for example in terms of the use of the terms EUR and GBP in commodity code descriptions).
+
+    The UK API is accessible via the [uk](https://www.trade-tariff.service.gov.uk/uk/api/beta/search) prefix.
+
+    The XI API is accessible via the [xi](https://www.trade-tariff.service.gov.uk/xi/api/beta/search) prefix.
+
+    Search uses the following data entities as source material:
+
+    - 10-digit commodity code numbers (goods nomenclature items)
+    - commodity code descriptions
+    - the commodity code hierarchy (relations between commodity codes)
+    - curated meta data to facilitate filtering on the commodity codes
+    - curated synonym data and search references to support the association of like terms
+    - data linking goods classification sections to official guides on difficult to classify goods
+
+    ## How search works
+
+    - Search loads the raw data described above into an AWS OpenSearch index
+    - Search terms are cleansed and interpreted and return a set of matching results in the core entities described below
+    - Items are returned in the API using the JSON API specification (link to https://jsonapi.org/format/)
+    Introduction to the primary data entities
+
+    ## Entities returned by search
+
+    The following entities are returned by the json api response
+
+    - [Hits](#hits)
+    - [Chapter statistics](#chapter-statistics)
+    - [Heading statistics](#heading-statistics)
+    - [Filters](#filters)
+    - [Guides](#guides)
+    - [Messages](#messages)
+
+    ### Hits
+
+    - This section features the full list of all results that match the search term
+    - By default the result set will feature all hits, irrespective of the 'class' of the entity returned
+    - A hit may be one of the following classes of entities:
+      - chapter - a 2-significant digit commodity code which has one or more dependent child codes (which are mostly headings, but may also be commodities)
+      - heading - a 4-significant digit commodity code which has one or more dependent child codes (either subheadings or commodities)
+      - subheading - a 6-, 8- or 10-significant digit commodity code that is a child of a heading but is not declarable (not an end-line)
+      - commodity - a declarable commodity code (with no children)
+    - The structure of the hits node is described in the sections below
+
+    ### Chapter statistics
+
+    - This section lists any chapters that are included in the search results as well as relevant statistics concerning the chapter
+    - This is described in detail below
+
+    ### Heading statistics
+
+    - This section lists any headings that are included in the search results as well as relevant statistics concerning the heading
+    - This is described in detail below
+
+    ### Filters
+
+    - Filters provide access for users to 'slice and dice' the search results to reduce a large volume to a more accurate, granular and useful subset of those results.
+    - When a filter is used, the results set is reduced according to the data that matches the selected filter
+    - Any number of filters may be used to reduce the size of the result set and to render it more pertinent to the user’s needs
+
+    ### Guides
+
+    - HMRC has produced a number of guides for goods that are considered to be difficult to classify
+    - these guides are associated to specific chapters and headings in the goods classification, such that, when a given percentage of results are returned in the result set that match a heading with an associated guide, the guide entity is returned
+    - only 1 guide entity may be returned as a part of the result section
+
+    ### Messages
+
+    - Specific messages are returned when users search for certain search terms.
+    - This need has been fostered through analysis of previously submitted search terms and the results that they have returned
+    - The messages are intended to show users guidance on where to look in the classification to find the right commodity, for example if there are complex decisions to be made that are not obviously follow the structure of the commodity code hierarchy.
+
+    Please note - search provides access to the content of the *current tariff* not past or future versions of the tariff.
+
+  version: 'beta'
+
+paths:
+  /search:
+    get:
+      summary: Returns search results for the input query and filters
+      tags:
+        - Search
+      parameters:
+        - in: query
+          name: 'q'
+          required: true
+          description: |
+            The search query parameter through which we can define the search term
+          schema:
+            type: string
+            example: horse
+
+        - in: query
+          name: 'filter'
+          required: false
+          description: |
+            The filter method, when appended with the search query narrows down the search results from the original search query to more precise results. Usually, you'd do an initial query with your search term and then offer the user additional filters based on the previous search result (
+          schema:
+            type: string
+            example: filter[animal_type]=horse
+
+      responses:
+        200:
+          description: The search resuts were found and returned
+        400:
+          description: Bad request or URL invalid format
+      x-code-samples:
+        /api/beta/search:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov./uk/api/beta/search?q=horse&filter[animal_type]=horse
