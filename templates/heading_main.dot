@@ -1,4 +1,4 @@
-# {{=data.header.title}}
+# {{=data.openapi.info.title}}
 
 {{? data.openapi.info.description}}{{=data.openapi.info.description}}{{?}}
 
