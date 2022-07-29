@@ -13,6 +13,7 @@ header_links:
   Getting Started: /getting-started.html
   Latest News: /news.html
   API Docs: /reference.html
+  BETA API Docs: /reference-beta.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-97208357-3

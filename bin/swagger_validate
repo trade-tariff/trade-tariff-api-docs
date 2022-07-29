@@ -3,6 +3,7 @@
 require 'openapi3_parser'
 
 files = %w[
+  source/beta/openapi.yaml,
   source/v2/openapi.yaml,
   source/v1/openapi.yaml,
 ]
