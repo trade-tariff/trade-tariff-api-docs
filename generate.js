@@ -1,39 +1,41 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-var yaml = require('js-yaml');
-var converter = require('widdershins');
-
-var input_file = fs.readFileSync(process.argv[2], 'utf8');
-var api = yaml.safeLoad(input_file, { json: true });
-
-var options = {
-  codeSamples: true,
-  language_tabs: [
-    { 'shell': 'Shell' }
-  ],
-  user_templates: 'templates',
-  sample: true,
-  templateCallback: function(templateName,stage,data) {
-    if (templateName == "schema_sample" && stage == "pre") {
-      appendSchemaDescription(data);
-    }
-    return data;
-  }
-}
+const fs = require('fs');
+const yaml = require('js-yaml');
+const converter = require('widdershins');
+const inputFile = fs.readFileSync(process.argv[2], 'utf8');
+const api = yaml.safeLoad(inputFile, {json: true});
 
 function appendSchemaDescription(data) {
-  var schemas = data.openapi.components.schemas;
-  for(name in schemas) {
-    var schema = schemas[name];
+  const schemas = data.openapi.components.schemas;
+
+  for (name in schemas) {
+    const schema = schemas[name];
     if (schema.example != data.schema || !schema.description) {
       continue;
     }
 
-    data.append = schema.description + "\n\n";
+    data.append = schema.description + '\n\n';
   }
 }
 
-converter.convert(api, options, function(err, output) {
-	fs.writeFileSync(process.argv[3], output, 'utf8');
+const options = {
+  codeSamples: true,
+  language_tabs: [
+    {'shell': 'Shell'},
+  ],
+  user_templates: 'templates',
+  sample: true,
+  templateCallback: function(templateName, stage, data) {
+    if (templateName == 'schema_sample' && stage == 'pre') {
+      appendSchemaDescription(data);
+    }
+    return data;
+  },
+  omitHeader: true,
+};
+
+
+converter.convert(api, options, function(_err, output) {
+  fs.writeFileSync(process.argv[3], output, 'utf8');
 });
