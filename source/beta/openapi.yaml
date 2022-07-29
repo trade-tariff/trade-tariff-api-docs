@@ -1,10 +1,11 @@
-openapi: '3.0.0'
+openapi: 3.1.0
 
 servers:
   - url: https://www.trade-tariff.service.gov.uk/uk/api/beta
   - url: https://www.trade-tariff.service.gov.uk/xi/api/beta
 
 info:
+  version: beta
   title: Trade Tariff Public Beta Search API
   description: |
     The HMRC Online Trade Tariff search API has been developed to provide access to third parties to utilise the Tariff's built-in search functionality. This API is also used by the Trade Tariff itself, so that the results accessible via the API equate to those accessible via the interface.
@@ -85,7 +86,6 @@ info:
 
     Please note - search provides access to the content of the *current tariff* not past or future versions of the tariff.
 
-  version: 'beta'
 
 paths:
   /search:
@@ -97,8 +97,7 @@ paths:
         - in: query
           name: 'q'
           required: true
-          description: |
-            The search query parameter through which we can define the search term
+          description: What you're searching for
           schema:
             type: string
             example: horse
@@ -107,7 +106,9 @@ paths:
           name: 'filter'
           required: false
           description: |
-            The filter method, when appended with the search query narrows down the search results from the original search query to more precise results. Usually, you'd do an initial query with your search term and then offer the user additional filters based on the previous search result (
+            The filter method, when appended with the search query narrows down the search results from the original search query to more precise results. Usually, you'd do an initial query with your search term and then offer the user additional filters based on the previous search result
+
+            Multiple filters can be supplied
           schema:
             type: string
             example: filter[animal_type]=horse
@@ -115,10 +116,1043 @@ paths:
       responses:
         200:
           description: The search resuts were found and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResult'
+              example:
+                $ref: '#/components/schemas/SearchResult/example'
         400:
           description: Bad request or URL invalid format
-      x-code-samples:
+      x-code-samles:
         /api/beta/search:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov./uk/api/beta/search?q=horse&filter[animal_type]=horse
+
+
+components:
+  schemas:
+    SearchResult:
+      type: object
+      description: A scheme of lower or preferential tariffs
+      properties:
+        took:
+          type: integer
+          format: number
+          description: The time the search query took to execute in milliseconds
+          required: true
+        timed_out:
+          type: boolean
+          description: Whether the ElasticSearch service timed_out retrieving the hits
+          required: true
+        max_score:
+          type: number
+          description: The highest scored hit
+          required: true
+        total_results:
+          type: integer
+          format: number
+          description: The total hits that were returned for the request
+          required: true
+        search_query_parser_result:
+          type: object
+          description: Indicates the original search query and tokenisation that happened on the search query (q) input
+          schema:
+            $ref: '#/components/schemas/SearchQueryParserResult'
+          required: true
+        hits:
+          type: array
+          description: The hits that were returned for our input query and filters
+          oneOf:
+            - $ref: '#/components/schemas/Chapter'
+            - $ref: '#/components/schemas/Heading'
+            - $ref: '#/components/schemas/Subheading'
+            - $ref: '#/components/schemas/Commodity'
+          required: true
+        heading_statistics:
+          type: object
+          description: Indicates the popularity of headings in the search results
+          schema:
+            $ref: '#/components/schemas/HeadingStatistic'
+          required: true
+        chapter_statistics:
+          type: object
+          description: Indicates the popularity of chapters in the search results
+          schema:
+            $ref: '#/components/schemas/ChapterStatistic'
+          required: true
+        guide:
+          type: object
+          description: Indicates the popular guidance that applies to the search results
+          schema:
+            $ref: '#/components/schemas/Guide'
+          required: false
+        facet_filter_statistics:
+          type: object
+          description: |
+            Indicates which facets and classifications apply to the current search results.
+
+            This informs subsequent searches to further refine results by specific facets and the available classifications.
+          schema:
+            $ref: '#/components/schemas/FacetFilterStatistic'
+          required: false
+
+      example:
+        data:
+          id: 773f19eb133e44c7b88f87902b3e557a
+          type: search_result
+          attributes:
+            took: 14
+            timed_out: false
+            max_score: 83.56923
+            total_results: 10
+          relationships:
+            search_query_parser_result:
+              data:
+                id: 52b14869c15726dda86b87cb93666a74
+                type: search_query_parser_result
+            hits:
+              data:
+              - id: '93797'
+                type: subheading
+              - id: '93796'
+                type: commodity
+              - id: '93798'
+                type: subheading
+              - id: '93799'
+                type: commodity
+              - id: '93800'
+                type: commodity
+              - id: '28100'
+                type: commodity
+              - id: '28105'
+                type: commodity
+              - id: '93801'
+                type: commodity
+              - id: '72763'
+                type: commodity
+              - id: '93994'
+                type: commodity
+            heading_statistics:
+              data:
+              - id: '0101'
+                type: heading_statistic
+              - id: '0206'
+                type: heading_statistic
+              - id: '0302'
+                type: heading_statistic
+            chapter_statistics:
+              data:
+              - id: '01'
+                type: chapter_statistic
+              - id: '02'
+                type: chapter_statistic
+              - id: '03'
+                type: chapter_statistic
+            guide:
+              data:
+            facet_filter_statistics:
+              data:
+              - id: 82daf4c6437dc8d7e507aa906ca5d8a1
+                type: facet_filter_statistic
+              - id: eccb53b0914b1e33430ac80de39c1ae5
+                type: facet_filter_statistic
+              - id: 0ae963502c0515639087a35157e8e671
+                type: facet_filter_statistic
+              - id: 8a34fc49e7461bf91bb00b4527081f31
+                type: facet_filter_statistic
+        meta:
+          redirect: false
+          redirect_to:
+        included:
+        - id: '27623'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0100000000'
+            producline_suffix: '80'
+            description: LIVE ANIMALS
+            description_indexed: LIVE ANIMALS
+        - id: '27624'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0101000000'
+            producline_suffix: '80'
+            description: Live horses, asses, mules and hinnies
+            description_indexed: Live horses, asses, mules and hinnies
+        - id: '93797'
+          type: subheading
+          attributes:
+            goods_nomenclature_item_id: '0101210000'
+            producline_suffix: '10'
+            description: Horses
+            description_indexed: Horses
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 83.56923
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+        - id: '93797'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0101210000'
+            producline_suffix: '10'
+            description: Horses
+            description_indexed: Horses
+        - id: '93796'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0101210000'
+            producline_suffix: '80'
+            description: Pure-bred breeding animals
+            description_indexed: Pure-bred breeding animals
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 70.354416
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+              - id: '93797'
+                type: ancestor
+        - id: '93798'
+          type: subheading
+          attributes:
+            goods_nomenclature_item_id: '0101290000'
+            producline_suffix: '80'
+            description: Other
+            description_indexed: Other
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 70.354416
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+              - id: '93797'
+                type: ancestor
+        - id: '93798'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0101290000'
+            producline_suffix: '80'
+            description: Other
+            description_indexed: Other
+        - id: '93799'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0101291000'
+            producline_suffix: '80'
+            description: For slaughter
+            description_indexed: For slaughter
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 70.354416
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+              - id: '93797'
+                type: ancestor
+              - id: '93798'
+                type: ancestor
+        - id: '93800'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0101299000'
+            producline_suffix: '80'
+            description: Other
+            description_indexed: Other
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 70.354416
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+              - id: '93797'
+                type: ancestor
+              - id: '93798'
+                type: ancestor
+        - id: '27809'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0200000000'
+            producline_suffix: '80'
+            description: MEAT AND EDIBLE MEAT OFFAL
+            description_indexed: MEAT AND EDIBLE MEAT OFFAL
+        - id: '28044'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0206000000'
+            producline_suffix: '80'
+            description: Edible offal of bovine animals, swine, sheep, goats, horses, asses,
+              mules or hinnies, fresh, chilled or frozen
+            description_indexed: Edible offal of bovine animals, swine, sheep, goats, horses,
+              asses, mules or hinnies, fresh, chilled or frozen
+        - id: '28097'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0206800000'
+            producline_suffix: '80'
+            description: Other, fresh or chilled
+            description_indexed: Other, fresh or chilled
+        - id: '28099'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0206809100'
+            producline_suffix: '10'
+            description: Other
+            description_indexed: Other
+        - id: '28100'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0206809100'
+            producline_suffix: '80'
+            description: Of horses, asses, mules and hinnies
+            description_indexed: Of horses, asses, mules and hinnies
+            search_references: ''
+            validity_start_date: '1972-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '02'
+            score: 63.343044
+            chapter_description:
+            heading_description:
+            heading_id: '0206'
+          relationships:
+            ancestors:
+              data:
+              - id: '27809'
+                type: ancestor
+              - id: '28044'
+                type: ancestor
+              - id: '28097'
+                type: ancestor
+              - id: '28099'
+                type: ancestor
+        - id: '28102'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0206900000'
+            producline_suffix: '80'
+            description: Other, frozen
+            description_indexed: Other, frozen
+        - id: '28104'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0206909100'
+            producline_suffix: '10'
+            description: Other
+            description_indexed: Other
+        - id: '28105'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0206909100'
+            producline_suffix: '80'
+            description: Of horses, asses, mules and hinnies
+            description_indexed: Of horses, asses, mules and hinnies
+            search_references: ''
+            validity_start_date: '1972-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '02'
+            score: 63.343044
+            chapter_description:
+            heading_description:
+            heading_id: '0206'
+          relationships:
+            ancestors:
+              data:
+              - id: '27809'
+                type: ancestor
+              - id: '28044'
+                type: ancestor
+              - id: '28102'
+                type: ancestor
+              - id: '28104'
+                type: ancestor
+        - id: '93801'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0101300000'
+            producline_suffix: '80'
+            description: Asses
+            description_indexed: Asses
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 60.350147
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+        - id: '72763'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0101900000'
+            producline_suffix: '80'
+            description: Other
+            description_indexed: Other
+            search_references: ''
+            validity_start_date: '2002-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '01'
+            score: 60.350147
+            chapter_description:
+            heading_description:
+            heading_id: '0101'
+          relationships:
+            ancestors:
+              data:
+              - id: '27623'
+                type: ancestor
+              - id: '27624'
+                type: ancestor
+        - id: '28373'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0300000000'
+            producline_suffix: '80'
+            description: FISH AND CRUSTACEANS, MOLLUSCS AND OTHER AQUATIC INVERTEBRATES
+            description_indexed: FISH AND CRUSTACEANS, MOLLUSCS AND OTHER AQUATIC INVERTEBRATES
+        - id: '28402'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0302000000'
+            producline_suffix: '80'
+            description: Fish, fresh or chilled, excluding fish fillets and other fish meat
+              of heading 0304
+            description_indexed: Fish, fresh or chilled
+        - id: '93985'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0302410000'
+            producline_suffix: '10'
+            description: Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis
+              spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella
+              spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber
+              australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes
+              (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.), jacks, crevalles
+              (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.),
+              Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus
+              villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos
+              (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae), excluding edible
+              fish offal of subheadings 0302 91 to 0302 99
+            description_indexed: Herrings (Clupea harengus, Clupea pallasii), anchovies (Engraulis
+              spp.), sardines (Sardina pilchardus, Sardinops spp.), sardinella (Sardinella
+              spp.), brisling or sprats (Sprattus sprattus), mackerel (Scomber scombrus, Scomber
+              australasicus, Scomber japonicus), Indian mackerels (Rastrelliger spp.), seerfishes
+              (Scomberomorus spp.), jack and horse mackerel (Trachurus spp.), jacks, crevalles
+              (Caranx spp.), cobia (Rachycentron canadum), silver pomfrets (Pampus spp.),
+              Pacific saury (Cololabis saira), scads (Decapterus spp.), capelin (Mallotus
+              villosus), swordfish (Xiphias gladius), Kawakawa (Euthynnus affinis), bonitos
+              (Sarda spp.), marlins, sailfishes, spearfish (Istiophoridae)
+        - id: '93993'
+          type: ancestor
+          attributes:
+            goods_nomenclature_item_id: '0302450000'
+            producline_suffix: '80'
+            description: Jack and horse mackerel (Trachurus spp.)
+            description_indexed: Jack and horse mackerel (Trachurus spp.)
+        - id: '93994'
+          type: commodity
+          attributes:
+            goods_nomenclature_item_id: '0302451000'
+            producline_suffix: '80'
+            description: Atlantic horse mackerel (Trachurus trachurus)
+            description_indexed: Atlantic horse mackerel (Trachurus trachurus)
+            search_references: ''
+            validity_start_date: '2012-01-01T00:00:00Z'
+            validity_end_date:
+            chapter_id: '03'
+            score: 53.984024
+            chapter_description:
+            heading_description:
+            heading_id: '0302'
+          relationships:
+            ancestors:
+              data:
+              - id: '28373'
+                type: ancestor
+              - id: '28402'
+                type: ancestor
+              - id: '93985'
+                type: ancestor
+              - id: '93993'
+                type: ancestor
+        - id: 52b14869c15726dda86b87cb93666a74
+          type: search_query_parser_result
+          attributes:
+            corrected_search_query: horses
+            original_search_query: horses
+            verbs: []
+            adjectives: []
+            nouns:
+            - horse
+            noun_chunks:
+            - horses
+        - id: '0101'
+          type: heading_statistic
+          attributes:
+            description:
+            chapter_id: '01'
+            chapter_description:
+            score: 485.68718800000005
+            cnt: 7
+            avg: 69.38388400000001
+            chapter_score: 485.68718800000005
+        - id: '0206'
+          type: heading_statistic
+          attributes:
+            description:
+            chapter_id: '02'
+            chapter_description:
+            score: 126.686088
+            cnt: 2
+            avg: 63.343044
+            chapter_score: 126.686088
+        - id: '0302'
+          type: heading_statistic
+          attributes:
+            description:
+            chapter_id: '03'
+            chapter_description:
+            score: 53.984024
+            cnt: 1
+            avg: 53.984024
+            chapter_score: 53.984024
+        - id: '01'
+          type: chapter_statistic
+          attributes:
+            description:
+            cnt: 7
+            score: 485.68718800000005
+            avg: 69.38388400000001
+        - id: '02'
+          type: chapter_statistic
+          attributes:
+            description:
+            cnt: 2
+            score: 126.686088
+            avg: 63.343044
+        - id: '03'
+          type: chapter_statistic
+          attributes:
+            description:
+            cnt: 1
+            score: 53.984024
+            avg: 53.984024
+        - id: 3afc6150b5c9a06ba76a427bf50d4efb
+          type: facet_classification_statistic
+          attributes:
+            facet: animal_type
+            classification: equine animals
+            count: 10
+        - id: a20f3c40ef03c710ed7d5eb87a81a0ea
+          type: facet_classification_statistic
+          attributes:
+            facet: animal_type
+            classification: fish
+            count: 1
+        - id: 82daf4c6437dc8d7e507aa906ca5d8a1
+          type: facet_filter_statistic
+          attributes:
+            facet_filter: filter_animal_type
+            facet_count: 10
+            display_name: Animal type
+            question: What type of animal?
+          relationships:
+            facet_classification_statistics:
+              data:
+              - id: 3afc6150b5c9a06ba76a427bf50d4efb
+                type: facet_classification_statistic
+              - id: a20f3c40ef03c710ed7d5eb87a81a0ea
+                type: facet_classification_statistic
+        - id: 2b771b5fcfc98ca0c0fb7dd60f66253c
+          type: facet_classification_statistic
+          attributes:
+            facet: animal_product_state
+            classification: live
+            count: 7
+        - id: 43ed094f711336292fe0a5777098dacf
+          type: facet_classification_statistic
+          attributes:
+            facet: animal_product_state
+            classification: chilled
+            count: 2
+        - id: 1252229951c35a7689434199b425be96
+          type: facet_classification_statistic
+          attributes:
+            facet: animal_product_state
+            classification: fresh
+            count: 2
+        - id: e5deafe40c6f42c6b9cba986886460d5
+          type: facet_classification_statistic
+          attributes:
+            facet: animal_product_state
+            classification: frozen
+            count: 1
+        - id: eccb53b0914b1e33430ac80de39c1ae5
+          type: facet_filter_statistic
+          attributes:
+            facet_filter: filter_animal_product_state
+            facet_count: 10
+            display_name: Animal state
+            question: What state is the animal in?
+          relationships:
+            facet_classification_statistics:
+              data:
+              - id: 2b771b5fcfc98ca0c0fb7dd60f66253c
+                type: facet_classification_statistic
+              - id: 43ed094f711336292fe0a5777098dacf
+                type: facet_classification_statistic
+              - id: 1252229951c35a7689434199b425be96
+                type: facet_classification_statistic
+              - id: e5deafe40c6f42c6b9cba986886460d5
+                type: facet_classification_statistic
+        - id: 83cc7bb14d0a35522570e9d1377df4b2
+          type: facet_classification_statistic
+          attributes:
+            facet: purpose
+            classification: breeding
+            count: 1
+        - id: '065862a3558fc55989a98e985f3ad92b'
+          type: facet_classification_statistic
+          attributes:
+            facet: purpose
+            classification: human consumption
+            count: 1
+        - id: 0ae963502c0515639087a35157e8e671
+          type: facet_filter_statistic
+          attributes:
+            facet_filter: filter_purpose
+            facet_count: 2
+            display_name: Purpose
+            question: What is the purpose of the commodity?
+          relationships:
+            facet_classification_statistics:
+              data:
+              - id: 83cc7bb14d0a35522570e9d1377df4b2
+                type: facet_classification_statistic
+              - id: '065862a3558fc55989a98e985f3ad92b'
+                type: facet_classification_statistic
+        - id: fa48febf19fa48f88a392b506eeaa7cb
+          type: facet_classification_statistic
+          attributes:
+            facet: fish_classification
+            classification: mackerel
+            count: 1
+        - id: 8a34fc49e7461bf91bb00b4527081f31
+          type: facet_filter_statistic
+          attributes:
+            facet_filter: filter_fish_classification
+            facet_count: 1
+            display_name: Fish classification
+            question: Pick one of Fish classification
+          relationships:
+            facet_classification_statistics:
+              data:
+              - id: fa48febf19fa48f88a392b506eeaa7cb
+                type: facet_classification_statistic
+    Chapter:
+      type: object
+      description: A chapter represents the highest and least precise goods nomenclature grouping
+      properties:
+        goods_nomenclature_item_id: 
+          type: string
+          example: 0100000000
+          description: |
+            The publicly displayed, sortable, unique id of the *current* Chapter
+        producline_suffix: 
+          type: string
+          example: 10
+          description: |
+            Used in conjunction with the **goods_nomenclature_item_id** to uniquely identify a goods nomenclature.
+        description: 
+          type: string
+          example: Horses
+          description: |
+            The non-negated description used for presentational purposes.
+        description_indexed: 
+          type: string
+          example: Horses
+          description: |
+            The negated description used for searching a given goods nomenclature and its ancestors
+        search_references: 
+          type: string
+          example: ricotta
+          description: |
+            Used to prioritise specific terms and have them point at specific goods nomenclature (usually at the heading and chapter levels).
+        validity_start_date: 
+          type: string
+          format: date-time
+          example: 2012-01-01T00:00:00Z
+        validity_end_date: 
+          type: string
+          format: nullable
+        score: 
+          type: number
+          example: 83.576675
+          description: |
+            The score returned by for the current search query based on **interesting terms**, specific **filter** and **field** boosts.
+        ancestors:
+          type: array
+          description: A list of the ancestors that the current hit belongs to.
+          schema:
+            $ref: '#/components/schemas/Ancestor'
+        guides:
+          type: array
+          description: A list of the guides that apply to the current Chapter
+          schema:
+            $ref: '#/components/schemas/Guide'
+    Heading:
+      type: object
+      description: A scheme of lower or preferential tariffs
+      properties:
+        goods_nomenclature_item_id: 
+          type: string
+          example: 0101000000
+          description: |
+            The publicly displayed, sortable, unique id of the *current* Chapter
+        producline_suffix: 
+          type: string
+          example: 10
+          description: |
+            Used in conjunction with the **goods_nomenclature_item_id** to uniquely identify a goods nomenclature.
+        description: 
+          type: string
+          example: Horses
+          description: |
+            The non-negated description used for presentational purposes.
+        description_indexed: 
+          type: string
+          example: Horses
+          description: |
+            The negated description used for searching a given goods nomenclature and its ancestors
+        search_references: 
+          type: string
+          example: ricotta
+          description: |
+            Used to prioritise specific terms and have them point at specific goods nomenclature (usually at the heading and chapter levels).
+        validity_start_date: 
+          type: string
+          format: date-time
+          example: 2012-01-01T00:00:00Z
+        validity_end_date: 
+          type: string
+          format: nullable
+        score: 
+          type: number
+          example: 83.576675
+          description: |
+            The score returned by for the current search query based on **interesting terms**, specific **filter** and **field** boosts.
+        chapter_id: 
+          type: string
+          example: 01
+        chapter_description: 
+          type: string
+          example: Live animals
+        ancestors:
+          type: array
+          description: A list of the ancestors that the current hit belongs to
+          schema:
+            $ref: '#/components/schemas/Ancestor'
+        guides:
+          type: array
+          description: A list of the guides that apply to the current Heading
+          schema:
+            $ref: '#/components/schemas/Guide'
+    Subheading:
+      type: object
+      description: A scheme of lower or preferential tariffs
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          example: 0101210000
+          description: |
+            The publicly displayed, sortable, unique id of the *current* Chapter
+        producline_suffix: 
+          type: string
+          example: 10
+          description: |
+            Used in conjunction with the **goods_nomenclature_item_id** to uniquely identify a goods nomenclature.
+        description:
+          type: string
+          example: Horses
+          description: |
+            The non-negated description used for presentational purposes.
+        description_indexed: 
+          type: string
+          example: Horses
+          description: |
+            The negated description used for searching a given goods nomenclature and its ancestors
+        search_references: 
+          type: string
+          example: ricotta
+          description: |
+            Used to prioritise specific terms and have them point at specific goods nomenclature (usually at the heading and chapter levels).
+        validity_start_date: 
+          type: string
+          format: date-time
+          example: 2012-01-01T00:00:00Z
+        validity_end_date: 
+          type: string
+          format: nullable
+        score: 
+          type: number
+          example: 83.576675
+          description: |
+            The score returned by for the current search query based on **interesting terms**, specific **filter** and **field** boosts.
+        chapter_id: 
+          type: string
+          example: 01
+        chapter_description: 
+          type: string
+          example: Live animals
+        heading_id: 
+          type: string
+          example: 0101
+        heading_description: 
+          type: string
+          format: nullable
+          example: Live horses, asses, mules and hinnies
+        ancestors:
+          type: array
+          description: A list of the ancestors that the current hit belongs to
+          schema:
+            $ref: '#/components/schemas/Ancestor'
+
+    Commodity:
+      type: object
+      description: A scheme of lower or preferential tariffs
+      properties:
+        goods_nomenclature_item_id:
+          type: string
+          example: 0101210000
+          description: |
+            The publicly displayed, sortable, unique id of the *current* Chapter
+        producline_suffix: 
+          type: string
+          example: 10
+          description: |
+            Used in conjunction with the **goods_nomenclature_item_id** to uniquely identify a goods nomenclature.
+        description:
+          type: string
+          example: Horses
+          description: |
+            The non-negated description used for presentational purposes.
+        description_indexed: 
+          type: string
+          example: Horses
+          description: |
+            The negated description used for searching a given goods nomenclature and its ancestors
+        search_references: 
+          type: string
+          example: ricotta
+          description: |
+            Used to prioritise specific terms and have them point at specific goods nomenclature (usually at the heading and chapter levels).
+        validity_start_date: 
+          type: string
+          format: date-time
+          example: 2012-01-01T00:00:00Z
+        validity_end_date: 
+          type: string
+          format: nullable
+        score: 
+          type: number
+          example: 83.576675
+          description: |
+            The score returned by for the current search query based on **interesting terms**, specific **filter** and **field** boosts.
+        chapter_id: 
+          type: string
+          example: 01
+        chapter_description: 
+          type: string
+          example: Live animals
+        heading_id: 
+          type: string
+          example: 0101
+        heading_description: 
+          type: string
+          format: nullable
+          example: Live horses, asses, mules and hinnies
+        ancestors:
+          type: array
+          description: A list of the ancestors that the current hit belongs to
+          schema:
+            $ref: '#/components/schemas/Ancestor'
+
+    Ancestor:
+      type: object
+      description: An ancestor of the current goods nomenclature
+      properties:
+        goods_nomenclature_item_id: 
+          type: string
+          example: 0101210000
+        producline_suffix: 
+          type: string
+          example: 10
+        description: 
+          type: string
+          example: Horses
+        description_indexed: 
+          type: string
+          example: Horses
+    Guide:
+      type: object
+      description: A guide provides helpful information for classification the current goods nomenclature
+      properties:
+        title: 
+          type: string
+          example: Textiles and textile articles
+        url: 
+          type: string
+          example: https://www.gov.uk/guidance/classifying-textile-apparel
+        image: 
+          type: string
+          example: textiles.png
+        strapline: 
+          type: string
+          example: Get help to classify textiles and which headings and codes to use.
+    HeadingStatistic:
+      type: object
+      description: Indicates the popularity of headings in the search results
+      properties: 
+        description: 
+          type: string
+          example: Live horses asses mules and hinnies
+        chapter_id: 
+          type: string
+          example: 01
+        chapter_description: 
+          type: string
+          example: Live animals
+        score: 
+          type: number
+          example: 485.68718800000005
+        cnt: 
+          type: number
+          example: 7
+        avg: 
+          type: number
+          example: 69.38388400000001
+        chapter_score: 
+          type: number
+          example: 485.68718800000005
+    ChapterStatistic:
+      type: object
+      description: Indicates the popularity of chapters in the search results
+      properties:
+        description: 
+          type: string
+          example: Live horses
+        cnt: 
+          type: number
+          example: 7
+        score: 
+          type: number
+          example: 485.68718800000005
+        avg: 
+          type: number
+          example: 69.38388400000001
+    FacetFilterStatistic:
+      type: object
+      description: |
+        Indicates a category that the current goods nomenclature belongs to.
+
+        Look to the classification to see which specific classification is associated with the current goods nomenclature
+
+      properties:
+        facet_filter: 
+          type: string
+          example: filter_animal_type
+        facet_count: 
+          description: The number of times this facet appears in the search results
+          type: number
+          example: 10
+        display_name: 
+          type: string
+          example: Animal type
+        question: 
+          type: string
+          example: What type of animal
+        facet_classification_statistics:
+          type: array
+          schema:
+            $ref: '#/components/schemas/FacetClassificationStatistic'
+          description: |
+            For a given category, what classifications exist as filterable options to further refine the search and how frequently did they occur.
+
+            For example, if you have search results with the facet category animal_type you may have results with one/any of the following classifications
+
+            - equine animals
+            - bovine animals
+            - swine
+            - sheep and goats
+            - poultry and other birds
+            - fish
+            - aquatic invertebrates
+            - other
+    FacetClassificationStatistic:
+      type: object
+      properties:
+        facet: 
+          type: string
+          example: animal_type
+          description: The category this classification is associated with
+        classification: 
+          type: string
+          example: equine animals
+          description: The classification that we can filter by
+        count: 
+          type: number
+          example: 10
+          description: The number of times we encountered these classifications in our search results.
