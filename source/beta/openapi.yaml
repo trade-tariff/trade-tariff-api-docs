@@ -212,6 +212,10 @@ components:
               data:
                 id: 52b14869c15726dda86b87cb93666a74
                 type: search_query_parser_result
+            intercept_message:
+              data:
+                id: f12f2d963bd9edfcbc56138adff3698a
+                type: intercept_message
             hits:
               data:
               - id: '93797'
@@ -690,6 +694,11 @@ components:
             cnt: 1
             score: 53.984024
             avg: 53.984024
+        - id: 'f12f2d963bd9edfcbc56138adff3698a'
+          type: 'intercept_message'
+          attributes:
+            term: 'horses'
+            message: 'Based on your search term we have provided the subheading for horses.'
         - id: 3afc6150b5c9a06ba76a427bf50d4efb
           type: facet_classification_statistic
           attributes:
@@ -1156,3 +1165,15 @@ components:
           type: number
           example: 10
           description: The number of times we encountered these classifications in our search results.
+    InterceptMessage:
+      type: object
+      properties:
+        term:
+          type: string
+          example: horse
+          description: The term that is searched for
+        message:
+          type: string
+          example: Based on your search term we have provided the subheading for horses.
+          description: The corresponding message associated with the search term
+
