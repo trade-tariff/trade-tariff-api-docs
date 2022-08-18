@@ -1,3 +1,28 @@
+
+- date: 2022-08-01
+  title: BETA commodity code API released
+  content: |
+    See documentation for the [commodity code search API BETA](/reference-beta.html).
+
+- date: 2022-07-01
+  title: New measure condition permutations nodes in the commodities API
+  content: |
+    The commodities API has been updated with a new set of nodes to more consistently explain
+    how to interpret the measure conditions on _complex measures_ (where identical conditions exist
+    more than once on the same measure with different measure condition codes).
+
+    The rules regarding measure conditions for all *Taric-based* systems are:
+
+    - Where multiple measure conditions exist within the same measure condition code grouping, then the trader must meet one of the 'positive' conditions (OR relationship).
+    - Where multiple measure condition groups exist, then the trader must comply with one from each group (AND relationship).
+
+    When a condition (document, waiver or threshold) appears in two condition code groups, this indicates that complex Boolean logic is to be observed as the border system (CDS) works out how to treat the measure conditions.
+
+    This is expressed in the *commodities* API via the use of two new data entities, which are referenced by each measure that has conditions:
+
+    - [measure_condition_permutation_group](/reference.html#measureconditionpermutationgroup)
+    - [measure_condition_permutation](/reference.html#measureconditionpermutation)
+
 - date: 2022-02-25
   title: New API endpoints
   content: |
