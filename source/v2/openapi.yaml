@@ -1789,7 +1789,7 @@ components:
             description: Frogs' legs
             number_indents: 2
             goods_nomenclature_item_id: '0208907000'
-            bti_url: >-
+            bti_url: |-
               https://www.gov.uk/guidance/check-what-youll-need-to-get-a-legally-binding-decision-on-a-commodity-code
             formatted_description: Frogs' legs
             description_plain: Frogs' legs
@@ -1861,7 +1861,7 @@ components:
             type: footnote
             attributes:
               code: TN701
-              description: >-
+              description: |-
                 According to the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it
                 shall be prohibited to import into European Union goods originating in
                 Crimea or Sevastopol.<br>The prohibition shall not apply in respect of:
@@ -1878,7 +1878,7 @@ components:
                 issued in accordance with Regulation (EU) No 978/2012 and Regulation
                 (EU) No 374/2014 or in accordance with the EU-Ukraine Association
                 Agreement.
-              formatted_description: >-
+              formatted_description: |-
                 According to the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it
                 shall be prohibited to import into European Union goods originating in
                 Crimea or Sevastopol.<br>The prohibition shall not apply in respect of:
@@ -1928,7 +1928,7 @@ components:
             attributes:
               action: Import/export allowed after control
               action_code: '29'
-              certificate_description: >-
+              certificate_description: |-
                 UN/EDIFACT certificates: Common Health Entry Document for Products
                 (CHED-P) (as set out in Part 2, Section B of Annex II to Commission
                 Implementing Regulation (EU) 2019/1715 (OJ L 261)) as transposed into UK
@@ -1941,7 +1941,7 @@ components:
               condition_monetary_unit_code: null
               document_code: N853
               duty_expression: ''
-              guidance_cds: >-
+              guidance_cds: |-
                 - Enter GBCHDyyyy. and the reference number of the CHED-P.
 
 
@@ -1966,7 +1966,7 @@ components:
                 applies to) this entry'>LE</abbr>, <abbr title='Lodged previously - part
                 use (applies to this and other entries)'>LP</abbr>, <abbr
                 title='Ex-heading goods for which the document does not apply'>XX</abbr>
-              guidance_chief: >-
+              guidance_chief: |-
                 - Use [status
                 code](https://www.gov.uk/government/publications/uk-trade-tariff-document-status-codes-for-harmonised-declarations/uk-trade-tariff-document-status-codes-for-harmonised-declarations)
                 <abbr title='Document attached - exhausted by (or only applies to) this
@@ -1981,7 +1981,7 @@ components:
                 as appropriate.
               measure_condition_class: document
               monetary_unit_abbreviation: null
-              requirement: >-
+              requirement: |-
                 UN/EDIFACT certificates: UN/EDIFACT certificates: Common Health Entry
                 Document for Products (CHED-P) (as set out in Part 2, Section B of Annex
                 II to Commission Implementing Regulation (EU) 2019/1715 (OJ L 261)) as
@@ -1994,7 +1994,7 @@ components:
             attributes:
               action: Import/export allowed after control
               action_code: '29'
-              certificate_description: >-
+              certificate_description: |-
                 Exemption by virtue of Article 7 of Commission Delegated Regulation
                 2019/2122 (Goods which form part of passengers' personal luggage and are
                 intended for personal consumption or use)
@@ -2006,7 +2006,7 @@ components:
               condition_monetary_unit_code: null
               document_code: Y058
               duty_expression: ''
-              guidance_cds: >-
+              guidance_cds: |-
                 - Complete the statement: 'Exempt personal consignment' in the Document
                 Identifier (Second Component).
 
@@ -2028,7 +2028,7 @@ components:
               guidance_chief: This document code is available on CDS only.
               measure_condition_class: exemption
               monetary_unit_abbreviation: null
-              requirement: >-
+              requirement: |-
                 Particular provisions: Exemption by virtue of Article 7 of Commission
                 Delegated Regulation 2019/2122 (Goods which form part of passengers'
                 personal luggage and are intended for personal consumption or use)
@@ -2040,7 +2040,7 @@ components:
             attributes:
               action: Import/export allowed after control
               action_code: '29'
-              certificate_description: >-
+              certificate_description: |-
                 Exemption by virtue of Articles 3 and 4 of regulation 2019/2122 (animals
                 intended for scientific purposes, research and diagnostic samples)
               condition: 'B: Presentation of a certificate/licence/document'
@@ -2051,7 +2051,7 @@ components:
               condition_monetary_unit_code: null
               document_code: C084
               duty_expression: ''
-              guidance_cds: >-
+              guidance_cds: |-
                 - Complete the statement 'regulation 2019/2122 exempt'.
 
 
@@ -2069,7 +2069,7 @@ components:
               guidance_chief: This document code is available on CDS only.
               measure_condition_class: unknown
               monetary_unit_abbreviation: null
-              requirement: >-
+              requirement: |-
                 Other certificates: Exemption by virtue of Articles 3 and 4 of
                 regulation 2019/2122 (animals intended for scientific purposes, research
                 and diagnostic samples)
@@ -2103,12 +2103,12 @@ components:
             attributes:
               action: Import/export allowed after control
               action_code: '29'
-              certificate_description: >-
+              certificate_description: |-
                 UN/EDIFACT certificates: Common Health Entry Document for Products
                 (CHED-P) (as set out in Part 2, Section B of Annex II to Commission
                 Implementing Regulation (EU) 2019/1715 (OJ L 261)) as transposed into UK
                 Law.
-              condition: >-
+              condition: |-
                 E: The quantity or the price per unit declared, as appropriate, is equal
                 or less than the specified maximum, or presentation of the required
                 document
@@ -2119,7 +2119,7 @@ components:
               condition_monetary_unit_code: null
               document_code: N853
               duty_expression: ''
-              guidance_cds: >-
+              guidance_cds: |-
                 - Enter GBCHDyyyy. and the reference number of the CHED-P.
 
 
@@ -2144,7 +2144,7 @@ components:
                 applies to) this entry'>LE</abbr>, <abbr title='Lodged previously - part
                 use (applies to this and other entries)'>LP</abbr>, <abbr
                 title='Ex-heading goods for which the document does not apply'>XX</abbr>
-              guidance_chief: >-
+              guidance_chief: |-
                 - Use [status
                 code](https://www.gov.uk/government/publications/uk-trade-tariff-document-status-codes-for-harmonised-declarations/uk-trade-tariff-document-status-codes-for-harmonised-declarations)
                 <abbr title='Document attached - exhausted by (or only applies to) this
@@ -2159,7 +2159,7 @@ components:
                 as appropriate.
               measure_condition_class: document
               monetary_unit_abbreviation: null
-              requirement: >-
+              requirement: |-
                 UN/EDIFACT certificates: UN/EDIFACT certificates: Common Health Entry
                 Document for Products (CHED-P) (as set out in Part 2, Section B of Annex
                 II to Commission Implementing Regulation (EU) 2019/1715 (OJ L 261)) as
@@ -2173,7 +2173,7 @@ components:
               action: Import/export allowed after control
               action_code: '29'
               certificate_description: null
-              condition: >-
+              condition: |-
                 E: The quantity or the price per unit declared, as appropriate, is equal
                 or less than the specified maximum, or presentation of the required
                 document
@@ -2197,10 +2197,10 @@ components:
             attributes:
               action: Import/export allowed after control
               action_code: '29'
-              certificate_description: >-
+              certificate_description: |-
                 Exemption by virtue of Articles 3 and 4 of regulation 2019/2122 (animals
                 intended for scientific purposes, research and diagnostic samples)
-              condition: >-
+              condition: |-
                 E: The quantity or the price per unit declared, as appropriate, is equal
                 or less than the specified maximum, or presentation of the required
                 document
@@ -2211,7 +2211,7 @@ components:
               condition_monetary_unit_code: null
               document_code: C084
               duty_expression: ''
-              guidance_cds: >-
+              guidance_cds: |-
                 - Complete the statement 'regulation 2019/2122 exempt'.
 
 
@@ -2229,7 +2229,7 @@ components:
               guidance_chief: This document code is available on CDS only.
               measure_condition_class: unknown
               monetary_unit_abbreviation: null
-              requirement: >-
+              requirement: |-
                 Other certificates: Exemption by virtue of Articles 3 and 4 of
                 regulation 2019/2122 (animals intended for scientific purposes, research
                 and diagnostic samples)
@@ -2242,7 +2242,7 @@ components:
               action: Import/export not allowed after control
               action_code: '09'
               certificate_description: null
-              condition: >-
+              condition: |-
                 E: The quantity or the price per unit declared, as appropriate, is equal
                 or less than the specified maximum, or presentation of the required
                 document
