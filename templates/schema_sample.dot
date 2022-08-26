@@ -2,7 +2,7 @@
   <summary>Sample JSON</summary>
   <pre>
     <code>
-    {{=JSON.stringify(data.schema,null,2)}}
+{{=JSON.stringify(data.schema,null,2)}}
     </code>
   </pre>
 </details>
