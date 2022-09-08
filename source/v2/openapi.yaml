@@ -1827,6 +1827,10 @@ components:
               data:
                 - id: '20180492'
                   type: measure
+            import_trade_summary:
+              data:
+                - id: '4176a8c3415ef099c881ffde5d69f861'
+                  type: 'import_trade_summary'
           meta:
             duty_calculator:
               applicable_additional_codes: {}
@@ -2464,6 +2468,12 @@ components:
               goods_nomenclature_item_id: '0208900000'
               formatted_description: Other
               description_plain: Other
+          - id: '4176a8c3415ef099c881ffde5d69f861'
+            type: import_trade_summary
+            attributes:
+              basic_third_country_duty: "<span>44.00</span> GBP / <abbr title='Hectokilogram'>100 kg</abbr>"
+              preferential_tariff_duty: '1.00 %'
+              preferential_quota_duty: '1.00 %'
 
     QuotaSearch:
       description: |
