@@ -1315,9 +1315,10 @@ paths:
 
   /preference_codes:
     get:
-      summary: Retrieves a list of all the preference codes
+      summary: |-
+        Retrieves a list of all the preference codes.
       description: |
-        Retrieves a list of preference codes
+        See [Preference code Guidance](https://www.gov.uk/government/publications/preference-codes-for-data-element-417-of-the-customs-declaration-service) for more details.
       tags:
       - PreferenceCodes
       responses:
