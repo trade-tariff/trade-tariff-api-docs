@@ -1313,6 +1313,33 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/rules_of_origin_schemes/392113/FR
 
+  /preference_codes:
+    get:
+      summary: |-
+        Retrieves a list of all the preference codes.
+      description: |
+        See [Preference code Guidance](https://www.gov.uk/government/publications/preference-codes-for-data-element-417-of-the-customs-declaration-service) for more details.
+      tags:
+      - PreferenceCodes
+      responses:
+        200:
+          description: An array of preference_code objects.
+          content:
+            application/json:
+              type: array
+              schema:
+                $ref: '#/components/schemas/PreferenceCodes'
+              example:
+                $ref: '#/components/schemas/PreferenceCodes/example'
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/preference_codes:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/preference_codes
+
+
 components:
   schemas:
 
@@ -4418,4 +4445,20 @@ components:
             - id: "20060276"
               type: "measure_condition"
 
-
+    PreferenceCodes:
+      type: object
+      description: A collection of preference_code objects.
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the preference_code.
+        data:type:
+          type: string
+          description: the type of object, i.e. `preference_code`
+        data:attributes:
+          type: object
+          description: A preference_code object
+          properties:
+            description:
+              type: string
+              description: The `description` for the preference_code.
