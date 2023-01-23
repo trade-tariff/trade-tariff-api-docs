@@ -13,7 +13,6 @@ commands:
           name: Setup CF CLI
           command: |
             curl -L -o cf.deb --retry 3 'https://packages.cloudfoundry.org/stable?release=debian64&version=7.4.0&source=github-rel'
-            file cf.deb
             sudo dpkg -i cf.deb
             cf -v
             cf api "$CF_ENDPOINT"
@@ -38,7 +37,7 @@ commands:
 jobs:
   build:
     docker:
-      - image: 'cimg/ruby:3.1.2-node'
+      - image: 'cimg/ruby:3.2.0-node'
         environment:
           BUNDLE_JOBS: "3"
           BUNDLE_RETRY: "3"
@@ -54,7 +53,7 @@ jobs:
             - .
   deploy_dev:
     docker:
-      - image: 'cimg/ruby:3.1.2-node'
+      - image: 'cimg/ruby:3.2.0-node'
     resource_class: small
     steps:
       - checkout
@@ -70,7 +69,7 @@ jobs:
 
   deploy_production:
     docker:
-      - image: 'cimg/ruby:3.1.2-node'
+      - image: 'cimg/ruby:3.2.0-node'
     resource_class: small
     steps:
       - checkout
