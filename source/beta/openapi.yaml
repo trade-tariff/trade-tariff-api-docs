@@ -266,9 +266,6 @@ components:
                 type: facet_filter_statistic
               - id: 8a34fc49e7461bf91bb00b4527081f31
                 type: facet_filter_statistic
-        meta:
-          redirect: false
-          redirect_to:
         included:
         - id: '27623'
           type: ancestor
