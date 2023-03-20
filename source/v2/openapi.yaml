@@ -260,21 +260,19 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
 
-  /subheadings/{subheading_id}-{productline_suffix}:
+  /subheadings/{goods_nomenclature_item_id}-{productline_suffix}:
     get:
       summary: Retrieves a subheading
       description: >
-        This endpoint returns a single subheading. The subheading_id parameter is used to uniquely identify the subheading, and it is the first ten digits of the subheading's goods_nomenclature_item_id. The productline_suffix parameter is a two-digit code that further describes the product line of the subheading.
-        <p>The `subheading_id` should be a zero-padded string of six (10) digits.</p>
-        <p>The `productline_suffix` should be a zero-padded string of two (2) digits.</p>
+        This resource is uniquely identified by a combination of goods_nomenclature_item_id and productline_suffix.
       tags:
       - Subheadings
       parameters:
-      - name: 'subheading_id'
+      - name: 'goods_nomenclature_item_id'
         in: path
         required: true
         description: |
-          The subheading_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits.
+          The goods_nomenclature_item_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits.
         schema:
           type: string
           minimum: 10
