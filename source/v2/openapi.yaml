@@ -260,6 +260,53 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
 
+  /subheadings/{subheading_id}-{productline_suffix}:
+    get:
+      summary: Retrieves a subheading
+      description: >
+        This endpoint returns a single subheading. The subheading_id parameter is used to uniquely identify the subheading, and it is the first ten digits of the subheading's goods_nomenclature_item_id. The productline_suffix parameter is a two-digit code that further describes the product line of the subheading.
+        <p>The `subheading_id` should be a zero-padded string of six (10) digits.</p>
+        <p>The `productline_suffix` should be a zero-padded string of two (2) digits.</p>
+      tags:
+      - Subheadings
+      parameters:
+      - name: 'subheading_id'
+        in: path
+        required: true
+        description: |
+          The subheading_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits.
+        schema:
+          type: string
+          minimum: 10
+          maximum: 10
+          example: "0102291000"
+      - name: 'productline_suffix'
+        in: path
+        description: The two-digit product line suffix of the subheading to retrieve
+        required: true
+        schema:
+          type: string
+          minimum: 2
+          maximum: 2
+        example: "80"
+      responses:
+        200:
+          description: The requested subheading was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subheading'
+              example:
+                $ref: '#/components/schemas/Subheading/example'
+        404:
+          description: The requested subheading was not found.
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/chapters:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/subheadings/0102291000-80
 
   /commodities/{id}:
     get:
