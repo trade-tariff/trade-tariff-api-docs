@@ -1827,6 +1827,141 @@ components:
             position: 1
             section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
 
+    Subheading:
+      description: |
+        A subheading in the tariff.
+
+        A subheading (or heading) describes products in more details.
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The `id` of the subheading. It may be used to uniquely identify a subheading.
+        data:type:
+          type: string
+          description: the type of object, i.e. `subheading`
+        data:attributes:
+          description: The subheading's attributes, as a [referenced subheading object](/reference.html#referencedsubheading "see referenced subheading object")
+          $ref: '#/components/schemas/ReferencedSubheading'
+        data:relationships:
+          type: object
+          description: |
+            Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"),
+            [chapter](/reference.html#referencedchapter "see referenced chapter object")
+            or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this subheading.
+            May include parent objects.
+        included:
+          type: array
+          description: |
+            Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects,
+            [referenced guide](/reference.html#referencedguide "see referenced guide object") objects,
+            or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects.
+          items:
+            type: object
+      example:
+        data:
+          id: "94057"
+          type: subheading
+          attributes:
+            goods_nomenclature_item_id: '0102291000'
+            description: Of a weight not exceeding 80 kg
+            formatted_description: "Of a weight not exceeding 80 kg"
+          relationships:
+            footnotes:
+              data:
+              - id: "701"
+                type: footnote
+            section:
+              data:
+                id: "1"
+                type: section
+            chapter:
+              data:
+                id: "27809"
+                type: chapter
+            commodities:
+              data:
+              - id: "27811"
+                type: commodity
+              - id: "104276"
+                type: commodity
+              - id: "104254"
+                type: commodity
+        included:
+        - id: "27809"
+          type: chapter
+          attributes:
+            goods_nomenclature_item_id: "0200000000"
+            description: "MEAT AND EDIBLE MEAT OFFAL"
+            formatted_description: "Meat and edible meat offal"
+            chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
+          relationships:
+            guides:
+              data:
+              - id: "23"
+                type: guide
+        - id: "23"
+          type: guide
+          attributes:
+            title: Classification of goods
+            url: https://www.gov.uk/government/collections/classification-of-goods
+        - id: "27811"
+          type: commodity
+          attributes:
+            description: "Carcases and half-carcases"
+            number_indents: 1
+            goods_nomenclature_item_id: "0201100000"
+            leaf: false
+            goods_nomenclature_sid: 27811,
+            formatted_description: "Carcases and half-carcases"
+            description_plain: "Carcases and half-carcases"
+            producline_suffix: "80"
+            parent_sid: null
+          relationships:
+            overview_measures:
+              data:
+              - id: "2982599"
+                type: measure
+        - id: "2982599"
+          type: measure
+          attributes:
+            id: 2982599
+            vat: false
+          relationships:
+            duty_expression:
+              data:
+                id: "2982599-duty_expression"
+                type: duty_expression
+            measure_type:
+              data:
+                id: "109"
+                type: measure_type
+        - id: "2982599-duty_expression"
+          type: duty_expression
+          attributes:
+            base: "p/st"
+            formatted_base: "\u003cabbr title='Number of items'\u003ep/st\u003c/abbr\u003e"
+        - id: "109"
+          type: measure_type
+          attributes:
+            description: "Supplementary unit"
+            national: null
+            measure_type_series_id: null
+            id: "109"
+        - id: "701"
+          type: footnote
+          attributes:
+            code: "TN701"
+            description: "According to  the Council Regulation (EU) No 692/2014sons, entity or body..."
+            formatted_description: "According to  the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it shall be..."
+        - id: "1"
+          type: section
+          attributes:
+            numeral: "I"
+            title: "Live animals; animal products"
+            position: 1
+            section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
+
     Commodity:
       description: |
         Commodities are headings or subheadings.
