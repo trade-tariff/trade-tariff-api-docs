@@ -19,7 +19,7 @@ overview of the endpoints and the response format.
 
 The data provided by this API is used on [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff).
 
-With the Trade Tariff API, you can access Commodity codes, which [classify 
+With the Trade Tariff API, you can access Commodity codes, which [classify
 goods](https://www.gov.uk/guidance/finding-commodity-codes-for-imports-or-exports)
 for import and export. Commodity codes allow you to:
 
@@ -38,7 +38,7 @@ The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-
 
 ## Quick start
 
-You can use GOV.UK Tariff API to lookup the data that is used on 
+You can use GOV.UK Tariff API to lookup the data that is used on
 [`https://www.gov.uk/trade-tariff`](https://www.gov.uk/trade-tariff).
 
 To get started:
@@ -59,9 +59,29 @@ curl https://www.trade-tariff.service.gov.uk/api/v2/sections
 
 Usage of GOV.UK Trade Tariff API does not require authentication.
 
+## User agent identification
+
+Please identify your application in the User-Agent request header using the following format:
+
+`User-Agent: <product> / <product-version> <comment>`
+
+In line with the above example using curl, the User-Agent header can be set with the `--user-agent` switch:
+
+```shell
+curl --user-agent 'product / product-version' https://www.trade-tariff.service.gov.uk/api/v2/sections
+```
+
+Or as a header by passing the `-H` switch:
+
+```shell
+curl -H 'User-Agent: product / product-version' https://www.trade-tariff.service.gov.uk/api/v2/sections
+```
+
+While this is not currently enforced, we reserve the right to enforce this requirement at a later date.
+
 ## Caching
 
-The GOV.UK Trade Tariff is updated on a daily basis, however to reduce the number of API calls please consider caching 
+The GOV.UK Trade Tariff is updated on a daily basis, however to reduce the number of API calls please consider caching
 requests for 24 hours.
 
 ## API updates
