@@ -12,9 +12,9 @@ header_links:
   About: /
   Getting Started: /getting-started.html
   Commodities API: /the-commodities-api.html
-  Latest News: /news.html
   API Docs: /reference.html
-  BETA API Docs: /reference-beta.html
+  BETA Docs: /reference-beta.html
+  News: /news.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-97208357-3
