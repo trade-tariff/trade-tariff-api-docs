@@ -1000,15 +1000,16 @@ paths:
         Here is an example of a response as CSV:
 
         ```
-        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href
-        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101
-        93797,0101210000,1,Horses,10,/api/v2/commodities/0101210000
-        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000
-        93798,0101290000,2,Other,80,/api/v2/commodities/0101290000
-        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000
-        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000
-        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000
-        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000
+        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Formatted description,Start date,End date,Declarable,Parent SID
+        27623,0100000000,0,LIVE ANIMALS,80,/api/v2/chapters/01,Live animals,1971-12-31 00:00:00 UTC,,false,
+        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
+        93797,0101210000,1,Horses,10,/api/v2/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
+        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
+        93798,0101290000,2,Other,80,/api/v2/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
+        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
+        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
+        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
+        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
         ```
       tags:
       - GoodsNomenclatures
@@ -1038,9 +1039,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GoodsNomenclatures'
+                $ref: '#/components/schemas/GoodsNomenclaturesExtended'
               example:
-                $ref: '#/components/schemas/GoodsNomenclatures/example'
+                $ref: '#/components/schemas/GoodsNomenclaturesExtended/example'
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1075,15 +1076,16 @@ paths:
         Here is an example of a response as CSV:
 
         ```
-        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href
-        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101
-        93797,0101210000,1,Horses,10,/api/v2/commodities/0101210000
-        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000
-        93798,0101290000,2,Other,80,/api/v2/commodities/0101290000
-        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000
-        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000
-        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000
-        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000
+        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Formatted description,Start date,End date,Declarable,Parent SID
+        27623,0100000000,0,LIVE ANIMALS,80,/api/v2/chapters/01,Live animals,1971-12-31 00:00:00 UTC,,false,
+        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
+        93797,0101210000,1,Horses,10,/api/v2/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
+        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
+        93798,0101290000,2,Other,80,/api/v2/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
+        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
+        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
+        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
+        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
         ```
       tags:
       - GoodsNomenclatures
@@ -1112,9 +1114,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GoodsNomenclatures'
+                $ref: '#/components/schemas/GoodsNomenclaturesExtended'
               example:
-                $ref: '#/components/schemas/GoodsNomenclatures/example'
+                $ref: '#/components/schemas/GoodsNomenclaturesExtended/example'
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1149,15 +1151,15 @@ paths:
         Here is an example of a response as CSV:
 
         ```
-        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href
-        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101
-        93797,0101210000,1,Horses,10,/api/v2/commodities/0101210000
-        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000
-        93798,0101290000,2,Other,80,/api/v2/commodities/0101290000
-        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000
-        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000
-        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000
-        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000
+        SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Formatted description,Start date,End date,Declarable,Parent SID
+        27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
+        93797,0101210000,1,Horses,10,/api/v2/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
+        93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
+        93798,0101290000,2,Other,80,/api/v2/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
+        93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
+        93800,0101299000,3,Other,80,/api/v2/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
+        93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
+        72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
         ```
       tags:
       - GoodsNomenclatures
@@ -1188,9 +1190,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GoodsNomenclatures'
+                $ref: '#/components/schemas/GoodsNomenclaturesExtended'
               example:
-                $ref: '#/components/schemas/GoodsNomenclatures/example'
+                $ref: '#/components/schemas/GoodsNomenclaturesExtended/example'
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -3498,6 +3500,74 @@ components:
             number_indents: 0
             productline_suffix: "80"
             href: /api/v2/commodities/0101210000
+
+    GoodsNomenclaturesExtended:
+      description: "Commodity codes"
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: the unique `id` of the goods_nomenclature
+        data:type:
+          type: string
+          description: the type of object, i.e. `goods_nomenclature`
+        data:attributes:
+          description: The goods_nomeclature's attributes, as a [referenced goods_nomenclature object](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object")
+          $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+      example:
+        data:
+        - id: "27623"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0100000000"
+            goods_nomenclature_sid: 27623
+            description: LIVE ANIMALS
+            number_indents: 0
+            productline_suffix: "80"
+            href: /api/v2/chapters/01
+            formatted_description: "Live animals"
+            validity_start_date: "1971-12-31T00:00:00.000Z"
+            validity_end_date: null
+            declarable: false
+          relationships:
+            parent:
+              data: null
+        - id: "27810"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101000000"
+            goods_nomenclature_sid: 27624
+            description: Live horses, asses, mules and hinnies
+            number_indents: 0
+            productline_suffix: "80"
+            href: /api/v2/headings/0101
+            formatted_description: "Live horses, asses, mules and hinnies"
+            validity_start_date: "1972-01-01T00:00:00.000Z"
+            validity_end_date: null
+            declarable: false
+          relationships:
+            parent:
+              data:
+                id: "27623"
+                type: "goods_nomenclature"
+        - id: "93797"
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0101210000"
+            goods_nomenclature_sid: 93797
+            description: Horses
+            number_indents: 0
+            productline_suffix: "80"
+            href: /api/v2/subheadings/0101210000-80
+            formatted_description: "Horses"
+            validity_start_date: "2012-01-01T00:00:00.000Z"
+            validity_end_date: null
+            declarable: false
+          relationships:
+            parent:
+              data:
+                id: "27810"
+                type: "goods_nomenclature"
 
     SearchReferences:
       description: "Curated terms and associated headings, subheadings or commodity codes"
