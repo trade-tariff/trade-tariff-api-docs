@@ -47,11 +47,12 @@ workflows:
   version: 2
   ci:
     jobs:
-      - build
+      - build:
+          context: trade-tariff
 
       - deploy:
           name: deploy_development
-          context: trade-tariff
+          context: trade-tariff-bot-aws-development
           environment: development
           filters:
             branches:
@@ -60,7 +61,7 @@ workflows:
 
       - deploy:
           name: deploy_staging
-          context: trade-tariff
+          context: trade-tariff-bot-aws-staging
           environment: staging
           filters:
             branches:
@@ -76,7 +77,7 @@ workflows:
 
       - deploy:
           name: deploy_production
-          context: trade-tariff
+          context: trade-tariff-bot-aws-production
           environment: production
           filters:
             branches:
