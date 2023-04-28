@@ -1,46 +1,20 @@
 version: 2.1
 
 orbs:
-  queue: eddiewebb/queue@1.6.4
+  aws-cli: circleci/aws-cli@3.1.5
 
-commands:
-  cf_install:
-    parameters:
-      space:
-        type: string
-    steps:
-      - run:
-          name: Setup CF CLI
-          command: |
-            curl -L -o cf.deb --retry 3 'https://packages.cloudfoundry.org/stable?release=debian64&version=7.4.0&source=github-rel'
-            sudo dpkg -i cf.deb
-            cf -v
-            cf api "$CF_ENDPOINT"
-            cf auth "$CF_USER" "$CF_PASSWORD"
-            cf add-plugin-repo CF-Community https://plugins.cloudfoundry.org
-            cf install-plugin app-autoscaler-plugin -r CF-Community -f
-            cf target -o "$CF_ORG" -s "<< parameters.space >>"
-
-  cf_deploy_static:
-    parameters:
-      app_name:
-        type: string
-      space:
-        type: string
-    steps:
-      - cf_install:
-          space: << parameters.space >>
-      - run:
-          name: Deploy Static Site to GovUK PaaS
-          command: cf push "<< parameters.app_name >>"
+executors:
+  default:
+    resource_class: small
+    docker:
+      - image: cimg/ruby:3.2.2-node
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
 
 jobs:
   build:
-    docker:
-      - image: 'cimg/ruby:3.2.2-node'
-        environment:
-          BUNDLE_JOBS: "3"
-          BUNDLE_RETRY: "3"
+    executor: default
     resource_class: small
     steps:
       - checkout
@@ -51,56 +25,61 @@ jobs:
           root: build
           paths:
             - .
-  deploy_dev:
-    docker:
-      - image: 'cimg/ruby:3.2.2-node'
-    resource_class: small
-    steps:
-      - checkout
-      - attach_workspace:
-          at: build
-      - queue/until_front_of_line:
-          time: '10'
-          consider-branch: false
-          dont-quit: true
-      - cf_deploy_static:
-          app_name: ${CF_APP}-dev
-          space: development
 
-  deploy_production:
-    docker:
-      - image: 'cimg/ruby:3.2.2-node'
-    resource_class: small
+  deploy:
+    executor: default
+    parameters:
+      environment:
+        description: Deployment environment
+        type: string
     steps:
       - checkout
       - attach_workspace:
           at: build
-      - queue/until_front_of_line:
-          time: '10'
-          consider-branch: true
-          dont-quit: true
-      - cf_deploy_static:
-          app_name: ${CF_APP}-production
-          space: production
+      - aws-cli/install
+      - run:
+          name: Upload to S3
+          command: |
+            cd build/
+            aws s3 sync . s3://trade-tariff-api-docs-<< parameters.environment >>
 
 workflows:
   version: 2
   ci:
     jobs:
-      - build
-      - deploy_dev:
+      - build:
           context: trade-tariff
+
+      - deploy:
+          name: deploy_development
+          context: trade-tariff-bot-aws-development
+          environment: development
           filters:
             branches:
-              ignore:
-                - main
-          requires:
-            - build
-      - deploy_production:
-          context: trade-tariff
+              ignore: [main]
+          requires: [build]
+
+      - deploy:
+          name: deploy_staging
+          context: trade-tariff-bot-aws-staging
+          environment: staging
           filters:
             branches:
-              only:
-                - main
-          requires:
-            - build
+              only: [main]
+          requires: [build]
+
+      - hold_deploy_production:
+          type: approval
+          requires: [deploy_staging]
+          filters:
+            branches:
+              only: [main]
+
+      - deploy:
+          name: deploy_production
+          context: trade-tariff-bot-aws-production
+          environment: production
+          filters:
+            branches:
+              only: [main]
+          requires: [build]

@@ -25,3 +25,4 @@ Staticfile.auth
 
 .idea/*
 .ruby-gemset
+/vendor
