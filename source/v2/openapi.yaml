@@ -886,94 +886,6 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnote_types
 
-  /chemicals/{cas}:
-    get:
-      summary: Retrieves a chemical by its CAS number.
-      description: |
-        This resource represents _a single chemical_ in the Tariff.
-
-        For this resource, `cas` is used to uniquely identify a chemical and request it from the API.
-
-        For information about the CAS Registry and the CAS number system, see [https://www.cas.org/support/documentation/chemical-substances](https://www.cas.org/support/documentation/chemical-substances)
-
-      tags:
-      - Chemicals
-      parameters:
-        - name: 'cas'
-          in: path
-          required: true
-          description: |
-            The CAS number of the chemical to be retrieved
-          schema:
-            type: string
-            minimum: 1
-            example: 22199-08-2
-      responses:
-        200:
-          description: Chemical was found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Chemical'
-              example:
-                $ref: '#/components/schemas/Chemical/example'
-        404:
-          description: Chemical was not found.
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/sections:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemicals/22199-08-2
-
-  /chemicals/search:
-    get:
-      summary: Retrieves a list of chemicals, with associated commodities.
-      description: >
-        Retrieves a paginated list of chemicals, filtered by parameters.
-      tags:
-      - Chemicals
-      parameters:
-        - name: cas
-          in: query
-          required: false
-          description: |
-            Retrieve chemicals with this exact `cas` or the chemical's `cas` contains `cas`.
-          schema:
-            type: string
-        - name: name
-          in: query
-          required: false
-          description: |
-            Retrieve chemicals with this exact `name` or the chemical's `name` contains `name`.
-          schema:
-            type: string
-        - name: page
-          in: query
-          required: false
-          description: |
-            Retrieve search page with number
-          schema:
-            type: integer
-
-      responses:
-        200:
-          description: Chemicals were found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChemicalSearch'
-              example:
-                $ref: '#/components/schemas/ChemicalSearch/example'
-        5XX:
-          description: Unexpected error.
-      x-code-samples:
-        /api/v2/chemicals/search:
-          lang: shell
-          source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemicals/search?name=benzene
-
   /goods_nomenclatures/section/{position}:
     get:
       summary: Retrieves a list of goods nomenclatures in a section
@@ -1350,8 +1262,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RulesOfOriginScheme'
-              example:
-                $ref: '#/components/schemas/RulesOfOriginScheme/example'
+
         5XX:
           description: Unexpected error - likely missing or incorrect params
       x-code-samples:
@@ -1359,6 +1270,52 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/rules_of_origin_schemes/392113/FR
+  /chemical_substances:
+    get:
+      summary: Get chemical substances
+      description: Returns chemical substances that match one or more of the following filter parameters. Not supplying a filter returns empty results.
+      tags:
+        - Chemical Substances
+      parameters:
+        - in: query
+          name: filter[cus]
+          schema:
+            type: string
+          description: Filter by the EU CUS number
+        - in: query
+          name: filter[cas_rn]
+          schema:
+            type: string
+          description: Filter by the international CAS number
+        - in: query
+          name: filter[goods_nomenclature_item_id]
+          schema:
+            type: string
+          description: Filter by a specific goods nomenclature item id field
+        - in: query
+          name: filter[goods_nomenclature_sid]
+          schema:
+            type: integer
+          description: Filter by a specific goods nomenclature sid field
+      responses:
+        200:
+          description: An array of chemical substances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChemicalSubstance'
+        5XX:
+          description: Unexpected error - likely missing or incorrect params
+
+      x-code-samples:
+        /api/v2/chemical_substances:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=0153778-6
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=90131-25-2
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_item_id]=0712909090
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_sid]=30725
+
 
   /preference_codes:
     get:
@@ -1389,7 +1346,6 @@ paths:
 
 components:
   schemas:
-
     Sections:
       description: |
         The response will be a JSONCollection, and will contain an array of [referenced section objects](/reference.html#referencedsection "see referenced section object"), which are abbreviated versions of a full [section](/reference.html#section "see section object") object.
@@ -3273,191 +3229,6 @@ components:
               footnote_type_id: "TP"
               description: "Dynamic footnote"
 
-    Chemical:
-      description: |
-        A Chemical is related to a GoodsNomenclature. A Chemical is, or is a part of, a GoodsNomencalture.
-
-        A Chemical is usually related to one GoodsNomenclature, and usually has one ChemicalName.
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: The `id` of the chemical. It may be used to uniquely identify a chemical.
-        data:type:
-          type: string
-          description: the type of object, i.e. `chemical`
-        data:attributes:
-          description: The chemical's attributes, as a [referenced chemical object](/reference.html#referencedchemical "see referenced chemical object")
-          $ref: '#/components/schemas/ReferencedChemical'
-        data:relationships:
-          type: object
-          description: One or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and one or many [referenced chemical name objects](/reference.html#referencedchemicalname "see referenced chemical name object") that are related to this chemical.
-        data:links:uri:
-          type: string
-          description: a URI for this resource on the Trade Tariff API
-        included:
-          type: array
-          description: One or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and one or many [referenced chemical name objects](/reference.html#referencedchemicalname "see referenced chemical name object") that are related to this chemical.
-          items:
-            type: object
-      example:
-        data:
-          id: "1"
-          type: chemical
-          attributes:
-            id: 1
-            cas: 22199-08-2
-            name: 4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver
-          relationships:
-            goods_nomeclatures:
-              data:
-              - id: "36102"
-                type: "goods_nomenclature"
-            chemical_names:
-              data:
-              - id: "1"
-                type: "chemical_name"
-          links:
-            uri: /chemicals/22199-08-2
-        included:
-        - id: 1
-          type: chemical_name
-          attributes:
-            name: 4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver
-            chemical_id: 1
-        - id: "36102"
-          type: goods_nomeclature
-          attributes:
-            goods_nomenclature_item_id: "2843290000"
-            goods_nomenclature_sid: 36102
-            description: Other
-            number_indents: 2
-            productline_suffix: "80"
-            href: /api/v2/commodities/2843290000
-
-    ChemicalSearch:
-      description: |
-        Search for chemicals with parameters
-      type: object
-      properties:
-        data:id:
-          type: string
-          description: The `id` of the chemical. It may be used to uniquely identify a chemical.
-        data:type:
-          type: string
-          description: the type of object, i.e. `chemical`
-        data:attributes:
-          description: The chemical's attributes, as a [referenced chemical object](/reference.html#referencedchemical "see referenced chemical object")
-          $ref: '#/components/schemas/ReferencedChemical'
-        data:relationships:
-          type: object
-          description: One or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and one or many [referenced chemical name objects](/reference.html#referencedchemicalname "see referenced chemical name object") that are related to this chemical.
-        included:
-          type: array
-          description: One or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and one or many [referenced chemical name objects](/reference.html#referencedchemicalname "see referenced chemical name object") that are related to this chemical.
-          items:
-            type: object
-        meta:pagination:
-          type: object
-          description: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-          items:
-            type: integer
-      example:
-        data:
-        - id: "1"
-          type: chemical
-          attributes:
-            id: 1,
-            cas: "22199-08-2"
-            name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver"
-          relationships:
-            goods_nomenclatures:
-              data:
-              - id: "36102"
-                type: goods_nomenclature
-            chemical_names:
-              data:
-              - id: "1"
-                type: chemical_name
-        - id: "8"
-          type: chemical
-          attributes:
-            id: 8,
-            cas: "42074-68-0"
-            name: "1-chloro-2-(chlorodiphenylmethyl)benzene"
-          relationships:
-            goods_nomenclatures:
-              data:
-              - id: "101256"
-                type: goods_nomenclature
-            chemical_names:
-              data:
-              - id: "8"
-                type: chemical_name
-        - id: "11"
-          type: chemical
-          attributes:
-            id: "11"
-            cas: "4714-32-3"
-            name: "1-nitro-4-(1,2,2,2-tetrachloroethyl)benzene"
-          relationships:
-            goods_nomenclatures:
-              data:
-              - id: "101275"
-                type: goods_nomenclature
-            chemical_names:
-              data:
-              - id: "11"
-                type: chemical_name
-        included:
-        - id: "1"
-          type: "chemical_name"
-          attributes:
-            name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN 1)benzenesulfonamidato-κOsilver"
-            chemical_id: 1
-        - id: "36102"
-          type: "goods_nomenclature"
-          attributes:
-            goods_nomenclature_item_id: "2843290000"
-            goods_nomenclature_sid: 36102
-            description: "Other"
-            number_indents: 2
-            productline_suffix: "80"
-            href: "/api/v2/commodities/2843290000"
-        - id: "8"
-          type: "chemical_name"
-          attributes:
-            name: "1-chloro-2-(chlorodiphenylmethyl)benzene"
-            chemical_id: 8
-        - id: "101256"
-          type: "goods_nomenclature"
-          attributes:
-            goods_nomenclature_item_id: "2903998000"
-            goods_nomenclature_sid: 101256
-            description: "Other"
-            number_indents: 3
-            productline_suffix: "80"
-            href: "/api/v2/commodities/2903998000"
-        - id: "11"
-          type: "chemical_name"
-          attributes:
-            name: "1-nitro-4-(1,2,2,2-tetrachloroethyl)benzene"
-            chemical_id: 11
-        - id: "101275"
-          type: "goods_nomenclature"
-          attributes:
-            goods_nomenclature_item_id: "2904990000"
-            goods_nomenclature_sid: 101275
-            description: "Other"
-            number_indents: 2
-            productline_suffix: "80"
-            href: "/api/v2/commodities/2904990000"
-        meta:
-          pagination:
-            page: 1
-            per_page: 20
-            total_count: 54
-
     GoodsNomenclatures:
       description: "Commodity codes"
       type: object
@@ -4130,55 +3901,6 @@ components:
         footnote_type_id: "WR"
         description: "Wine reference"
 
-    ReferencedChemical:
-      description: |
-        A chemical object referenced elsewhere.
-      type: object
-      properties:
-        id:
-          type: integer
-          description: The `id` of the chemical.
-        cas:
-          type: string
-          description: The CAS number of the chemical. See [https://www.cas.org/support/documentation/chemical-substances](https://www.cas.org/support/documentation/chemical-substances)
-        name:
-          type: string
-          description: The `name` of the chemical. A chemical may be known by more than one name, including names not in this database.
-      example:
-        id: 1
-        cas: "22199-08-2"
-        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN)"
-
-    ReferencedChemicalName:
-      description: |
-        A chemical name object referenced elsewhere.
-      type: object
-      properties:
-        name:
-          type: string
-          description: The `name` of the related chemical. A chemical may be known by more than one name, including names not in this database.
-        chemical_id:
-          type: string
-          description: The `id` of the chemical related to this name.
-      example:
-        name: "4-amino-N-(pyrimidin-2(1H)-ylidene-κN)"
-        chemical_id: 1
-
-    ReferencedGuide:
-      description: |
-        A guide object referenced elsewhere.
-      type: object
-      properties:
-        title:
-          type: string
-          description: The `title` for the guide.
-        url:
-          type: string
-          description: The `url` for the guide.
-      example:
-        title: Classification of goods
-        url: https://www.gov.uk/government/collections/classification-of-goods
-
     ReferencedGeographicalArea:
       description: A geographical_area object referenced elsewhere.
       type: object
@@ -4712,3 +4434,55 @@ components:
             description:
               type: string
               description: The `description` for the preference_code.
+
+    ChemicalSubstance:
+      type: object
+      description: Contains details about a specific chemical substance.
+      properties:
+        id:
+          type: string
+          description: "A unique id for the chemical substance (the concatenated CUS number and the internal goods nomenclature sid that this chemical row refers too."
+          required: true
+        type:
+          type: string
+          description: The type of object, i.e., `chemical_substance`
+          required: true
+        attributes:cus:
+          type: string
+          description: The EU CUS number
+          required: true
+        attributes:goods_nomenclature_sid:
+          type: integer
+          description: The goods nomenclature sid field
+          required: true
+        attributes:goods_nomenclature_item_id:
+          type: string
+          description: The goods nomenclature item id field
+          required: true
+        attributes:producline_suffix:
+          type: string
+          description: The producline suffix
+          required: true
+        attributes:name:
+          type: string
+          description: The name of the chemical substance
+          required: true
+        attributes:cas_rn:
+          type: string
+          description: The international CAS number
+          required: true
+        attributes:nomen:
+          type: string
+          description: The nomen field. This indicates which taxonomy the chemical substance originates
+      example:
+        data:
+        - id: "0153778-6-30725"
+          type: "chemical_substance"
+          attributes:
+            cus: "0153778-6"
+            goods_nomenclature_sid: 30725
+            goods_nomenclature_item_id: "0712909090"
+            producline_suffix: "80"
+            name: "Spinacia oleracea, as dried vegetables"
+            cas_rn: "90131-25-2"
+            nomen: "INCI"
