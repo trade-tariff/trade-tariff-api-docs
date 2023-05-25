@@ -1350,8 +1350,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RulesOfOriginScheme'
-              example:
-                $ref: '#/components/schemas/RulesOfOriginScheme/example'
+
         5XX:
           description: Unexpected error - likely missing or incorrect params
       x-code-samples:
@@ -1359,6 +1358,52 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/rules_of_origin_schemes/392113/FR
+  /chemical_substances:
+    get:
+      summary: Get chemical substances
+      description: Returns chemical substances that match one or more of the following filter parameters. Not supplying a filter returns empty results.
+      tags:
+        - Chemical Substances
+      parameters:
+        - in: query
+          name: filter[cus]
+          schema:
+            type: string
+          description: Filter by the EU CUS number
+        - in: query
+          name: filter[cas_rn]
+          schema:
+            type: string
+          description: Filter by the international CAS number
+        - in: query
+          name: filter[goods_nomenclature_item_id]
+          schema:
+            type: string
+          description: Filter by a specific goods nomenclature item id field
+        - in: query
+          name: filter[goods_nomenclature_sid]
+          schema:
+            type: integer
+          description: Filter by a specific goods nomenclature sid field
+      responses:
+        200:
+          description: An array of chemical substances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChemicalSubstance'
+        5XX:
+          description: Unexpected error - likely missing or incorrect params
+
+      x-code-samples:
+        /api/v2/chemical_substances:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=0153778-6
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=90131-25-2
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_item_id]=0712909090
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_sid]=30725
+
 
   /preference_codes:
     get:
@@ -1389,7 +1434,6 @@ paths:
 
 components:
   schemas:
-
     Sections:
       description: |
         The response will be a JSONCollection, and will contain an array of [referenced section objects](/reference.html#referencedsection "see referenced section object"), which are abbreviated versions of a full [section](/reference.html#section "see section object") object.
@@ -4475,114 +4519,114 @@ components:
           description: A collection of [proofs of origin](#rulesoforiginproof) necessary to claim preferential tariff treatment
           items:
             $ref: '#/components/schemas/RulesOfOriginProof'
-      example:
-        data:
-        - id: eu
-          type: rules_of_origin_scheme
-          attributes:
-            scheme_code: eu
-            title: UK / EU Trade and Co-operation Agreement
-            countries:
-            - EU
-            - AT
-            - BE
-            - BG
-            - CY
-            - CZ
-            - DE
-            - DK
-            - EE
-            - ES
-            - FI
-            - FR
-            - GR
-            - HR
-            - HU
-            - IE
-            - IT
-            - LT
-            - LU
-            - LV
-            - MT
-            - NL
-            - PL
-            - PT
-            - RO
-            - SE
-            - SI
-            - SK
-            - SM
-            - AD
-            footnote:
-            unilateral:
-            fta_intro: |-
-              ### UK / EU Trade and Co-operation Agreement
+      # example:
+      #   data:
+      #   - id: eu
+      #     type: rules_of_origin_scheme
+      #     attributes:
+      #       scheme_code: eu
+      #       title: UK / EU Trade and Co-operation Agreement
+      #       countries:
+      #       - EU
+      #       - AT
+      #       - BE
+      #       - BG
+      #       - CY
+      #       - CZ
+      #       - DE
+      #       - DK
+      #       - EE
+      #       - ES
+      #       - FI
+      #       - FR
+      #       - GR
+      #       - HR
+      #       - HU
+      #       - IE
+      #       - IT
+      #       - LT
+      #       - LU
+      #       - LV
+      #       - MT
+      #       - NL
+      #       - PL
+      #       - PT
+      #       - RO
+      #       - SE
+      #       - SI
+      #       - SK
+      #       - SM
+      #       - AD
+      #       footnote:
+      #       unilateral:
+      #       fta_intro: |-
+      #         ### UK / EU Trade and Co-operation Agreement
 
-              The UK moved to trading based on a new Free Trade Agreement (FTA) - the Trade and Cooperation Agreement (TCA) between the UK and the EU.
+      #         The UK moved to trading based on a new Free Trade Agreement (FTA) - the Trade and Cooperation Agreement (TCA) between the UK and the EU.
 
-              To import / export tariff-free under the TCA, goods must meet the UK-EU preferential rules of origin. This means that there must be a qualifying level of processing in the country of export to access zero tariffs. This applies to EU origin goods imported and moving through the UK from a Member State to another EU Member State, as well as goods imported from the Rest of World.
+      #         To import / export tariff-free under the TCA, goods must meet the UK-EU preferential rules of origin. This means that there must be a qualifying level of processing in the country of export to access zero tariffs. This applies to EU origin goods imported and moving through the UK from a Member State to another EU Member State, as well as goods imported from the Rest of World.
 
-              These rules are set out in the TCA and determine the origin of goods based on where the products or materials (or inputs) used in their production come from. Their purpose is to ensure that preferential tariffs are only given to goods that originate in the UK or EU and not from third countries (those apart from UK and the EU Member States).
+      #         These rules are set out in the TCA and determine the origin of goods based on where the products or materials (or inputs) used in their production come from. Their purpose is to ensure that preferential tariffs are only given to goods that originate in the UK or EU and not from third countries (those apart from UK and the EU Member States).
 
-              #### Andorra and San Marino
-              Andorra and San Marino are part of customs unions with the EU. The UK has agreed with the EU that all products originating in San Marino and all non-agricultural products (chapters 25-97) originating in Andorra are to be treated as originating in the EU under the UK-EU Trade and Cooperation Agreement as long as Andorra and San Marino apply to UK products the same preferences that the EU applies to them. These products benefit from zero tariffs, where they meet the relevant rules of origin. Trade with Andorra of agricultural products (chapters 01-24) is not in scope of the UK-EU Trade and Cooperation Agreement and takes place under WTO terms.
-            introductory_notes: "### Note 1 - General principles\n\n1. This Annex sets out
-              the general rules for the applicable requirements of Annex ORIG-2 \\[Product-specific
-              rules of origin\\] as provided for in point (c) of Article ORIG 3(1) \\[General
-              requirements\\] of this Agreement."
-          relationships:
-            rules:
-              data:
-              - id: '10000096'
-                type: rules_of_origin_rule
-            links:
-              data:
-              - id: fd431ebe2833f8753e90e93cbbe64ef4
-                type: rules_of_origin_link
-              - id: 71ce11df10c4c03e61ce0702f3802ce7
-                type: rules_of_origin_link
-            proofs:
-              data:
-              - id: 506eb2e258484e97bc25568b864c4fd0
-                type: rules_of_origin_proof
-              - id: 724fc25dcaf6a7d21e9015f065344a52
-                type: rules_of_origin_proof
-        included:
-        - id: fd431ebe2833f8753e90e93cbbe64ef4
-          type: rules_of_origin_link
-          attributes:
-            text: Check your goods meet the rules of origin
-            url: https://www.gov.uk/guidance/check-your-goods-meet-the-rules-of-origin
-        - id: 71ce11df10c4c03e61ce0702f3802ce7
-          type: rules_of_origin_link
-          attributes:
-            text: 'UK/EU and EAEC: Trade and Cooperation Agreement'
-            url: https://www.gov.uk/government/publications/ukeu-and-eaec-trade-and-cooperation-agreement-ts-no82021
-        - id: 506eb2e258484e97bc25568b864c4fd0
-          type: rules_of_origin_proof
-          attributes:
-            summary: Statement on origin
-            subtext: ''
-            url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration
-        - id: 724fc25dcaf6a7d21e9015f065344a52
-          type: rules_of_origin_proof
-          attributes:
-            summary: Importer's knowledge
-            subtext: ''
-            url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#importers-knowledge
-        - id: '10000096'
-          type: rules_of_origin_rule
-          attributes:
-            id_rule: 10000096
-            heading: 39.21-39.22
-            description: |-
-              3921: Other plates, sheets, film, foil and strip, of plastics
+      #         #### Andorra and San Marino
+      #         Andorra and San Marino are part of customs unions with the EU. The UK has agreed with the EU that all products originating in San Marino and all non-agricultural products (chapters 25-97) originating in Andorra are to be treated as originating in the EU under the UK-EU Trade and Cooperation Agreement as long as Andorra and San Marino apply to UK products the same preferences that the EU applies to them. These products benefit from zero tariffs, where they meet the relevant rules of origin. Trade with Andorra of agricultural products (chapters 01-24) is not in scope of the UK-EU Trade and Cooperation Agreement and takes place under WTO terms.
+      #       introductory_notes: "### Note 1 - General principles\n\n1. This Annex sets out
+      #         the general rules for the applicable requirements of Annex ORIG-2 \\[Product-specific
+      #         rules of origin\\] as provided for in point (c) of Article ORIG 3(1) \\[General
+      #         requirements\\] of this Agreement."
+      #     relationships:
+      #       rules:
+      #         data:
+      #         - id: '10000096'
+      #           type: rules_of_origin_rule
+      #       links:
+      #         data:
+      #         - id: fd431ebe2833f8753e90e93cbbe64ef4
+      #           type: rules_of_origin_link
+      #         - id: 71ce11df10c4c03e61ce0702f3802ce7
+      #           type: rules_of_origin_link
+      #       proofs:
+      #         data:
+      #         - id: 506eb2e258484e97bc25568b864c4fd0
+      #           type: rules_of_origin_proof
+      #         - id: 724fc25dcaf6a7d21e9015f065344a52
+      #           type: rules_of_origin_proof
+      #   included:
+      #   - id: fd431ebe2833f8753e90e93cbbe64ef4
+      #     type: rules_of_origin_link
+      #     attributes:
+      #       text: Check your goods meet the rules of origin
+      #       url: https://www.gov.uk/guidance/check-your-goods-meet-the-rules-of-origin
+      #   - id: 71ce11df10c4c03e61ce0702f3802ce7
+      #     type: rules_of_origin_link
+      #     attributes:
+      #       text: 'UK/EU and EAEC: Trade and Cooperation Agreement'
+      #       url: https://www.gov.uk/government/publications/ukeu-and-eaec-trade-and-cooperation-agreement-ts-no82021
+      #   - id: 506eb2e258484e97bc25568b864c4fd0
+      #     type: rules_of_origin_proof
+      #     attributes:
+      #       summary: Statement on origin
+      #       subtext: ''
+      #       url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration
+      #   - id: 724fc25dcaf6a7d21e9015f065344a52
+      #     type: rules_of_origin_proof
+      #     attributes:
+      #       summary: Importer's knowledge
+      #       subtext: ''
+      #       url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#importers-knowledge
+      #   - id: '10000096'
+      #     type: rules_of_origin_rule
+      #     attributes:
+      #       id_rule: 10000096
+      #       heading: 39.21-39.22
+      #       description: |-
+      #         3921: Other plates, sheets, film, foil and strip, of plastics
 
-              3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics
-            rule: |-
-              A change from any other heading  - CTH;
-              or
-              Maximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}
+      #         3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics
+      #       rule: |-
+      #         A change from any other heading  - CTH;
+      #         or
+      #         Maximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}
 
     RulesOfOriginLink:
       type: object
@@ -4712,3 +4756,55 @@ components:
             description:
               type: string
               description: The `description` for the preference_code.
+
+    ChemicalSubstance:
+      type: object
+      description: Contains details about a specific chemical substance.
+      properties:
+        id:
+          type: string
+          description: "A unique id for the chemical substance (the concatenated CUS number and the internal goods nomenclature sid that this chemical row refers too."
+          required: true
+        type:
+          type: string
+          description: The type of object, i.e., `chemical_substance`
+          required: true
+        attributes:cus:
+          type: string
+          description: The EU CUS number
+          required: true
+        attributes:goods_nomenclature_sid:
+          type: integer
+          description: The goods nomenclature sid field
+          required: true
+        attributes:goods_nomenclature_item_id:
+          type: string
+          description: The goods nomenclature item id field
+          required: true
+        attributes:producline_suffix:
+          type: string
+          description: The producline suffix
+          required: true
+        attributes:name:
+          type: string
+          description: The name of the chemical substance
+          required: true
+        attributes:cas_rn:
+          type: string
+          description: The international CAS number
+          required: true
+        attributes:nomen:
+          type: string
+          description: The nomen field. This indicates which taxonomy the chemical substance originates
+      example:
+        data:
+        - id: "0153778-6-30725"
+          type: "chemical_substance"
+          attributes:
+            cus: "0153778-6"
+            goods_nomenclature_sid: 30725
+            goods_nomenclature_item_id: "0712909090"
+            producline_suffix: "80"
+            name: "Spinacia oleracea, as dried vegetables"
+            cas_rn: "90131-25-2"
+            nomen: "INCI"
