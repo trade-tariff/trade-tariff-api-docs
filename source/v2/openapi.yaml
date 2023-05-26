@@ -1316,6 +1316,52 @@ paths:
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_item_id]=0712909090
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_sid]=30725
 
+  /simplified_procedural_code_measures:
+    get:
+      summary: Get simplified procedural code measures
+      description: Returns simplified procedural code measures indicating the current valuations of imported fruit and vegetables. Valuations cover a 2 week window. Null valuations indicate no data for the given input filter period.
+      tags:
+        - Simplified Procedural Code Measure
+      parameters:
+        - in: query
+          name: filter[from_date]
+          schema:
+            type: string
+            format: date
+          description: Filter measures that start from this date
+        - in: query
+          name: filter[to_date]
+          schema:
+            type: string
+            format: date
+          description: Filter measures that end up to and inluding this date
+        - in: query
+          name: filter[simplified_procedural_code]
+          schema:
+            type: string
+          description: Filter by the simplified procedural code
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimplifiedProceduralCodeMeasure'
+        5XX:
+          description: Unexpected error - likely missing or incorrect params
+
+      x-code-samples:
+        /api/v2/simplified_procedural_code_measures:
+          lang: shell
+          source: |-
+            # Fetch all measures
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures
+
+            # Fetch a given 2 week window of measures
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures?filter[from_date]=2023-05-12&filter[to_date]=2023-05-25
+
+            # Fetch the full history of a given simplified procedural code
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures?filter[simplified_procedural_code]=1.10
 
   /preference_codes:
     get:
@@ -4486,3 +4532,56 @@ components:
             name: "Spinacia oleracea, as dried vegetables"
             cas_rn: "90131-25-2"
             nomen: "INCI"
+
+    SimplifiedProceduralCodeMeasure:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The simplified procedural code of the measure
+        type:
+          type: string
+          description: The type of object, i.e., `simplified_procedural_code_measure`
+        attributes:validity_start_date:
+          type: string
+          format: date
+          description: The start date of when the valuation is applicable
+        attributes:validity_end_date:
+          type: string
+          format: date
+          description: The end date after which the valuation is no longer applicable
+        attributes:duty_amount:
+          type: number
+          description: The duty amount for the code
+        attributes:goods_nomenclature_label:
+          type: string
+          description: The label for the goods nomenclature
+        attributes:goods_nomenclature_item_ids:
+          type: string
+          description: The item ids for the goods nomenclature
+        attributes:monetary_unit_code:
+          type: string
+          description: The monetary unit code for the measure
+        attributes:measurement_unit_code:
+          type: string
+          description: The measurement unit code for the measure
+        attributes:measurement_unit_qualifier_code:
+          type: string
+          description: The measurement unit qualifier code for the measure
+      required:
+        - id
+        - type
+        - attributes
+      example:
+        data:
+          - id: "1.10"
+            type: "simplified_procedural_code_measure"
+            attributes:
+              validity_start_date: "2023-02-17"
+              validity_end_date: "2023-03-02"
+              duty_amount: 52.96
+              goods_nomenclature_label: "New potatoes"
+              goods_nomenclature_item_ids: "0701905000"
+              monetary_unit_code: "GBP"
+              measurement_unit_code: "DTN"
+              measurement_unit_qualifier_code: null
