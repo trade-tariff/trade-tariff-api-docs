@@ -378,6 +378,263 @@ Look for the unique identifier on an entity of type `additional_code` in the `in
 }
 ```
 
+## Measure condition permutations
+
+Measure conditions are used to identify where:
+
+- document codes (such as licences, certificates, waivers or exceptions) are needed
+- weight or volume thresholds are applicable.
+
+For instance, the certificate identified by document code **N002** is needed to import [cherry tomatoes](https://www.trade-tariff.service.gov.uk/commodities/0702000007#uk_import_controls), as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
+
+And importing [champagne](https://www.trade-tariff.service.gov.uk/commodities/2204101100) from Switzerland has a threshold measure on the 'Restriction on entry into free circulation' measure (i.e. if the volume of goods imported does not exceed 100 litres, then the licence is not required).
+
+In most cases, understanding measure conditions is simple. In most cases, if multiple conditions are presented, then the trader must fulfil one of the conditions (i.e. it is an OR boolean relationship between the conditions).
+
+However, in certain cases, it is more complex.
+
+### Complex measures
+
+The term 'complex measures' has been invented by the Trade Tariff team to refer to those measures where there may be a requirement for more than one condition to be fulfilled by the trader (for example both the provision of a document and a threshold limit).
+
+These 'complex measures' are most frequently present on:
+
+- veterinary controls
+- waste controls
+
+Also look out for 'Import control of fluorinated greenhouse gases', as these measures exhibit a similar 'boolean AND' relationship, albeit in a different way.
+
+To start with, let's look at veterinary controls.
+
+#### Veterinary controls
+
+Let's look at [rock lobsters, for processing](https://www.trade-tariff.service.gov.uk/commodities/0306111010) as an example. If you were to put across the import requirement (for vet control) in plain language, then you would write something like:
+
+You need either:
+
+- to provide a CHED-P document, as represented by document code N853, *or*
+- to be exempted from this requirement via the provision of document code C084, to identify that you are bringing the goods into the country for scientific or research purposes, *or*
+- you are bringing the goods in for personal consumption, *AND* the weight does not exceed 2 kilogrammes.
+
+The AND in the last bullet is the complex part of this set of conditions.
+
+#### Condition codes
+
+The JSON code below is derived from the [API response for commodity code 0306111010](https://www.trade-tariff.service.gov.uk/api/v2/commodities/0306910000).
+
+
+```json
+{
+      "id": "20243936",
+      "type": "measure_condition",
+      "attributes": {
+        "action": "Import/export allowed after control",
+        "action_code": "29",
+        "certificate_description": "UN/EDIFACT certificates: ...",
+        "condition_code": "B",
+        "condition_duty_amount": null,
+        "condition_measurement_unit_code": null,
+        "condition_measurement_unit_qualifier_code": null,
+        "condition_monetary_unit_code": null,
+        "document_code": "N853",
+        "duty_expression": "",
+        "guidance_cds": "...",
+        "guidance_chief": "...",
+        "measure_condition_class": "document",
+        "monetary_unit_abbreviation": null,
+        "requirement": "UN/EDIFACT certificates: UN/EDIFACT certificates: Common Health Entry Document ...",
+        "requirement_operator": null,
+        "threshold_unit_type": null
+      },
+      "relationships": {
+        "measure_condition_components": {
+          "data": []
+        }
+      }
+    },
+```
+
+Crucial to the interpretation of this data is the **condition code**. The condition code, at a high level, describes to border systems (such as CDS) what the overarching condition means (e.g. a requirement for a licence, certificate or other document).
+
+How the condition codes interact with others on conditions on the same measure determines the boolean logic to be applied.
+
+These two rules are used to interpret the condition codes and their impact:
+
+1. All **conditions with the same condition code** exist in a boolean **OR** relationship. i.e. the trader ust fulfil one of the requirements.
+
+2. If a measure features conditions with **more than one condition code**, then a boolean **AND** relationship exists between the conditions assigned to the one condition code, and those assigned to the other (or others in the case of fluorinated gases).
+
+The tables below show the 10 conditions that are associated with the veterinary control measure on the rock lobster commodity. As you can see, there are two condition codes, B and E (in the first column).
+
+|Condition_code|Certificate type code|Certificate code|Action code|Condition duty amount|Condition measurement unit code|Notes|
+|:----|:----|:----|:----|:----|:----|:----|
+|**B**|N|853|29| | |CHED-P document|
+|**B**|Y|058|29| | |Personal use waiver|
+|**B**|C|084|29| | |Scientific use waiver|
+|**B**|9|99L|29| | |CDS Licence waiver|
+|**B**| | |09| | |Negative condition - prevent trade|
+
+|Condition_code|Certificate type code|Certificate code|Action code|Condition duty amount|Condition measurement unit code|Notes|
+|:----|:----|:----|:----|:----|:----|:----|
+|**E**|N|853|29| | |CHED-P document|
+|**E**| | |29|2.0|KGM|Threshold condition - do not exceed 2.0 KGM|
+|**E**|C|084|29| | |Scientific use waiver|
+|**E**|9|99L|29| | |CDS Licence waiver|
+|**E**| | |09| | |Negative condition - prevent trade|
+
+In the two tables above, you can see that:
+
+- **N853** (CHED-P) is in both tables
+- **C084** (scientific use waiver) is in both tables
+- **999L** (CDS licence waiver) is in both tables
+
+But
+
+- the **threshold condition** is present only once
+- **Y058** (personal use waiver) is present only once
+
+
+The table below shows you how to interpret measures where:
+
+- there are multiple measure condition codes, *and*
+-  one or more of the conditions is repeated between the conditions of the different condition code types (see fluorinated gas example below, for when conditions are *not* repeated).
+
+The idea is that, due to this 'AND' requirement, the trader picks one condition from the horizontal access
+
+| |N853|C084|999L|Y058|
+|:----|:----|:----|:----|:----|
+|**N853**|**Duplicated**|Not relevant|Not relevant|Not relevant|
+|**C084**|Not relevant|**Duplicated**|Not relevant|Not relevant|
+|**999L**|Not relevant|Not relevant|**Duplicated**|Not relevant|
+|**2.0 KGM**|Not relevant|Not relevant|Not relevant|**Boolean AND applies**|
+
+The three discrete entries in the table are:
+
+- **Duplicated** - as the same condition exists on both axes.
+- **Not relevant** - while these are valid permutations, they are superseded by the supply of N853, C084 or 999L on their own.
+- **Boolean AND applies** - this is a unique and discrete condition, and means that a trade can proceed if the goods are for personal consumption (Y058) and do not exceed a weight of 2 kilogrammes.
+
+#### How we reflect this in 'permutations'
+
+All measure conditions are listed in the 'included' section of the commodity API. However, this does not always tell the full tale of how they associate with each other, especially when it comes to complex measures such as the vet controls (or waster controls which behave similarly).
+
+There are two primary entities (on top of the already mentioned measures and measure conditions) to recognise:
+
+- measure_condition_permutation_group
+- measure_condition_permutation
+
+#### Measure condition permutation groups
+
+The JSON block below shows the permutation group associated with rock lobster's vet control. You can see that there are four permutations that are related to the group. These four correspond to:
+
+- The N853 document
+- The C084 exemption
+- The 999L waiver
+- The threshold condition and the Y058 exemption
+
+As these are pseudo-entities which do not exist in source data, we have created GUIDs for these. The actual GUID values do not matter: what matters is relating the parent permutation group with the individual permutations.
+
+```json
+{
+  "id": "20200262-n/a",
+  "type": "measure_condition_permutation_group",
+  "attributes": {
+    "condition_code": "n/a"
+  },
+  "relationships": {
+    "permutations": {
+      "data": [
+        {
+          "id": "6234c2e9dcb5f9dda1fd8cd62ea06e47",
+          "type": "measure_condition_permutation"
+        },
+        {
+          "id": "037195f93b2a0f7546dc9ac29445086e",
+          "type": "measure_condition_permutation"
+        },
+        {
+          "id": "9f91c1e665b90afca40ca5bcda62ddad",
+          "type": "measure_condition_permutation"
+        },
+        {
+          "id": "8c74355c5718a7e39d248a2825243881",
+          "type": "measure_condition_permutation"
+        }
+      ]
+    }
+  }
+}
+```
+
+#### Measure condition permutations
+
+The block below just shows two of the permutations in the vet control above:
+
+- a reference to the N853 (CHED-P) control
+- a reference to the combined requirement (boolean AND) for a Y058 exemption and the 2.0 KGM threshold.
+
+The second of the two permutation references two separate conditions to show that there is an AND relationship in place on this permutation.
+
+```json
+{
+  "id": "6234c2e9dcb5f9dda1fd8cd62ea06e47",
+  "type": "measure_condition_permutation",
+  "relationships": {
+    "measure_conditions": {
+      "data": [
+        {
+          "id": "20243936",
+          "type": "measure_condition"
+        }
+      ]
+    }
+  }
+},
+{
+  "id": "8c74355c5718a7e39d248a2825243881",
+  "type": "measure_condition_permutation",
+  "relationships": {
+    "measure_conditions": {
+      "data": [
+        {
+          "id": "20243938",
+          "type": "measure_condition"
+        },
+        {
+          "id": "20243942",
+          "type": "measure_condition"
+        }
+      ]
+    }
+  }
+}
+```
+
+Measures of this type **can only ever have conditions with 2 discrete condition codes**. Otherwise the logic described here would not work.
+
+### Complex measures where no conditions are repeated (Import control of fluorinated greenhouse gases)
+
+The same rules regarding condition codes apply to other measure types, where conditions are not duplicated across condition code boundaries.
+
+Measures of type 'Import control of fluorinated greenhouse gases' are the best example of these types of measure.
+
+See the relevant control on [Refrigerated showcases, precharged with HFCs](https://www.trade-tariff.service.gov.uk/commodities/8418501910).
+
+This type is simpler to understand than the very complex measures such as veterinary controls, as described previously, however the dual rules of condition codes still apply and need to be observed:
+
+1. All **conditions with the same condition code** exist in a boolean **OR** relationship. i.e. the trader must fulfil one of the requirements (but is not required to fulfil more than one).
+
+2. If a measure features conditions with **more than one condition code**, then a boolean **AND** relationship exists between the conditions assigned to the one condition code, and those assigned to the other (or others in the case of fluorinated gases).
+
+In this instance, there are conditions with three different condition codes. The conditions are laid out on the condition popup in the way in which they are to be interpreted.
+
+Pick:
+
+- one option from the top table, *and*
+- one option from the second table, *and*
+- one option from the third table
+
+
 ## An overall approach to parsing the API
 
 If you need to do anything more than just one single task on a commodity API, it's worth capturing and parsing every entity in the `included` section.
