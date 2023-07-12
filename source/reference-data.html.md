@@ -10,7 +10,7 @@ Measure type series are used to group measure types, and therefore measures,
 according to their use in the declaration process. The sequence corresponds to the
 order against which border systems, such as CDS, should validate a declaration.
 
-For example, if a declaration does not meet the requirements of measure type series `A` (prohibitions), 
+For example, if a declaration does not meet the requirements of measure type series `A` (prohibitions),
 then measures pertaining to the remaining series are not addressed.
 
 Measure type series are largely static, i.e. change to the list provided below is extremely rare.
@@ -37,7 +37,6 @@ Measure type series are largely static, i.e. change to the list provided below i
 |S|Supplementary amount|
 |Z|Archived measure type|
 
-
 ## Measure types
 
 Measures are grouped according to their nature into measure types. Measure types
@@ -50,7 +49,7 @@ types in use, access the [measure types API](https://www.trade-tariff.service.go
 
 ### Prohibition-type measures (series A)
 
-If an import or export declaration does not meet the requirements of the applied prohibition-type controls, 
+If an import or export declaration does not meet the requirements of the applied prohibition-type controls,
 then a trade will not be permitted to proceed.
 
 |ID|Description|Import&nbsp;/&nbsp;export|
@@ -66,7 +65,7 @@ Restrictive controls permit a trade to proceed under certain conditions, e.g.
 
 - provision of a certificate or licence in the form of an electronic document code;
 - submission of exemption to a measure, via an exemption-type document code;
-- adherence to threshold controls (e.g. weight or volume) 
+- adherence to threshold controls (e.g. weight or volume)
 
 |ID|Description|Import&nbsp;/&nbsp;export|
 |-|-|-|
@@ -256,7 +255,6 @@ Excise only
 |-|-|-|
 |306|Excises|Import|Q|
 
-
 ### Supplementary amount-type measures (series S)
 
 Quotas and securities required on the import of poultry (Northern Ireland tariff only)
@@ -272,10 +270,9 @@ Quotas and securities required on the import of poultry (Northern Ireland tariff
 |657|Reduced security based on representative price|Import|S|
 |658|Reduced additional duty based on CIF price|Import|S|
 
-
 ## Measure action codes
 
-Measure action codes illustrate how CDS (and other border systems) will act in 
+Measure action codes illustrate how CDS (and other border systems) will act in
 response to measure conditions being met or not met.
 
 |Action code|Description|
@@ -334,3 +331,81 @@ A condition code identifies what sort of condition is to be fulfilled in order f
 |W|Washington Convention|
 |Y|Other conditions|
 |Z|Presentation of more than one certificate|
+
+## Measurement units
+
+|Code|Description|
+|:----|:----|
+|ASV|%vol|
+|CCT|Carrying capacity in metric tonnes|
+|CEN|Hundred items|
+|CTM|Carats (one metric carat = 2 x 10<sup>-4</sup>kg)|
+|DAP|Decatonne, corrected according to polarisation|
+|DHS|Kilogram of dihydrostreptomycin|
+|DTN|Hectokilogram|
+|EUR|Euro (used for statistical surveillance)|
+|FC1|Factor|
+|GFI|Gram of fissile isotopes|
+|GP1|Gross Production|
+|GRM|Gram|
+|GRT|Gross tonnage|
+|HLT|Hectolitre|
+|HMT|Hectometre|
+|KAC|Kilogram net of acesulfame potassium|
+|KCC|Kilogram of choline chloride|
+|KCL|Tonne of potassium chloride|
+|KGM|Kilogram|
+|KLT|1000 litres|
+|KMA|Kilogram of methylamines|
+|KMT|Kilometre|
+|KNI|Kilogram of nitrogen|
+|KNS|Kilogram of hydrogen peroxide|
+|KPH|Kilogram of potassium hydroxide (caustic potash)|
+|KPO|Kilogram of potassium oxide|
+|KPP|Kilogram of diphosphorus pentaoxide|
+|KSD|Kilogram of substance 90¬†% dry|
+|KSH|Kilogram of sodium hydroxide (caustic soda)|
+|KUR|Kilogram of uranium|
+|KW1|Kilowatt Hour|
+|LPA|Litre pure (100%) alcohol|
+|LTR|Litre|
+|MCG|Microgram|
+|MCL|Microlitre|
+|MGM|Milligram|
+|MIL|1000 items|
+|MLT|Millilitre|
+|MPR|1000 pairs (used for statistical surveillance)|
+|MTK|Square metre|
+|MTQ|Cubic meter|
+|MTR|Metre|
+|MWH|1000 kilowatt hours|
+|NAR|Number of items|
+|NCL|Number of cells|
+|NPR|Number of pairs|
+|RET|Retail Price|
+|TJO|Terajoule (gross calorific value)|
+|TNE|Tonne|
+|WAT|Number of Watt|
+
+## Measurement unit qualifiers
+
+|Code|Description|
+|:----|:----|:----|
+|A|total alcohol|
+|B|per flask|
+|C|1 000|
+|D|per 1% by weight of sucrose or extractable sugar|
+|E|of drained net weight|
+|F|of common wheat|
+|G|, gross|
+|I|of biodiesel content|
+|J|of fuel content (usually in form of tallow, stearin, paraffin wax or other waxes, including the wick)|
+|K|of bioethanol content|
+|L|of live weight|
+|M|net of dry matter|
+|P|of lactic matter|
+|R|of the standard quality|
+|S|of sugar with a yield in white sugar of 92%|
+|T|of dry lactic matter|
+|X|per hectolitre|
+|Z|per 1% by weight of sucrose|
