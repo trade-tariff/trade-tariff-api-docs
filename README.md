@@ -33,9 +33,11 @@ To update the Trade Tariff API documentation, you may follow this general workfl
 - If the changes involve the API specification itself, edit the `source/v2/openapi.yaml` file. This file is used to build the HTML file `build/reference.html`.
 
   - edit `source/v2/openapi.yaml`
-  - ```
+
+  - ```shell
     make serve
     ```
+
   - manually (re)load [http://localhost:4567](http://localhost:4567) in a browser when the Middleman server (re)starts
 
 - It is also useful to add an entry in the `NEWS.yml` file, this information will be published on the Latest News page for users viewing these docs. It will also be added to the `/feed.xml` atom feed for anyone subscribing for updates.
@@ -46,23 +48,24 @@ As we release new versions of the API, we will continue to support older version
 
 In order to do this, some modifications to the default Middleman templates and options are required:
 
-1.  create a new `openapi.yaml` file for the new API version and a directory in which to store it
+1. create a new `openapi.yaml` file for the new API version and a directory in which to store it
 
 ```
-$ mkdir v2
-$ touch v2/openapi.yaml
+mkdir v2
+touch v2/openapi.yaml
 ```
 
-2.  edit `config/tech-docs.yml` - add new link in the header for old reference file, i.e.;
+2. edit `config/tech-docs.yml` - add new link in the header for old reference file, i.e.;
 
 ```
  Reference: /reference.html
 ```
 
-3.  edit `Makefile`
+3. edit `Makefile`
 
 - add new task to generate old reference file
 - rename previous reference file, add "-v1" (or whatever the old version number is) to the output filename
+
   ```
   ./generate.js source/v1/openapi.yaml source/reference-v1.html.md.erb
   ```
@@ -113,12 +116,12 @@ The example above is rendered into HTML:
 
 The `openapi.yaml` file makes use of [`$ref`](https://swagger.io/specification/#documentStructure) to refer to connected parts of the specification. In the example above, [`$ref`](https://swagger.io/specification/#documentStructure) is used to refer to the schema and example response in another part of the document.
 
-Information on `$ref`: https://swagger.io/specification/#documentStructure
+Information on `$ref`: <https://swagger.io/specification/#documentStructure>
 
 ### Links
 
-- OAS 3.0 Specification (https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#oasDocument)
-- Swagger, upon which OAS is based (https://swagger.io/specification/)
+- OAS 3.0 Specification (<https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#oasDocument>)
+- Swagger, upon which OAS is based (<https://swagger.io/specification/>)
 
 ## Running documentation locally
 
@@ -126,13 +129,13 @@ Information on `$ref`: https://swagger.io/specification/#documentStructure
 
 Manual build and deploy is not necessary if automated deploy is used.
 
-1.  Build the documentation
+1. Build the documentation
 
 ```
 bundle exec middleman build --clean
 ```
 
-2.  Push to prod
+2. Push to prod
 
 ```
 cf push tariff-api-production
@@ -159,19 +162,19 @@ Type the following to start the server:
 make serve
 ```
 
-You should now be able to view a live preview at http://localhost:4567.
+You should now be able to view a live preview at <http://localhost:4567>.
 
 ## Publishing documentation
 
 ### Development
 
-Any changes pushed to GitHub on a branch (eg, a Pull Request) will be deployed 
+Any changes pushed to GitHub on a branch (eg, a Pull Request) will be deployed
 automatically to the [Development URL](https://tariff-api-dev.london.cloudapps.digital)
 
 ### Production
 
-Any changes to `main` on GitHub will be deployed automatically to our published docs 
-at [api.trade-tariff.service.gov.uk](https://api.trade-tariff.service.gov.uk) 
+Any changes to `main` on GitHub will be deployed automatically to our published docs
+at [api.trade-tariff.service.gov.uk](https://api.trade-tariff.service.gov.uk)
 
 ## License
 
