@@ -11,6 +11,12 @@ is provided by the [GOV.UK Tech Docs Template][tech-docs-template] and through
 the use of a [fork][forked-widdershins] of [widdershins][widdershins] to
 convert the [`openapi.yaml`][tariff-openapi] to Markdown.
 
+These docs are deployed to the following URLs:
+
+- *Development* - https://api.dev.trade-tariff.service.gov.uk
+- *Staging* - https://api.staging.trade-tariff.service.gov.uk
+- *Production* - https://api.trade-tariff.service.gov.uk
+
 ## Updating content
 
 To update content of this site, modify the files under `source` directory, i.e., `source/v2/openapi.yaml`.
