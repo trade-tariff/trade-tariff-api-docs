@@ -378,6 +378,253 @@ Look for the unique identifier on an entity of type `additional_code` in the `in
 }
 ```
 
+## Finding all units
+
+It may be necessary to find all the units that are present on a commodity code, for example to calculate duties in an external application, or to see what thresholds are in place for import or export controls.
+
+These units appear in two places in the API:
+
+- in measure component nodes
+- in measure condition nodes
+
+### Units and measure components
+
+Let's say you are building an application which will calculate duties, and in order to calculate the duties successfully, you need to ask the user to supply a number of units. These units may be requested already in supplementary unit measures, applied as measures to the commodity code in question, but this is not always the case, e.g. when the units are conditional on (for example) origin or tax type.
+
+If a measure is duty-related, then it will be accompanied by one or more measure components, or in exceptional circumstances, by measure condition components.
+
+- A measure component is a logical part of a duty, sometimes known as a duty expression. 
+- A duty may be made up of one or more measure components.
+- Each measure component features the following key fields:
+
+|Field|Notes|
+|-|-|
+|duty_expression_id|This determines the kind of duty that is being expressed|
+|duty_amount|The unit associated with the component (e.g. the 3 in 3.00% or the 15 in £15.00 / kilogramme)|
+|monetary_unit_code|If the unit is specific (e.g. £15.00 / kilogramme), then this is GBP on the UK tariff, or EUR on the XI tariff.<br><br>If the unit is ad valorem (e.g. 3.00%), then the value is `null`|
+|measurement_unit_code|This is the crucial field for this purpose.<br><br>If this value is populated, then it may be necessary to ask the user the value associated with this unit in their trade.<br><br>[List of all measurement units](/reference-data.html#measurement-units).|
+|measurement_unit_qualifier_code|It may also be the case that a unit on its own is insufficent to describe in full the requirement, therefore an additional qualifier is required.<br><br>For example, for weights, it may be that there is a need to include a qualifier for net, gross or dried weight.<br><br>[List of all measurement unit qualifiers](/reference-data.html#measurement-unit-qualifiers).|
+
+On many occasions, there are multiple units which are actually requesting the same thing from the user, just in multiples. For example:
+
+- `KGM` and `DTN` are the same unit axis (weight), one is just a 100 * multiple of the other.
+- `LTR` and `HLT` similarly, but for volumes
+
+Therefore, there is no value in asking the user both `KGM` and `DTN`, as one can be determined from the other. Similalry, with `LTR` and `HLT`
+
+By way of example, let's look at the commodity code for [Cava (2204101300)](https://www.trade-tariff.service.gov.uk/commodities/2204101300). If you look at the public-facing web page, you will see that there are multiple measures that feature units:
+
+- third country duty that mentions 100 litres (`HLT`)
+- supplementary unit (global) of litres (`LTR`)
+- excise duties which refer to both litres (`LTR`) and litres of pure alcohol (`LPA`)
+
+Let's look at a couple of these in the [commodities API for Cava](https://www.trade-tariff.service.gov.uk/api/v2/commodities/2204101300).
+
+The third country duty measure, which has an ID of `20002430` (at the time of writing) features a single measure component. This is referenced in the `relationships` part of the measure node, and is available via the node of type `measure_component`.
+
+The ID of this node is a compound of the measure's ID and the duty expression ID, as follows:
+
+```json
+{
+  "id": "20002430-01",
+  "type": "measure_component",
+  "attributes": {
+    "duty_expression_id": "01",
+    "duty_amount": 26,
+    "monetary_unit_code": "GBP",
+    "monetary_unit_abbreviation": null,
+    "measurement_unit_code": "HLT",
+    "measurement_unit_qualifier_code": null,
+    "duty_expression_description": "% or amount",
+    "duty_expression_abbreviation": "%"
+  },
+  "relationships": {
+    "measurement_unit": {
+      "data": {
+        "id": "HLT",
+        "type": "measurement_unit"
+      }
+    },
+    "measurement_unit_qualifier": {
+      "data": null
+    }
+  }
+}
+```
+
+In turn, the unit `HLT` is referenced and the detail, if needed, can be found elsewhere in the `included` section of the same commodity's API.
+
+Similarly, the excise code that references LPA is captured here, in the measure component associated with the measure's ID (`-1011988603`).
+
+Please note: all VAT and excise measures have a negative identifier: all other measures' identifiers are positive.
+
+```json
+{
+  "id": "-1011988603-01",
+  "type": "measure_component",
+  "attributes": {
+    "duty_expression_id": "01",
+    "duty_amount": 28.74,
+    "monetary_unit_code": "GBP",
+    "monetary_unit_abbreviation": null,
+    "measurement_unit_code": "LPA",
+    "measurement_unit_qualifier_code": null,
+    "duty_expression_description": "% or amount",
+    "duty_expression_abbreviation": "%"
+  },
+  "relationships": {
+    "measurement_unit": {
+      "data": {
+        "id": "LPA",
+        "type": "measurement_unit"
+      }
+    },
+    "measurement_unit_qualifier": {
+      "data": null
+    }
+  }
+}
+```
+
+An example of where a qualifier unit is used in on the commodity code for [Corn cobs 0710400020](https://www.trade-tariff.service.gov.uk/commodities/0710400020).
+
+At the point of writing, the third country duty for corn cobs is `4.00% + £7.80 / 100 kg, drained net weight (kg/net eda)`, which is a combination of a measurement unit code (`DTN`) and qualifier code (`E`).
+
+This has a measure ID of `20001091`. In this instance, there are two measure components, which are again referenced from the measure object itself. These use the duty expression IDs `01` and `04` in order.
+
+The two components in the API are as follows:
+
+- the first is an ad valorem duty, therefore there is no unit (4.00%)
+- however, the second is a specific duty with both a unit and unit qualifier.
+
+```json
+{
+  "id": "20001091-01",
+  "type": "measure_component",
+  "attributes": {
+    "duty_expression_id": "01",
+    "duty_amount": 4,
+    "monetary_unit_code": null,
+    "monetary_unit_abbreviation": null,
+    "measurement_unit_code": null,
+    "measurement_unit_qualifier_code": null,
+    "duty_expression_description": "% or amount",
+    "duty_expression_abbreviation": "%"
+  },
+  "relationships": {}
+},
+{
+  "id": "20001091-04",
+  "type": "measure_component",
+  "attributes": {
+    "duty_expression_id": "04",
+    "duty_amount": 7.8,
+    "monetary_unit_code": "GBP",
+    "monetary_unit_abbreviation": null,
+    "measurement_unit_code": "DTN",
+    "measurement_unit_qualifier_code": "E",
+    "duty_expression_description": "+ % or amount",
+    "duty_expression_abbreviation": "+"
+  },
+  "relationships": {
+    "measurement_unit": {
+      "data": {
+        "id": "DTN",
+        "type": "measurement_unit"
+      }
+    },
+    "measurement_unit_qualifier": {
+      "data": {
+        "id": "E",
+        "type": "measurement_unit_qualifier"
+      }
+    }
+  }
+}
+```
+
+
+### Units and measure conditions
+
+Measure conditions may also use unit codes, and potentially also unit qualifiers, in order to set out a threshold, based on weight, volume or value.
+
+For instance, at the point of writing, there is an allowance to export goods of a value of £10.00 or less of commodity code [Cigars, cheroots, cigarillos and cigarettes - 2402900000](https://www.trade-tariff.service.gov.uk/commodities/2402900000#export) to Belarus.
+
+In this instance, we are looking at an export measure, with ID `20185322`. In a similar way to which we looked at the unit associated with measure components for duty purposes, we can also see that there are units on measure conditions which influence the trade.
+
+In this instance, the unit is captured in the one of two nodes wihtin the measure_condition object associated with the measure (condition ID `20194642`):
+
+The unit may be expressed either:
+
+- in the `condition_measurement_unit_code` field (for weight / volume thresholds), *or*
+- in the `condition_monetary_unit_code` field (for price thresholds)
+
+```json
+{
+  "id": "20194642",
+  "type": "measure_condition",
+  "attributes": {
+    "action": "Import/export allowed after control",
+    "action_code": "29",
+    "certificate_description": null,
+    "condition": "E: The quantity or the price per unit declared, as appropriate, is equal or less than the specified maximum, or presentation of the required document",
+    "condition_code": "E",
+    "condition_duty_amount": 10,
+    "condition_measurement_unit_code": null,
+    "condition_measurement_unit_qualifier_code": null,
+    "condition_monetary_unit_code": "GBP",
+    "document_code": "",
+    "duty_expression": "",
+    "guidance_cds": null,
+    "guidance_chief": null,
+    "measure_condition_class": "threshold",
+    "monetary_unit_abbreviation": null,
+    "requirement": "<span>10.00</span> GBP",
+    "requirement_operator": "=<",
+    "threshold_unit_type": "price"
+  },
+  "relationships": {
+    "measure_condition_components": {
+      "data": []
+    }
+  }
+}
+```
+
+For an example of a weight-based threshold, see commodity code [Mixtures of fruit and nuts ... containing hazelnuts 0813509970](https://www.trade-tariff.service.gov.uk/commodities/0813509970), which features a weight-based threshold for imports from Turkey, as follows:
+
+```json
+{
+  "id": "20084295",
+  "type": "measure_condition",
+  "attributes": {
+    "action": "Import/export allowed after control",
+    "action_code": "29",
+    "certificate_description": null,
+    "condition": "E: The quantity or the price per unit declared, as appropriate, is equal or less than the specified maximum, or presentation of the required document",
+    "condition_code": "E",
+    "condition_duty_amount": 30,
+    "condition_measurement_unit_code": "KGM",
+    "condition_measurement_unit_qualifier_code": null,
+    "condition_monetary_unit_code": null,
+    "document_code": "",
+    "duty_expression": "",
+    "guidance_cds": null,
+    "guidance_chief": null,
+    "measure_condition_class": "threshold",
+    "monetary_unit_abbreviation": null,
+    "requirement": "<span>30.00</span> <abbr title='Kilogram'>kg</abbr>",
+    "requirement_operator": "=<",
+    "threshold_unit_type": "weight"
+  },
+  "relationships": {
+    "measure_condition_components": {
+      "data": []
+    }
+  }
+}
+```
+
 ## Measure condition permutations
 
 Measure conditions are used to identify where:
