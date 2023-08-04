@@ -583,16 +583,16 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v2/certificates/search:
+        /api/v2/certificates:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates
 
   /certificates/search:
     get:
-      summary: Retrieves a list of certificates, with associated measures and commodities.
+      summary: Retrieves a list of certificates, with associated goods nomenclatures.
       description: >
-        Retrieves a paginated list of certificates, filtered by parameters.
+        Retrieves a list of certificates, filtered by parameters.
       tags:
       - Certificates
       parameters:
@@ -617,13 +617,6 @@ paths:
             Retrieve certificates with `description` that contains `description`.
           schema:
             type: string
-        - name: page
-          in: query
-          required: false
-          description: |
-            Retrieve search page with number
-          schema:
-            type: integer
 
       responses:
         200:
@@ -640,7 +633,7 @@ paths:
         /api/v2/certificates/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D
 
   /certificate_types:
     get:
@@ -2927,17 +2920,12 @@ components:
           $ref: '#/components/schemas/ReferencedCertificate'
         data:relationships:
           type: object
-          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object").
         included:
           type: array
-          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this certificate. May include parent objects.
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"). May include parent objects.
           items:
             type: object
-        meta:pagination:
-          type: object
-          description: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-          items:
-            type: integer
       example:
         data:
           id: "D005"
@@ -2955,18 +2943,6 @@ components:
               - id: "2250100"
                 type: measure
         included:
-        - id: "2124342"
-          type: measure
-          attributes:
-            id: 2124342
-            validity_start_date: "2010-01-01T00:00:00.000Z"
-            validity_end_date: null
-            goods_nomenclature_item_id: "7307191010"
-          relationships:
-            goods_nomenclature:
-              data:
-                id: "71692"
-                type: goods_nomenclature
         - id: "71692"
           type: goods_nomenclature
           attributes:
