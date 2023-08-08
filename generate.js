@@ -4,7 +4,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const converter = require('widdershins');
 const inputFile = fs.readFileSync(process.argv[2], 'utf8');
-const api = yaml.safeLoad(inputFile, {json: true});
+const api = yaml.load(inputFile, {json: true});
 
 function appendSchemaDescription(data) {
   const schemas = data.openapi.components.schemas;
