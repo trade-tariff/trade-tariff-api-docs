@@ -10,7 +10,7 @@ info:
     [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
     published content as is presented on GOV.UK.
 
-  version: '2'
+  version: "2"
 
 servers:
   - url: https://www.trade-tariff.service.gov.uk/api/v2
@@ -25,16 +25,16 @@ paths:
         Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
 
       tags:
-      - Sections
+        - Sections
       responses:
         200:
           description: Sections were found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Sections'
+                $ref: "#/components/schemas/Sections"
               example:
-                $ref: '#/components/schemas/Sections/example'
+                $ref: "#/components/schemas/Sections/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -54,9 +54,9 @@ paths:
         There are 21 sections in the Tariff, and their positions range from 1 to 21.
 
       tags:
-      - Sections
+        - Sections
       parameters:
-        - name: 'position'
+        - name: "position"
           in: path
           required: true
           description: |
@@ -71,9 +71,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Section'
+                $ref: "#/components/schemas/Section"
               example:
-                $ref: '#/components/schemas/Section/example'
+                $ref: "#/components/schemas/Section/example"
         404:
           description: Section was not found.
         5XX:
@@ -92,7 +92,7 @@ paths:
 
         For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
       tags:
-      - Sections
+        - Sections
       parameters:
         - name: section_id
           in: path
@@ -109,9 +109,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SectionNote'
+                $ref: "#/components/schemas/SectionNote"
               example:
-                $ref: '#/components/schemas/SectionNote/example'
+                $ref: "#/components/schemas/SectionNote/example"
         404:
           description: A section's notes were not found.
         5XX:
@@ -130,16 +130,16 @@ paths:
 
         Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
       tags:
-      - Chapters
+        - Chapters
       responses:
         200:
           description: Chapters were found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Chapters'
+                $ref: "#/components/schemas/Chapters"
               example:
-                $ref: '#/components/schemas/Chapters/example'
+                $ref: "#/components/schemas/Chapters/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -155,24 +155,24 @@ paths:
         Retrieves a chapter, given the first two (2) digits of its `goods_nomenclature_item_id`
         <p>This should be a zero-padded string of two digits.</p>
       tags:
-      - Chapters
+        - Chapters
       parameters:
-      - name: 'chapter_id'
-        in: path
-        required: true
-        description: |
-          The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
-        schema:
-          type: string
+        - name: "chapter_id"
+          in: path
+          required: true
+          description: |
+            The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
+          schema:
+            type: string
       responses:
         200:
           description: A chapter was found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Chapter'
+                $ref: "#/components/schemas/Chapter"
               example:
-                $ref: '#/components/schemas/Chapter/example'
+                $ref: "#/components/schemas/Chapter/example"
         404:
           description: Chapter was not found.
         5XX:
@@ -191,7 +191,7 @@ paths:
         For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id`
         <p>`chapter_id` should be a zero-padded string of two digits.</p>
       tags:
-      - Chapters
+        - Chapters
       parameters:
         - name: chapter_id
           in: path
@@ -208,9 +208,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChapterNote'
+                $ref: "#/components/schemas/ChapterNote"
               example:
-                $ref: '#/components/schemas/ChapterNote/example'
+                $ref: "#/components/schemas/ChapterNote/example"
         404:
           description: A chapter's notes were not found.
         5XX:
@@ -229,27 +229,27 @@ paths:
         For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id`
         <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
       tags:
-      - Headings
+        - Headings
       parameters:
-      - name: 'heading_id'
-        in: path
-        required: true
-        description: |
-          The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
-        schema:
-          type: string
-          minimum: 4
-          maximum: 4
-          example: "0101"
+        - name: "heading_id"
+          in: path
+          required: true
+          description: |
+            The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+          schema:
+            type: string
+            minimum: 4
+            maximum: 4
+            example: "0101"
       responses:
         200:
           description: A heading was found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Heading'
+                $ref: "#/components/schemas/Heading"
               example:
-                $ref: '#/components/schemas/Heading/example'
+                $ref: "#/components/schemas/Heading/example"
         404:
           description: Heading was not found.
         5XX:
@@ -266,36 +266,36 @@ paths:
       description: >
         This resource is uniquely identified by a combination of goods_nomenclature_item_id and productline_suffix.
       tags:
-      - Subheadings
+        - Subheadings
       parameters:
-      - name: 'goods_nomenclature_item_id'
-        in: path
-        required: true
-        description: |
-          The goods_nomenclature_item_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits.
-        schema:
-          type: string
-          minimum: 10
-          maximum: 10
-          example: "0102291000"
-      - name: 'productline_suffix'
-        in: path
-        description: The two-digit product line suffix of the subheading to retrieve
-        required: true
-        schema:
-          type: string
-          minimum: 2
-          maximum: 2
-        example: "80"
+        - name: "goods_nomenclature_item_id"
+          in: path
+          required: true
+          description: |
+            The goods_nomenclature_item_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits.
+          schema:
+            type: string
+            minimum: 10
+            maximum: 10
+            example: "0102291000"
+        - name: "productline_suffix"
+          in: path
+          description: The two-digit product line suffix of the subheading to retrieve
+          required: true
+          schema:
+            type: string
+            minimum: 2
+            maximum: 2
+          example: "80"
       responses:
         200:
           description: The requested subheading was found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Subheading'
+                $ref: "#/components/schemas/Subheading"
               example:
-                $ref: '#/components/schemas/Subheading/example'
+                $ref: "#/components/schemas/Subheading/example"
         404:
           description: The requested subheading was not found.
         5XX:
@@ -314,27 +314,27 @@ paths:
         For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API.
         <p>`id` should be a string of ten (10) digits.</p>
       tags:
-      - Commodities
+        - Commodities
       parameters:
-      - name: 'id'
-        in: path
-        required: true
-        description: |
-          The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
-        schema:
-          type: string
-          minimum: 10
-          maximum: 10
-          example: "0102291020"
+        - name: "id"
+          in: path
+          required: true
+          description: |
+            The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
+          schema:
+            type: string
+            minimum: 10
+            maximum: 10
+            example: "0102291020"
       responses:
         200:
           description: A commodity was found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Commodity'
+                $ref: "#/components/schemas/Commodity"
               example:
-                $ref: '#/components/schemas/Commodity/example'
+                $ref: "#/components/schemas/Commodity/example"
         404:
           description: Commodity was not found.
         5XX:
@@ -351,7 +351,7 @@ paths:
       description: >
         Retrieves a paginated list of quota definitions, optionally filtered by a variety of parameters.
       tags:
-      - Quotas
+        - Quotas
       parameters:
         - name: goods_nomenclature_item_id
           in: query
@@ -382,8 +382,8 @@ paths:
           schema:
             type: string
             enum:
-            - Y
-            - N
+              - Y
+              - N
         - name: status
           in: query
           required: false
@@ -392,10 +392,10 @@ paths:
           schema:
             type: string
             enum:
-            - blocked
-            - exhausted
-            - not blocked
-            - not exhausted
+              - blocked
+              - exhausted
+              - not blocked
+              - not exhausted
         - name: year
           in: query
           required: false
@@ -463,7 +463,7 @@ paths:
           schema:
             type: string
             enum:
-            - quota_balance_events
+              - quota_balance_events
 
       responses:
         200:
@@ -471,9 +471,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuotaSearch'
+                $ref: "#/components/schemas/QuotaSearch"
               example:
-                $ref: '#/components/schemas/QuotaSearch/example'
+                $ref: "#/components/schemas/QuotaSearch/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -488,7 +488,7 @@ paths:
       description: >
         Retrieves a paginated list of additional_codes, filtered by parameters.
       tags:
-      - Additional Codes
+        - Additional Codes
       parameters:
         - name: code
           in: query
@@ -518,9 +518,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdditionalCodeSearch'
+                $ref: "#/components/schemas/AdditionalCodeSearch"
               example:
-                $ref: '#/components/schemas/AdditionalCodeSearch/example'
+                $ref: "#/components/schemas/AdditionalCodeSearch/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -528,7 +528,6 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&type=B
-
 
   /additional_code_types:
     get:
@@ -543,9 +542,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdditionalCodeTypes'
+                $ref: "#/components/schemas/AdditionalCodeTypes"
               example:
-                $ref: '#/components/schemas/AdditionalCodeTypes/example'
+                $ref: "#/components/schemas/AdditionalCodeTypes/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -560,7 +559,7 @@ paths:
       description: >
         Retrieves a paginated list of certificates, filtered by `as_of param, if present.
       tags:
-      - Certificates
+        - Certificates
       parameters:
         - name: as_of
           in: query
@@ -577,9 +576,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Certificates'
+                $ref: "#/components/schemas/Certificates"
               example:
-                $ref: '#/components/schemas/Certificates/example'
+                $ref: "#/components/schemas/Certificates/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -594,7 +593,7 @@ paths:
       description: >
         Retrieves a list of certificates, filtered by parameters.
       tags:
-      - Certificates
+        - Certificates
       parameters:
         - name: code
           in: query
@@ -624,9 +623,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CertificateSearch'
+                $ref: "#/components/schemas/CertificateSearch"
               example:
-                $ref: '#/components/schemas/CertificateSearch/example'
+                $ref: "#/components/schemas/CertificateSearch/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -648,9 +647,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CertificateTypes'
+                $ref: "#/components/schemas/CertificateTypes"
               example:
-                $ref: '#/components/schemas/CertificateTypes/example'
+                $ref: "#/components/schemas/CertificateTypes/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -683,9 +682,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MeasureTypes'
+                $ref: "#/components/schemas/MeasureTypes"
               example:
-                $ref: '#/components/schemas/MeasureTypes/example'
+                $ref: "#/components/schemas/MeasureTypes/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -717,9 +716,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuotaOrderNumbers'
+                $ref: "#/components/schemas/QuotaOrderNumbers"
               example:
-                $ref: '#/components/schemas/QuotaOrderNumbers/example'
+                $ref: "#/components/schemas/QuotaOrderNumbers/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -750,9 +749,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MeasureActions'
+                $ref: "#/components/schemas/MeasureActions"
               example:
-                $ref: '#/components/schemas/MeasureActions/example'
+                $ref: "#/components/schemas/MeasureActions/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -783,9 +782,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MeasureConditionCodes'
+                $ref: "#/components/schemas/MeasureConditionCodes"
               example:
-                $ref: '#/components/schemas/MeasureConditionCodes/example'
+                $ref: "#/components/schemas/MeasureConditionCodes/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -796,40 +795,33 @@ paths:
 
   /footnotes/search:
     get:
-      summary: Retrieves a list of footnotes, with associated measures and commodities.
+      summary: Retrieves a list of footnotes, with associated goods nomenclatures.
       description: >
-        Retrieves a paginated list of footnotes, filtered by parameters.
+        Retrieves a list of footnotes, filtered by parameters.
       tags:
-      - Footnotes
+        - Footnotes
       parameters:
-        - name: code
-          in: query
-          required: false
-          description: |
-            Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`.
-          schema:
-            type: string
         - name: type
           in: query
           required: false
           description: |
-            Retrieve footnotes with this exact `type` equal to `footnote_type_id`.
+            Retrieve footnotes with this exact `type` equal to `footnote_type_id`. **Must be combined with a code**.
+          schema:
+            type: string
+        - name: code
+          in: query
+          required: false
+          description: |
+            Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`. **Must be combined with a type**.
           schema:
             type: string
         - name: description
           in: query
           required: false
           description: |
-            Retrieve footnotes with `description` that contains `description`.
+            Retrieve footnotes with `description` that contains `description`. Can be combined with `type` and `code`.
           schema:
             type: string
-        - name: page
-          in: query
-          required: false
-          description: |
-            Retrieve search page with number
-          schema:
-            type: integer
 
       responses:
         200:
@@ -837,16 +829,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FootnoteSearch'
+                $ref: "#/components/schemas/FootnoteSearch"
               example:
-                $ref: '#/components/schemas/FootnoteSearch/example'
+                $ref: "#/components/schemas/FootnoteSearch/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
         /api/v2/footnotes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD&page=1
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD
 
   /footnote_types:
     get:
@@ -861,9 +853,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FootnoteTypes'
+                $ref: "#/components/schemas/FootnoteTypes"
               example:
-                $ref: '#/components/schemas/FootnoteTypes/example'
+                $ref: "#/components/schemas/FootnoteTypes/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -910,10 +902,10 @@ paths:
         72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
         ```
       tags:
-      - GoodsNomenclatures
-      - text/csv
+        - GoodsNomenclatures
+        - text/csv
       parameters:
-        - name: 'position'
+        - name: "position"
           in: path
           required: true
           description: |
@@ -937,9 +929,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GoodsNomenclaturesExtended'
+                $ref: "#/components/schemas/GoodsNomenclaturesExtended"
               example:
-                $ref: '#/components/schemas/GoodsNomenclaturesExtended/example'
+                $ref: "#/components/schemas/GoodsNomenclaturesExtended/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -986,10 +978,10 @@ paths:
         72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
         ```
       tags:
-      - GoodsNomenclatures
-      - text/csv
+        - GoodsNomenclatures
+        - text/csv
       parameters:
-        - name: 'chapter_id'
+        - name: "chapter_id"
           in: path
           required: true
           description: |
@@ -1012,9 +1004,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GoodsNomenclaturesExtended'
+                $ref: "#/components/schemas/GoodsNomenclaturesExtended"
               example:
-                $ref: '#/components/schemas/GoodsNomenclaturesExtended/example'
+                $ref: "#/components/schemas/GoodsNomenclaturesExtended/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1060,10 +1052,10 @@ paths:
         72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
         ```
       tags:
-      - GoodsNomenclatures
-      - text/csv
+        - GoodsNomenclatures
+        - text/csv
       parameters:
-        - name: 'heading_id'
+        - name: "heading_id"
           in: path
           required: true
           description: |
@@ -1088,9 +1080,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GoodsNomenclaturesExtended'
+                $ref: "#/components/schemas/GoodsNomenclaturesExtended"
               example:
-                $ref: '#/components/schemas/GoodsNomenclaturesExtended/example'
+                $ref: "#/components/schemas/GoodsNomenclaturesExtended/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1105,7 +1097,7 @@ paths:
       description: |
         Retrieves a list of search references by letter
       tags:
-      - SearchReferences
+        - SearchReferences
       parameters:
         - name: query[letter]
           in: query
@@ -1121,9 +1113,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchReferences'
+                $ref: "#/components/schemas/SearchReferences"
               example:
-                $ref: '#/components/schemas/SearchReferences/example'
+                $ref: "#/components/schemas/SearchReferences/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1138,16 +1130,16 @@ paths:
       description: |
         Retrieves a list of geographical areas
       tags:
-      - GeographicalAreas
+        - GeographicalAreas
       responses:
         200:
           description: Geographical areas were found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeographicalAreas'
+                $ref: "#/components/schemas/GeographicalAreas"
               example:
-                $ref: '#/components/schemas/GeographicalAreas/example'
+                $ref: "#/components/schemas/GeographicalAreas/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1162,16 +1154,16 @@ paths:
       description: |
         Retrieves a list of contries
       tags:
-      - GeographicalAreas
+        - GeographicalAreas
       responses:
         200:
           description: Contries were found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GeographicalAreas'
+                $ref: "#/components/schemas/GeographicalAreas"
               example:
-                $ref: '#/components/schemas/GeographicalAreas/example'
+                $ref: "#/components/schemas/GeographicalAreas/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1187,9 +1179,9 @@ paths:
 
         Changes only go back 30 days
       tags:
-      - Changes
+        - Changes
       parameters:
-        - name: 'as_of'
+        - name: "as_of"
           in: path
           required: true
           description: |
@@ -1203,9 +1195,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Change'
+                $ref: "#/components/schemas/Change"
               example:
-                $ref: '#/components/schemas/Change/example'
+                $ref: "#/components/schemas/Change/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1220,7 +1212,7 @@ paths:
         Retrieves a list of Schemes and corresponding rules which apply to the
         supplied heading and country codes
       tags:
-      - Rules of Origin
+        - Rules of Origin
       parameters:
         - name: subheading
           in: path
@@ -1231,7 +1223,7 @@ paths:
             minimum: 6
             maximum: 6
             example: "392113"
-        - name: 'country_code'
+        - name: "country_code"
           in: path
           required: true
           description: Two letter country code for the country you are trading with
@@ -1242,12 +1234,11 @@ paths:
             example: "FR"
       responses:
         200:
-          description:
-            An array of Schemes, with the relevant rules and other data nested under the scheme
+          description: An array of Schemes, with the relevant rules and other data nested under the scheme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RulesOfOriginScheme'
+                $ref: "#/components/schemas/RulesOfOriginScheme"
 
         5XX:
           description: Unexpected error - likely missing or incorrect params
@@ -1289,7 +1280,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChemicalSubstance'
+                $ref: "#/components/schemas/ChemicalSubstance"
         5XX:
           description: Unexpected error - likely missing or incorrect params
 
@@ -1332,7 +1323,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SimplifiedProceduralCodeMeasure'
+                $ref: "#/components/schemas/SimplifiedProceduralCodeMeasure"
         5XX:
           description: Unexpected error - likely missing or incorrect params
 
@@ -1356,7 +1347,7 @@ paths:
       description: |
         See [Preference code Guidance](https://www.gov.uk/government/publications/preference-codes-for-data-element-417-of-the-customs-declaration-service) for more details.
       tags:
-      - PreferenceCodes
+        - PreferenceCodes
       responses:
         200:
           description: An array of preference_code objects.
@@ -1364,9 +1355,9 @@ paths:
             application/json:
               type: array
               schema:
-                $ref: '#/components/schemas/PreferenceCodes'
+                $ref: "#/components/schemas/PreferenceCodes"
               example:
-                $ref: '#/components/schemas/PreferenceCodes/example'
+                $ref: "#/components/schemas/PreferenceCodes/example"
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1374,7 +1365,6 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/preference_codes
-
 
 components:
   schemas:
@@ -1395,25 +1385,25 @@ components:
           type: array
           description: A collection of [referenced section objects](/reference.html#referencedsection "see referenced section object")
           items:
-            $ref: '#/components/schemas/ReferencedSection'
+            $ref: "#/components/schemas/ReferencedSection"
       example:
         data:
-        - id: 1
-          type: section
-          attributes:
-            position: 1
-            title: Live animals; animal products
-            numeral: I
-            chapter_from: '01'
-            chapter_to: '05'
-        - id: 2
-          type: section
-          attributes:
-            position: 2
-            title: Vegetable products
-            numeral: II
-            chapter_from: '06'
-            chapter_to: '14'
+          - id: 1
+            type: section
+            attributes:
+              position: 1
+              title: Live animals; animal products
+              numeral: I
+              chapter_from: "01"
+              chapter_to: "05"
+          - id: 2
+            type: section
+            attributes:
+              position: 2
+              title: Vegetable products
+              numeral: II
+              chapter_from: "06"
+              chapter_to: "14"
         # - $ref: '#/components/schemas/ReferencedSection/example'
 
     Section:
@@ -1432,7 +1422,7 @@ components:
           description: the type of object, i.e. `section`
         data:attributes:
           description: The section's attributes, as a [referenced section object](/reference.html#referencedsection "see referenced section object")
-          $ref: '#/components/schemas/ReferencedSection'
+          $ref: "#/components/schemas/ReferencedSection"
         data:relationships:
           type: object
           description: Objects and collections that are related to this section, e.g., a [referenced chapter](/reference.html#referencedchapter "see referenced chapter object")
@@ -1440,7 +1430,7 @@ components:
           type: array
           description: A collection of chapters that are included in the section [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
           items:
-            $ref: '#/components/schemas/ReferencedChapter'
+            $ref: "#/components/schemas/ReferencedChapter"
 
       example:
         data:
@@ -1451,8 +1441,8 @@ components:
             numeral: I
             title: Live animals; animal products
             position: 1
-            chapter_from: '01'
-            chapter_to: '05'
+            chapter_from: "01"
+            chapter_to: "05"
             section_note: "* 1\\. Any reference in this section to a particular
               genus or species of an animal, except where the context otherwise
               requires, includes a reference to the young of that genus or species.\r\n*
@@ -1462,44 +1452,44 @@ components:
           relationships:
             chapters:
               data:
-              - id: "27623"
-                type: chapter
-              - id: "27809"
-                type: chapter
+                - id: "27623"
+                  type: chapter
+                - id: "27809"
+                  type: chapter
         included:
-        - id: "27623"
-          type: "chapter"
-          attributes:
-            goods_nomenclature_sid: 27623
-            goods_nomenclature_item_id: 0100000000
-            headings_from: 0101
-            headings_to: 0106
-            description: LIVE ANIMALS
-            formatted_description: Live animals
-          relationships:
-            guides:
-              data:
-              - id: "23"
-                type: guide
-        - id: "27809"
-          type: "chapter"
-          attributes:
-            goods_nomenclature_sid: 27809
-            goods_nomenclature_item_id: 0200000000
-            headings_from: 0101
-            headings_to: 0106
-            description: MEAT AND EDIBLE MEAT OFFAL
-            formatted_description: Meat and edible meat offal
-          relationships:
-            guides:
-              data:
-              - id: "23"
-                type: guide
-        - id: "23"
-          type: guide
-          attributes:
-            title: "Classification of goods"
-            url: "https://www.gov.uk/government/collections/classification-of-goods"
+          - id: "27623"
+            type: "chapter"
+            attributes:
+              goods_nomenclature_sid: 27623
+              goods_nomenclature_item_id: 0100000000
+              headings_from: 0101
+              headings_to: 0106
+              description: LIVE ANIMALS
+              formatted_description: Live animals
+            relationships:
+              guides:
+                data:
+                  - id: "23"
+                    type: guide
+          - id: "27809"
+            type: "chapter"
+            attributes:
+              goods_nomenclature_sid: 27809
+              goods_nomenclature_item_id: 0200000000
+              headings_from: 0101
+              headings_to: 0106
+              description: MEAT AND EDIBLE MEAT OFFAL
+              formatted_description: Meat and edible meat offal
+            relationships:
+              guides:
+                data:
+                  - id: "23"
+                    type: guide
+          - id: "23"
+            type: guide
+            attributes:
+              title: "Classification of goods"
+              url: "https://www.gov.uk/government/collections/classification-of-goods"
 
     SectionNote:
       description: |
@@ -1519,7 +1509,7 @@ components:
           type: string
           description: The `content` of the section_note. Not all sections have a note.
       required:
-      - id
+        - id
       example:
         id: 1
         section_id: 1
@@ -1548,24 +1538,24 @@ components:
           type: array
           description: A collection of [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
           items:
-            $ref: '#/components/schemas/ReferencedChapter'
+            $ref: "#/components/schemas/ReferencedChapter"
       example:
         data:
-        - id: "27623"
-          type: chapter
-          attributes:
-            goods_nomenclature_sid: '27623'
-            goods_nomenclature_item_id: '0100000000'
-        - id: "27809"
-          type: chapter
-          attributes:
-            goods_nomenclature_sid: '27809'
-            goods_nomenclature_item_id: '0200000000'
-        - id: "28373"
-          type: chapter
-          attributes:
-            goods_nomenclature_sid: '28373'
-            goods_nomenclature_item_id: '0300000000'
+          - id: "27623"
+            type: chapter
+            attributes:
+              goods_nomenclature_sid: "27623"
+              goods_nomenclature_item_id: "0100000000"
+          - id: "27809"
+            type: chapter
+            attributes:
+              goods_nomenclature_sid: "27809"
+              goods_nomenclature_item_id: "0200000000"
+          - id: "28373"
+            type: chapter
+            attributes:
+              goods_nomenclature_sid: "28373"
+              goods_nomenclature_item_id: "0300000000"
 
     Chapter:
       description: |
@@ -1583,7 +1573,7 @@ components:
           description: the type of object, i.e. `chapter`
         data:attributes:
           description: The chapter's attributes, as a [referenced chapter object](/reference.html#referencedchapter "see referenced chapter object")
-          $ref: '#/components/schemas/ReferencedChapter'
+          $ref: "#/components/schemas/ReferencedChapter"
         data:relationships:
           type: object
           description: Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [referenced heading objects](/reference.html#referencedheading "see referenced heading object") and [referenced guide objects](/reference.html#referencedguide "see referenced guide object") that are related to this chapter. May include parent objects.
@@ -1593,14 +1583,14 @@ components:
           items:
             type: object
       required:
-      - id
+        - id
       example:
         data:
           id: "27623"
           type: chapter
           attributes:
             goods_nomenclature_sid: 27623
-            goods_nomenclature_item_id: '0100000000'
+            goods_nomenclature_item_id: "0100000000"
             description: LIVE ANIMALS
             formatted_description: Live animals
             chapter_note_id: 46
@@ -1609,27 +1599,27 @@ components:
           relationships:
             section:
               data:
-              - id: "1"
-                type: section
+                - id: "1"
+                  type: section
             guide:
               data:
-              - id: "23"
-                type: guide
+                - id: "23"
+                  type: guide
             headings:
               data:
-              - id: "27624"
-                type: heading
-              - id: "27633"
-                type: heading
+                - id: "27624"
+                  type: heading
+                - id: "27633"
+                  type: heading
         included:
-        - id: 23
-          type: guide
-          attributes:
-            title: Classification of goods
-            url: https://www.gov.uk/government/collections/classification-of-goods
-        - id: 27624
-          type: heading
-          attributes:
+          - id: 23
+            type: guide
+            attributes:
+              title: Classification of goods
+              url: https://www.gov.uk/government/collections/classification-of-goods
+          - id: 27624
+            type: heading
+            attributes:
               goods_nomenclature_sid: 27624
               goods_nomenclature_item_id: "0101000000"
               declarable: false
@@ -1638,9 +1628,9 @@ components:
               leaf: true
               description_plain: "Live horses, asses, mules and hinnies"
               formatted_description: "Live horses, asses, mules and hinnies"
-        - id: 27633
-          type: heading
-          attributes:
+          - id: 27633
+            type: heading
+            attributes:
               goods_nomenclature_sid: 27633
               goods_nomenclature_item_id: "0102000000"
               declarable: false
@@ -1670,11 +1660,11 @@ components:
           type: string
           description: The `content` of the chapter_note.
       required:
-      - id
+        - id
       example:
         id: 46
         section_id: 1
-        chapter_id: '01'
+        chapter_id: "01"
         content: "* 1\\. This chapter covers all live animals except:\r\n  *
           (a) fish and crustaceans, molluscs and other aquatic invertebrates,
           of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms
@@ -1696,7 +1686,7 @@ components:
           description: the type of object, i.e. `heading`
         data:attributes:
           description: The heading's attributes, as a [referenced heading object](/reference.html#referencedheading "see referenced heading object")
-          $ref: '#/components/schemas/ReferencedHeading'
+          $ref: "#/components/schemas/ReferencedHeading"
         data:relationships:
           type: object
           description: |
@@ -1717,15 +1707,15 @@ components:
           id: "27810"
           type: heading
           attributes:
-            goods_nomenclature_item_id: '0101000000'
+            goods_nomenclature_item_id: "0101000000"
             description: Live horses, asses, mules and hinnies
             bit_url: http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0201000000&Expand=true
             formatted_description: "Live horses, asses, mules and hinnies"
           relationships:
             footnotes:
               data:
-              - id: "701"
-                type: footnote
+                - id: "701"
+                  type: footnote
             section:
               data:
                 id: "1"
@@ -1736,86 +1726,86 @@ components:
                 type: chapter
             commodities:
               data:
-              - id: "27811"
-                type: commodity
-              - id: "104276"
-                type: commodity
-              - id: "104254"
-                type: commodity
+                - id: "27811"
+                  type: commodity
+                - id: "104276"
+                  type: commodity
+                - id: "104254"
+                  type: commodity
         included:
-        - id: "27809"
-          type: chapter
-          attributes:
-            goods_nomenclature_item_id: "0200000000"
-            description: "MEAT AND EDIBLE MEAT OFFAL"
-            formatted_description: "Meat and edible meat offal"
-            chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
-          relationships:
-            guides:
-              data:
-              - id: "23"
-                type: guide
-        - id: "23"
-          type: guide
-          attributes:
-            title: Classification of goods
-            url: https://www.gov.uk/government/collections/classification-of-goods
-        - id: "27811"
-          type: commodity
-          attributes:
-            description: "Carcases and half-carcases"
-            number_indents: 1
-            goods_nomenclature_item_id: "0201100000"
-            leaf: false
-            goods_nomenclature_sid: 27811,
-            formatted_description: "Carcases and half-carcases"
-            description_plain: "Carcases and half-carcases"
-            producline_suffix: "80"
-            parent_sid: null
-          relationships:
-            overview_measures:
-              data:
-              - id: "2982599"
-                type: measure
-        - id: "2982599"
-          type: measure
-          attributes:
-            id: 2982599
-            vat: false
-          relationships:
-            duty_expression:
-              data:
-                id: "2982599-duty_expression"
-                type: duty_expression
-            measure_type:
-              data:
-                id: "109"
-                type: measure_type
-        - id: "2982599-duty_expression"
-          type: duty_expression
-          attributes:
-            base: "p/st"
-            formatted_base: "\u003cabbr title='Number of items'\u003ep/st\u003c/abbr\u003e"
-        - id: "109"
-          type: measure_type
-          attributes:
-            description: "Supplementary unit"
-            national: null
-            measure_type_series_id: null
-            id: "109"
-        - id: "701"
-          type: footnote
-          attributes:
-            code: "TN701"
-            description: "According to  the Council Regulation (EU) No 692/2014sons, entity or body..."
-            formatted_description: "According to  the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it shall be..."
-        - id: "1"
-          type: section
-          attributes:
-            numeral: "I"
-            title: "Live animals; animal products"
-            position: 1
-            section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
+          - id: "27809"
+            type: chapter
+            attributes:
+              goods_nomenclature_item_id: "0200000000"
+              description: "MEAT AND EDIBLE MEAT OFFAL"
+              formatted_description: "Meat and edible meat offal"
+              chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
+            relationships:
+              guides:
+                data:
+                  - id: "23"
+                    type: guide
+          - id: "23"
+            type: guide
+            attributes:
+              title: Classification of goods
+              url: https://www.gov.uk/government/collections/classification-of-goods
+          - id: "27811"
+            type: commodity
+            attributes:
+              description: "Carcases and half-carcases"
+              number_indents: 1
+              goods_nomenclature_item_id: "0201100000"
+              leaf: false
+              goods_nomenclature_sid: 27811,
+              formatted_description: "Carcases and half-carcases"
+              description_plain: "Carcases and half-carcases"
+              producline_suffix: "80"
+              parent_sid: null
+            relationships:
+              overview_measures:
+                data:
+                  - id: "2982599"
+                    type: measure
+          - id: "2982599"
+            type: measure
+            attributes:
+              id: 2982599
+              vat: false
+            relationships:
+              duty_expression:
+                data:
+                  id: "2982599-duty_expression"
+                  type: duty_expression
+              measure_type:
+                data:
+                  id: "109"
+                  type: measure_type
+          - id: "2982599-duty_expression"
+            type: duty_expression
+            attributes:
+              base: "p/st"
+              formatted_base: "\u003cabbr title='Number of items'\u003ep/st\u003c/abbr\u003e"
+          - id: "109"
+            type: measure_type
+            attributes:
+              description: "Supplementary unit"
+              national: null
+              measure_type_series_id: null
+              id: "109"
+          - id: "701"
+            type: footnote
+            attributes:
+              code: "TN701"
+              description: "According to  the Council Regulation (EU) No 692/2014sons, entity or body..."
+              formatted_description: "According to  the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it shall be..."
+          - id: "1"
+            type: section
+            attributes:
+              numeral: "I"
+              title: "Live animals; animal products"
+              position: 1
+              section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
 
     Subheading:
       description: |
@@ -1832,7 +1822,7 @@ components:
           description: the type of object, i.e. `subheading`
         data:attributes:
           description: The subheading's attributes, as a [referenced subheading object](/reference.html#referencedsubheading "see referenced subheading object")
-          $ref: '#/components/schemas/ReferencedSubheading'
+          $ref: "#/components/schemas/ReferencedSubheading"
         data:relationships:
           type: object
           description: |
@@ -1853,14 +1843,14 @@ components:
           id: "94057"
           type: subheading
           attributes:
-            goods_nomenclature_item_id: '0102291000'
+            goods_nomenclature_item_id: "0102291000"
             description: Of a weight not exceeding 80 kg
             formatted_description: "Of a weight not exceeding 80 kg"
           relationships:
             footnotes:
               data:
-              - id: "701"
-                type: footnote
+                - id: "701"
+                  type: footnote
             section:
               data:
                 id: "1"
@@ -1871,86 +1861,86 @@ components:
                 type: chapter
             commodities:
               data:
-              - id: "27811"
-                type: commodity
-              - id: "104276"
-                type: commodity
-              - id: "104254"
-                type: commodity
+                - id: "27811"
+                  type: commodity
+                - id: "104276"
+                  type: commodity
+                - id: "104254"
+                  type: commodity
         included:
-        - id: "27809"
-          type: chapter
-          attributes:
-            goods_nomenclature_item_id: "0200000000"
-            description: "MEAT AND EDIBLE MEAT OFFAL"
-            formatted_description: "Meat and edible meat offal"
-            chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
-          relationships:
-            guides:
-              data:
-              - id: "23"
-                type: guide
-        - id: "23"
-          type: guide
-          attributes:
-            title: Classification of goods
-            url: https://www.gov.uk/government/collections/classification-of-goods
-        - id: "27811"
-          type: commodity
-          attributes:
-            description: "Carcases and half-carcases"
-            number_indents: 1
-            goods_nomenclature_item_id: "0201100000"
-            leaf: false
-            goods_nomenclature_sid: 27811,
-            formatted_description: "Carcases and half-carcases"
-            description_plain: "Carcases and half-carcases"
-            producline_suffix: "80"
-            parent_sid: null
-          relationships:
-            overview_measures:
-              data:
-              - id: "2982599"
-                type: measure
-        - id: "2982599"
-          type: measure
-          attributes:
-            id: 2982599
-            vat: false
-          relationships:
-            duty_expression:
-              data:
-                id: "2982599-duty_expression"
-                type: duty_expression
-            measure_type:
-              data:
-                id: "109"
-                type: measure_type
-        - id: "2982599-duty_expression"
-          type: duty_expression
-          attributes:
-            base: "p/st"
-            formatted_base: "\u003cabbr title='Number of items'\u003ep/st\u003c/abbr\u003e"
-        - id: "109"
-          type: measure_type
-          attributes:
-            description: "Supplementary unit"
-            national: null
-            measure_type_series_id: null
-            id: "109"
-        - id: "701"
-          type: footnote
-          attributes:
-            code: "TN701"
-            description: "According to  the Council Regulation (EU) No 692/2014sons, entity or body..."
-            formatted_description: "According to  the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it shall be..."
-        - id: "1"
-          type: section
-          attributes:
-            numeral: "I"
-            title: "Live animals; animal products"
-            position: 1
-            section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
+          - id: "27809"
+            type: chapter
+            attributes:
+              goods_nomenclature_item_id: "0200000000"
+              description: "MEAT AND EDIBLE MEAT OFFAL"
+              formatted_description: "Meat and edible meat offal"
+              chapter_note: "* 1\\.This chapter does not cover:\r\n  * (a) products of the kinds described in headings 0201 to 0208 or 0210, unfit or unsuitable for human consumption; ... "
+            relationships:
+              guides:
+                data:
+                  - id: "23"
+                    type: guide
+          - id: "23"
+            type: guide
+            attributes:
+              title: Classification of goods
+              url: https://www.gov.uk/government/collections/classification-of-goods
+          - id: "27811"
+            type: commodity
+            attributes:
+              description: "Carcases and half-carcases"
+              number_indents: 1
+              goods_nomenclature_item_id: "0201100000"
+              leaf: false
+              goods_nomenclature_sid: 27811,
+              formatted_description: "Carcases and half-carcases"
+              description_plain: "Carcases and half-carcases"
+              producline_suffix: "80"
+              parent_sid: null
+            relationships:
+              overview_measures:
+                data:
+                  - id: "2982599"
+                    type: measure
+          - id: "2982599"
+            type: measure
+            attributes:
+              id: 2982599
+              vat: false
+            relationships:
+              duty_expression:
+                data:
+                  id: "2982599-duty_expression"
+                  type: duty_expression
+              measure_type:
+                data:
+                  id: "109"
+                  type: measure_type
+          - id: "2982599-duty_expression"
+            type: duty_expression
+            attributes:
+              base: "p/st"
+              formatted_base: "\u003cabbr title='Number of items'\u003ep/st\u003c/abbr\u003e"
+          - id: "109"
+            type: measure_type
+            attributes:
+              description: "Supplementary unit"
+              national: null
+              measure_type_series_id: null
+              id: "109"
+          - id: "701"
+            type: footnote
+            attributes:
+              code: "TN701"
+              description: "According to  the Council Regulation (EU) No 692/2014sons, entity or body..."
+              formatted_description: "According to  the Council Regulation (EU) No 692/2014 (OJ L183, p. 9) it shall be..."
+          - id: "1"
+            type: section
+            attributes:
+              numeral: "I"
+              title: "Live animals; animal products"
+              position: 1
+              section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal..."
 
     Commodity:
       description: |
@@ -1967,7 +1957,7 @@ components:
           description: the type of object, i.e. `commodity`
         data:attributes:
           description: The commodity's attributes, as a [referenced commodity object](/reference.html#referencedcommodity "see referenced commodity object")
-          $ref: '#/components/schemas/ReferencedCommodity'
+          $ref: "#/components/schemas/ReferencedCommodity"
         data:relationships:
           type: object
           description: Zero, one or many [referenced section](/reference.html#referencedsection "see referenced section object") objects, [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced heading](/reference.html#referencedheading "see referenced heading object") objects, [referenced measure](/reference.html#referencedmeasure "see referenced measure object") objects, and [referenced footnote](/reference.html#referencedfootnote "see referenced footnote object") objects that are related to this heading. May include parent objects.
@@ -1979,13 +1969,13 @@ components:
             # $ref: '#/components/schemas/ReferencedCommodity'
       example:
         data:
-          id: '85314'
+          id: "85314"
           type: commodity
           attributes:
-            producline_suffix: '80'
+            producline_suffix: "80"
             description: Frogs' legs
             number_indents: 2
-            goods_nomenclature_item_id: '0208907000'
+            goods_nomenclature_item_id: "0208907000"
             bti_url: |-
               https://www.gov.uk/guidance/check-what-youll-need-to-get-a-legally-binding-decision-on-a-commodity-code
             formatted_description: Frogs' legs
@@ -1998,36 +1988,36 @@ components:
           relationships:
             footnotes:
               data:
-                - id: '701'
+                - id: "701"
                   type: footnote
             section:
               data:
-                id: '1'
+                id: "1"
                 type: section
             chapter:
               data:
-                id: '27809'
+                id: "27809"
                 type: chapter
             heading:
               data:
-                id: '28267'
+                id: "28267"
                 type: heading
             ancestors:
               data:
-                - id: '28275'
+                - id: "28275"
                   type: commodity
             import_measures:
               data:
-                - id: '20098001'
+                - id: "20098001"
                   type: measure
             export_measures:
               data:
-                - id: '20180492'
+                - id: "20180492"
                   type: measure
             import_trade_summary:
               data:
-                - id: '4176a8c3415ef099c881ffde5d69f861'
-                  type: 'import_trade_summary'
+                - id: "4176a8c3415ef099c881ffde5d69f861"
+                  type: "import_trade_summary"
           meta:
             duty_calculator:
               applicable_additional_codes: {}
@@ -2041,24 +2031,24 @@ components:
               trade_defence: false
               zero_mfn_duty: false
         included:
-          - id: '1'
+          - id: "1"
             type: section
             attributes:
               numeral: I
               title: Live animals; animal products
               position: 1
               section_note: "1. Any reference in this section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species.\r\n\r\n2. Except where the context otherwise requires, throughout the classification any reference to 'dried' products also covers products which have been dehydrated, evaporated or freeze-dried.\r\n"
-          - id: '27809'
+          - id: "27809"
             type: chapter
             attributes:
-              goods_nomenclature_item_id: '0200000000'
+              goods_nomenclature_item_id: "0200000000"
               description: MEAT AND EDIBLE MEAT OFFAL
               formatted_description: Meat and edible meat offal
               chapter_note: "1. This chapter does not cover:\r\n\r\n   a) products of the kinds described in headings [0201](/headings/0201) to [0208](/headings/0208) or [0210](/headings/0210), unfit or unsuitable for human consumption;\r\n\r\n   b) edible, non-living insects (heading [0410](/headings/0410))\r\n\r\n   c) guts, bladders or stomachs of animals (heading [0504](/headings/0504)) or animal blood (heading [0511](/headings/0511) or [3002](/headings/3002)); or\r\n\r\n   d) animal fat, other than products of heading [0209](/headings/0209) ([Chapter 15](/chapters/15)).\r\n\r\n### Additional chapter notes\r\n\r\n1. A. The following expressions have the meanings hereby assigned to them:\r\n\r\n   (a) ‘carcases of bovine animals’, for the purposes of subheadings [0201 10](/subheadings/0201100000-80) and [0202 10](/subheadings/0202100000-80): whole carcases of the slaughtered animals after having been bled, eviscerated and skinned, imported with or without the heads, with or without the feet and with or without the other offal’s attached. Where carcases are imported without the heads, the latter must have been separated from the carcase at the atloido-occipital joint. When imported without the feet, the latter must have been cut off at the carpo-metacarpal or tarso-metatarsal joints; ‘carcase’ includes the front part of the carcase comprising all the bones and the scrag, neck and shoulder, having more than 10 pairs of ribs;\r\n\r\n   (b) ‘half-carcases of bovine animals’, for the purposes of subheadings [0201 10](/subheadings/0201100000-80) and [0202 10](/subheadings/0202100000-80): the product resulting from the symmetrical division of the whole carcase through the centre of each cervical, dorsal, lumbar and sacral vertebra and through the centre of the sternum and of the ischio-pubic symphysis; ‘halfcarcase’ includes the front part of the half-carcase comprising all the bones and the scrag, neck and shoulder, having more than 10 ribs;\r\n\r\n   (c) ‘compensated quarters’, for the purposes of subheadings [0201 20 20](/subheadings/0201202000-80) and [0202 20 10](/subheadings/0202201000-80): portions composed of either:\r\n\r\n      - forequarters comprising all the bones and the scrag, neck and shoulder, and cut at the tenth rib; and hindquarters comprising all the bones and the thigh and sirloin, and cut at the third rib, or\r\n\r\n      - forequarters comprising all the bones and the scrag, neck and shoulder, and cut at the fifth rib, with the whole of the flank and breast attached; and hindquarters comprising all the bones and the thigh and sirloin and cut at the eighth cut rib.\r\n      The forequarters and the hindquarters constituting ‘compensated quarters’ must be presented to customs at the same time and in equal numbers, and the total weight of the forequarters must be the same as that of the hindquarters; however, a difference between the weights of the two parts of the consignment is allowed, provided that this does not exceed 5 % of the weight of the heavier part (forequarters or hindquarters);\r\n\r\n   (d) ‘unseparated forequarters’, for the purposes of subheadings [0201 20 30](/subheadings/0201203000-80) and [0202 20 30](/subheadings/0202203000-80): the front part of a carcase, comprising all the bones and the scrag, neck and shoulder, with a minimum of four pairs of ribs and a maximum of 10 pairs of ribs (the first four pairs of ribs must be whole, the others may be cut), with or without the thin flank;\r\n\r\n   (e) ‘separated forequarters’, for the purposes of subheadings [0201 20 30](/subheadings/0201203000-80) and [0202 20 30](/subheadings/0202203000-80): the front part of a half-carcase, comprising all the bones and the scrag, neck and shoulder, with a minimum of four ribs and a maximum of 10 ribs (the first four ribs must be whole, the others may be cut), with or without the thin flank;\r\n\r\n   (f) ‘unseparated hindquarters’, for the purposes of subheadings [0201 20 50](/subheadings/0201205000-80) and [0202 20 50](/subheadings/0202205000-80): the rear part of a carcase comprising all the bones and the thigh and sirloin, including the fillet, with a minimum of three pairs of whole or cut ribs, with or without the shank and with or without the thin flank;\r\n\r\n   (g) ‘separated hindquarters’, for the purposes of subheadings [0201 20 50](/subheadings/0201205000-80) and [0202 20 50](/subheadings/0202205000-80): the rear part of a half-carcase, comprising all the bones and the thigh and sirloin, including the fillet, with a minimum of three whole or cut ribs, with or without the shank and with or without the thin flank;\r\n\r\n   (h) 1. ‘crop’ and ‘chuck and blade’ cuts, for the purposes of subheading [0202 30 50](/subheadings/0202305000-80): the dorsal part of the forequarter, including the upper part of the shoulder, obtained from a forequarter with a minimum of four ribs and a maximum of 10 ribs by a cut along a straight line through the point where the first rib joins the first sternal segment to the point of reflection of the diaphragm on the tenth rib;\r\n\r\n2. ‘brisket’ cut, for the purposes of subheading [0202 30 50](/subheadings/0202305000-80): the lower part of the forequarter, comprising the brisket navel end and the brisket point end.\r\n\r\n   B. Products covered by additional chapter notes 1(A)(a) to (g) to this chapter may be presented with or without the vertebral column.\r\n\r\n   C. In determining the number of whole or cut ribs referred to in additional chapter note 1(A), only those attached to the vertebral column are to be taken into consideration. If the vertebral column has been removed, only the whole or cut ribs which otherwise would have been directly attached to the vertebral column are to be taken into consideration.\r\n\r\n   2. A. The following expressions have the meanings hereby assigned to them:\r\n\r\n      (a) ‘carcases or half-carcases’, for the purposes of subheadings [0203 11 10](/subheadings/0203111000-80) and [0203 21 10](/subheadings/0203211000-80): slaughtered pigs, in the form of carcases of domestic swine which have been bled and eviscerated and from which the bristles and hooves have been removed. Half-carcases are derived from whole carcases by division through each cervical, dorsal, lumbar and sacral vertebra, through or along the sternum and through the ischio-pubic symphysis. These carcases or half-carcases may be with or without head, with or without the chaps, feet, flare fat, kidneys, tail or diaphragm. Half-carcases may be with or without spinal cord, brain or tongue. Carcases and half-carcases of sows may be with or without udders (mammary glands);\r\n\r\n      (b) ‘hams’ (legs), for the purposes of subheadings [0203 12 11](/subheadings/0203121100-80), [0203 22 11](/subheadings/0203221100-80), [0210 11 11](/subheadings/0210111100-80) and [0210 11 31](/subheadings/0210113100-80): the posterior (caudal) part of the half-carcase, including bones, with or without the foot, shank, rind or subcutaneous fat. The ham (leg) is separated from the rest of the half-carcase, so that it includes, at most, the last lumbar vertebra;\r\n\r\n      (c) ‘fore-ends’, for the purposes of subheadings [0203 19 11](/subheadings/0203191100-80), [0203 29 11](/subheadings/0203291100-80), [0210 19 30](/subheadings/0210193000-80) and [0210 19 60](/subheadings/0210196000-80): the anterior (cranial) part of the half-carcase without the head, with or without the chaps, including bones, with or without foot, shank, rind or subcutaneous fat. The fore-end is separated from the rest of the half-carcase, so that it includes, at most, the fifth dorsal vertebra. The upper (dorsal) part of the fore-end, whether or not containing the blade-bone and attached muscles (neckend in fresh or collar in salted condition), is considered a cut of the loin, when it is separated from the lower (ventral) part of the fore-end, at most by a cut just below the vertebral column;\r\n\r\n      (d) ‘shoulders’, for the purposes of subheadings [0203 12 19](/subheadings/0203121900-80), [0203 22 19](/subheadings/0203221900-80), [0210 11 19](/subheadings/0210111900-80) and [0210 11 39](/subheadings/0210113900-80): the lower part of the fore-end whether or not containing the blade-bone and attached muscles, including bones, with or without foot, shank, rind or subcutaneous fat. The blade-bone and attached muscles, presented separately, remain classified in this subheading as a part of the shoulder;\r\n\r\n      (e) ‘loins’, for the purposes of subheadings [0203 19 13](/subheadings/0203191300-80), [0203 29 13](/subheadings/0203291300-80), [0210 19 40](/subheadings/0210194000-80) and [0210 19 70](/subheadings/0210197000-80): the upper part of the half-carcase, extending from the first cervical vertebra to the caudal vertebrae, including bones, with or without the tenderloin, blade-bone, subcutaneous fat or rind. The loin is separated from the lower part of the half-carcase by a cut just below the vertebral column;\r\n\r\n      (f) ‘bellies’, for the purposes of subheadings [0203 19 15](/subheadings/0203191500-80), [0203 29 15](/subheadings/0203291500-80), [0210 12 11](/subheadings/0210121100-80) and [0210 12 19](/subheadings/0210121900-80): the lower part of the half-carcase situated between the ham (leg) and the shoulder, commonly known as ‘streaky’, with or without bones, but with the rind and the subcutaneous fat;\r\n\r\n      (g) ‘bacon sides’, for the purposes of subheading [0210 19 10](/subheadings/0210191000-80): the pig half-carcase without the head, cheek, chap, feet, tail, flare fat, kidney, tenderloin, blade-bone, sternum, vertebral column, pelvic bone and diaphragm;\r\n\r\n      (h) ‘spencers’, for the purposes of subheading [0210 19 10](/subheadings/0210191000-80): the bacon side without the ham, whether or not boned;\r\n\r\n      (ij) ‘three-quarter sides’, for the purposes of subheading [0210 19 20](/subheadings/0210192000-80): the bacon side without the fore-end, whether or not boned;\r\n\r\n      (k) ‘middles’, for the purposes of subheading [0210 19 20](/subheadings/0210192000-80): the bacon side without the ham and the fore-end, whether or not boned. The subheading also includes cuts of middles containing tissue of loin and belly in natural proportion to the entire middles.\r\n\r\n   B. The parts of the cuts defined in paragraph 2(A)(f) fall in the same subheadings, only if they contain rind and subcutaneous fat. If the cuts falling in subheadings [0210 11 11](/subheadings/0210111100-80), [0210 11 19](/subheadings/0210111900-80), [0210 11 31](/subheadings/0210113100-80), [0210 11 39](/subheadings/0210113900-80), [0210 19 30](/subheadings/0210193000-80) and [0210 19 60](/subheadings/0210196000-80) are derived from a bacon side from which the bones indicated under paragraph 2(A)(g) have already been removed, the lines of cutting must follow those defined under paragraph 2(A)(b), (c) and (d) accordingly; in any case, these cuts or parts thereof must contain bones.\r\n\r\n   C. Subheadings [0206 49 00](/subheadings/0206490000-80) and [0210 99 49](/subheadings/0210994900-80), include, in particular, heads or halves of heads of domestic swine, with or without the brains, cheeks or tongues, and parts thereof. The head is separated from the rest of the half-carcase as follows:\r\n\r\n      - by a straight cut parallel to the cranium; or\r\n\r\n      - by a cut parallel to the cranium up to the level of the eyes and then inclined to the front of the head, thereby causing the chaps to remain attached to the half-carcase. The cheeks, snouts and ears as well as the meat attached to the head, particularly to the rear part, are considered parts of heads. \r\n\r\n   However, the cuts of boneless meat of the fore-end, presented alone (jowls, chaps, or chaps and jowls together), fall in subheading [0203 19 55](/subheadings/0203195500-80), [0203 29 55](/subheadings/0203295500-80), [0210 19 50](/subheadings/0210195000-80) or [0210 19 81](/subheadings/0210198100-80), as the case may be.\r\n\r\n   D. For the purposes of subheadings [0209 10 11](/subheadings/0209101100-80) and [0209 10 19](/subheadings/0209101900-80), ‘subcutaneous pig fat’ has the meaning of the fatty tissue which accumulates under the rind of the pig and adheres to it, irrespective of the part of the pig from which it comes; in any case, the weight of the fatty tissue must exceed the weight of the rind. These subheadings also include subcutaneous pig fat from which the rind has been removed.\r\n\r\n   E. For the purposes of subheadings [0210 11 31](/subheadings/0210113100-80), [0210 11 39](/subheadings/0210113900-80), [0210 12 19](/subheadings/0210121900-80) and [0210 19 60](/subheadings/0210196000-80) to [0210 19 89](/subheadings/0210198900-80), products in which the water/protein ratio in the meat (nitrogen content × 6.25) is 2.8 or less is considered as ‘dried or smoked’. The nitrogen content is determined in accordance with ISO method 937-1978. \r\n\r\n3. A. For the purposes of heading 0204, the following expressions have the meanings hereby assigned to them:\r\n\r\n      (a) ‘carcases’, for the purposes of subheadings [0204 10](/subheadings/0204100000-80), [0204 21](/subheadings/0204210000-80), [0204 30](/subheadings/0204300000-80), [0204 41](/subheadings/0204410000-80), [0204 50 11](/subheadings/0204501100-80) and [0204 50 51](/subheadings/0204505100-80): whole carcases of the slaughtered animals after having been bled, eviscerated and skinned, imported with or without the heads, with or without the feet and with or without the other offal’s attached. Where carcases are imported without the heads, the latter must have been separated from the carcase at the atloidooccipital joint. When imported without the feet, the latter must have been cut off at the carpo-metacarpal or tarso-metatarsal joints;\r\n\r\n      (b) ‘half-carcases’, for the purposes of subheadings [0204 10](/subheadings/0204100000-80), [0204 21](/subheadings/0204210000-80), [0204 30](/subheadings/0204300000-80), [0204 41](/subheadings/0204410000-80), [0204 50 11](/subheadings/0204501100-80) and [0204 50 51](/subheadings/0204505100-80): the product resulting from the symmetrical division of the whole carcase through the centre of each cervical, dorsal, lumbar and sacral vertebra and through the centre of the sternum and of the ischiopubic symphysis;\r\n\r\n      (c) ‘short-forequarters’, for the purposes of subheadings [0204 22 10](/subheadings/0204221000-80), [0204 42 10](/subheadings/0204421000-80), [0204 50 13](/subheadings/0204501300-80) and [0204 50 53](/subheadings/0204505300-80): the anterior part of the carcase, with or without the breast, including all the bones and the shoulders, scrag and middle neck, cut at right angles to the backbone, with a minimum of five and a maximum of seven pairs of whole or cut ribs;\r\n\r\n      (d) ‘short-forequarters’, for the purposes of subheadings [0204 22 10](/subheadings/0204221000-80), [0204 42 10](/subheadings/0204421000-80), [0204 50 13](/subheadings/0204501300-80) and [0204 50 53](/subheadings/0204505300-80): the anterior part of the half-carcase, with or without the breast, including all the bones and the shoulder, scrag and middle neck, cut at right angles to the backbone, with a minimum of five and a maximum of seven whole or cut ribs;\r\n\r\n      (e) ‘chines and/or best ends’, for the purposes of subheadings [0204 22 30](/subheadings/0204223000-80), [0204 42 30](/subheadings/0204423000-80), [0204 50 15](/subheadings/0204501500-80) and [0204 50 55](/subheadings/0204505500-80): the remaining part of the carcase after the legs and short-forequarters have been removed, with or without the kidneys; the chines, when separated from the best ends, must include a minimum of five lumbar vertebrae; the best ends, when separated from the chines, must include a minimum of five pairs of whole or cut ribs;\r\n\r\n      (f) ‘chine and/or best end’, for the purposes of subheadings [0204 22 30](/subheadings/0204223000-80), [0204 42 30](/subheadings/0204423000-80), [0204 50 15](/subheadings/0204501500-80) and [0204 50 55](/subheadings/0204505500-80): the remaining part of the half-carcase after the legs and short-forequarters have been removed, with or without the kidney; the chine, when separated from the best end, must include a minimum of five lumbar vertebrae; the best end, when separated from the chine, must include a minimum of five whole or cut ribs;\r\n\r\n      (g) ‘legs’, for the purposes of subheadings [0204 22 50](/subheadings/0204225000-80), [0204 42 50](/subheadings/0204425000-80), [0204 50 19](/subheadings/0204501900-80) and [0204 50 59](/subheadings/0204505900-80): the rear part of the carcase, comprising all the bones and the legs and cut at right angles to the backbone at the sixth lumbar vertebra just under the ilium or at the fourth sacral vertebra through the ilium anterior to the ischiopubic symphysis;\r\n\r\n      (h) ‘legs’, for the purposes of subheadings [0204 22 50](/subheadings/0204225000-80), [0204 42 50](/subheadings/0204425000-80), [0204 50 19](/subheadings/0204501900-80) and [0204 50 59](/subheadings/0204505900-80): the rear part of the half-carcase comprising all the bones and the leg cut at right angles to the backbone at the sixth lumbar vertebra just under the ilium or at the fourth sacral vertebra through the ilium anterior to the ischio-pubic symphysis.\r\n\r\n   B. In determining the number of whole or cut ribs referred to in paragraph 3 A, only those attached to the backbone are to be taken into consideration.\r\n\r\n4. The following expressions have the meanings hereby assigned to them:\r\n\r\n   (a) ‘poultry cuts, with bone in’, for the purposes of subheadings [0207 13 20](/subheadings/0207132000-80) to [0207 13 60](/subheadings/0207136000-80), [0207 14 20](/subheadings/0207142000-80) to [0207 14 60](/subheadings/0207146000-80), [0207 26 20](/subheadings/0207262000-80) to [0207 26 70](/subheadings/0207267000-80), [0207 27 20](/subheadings/0207272000-80) to [0207 27 70](/subheadings/0207277000-80), [0207 44 21](/subheadings/0207442100-80) to [0207 44 61](/subheadings/0207446100-80), [0207 45 21](/subheadings/0207452100-80) to [0207 45 61](/subheadings/0207456100-80), [0207 54 21](/subheadings/0207542100-80) to [0207 54 61](/subheadings/0207546100-80), [0207 55 21](/subheadings/0207552100-80) to [0207 55 61](/subheadings/0207556100-80) and [0207 60 21](/subheadings/0207602100-80) to [0207 60 61](/subheadings/0207606100-80): the cuts specified therein, including all bones. Poultry cuts as referred to in (a) which have been partly boned fall in subheading [0207 13 70](/subheadings/0207137000-80), [0207 14 70](/subheadings/0207147000-80), [0207 26 80](/subheadings/0207268000-80), [0207 27 80](/subheadings/0207278000-80), [0207 44 71](/subheadings/0207447100-80), [0207 44 81](/subheadings/0207448100-80), [0207 45 71](/subheadings/0207457100-80), [0207 45 81](/subheadings/0207458100-80), [0207 54 71](/subheadings/0207547100-80), [0207 54 81](/subheadings/0207548100-80), [0207 55 71](/subheadings/0207557100-80), [0207 55 81](/subheadings/0207558100-80) and [0207 60 81](/subheadings/0207608100-80);\r\n\r\n   (b) ‘halves’, for the purposes of subheadings [0207 13 20](/subheadings/0207132000-80), [0207 14 20](/subheadings/0207142000-80), [0207 26 20](/subheadings/0207262000-80), [0207 27 20](/subheadings/0207272000-80), [0207 44 21](/subheadings/0207442100-80), [0207 45 21](/subheadings/0207452100-80), [0207 54 21](/subheadings/0207542100-80), [0207 55 21](/subheadings/0207552100-80) and [0207 60 21](/subheadings/0207602100-80): halves of poultry carcases, obtained by a longitudinal cut in a plane along the sternum and the backbone;\r\n\r\n   (c) ‘quarters’, for the purposes of subheadings [0207 13 20](/subheadings/0207132000-80), [0207 14 20](/subheadings/0207142000-80), [0207 26 20](/subheadings/0207262000-80), [0207 27 20](/subheadings/0207272000-80), [0207 44 21](/subheadings/0207442100-80), [0207 45 21](/subheadings/0207452100-80), [0207 54 21](/subheadings/0207542100-80), [0207 55 21](/subheadings/0207552100-80) and [0207 60 21](/subheadings/0207602100-80): leg quarters or breast quarters, obtained by a transversal cut of a half;\r\n\r\n   (d) ‘whole wings, with or without tips’, for the purposes of subheadings [0207 13 30](/subheadings/0207133000-80), [0207 14 30](/subheadings/0207143000-80), [0207 26 30](/subheadings/0207263000-80), [0207 27 30](/subheadings/0207273000-80), [0207 44 31](/subheadings/0207443100-80), [0207 45 31](/subheadings/0207453100-80), [0207 54 31](/subheadings/0207543100-80), [0207 55 31](/subheadings/0207553100-80) and [0207 60 31](/subheadings/0207603100-80): poultry cuts, consisting of the humerus, radius and ulna, together with the surrounding musculature. The tip, including the carpal bones, may or may not have been removed. The cuts must have been made at the joints;\r\n\r\n   (e) ‘breasts’, for the purposes of subheadings [0207 13 50](/subheadings/0207135000-80), [0207 14 50](/subheadings/0207145000-80), [0207 26 50](/subheadings/0207265000-80), [0207 27 50](/subheadings/0207275000-80), [0207 44 51](/subheadings/0207445100-80), [0207 45 51](/subheadings/0207455100-80), [0207 54 51](/subheadings/0207545100-80), [0207 55 51](/subheadings/0207555100-80) and [0207 60 51](/subheadings/0207605100-80): poultry cuts, consisting of the sternum and the ribs distributed on both sides of it, together with the surrounding musculature;\r\n\r\n   (f) ‘legs’, for the purposes of subheadings [0207 13 60](/subheadings/0207136000-80), [0207 14 60](/subheadings/0207146000-80), [0207 44 61](/subheadings/0207446100-80), [0207 45 61](/subheadings/0207456100-80), [0207 54 61](/subheadings/0207546100-80), [0207 55 61](/subheadings/0207556100-80) and [0207 60 61](/subheadings/0207606100-80): poultry cuts consisting of the femur, tibia and fibula, together with the surrounding musculature. The two cuts must have been made at the joints;\r\n\r\n   (g) ‘turkey drumsticks’, for the purposes of subheadings [0207 26 60](/subheadings/0207266000-80) and [0207 27 60](/subheadings/0207276000-80): turkey cuts, consisting of the tibia and fibula, together with the surrounding musculature. The two cuts must have been made at the joints;\r\n\r\n   (h) ‘turkey legs, other than drumsticks’, for the purposes of subheadings [0207 26 70](/subheadings/0207267000-80) and [0207 27 70](/subheadings/0207277000-80): turkey cuts, consisting of the femur together with the surrounding musculature or of the femur, tibia and fibula, together with the surrounding musculature. The two cuts must have been made at the joints;\r\n\r\n   (ij) ‘duck or goose paletots’, for the purposes of subheadings [0207 44 71](/subheadings/0207447100-80), [0207 45 71](/subheadings/0207457100-80), [0207 54 71](/subheadings/0207547100-80) and [0207 55 71](/subheadings/0207557100-80): ducks or geese, plucked and completely drawn, without heads or feet, with carcase bones (breastbone, ribs, backbone and sacrum) removed, but with the femurs, tibias and humeri.\r\n\r\n5. (a) Uncooked seasoned meats fall in [Chapter 16](/chapters/16). ‘Seasoned meat’ is uncooked meat that has been seasoned, either in depth or over the whole surface of the product, with seasoning either visible to the naked eye or clearly distinguishable by taste.\r\n\r\n   (b) Products falling in heading 0210 to which seasoning has been added during the process of preparation remain classified therein, provided that the addition of seasoning has not changed their character.\r\n\r\n6. For the purposes of subheadings [0210 11](/subheadings/0210110000-80) to [0210 93](/subheadings/0210930000-80), the term ‘meat and edible meat offal, salted or in brine’ means meat and edible meat offal deeply and homogeneously impregnated with salt in all parts and having a total salt content by weight of 1.2% or more, provided that it is the salting which ensures the long-term preservation. For the purposes of subheading [0210 99](/subheadings/0210990000-80), the term ‘meat and edible meat offal, salted or in brine’ means meat and edible meat offal deeply and homogeneously impregnated with salt in all parts and having a total salt content by weight of 1.2% or more.\r\n"
             relationships:
               guides:
                 data: []
-          - id: '701'
+          - id: "701"
             type: footnote
             attributes:
               code: TN701
@@ -2099,9 +2089,9 @@ components:
           - id: 20098001-duty_expression
             type: duty_expression
             attributes:
-              base: ''
-              formatted_base: ''
-          - id: '410'
+              base: ""
+              formatted_base: ""
+          - id: "410"
             type: measure_type
             attributes:
               description: Veterinary control
@@ -2110,38 +2100,38 @@ components:
               order_number_capture_code: 2
               trade_movement_code: 0
               validity_end_date: null
-              validity_start_date: '2012-04-01T00:00:00.000Z'
-              id: '410'
+              validity_start_date: "2012-04-01T00:00:00.000Z"
+              id: "410"
               measure_type_series_description: Entry into free circulation or exportation subject to conditions
           - id: C2100270
             type: legal_act
             attributes:
-              validity_start_date: '2021-01-01T00:00:00.000Z'
+              validity_start_date: "2021-01-01T00:00:00.000Z"
               validity_end_date: null
-              officialjournal_number: '1'
+              officialjournal_number: "1"
               officialjournal_page: 1
-              published_date: '2021-01-01'
+              published_date: "2021-01-01"
               regulation_code: C0027/21
-              regulation_url: ''
+              regulation_url: ""
               description: null
-          - id: '20060275'
+          - id: "20060275"
             type: measure_condition
             attributes:
               action: Import/export allowed after control
-              action_code: '29'
+              action_code: "29"
               certificate_description: |-
                 UN/EDIFACT certificates: Common Health Entry Document for Products
                 (CHED-P) (as set out in Part 2, Section B of Annex II to Commission
                 Implementing Regulation (EU) 2019/1715 (OJ L 261)) as transposed into UK
                 Law.
-              condition: 'B: Presentation of a certificate/licence/document'
+              condition: "B: Presentation of a certificate/licence/document"
               condition_code: B
               condition_duty_amount: null
               condition_measurement_unit_code: null
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
               document_code: N853
-              duty_expression: ''
+              duty_expression: ""
               guidance_cds: |-
                 - Enter GBCHDyyyy. and the reference number of the CHED-P.
 
@@ -2190,23 +2180,23 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060277'
+          - id: "20060277"
             type: measure_condition
             attributes:
               action: Import/export allowed after control
-              action_code: '29'
+              action_code: "29"
               certificate_description: |-
                 Exemption by virtue of Article 7 of Commission Delegated Regulation
                 2019/2122 (Goods which form part of passengers' personal luggage and are
                 intended for personal consumption or use)
-              condition: 'B: Presentation of a certificate/licence/document'
+              condition: "B: Presentation of a certificate/licence/document"
               condition_code: B
               condition_duty_amount: null
               condition_measurement_unit_code: null
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
               document_code: Y058
-              duty_expression: ''
+              duty_expression: ""
               guidance_cds: |-
                 - Complete the statement: 'Exempt personal consignment' in the Document
                 Identifier (Second Component).
@@ -2236,22 +2226,22 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060278'
+          - id: "20060278"
             type: measure_condition
             attributes:
               action: Import/export allowed after control
-              action_code: '29'
+              action_code: "29"
               certificate_description: |-
                 Exemption by virtue of Articles 3 and 4 of regulation 2019/2122 (animals
                 intended for scientific purposes, research and diagnostic samples)
-              condition: 'B: Presentation of a certificate/licence/document'
+              condition: "B: Presentation of a certificate/licence/document"
               condition_code: B
               condition_duty_amount: null
               condition_measurement_unit_code: null
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
               document_code: C084
-              duty_expression: ''
+              duty_expression: ""
               guidance_cds: |-
                 - Complete the statement 'regulation 2019/2122 exempt'.
 
@@ -2277,20 +2267,20 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060281'
+          - id: "20060281"
             type: measure_condition
             attributes:
               action: Import/export not allowed after control
-              action_code: '09'
+              action_code: "09"
               certificate_description: null
-              condition: 'B: Presentation of a certificate/licence/document'
+              condition: "B: Presentation of a certificate/licence/document"
               condition_code: B
               condition_duty_amount: null
               condition_measurement_unit_code: null
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
-              document_code: ''
-              duty_expression: ''
+              document_code: ""
+              duty_expression: ""
               guidance_cds: null
               guidance_chief: null
               measure_condition_class: negative
@@ -2299,11 +2289,11 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060274'
+          - id: "20060274"
             type: measure_condition
             attributes:
               action: Import/export allowed after control
-              action_code: '29'
+              action_code: "29"
               certificate_description: |-
                 UN/EDIFACT certificates: Common Health Entry Document for Products
                 (CHED-P) (as set out in Part 2, Section B of Annex II to Commission
@@ -2319,7 +2309,7 @@ components:
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
               document_code: N853
-              duty_expression: ''
+              duty_expression: ""
               guidance_cds: |-
                 - Enter GBCHDyyyy. and the reference number of the CHED-P.
 
@@ -2368,11 +2358,11 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060276'
+          - id: "20060276"
             type: measure_condition
             attributes:
               action: Import/export allowed after control
-              action_code: '29'
+              action_code: "29"
               certificate_description: null
               condition: |-
                 E: The quantity or the price per unit declared, as appropriate, is equal
@@ -2383,8 +2373,8 @@ components:
               condition_measurement_unit_code: KGM
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
-              document_code: ''
-              duty_expression: ''
+              document_code: ""
+              duty_expression: ""
               guidance_cds: null
               guidance_chief: null
               measure_condition_class: threshold
@@ -2393,11 +2383,11 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060279'
+          - id: "20060279"
             type: measure_condition
             attributes:
               action: Import/export allowed after control
-              action_code: '29'
+              action_code: "29"
               certificate_description: |-
                 Exemption by virtue of Articles 3 and 4 of regulation 2019/2122 (animals
                 intended for scientific purposes, research and diagnostic samples)
@@ -2411,7 +2401,7 @@ components:
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
               document_code: C084
-              duty_expression: ''
+              duty_expression: ""
               guidance_cds: |-
                 - Complete the statement 'regulation 2019/2122 exempt'.
 
@@ -2437,11 +2427,11 @@ components:
             relationships:
               measure_condition_components:
                 data: []
-          - id: '20060280'
+          - id: "20060280"
             type: measure_condition
             attributes:
               action: Import/export not allowed after control
-              action_code: '09'
+              action_code: "09"
               certificate_description: null
               condition: |-
                 E: The quantity or the price per unit declared, as appropriate, is equal
@@ -2452,8 +2442,8 @@ components:
               condition_measurement_unit_code: null
               condition_measurement_unit_qualifier_code: null
               condition_monetary_unit_code: null
-              document_code: ''
-              duty_expression: ''
+              document_code: ""
+              duty_expression: ""
               guidance_cds: null
               guidance_chief: null
               measure_condition_class: negative
@@ -2467,23 +2457,23 @@ components:
             relationships:
               measure_conditions:
                 data:
-                  - id: '20060275'
+                  - id: "20060275"
                     type: measure_condition
           - id: 4d3b48c99972647c2f067a667703f311
             type: measure_condition_permutation
             relationships:
               measure_conditions:
                 data:
-                  - id: '20060278'
+                  - id: "20060278"
                     type: measure_condition
           - id: 2cbaf3625f27ae2236f643c9def204eb
             type: measure_condition_permutation
             relationships:
               measure_conditions:
                 data:
-                  - id: '20060277'
+                  - id: "20060277"
                     type: measure_condition
-                  - id: '20060276'
+                  - id: "20060276"
                     type: measure_condition
           - id: 20098001-n/a
             type: measure_condition_permutation_group
@@ -2498,12 +2488,12 @@ components:
                     type: measure_condition_permutation
                   - id: 2cbaf3625f27ae2236f643c9def204eb
                     type: measure_condition_permutation
-          - id: '20098001'
+          - id: "20098001"
             type: measure
             attributes:
               id: 20098001
               origin: eu
-              effective_start_date: '2021-01-01T00:00:00.000Z'
+              effective_start_date: "2021-01-01T00:00:00.000Z"
               effective_end_date: null
               import: true
               export: false
@@ -2511,7 +2501,7 @@ components:
               vat: false
               reduction_indicator: null
               meursing: false
-              resolved_duty_expression: ''
+              resolved_duty_expression: ""
               universal_waiver_applies: false
             relationships:
               duty_expression:
@@ -2520,7 +2510,7 @@ components:
                   type: duty_expression
               measure_type:
                 data:
-                  id: '410'
+                  id: "410"
                   type: measure_type
               legal_acts:
                 data:
@@ -2528,21 +2518,21 @@ components:
                     type: legal_act
               measure_conditions:
                 data:
-                  - id: '20060275'
+                  - id: "20060275"
                     type: measure_condition
-                  - id: '20060277'
+                  - id: "20060277"
                     type: measure_condition
-                  - id: '20060278'
+                  - id: "20060278"
                     type: measure_condition
-                  - id: '20060281'
+                  - id: "20060281"
                     type: measure_condition
-                  - id: '20060274'
+                  - id: "20060274"
                     type: measure_condition
-                  - id: '20060276'
+                  - id: "20060276"
                     type: measure_condition
-                  - id: '20060279'
+                  - id: "20060279"
                     type: measure_condition
-                  - id: '20060280'
+                  - id: "20060280"
                     type: measure_condition
               measure_condition_permutation_groups:
                 data:
@@ -2556,7 +2546,7 @@ components:
                 data: []
               geographical_area:
                 data:
-                  id: '1008'
+                  id: "1008"
                   type: geographical_area
               excluded_countries:
                 data:
@@ -2610,7 +2600,7 @@ components:
                     type: geographical_area
                   - id: NL
                     type: geographical_area
-                  - id: 'NO'
+                  - id: "NO"
                     type: geographical_area
                   - id: PL
                     type: geographical_area
@@ -2638,39 +2628,39 @@ components:
               duty_calculator:
                 source: uk
                 scheme_code: null
-          - id: '1011'
+          - id: "1011"
             type: geographical_area
             attributes:
-              id: '1011'
+              id: "1011"
               description: ERGA OMNES
-              geographical_area_id: '1011'
+              geographical_area_id: "1011"
             relationships:
               children_geographical_areas:
                 data:
                   - id: AD
                     type: geographical_area
-          - id: '28267'
+          - id: "28267"
             type: heading
             attributes:
-              goods_nomenclature_item_id: '0208000000'
+              goods_nomenclature_item_id: "0208000000"
               description: Other meat and edible meat offal, fresh, chilled or frozen
               formatted_description: Other meat and edible meat offal, fresh, chilled or frozen
               description_plain: Other meat and edible meat offal, fresh, chilled or frozen
-          - id: '28275'
+          - id: "28275"
             type: commodity
             attributes:
-              producline_suffix: '80'
+              producline_suffix: "80"
               description: Other
               number_indents: 1
-              goods_nomenclature_item_id: '0208900000'
+              goods_nomenclature_item_id: "0208900000"
               formatted_description: Other
               description_plain: Other
-          - id: '4176a8c3415ef099c881ffde5d69f861'
+          - id: "4176a8c3415ef099c881ffde5d69f861"
             type: import_trade_summary
             attributes:
               basic_third_country_duty: "<span>44.00</span> GBP / <abbr title='Hectokilogram'>100 kg</abbr>"
-              preferential_tariff_duty: '1.00 %'
-              preferential_quota_duty: '1.00 %'
+              preferential_tariff_duty: "1.00 %"
+              preferential_quota_duty: "1.00 %"
 
     QuotaSearch:
       description: |
@@ -2685,7 +2675,7 @@ components:
           description: the type of object, i.e. `definition`
         data:attributes:
           description: The definition's attributes, as a [referenced definition object](/reference.html#referenceddefinition "see referenced definition object")
-          $ref: '#/components/schemas/ReferencedDefinition'
+          $ref: "#/components/schemas/ReferencedDefinition"
         data:relationships:
           type: object
           description: Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), and [referenced footnote objects](/reference.html#referencedheading "see referenced footnote object") that are related to this heading. May include parent objects.
@@ -2702,81 +2692,81 @@ components:
             type: integer
       example:
         data:
-        - id: "12202"
-          type: definition
-          attributes:
-            quota_definition_sid: 12202
-            quota_order_number_id: "091784"
-            initial_volume: "36300000.0"
-            validity_start_date: "2018-12-01T00:00:00.000Z"
-            validity_end_date: "2019-05-31T00:00:00.000Z"
-            status: "Open"
-            description: "Commission Regulation (EU) No 449/2010 amending Council Regulation (EC) No 747/2001 and repealing Regulations (EC) No 2276/2003 (EC) No 995/2005 (EC) No 1002/2007 and (EC) No 1455/2007"
-            balance: "36300000.0"
-            measurement_unit: "Kilogram (kg)"
-            monetary_unit: null
-            measurement_unit_qualifier: null
-            last_allocation_date: null
-            suspension_period_start_date: null
-            suspension_period_end_date: null
-            blocking_period_start_date: null
-            blocking_period_end_date: null
-          relationships:
-            order_number:
-              data:
-                id: "091784"
-                type: order_number
-            measures:
-              data:
-              - id: "3659283"
-                type: measure
-              - id: "3659284"
-                type: measure
-              - id: "3659285"
-                type: measure
+          - id: "12202"
+            type: definition
+            attributes:
+              quota_definition_sid: 12202
+              quota_order_number_id: "091784"
+              initial_volume: "36300000.0"
+              validity_start_date: "2018-12-01T00:00:00.000Z"
+              validity_end_date: "2019-05-31T00:00:00.000Z"
+              status: "Open"
+              description: "Commission Regulation (EU) No 449/2010 amending Council Regulation (EC) No 747/2001 and repealing Regulations (EC) No 2276/2003 (EC) No 995/2005 (EC) No 1002/2007 and (EC) No 1455/2007"
+              balance: "36300000.0"
+              measurement_unit: "Kilogram (kg)"
+              monetary_unit: null
+              measurement_unit_qualifier: null
+              last_allocation_date: null
+              suspension_period_start_date: null
+              suspension_period_end_date: null
+              blocking_period_start_date: null
+              blocking_period_end_date: null
+            relationships:
+              order_number:
+                data:
+                  id: "091784"
+                  type: order_number
+              measures:
+                data:
+                  - id: "3659283"
+                    type: measure
+                  - id: "3659284"
+                    type: measure
+                  - id: "3659285"
+                    type: measure
         included:
-        - id: "3659283"
-          type: measure
-          attributes:
-            goods_nomenclature_item_id: "0805102200"
-          relationships:
-            geographical_area:
-              data:
-                id: EG
-                type: geographical_area
-        - id: "3659284"
-          type: measure
-          attributes:
-            goods_nomenclature_item_id: "0805102400"
-          relationships:
-            geographical_area:
-              data:
-                id: EG
-                type: geographical_area
-        - id: "3659285"
-          type: measure
-          attributes:
-            goods_nomenclature_item_id: "0805102800"
-          relationships:
-            geographical_area:
-              data:
-                id: EG
-                type: geographical_area
-        - id: "091784"
-          type: order_number
-          attributes:
-            number: "091784"
-          relationships:
-            geographical_area:
-              data:
-                id: EG
-                type: geographical_area
-        - id: EG
-          type: geographical_area
-          attributes:
-            id: EG
-            description: Egypt
-            geographical_area_id: EG
+          - id: "3659283"
+            type: measure
+            attributes:
+              goods_nomenclature_item_id: "0805102200"
+            relationships:
+              geographical_area:
+                data:
+                  id: EG
+                  type: geographical_area
+          - id: "3659284"
+            type: measure
+            attributes:
+              goods_nomenclature_item_id: "0805102400"
+            relationships:
+              geographical_area:
+                data:
+                  id: EG
+                  type: geographical_area
+          - id: "3659285"
+            type: measure
+            attributes:
+              goods_nomenclature_item_id: "0805102800"
+            relationships:
+              geographical_area:
+                data:
+                  id: EG
+                  type: geographical_area
+          - id: "091784"
+            type: order_number
+            attributes:
+              number: "091784"
+            relationships:
+              geographical_area:
+                data:
+                  id: EG
+                  type: geographical_area
+          - id: EG
+            type: geographical_area
+            attributes:
+              id: EG
+              description: Egypt
+              geographical_area_id: EG
         meta:
           pagination:
             page: 1
@@ -2796,7 +2786,7 @@ components:
           description: the type of object, i.e. `additional_code`
         data:attributes:
           description: The additional_code's attributes, as a [referenced additional_code object](/reference.html#referencedadditional_code "see referenced additional_code object")
-          $ref: '#/components/schemas/ReferencedAdditionalCode'
+          $ref: "#/components/schemas/ReferencedAdditionalCode"
         data:relationships:
           type: object
           description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object").
@@ -2807,40 +2797,40 @@ components:
             type: object
       example:
         data:
-        - id: "11486"
-          type: additional_code
-          attributes:
-            additional_code_type_id: "B"
-            additional_code: "067"
-            code: "B067"
-            description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
-            formatted_description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
-          relationships:
-            measures:
-              data:
-              - id: "3625236"
-                type: measure
+          - id: "11486"
+            type: additional_code
+            attributes:
+              additional_code_type_id: "B"
+              additional_code: "067"
+              code: "B067"
+              description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
+              formatted_description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
+            relationships:
+              measures:
+                data:
+                  - id: "3625236"
+                    type: measure
         included:
-        - id: "3625236"
-          type: measure
-          attributes:
-            id: 3625236
-            validity_start_date: "1991-07-01T00:00:00.000Z"
-            validity_end_date: "1992-03-31T00:00:00.000Z"
-            goods_nomenclature_item_id: "7317000000"
-          relationships:
-            goods_nomenclature:
-              data:
-                id: "46392"
-                type: goods_nomenclature
-        - id: "46392"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "7317000000"
-            goods_nomenclature_sid: 46392
-            number_indents: 0
-            description: "Nails, tacks, drawing pins, corrugated nails, staples ..."
-            productline_suffix: "80"
+          - id: "3625236"
+            type: measure
+            attributes:
+              id: 3625236
+              validity_start_date: "1991-07-01T00:00:00.000Z"
+              validity_end_date: "1992-03-31T00:00:00.000Z"
+              goods_nomenclature_item_id: "7317000000"
+            relationships:
+              goods_nomenclature:
+                data:
+                  id: "46392"
+                  type: goods_nomenclature
+          - id: "46392"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "7317000000"
+              goods_nomenclature_sid: 46392
+              number_indents: 0
+              description: "Nails, tacks, drawing pins, corrugated nails, staples ..."
+              productline_suffix: "80"
         meta:
           pagination:
             page: 1
@@ -2860,19 +2850,19 @@ components:
           description: the type of object, i.e. `additional_code_type`
         data:attributes:
           description: The additional_code_type's attributes, as a [referenced additional_code_type object](/reference.html#referencedadditional_code_type "see referenced additional_code_type object")
-          $ref: '#/components/schemas/ReferencedAdditionalCodeType'
+          $ref: "#/components/schemas/ReferencedAdditionalCodeType"
       example:
         data:
-        - id: "B"
-          type: additional_code_type
-          attributes:
-            additional_code_type_id: "B"
-            description: "Anti-dumping/countervailing"
-        - id: "P"
-          type: additional_code_type
-          attributes:
-            additional_code_type_id: "B"
-            description: "Refund for basic products"
+          - id: "B"
+            type: additional_code_type
+            attributes:
+              additional_code_type_id: "B"
+              description: "Anti-dumping/countervailing"
+          - id: "P"
+            type: additional_code_type
+            attributes:
+              additional_code_type_id: "B"
+              description: "Refund for basic products"
 
     Certificates:
       description: List of the certificates
@@ -2886,7 +2876,7 @@ components:
           description: the type of object, i.e. `certificate`
         data:attributes:
           description: The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
-          $ref: '#/components/schemas/ReferencedCertificate'
+          $ref: "#/components/schemas/ReferencedCertificate"
       example:
         data:
           id: "D005"
@@ -2899,10 +2889,10 @@ components:
           relationships:
             measures:
               data:
-              - id: "2124342"
-                type: measure
-              - id: "2250100"
-                type: measure
+                - id: "2124342"
+                  type: measure
+                - id: "2250100"
+                  type: measure
 
     CertificateSearch:
       description: |
@@ -2917,7 +2907,7 @@ components:
           description: the type of object, i.e. `certificate`
         data:attributes:
           description: The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
-          $ref: '#/components/schemas/ReferencedCertificate'
+          $ref: "#/components/schemas/ReferencedCertificate"
         data:relationships:
           type: object
           description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object").
@@ -2938,19 +2928,19 @@ components:
           relationships:
             measures:
               data:
-              - id: "2124342"
-                type: measure
-              - id: "2250100"
-                type: measure
+                - id: "2124342"
+                  type: measure
+                - id: "2250100"
+                  type: measure
         included:
-        - id: "71692"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "7307191010"
-            goods_nomenclature_sid: 71692
-            number_indents: 4
-            description: "Threaded malleable cast iron tube or pipe fittings"
-            productline_suffix: "80"
+          - id: "71692"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "7307191010"
+              goods_nomenclature_sid: 71692
+              number_indents: 4
+              description: "Threaded malleable cast iron tube or pipe fittings"
+              productline_suffix: "80"
         meta:
           pagination:
             page: 1
@@ -2970,19 +2960,19 @@ components:
           description: the type of object, i.e. `certificate_type`
         data:attributes:
           description: The certificate_type's attributes, as a [referenced certificate_type object](/reference.html#referencedcertificate_type "see referenced certificate_type object")
-          $ref: '#/components/schemas/ReferencedCertificateType'
+          $ref: "#/components/schemas/ReferencedCertificateType"
       example:
         data:
-        - id: "Z"
-          type: certificate_type
-          attributes:
-            certificate_type_code: "Z"
-            description: "More certificates"
-        - id: "X"
-          type: certificate_type
-          attributes:
-            certificate_type_code: "X"
-            description: "Export licence"
+          - id: "Z"
+            type: certificate_type
+            attributes:
+              certificate_type_code: "Z"
+              description: "More certificates"
+          - id: "X"
+            type: certificate_type
+            attributes:
+              certificate_type_code: "X"
+              description: "Export licence"
 
     MeasureTypes:
       description: |
@@ -2997,7 +2987,7 @@ components:
           description: the type of object, i.e. `measure_type`
         data:attributes:
           description: The measure_type's attributes, as a [referenced measure_type object](/reference.html#referencedmeasuretype "see referenced measure_type object")
-          $ref: '#/components/schemas/ReferencedMeasureType'
+          $ref: "#/components/schemas/ReferencedMeasureType"
       example:
         data:
           - id: "1"
@@ -3066,7 +3056,7 @@ components:
           description: the type of object (`measure_action`)
         data:attributes:
           description: The measure_action's attributes, as a [referenced measure_action object](/reference.html#referencedmeasureaction "see referenced measure_action object")
-          $ref: '#/components/schemas/ReferencedMeasureAction'
+          $ref: "#/components/schemas/ReferencedMeasureAction"
       example:
         data:
           - id: "1"
@@ -3108,7 +3098,7 @@ components:
           description: the type of object (`measure_condition_code`)
         data:attributes:
           description: The measure_condition_code's attributes, as a [referenced measure_action object](/reference.html#referencedmeasureconditioncode "see referenced_condition_code object")
-          $ref: '#/components/schemas/ReferencedMeasureConditionCode'
+          $ref: "#/components/schemas/ReferencedMeasureConditionCode"
       example:
         data:
           - id: "1"
@@ -3151,20 +3141,15 @@ components:
           description: the type of object, i.e. `footnote`
         data:attributes:
           description: The footnote's attributes, as a [referenced footnote object](/reference.html#referencedfootnote "see referenced footnote object")
-          $ref: '#/components/schemas/ReferencedFootnote'
+          $ref: "#/components/schemas/ReferencedFootnote"
         data:relationships:
           type: object
-          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this footnote. May include parent objects.
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object") that are related to this footnote. May include parent objects.
         included:
           type: array
-          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"), and [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object") that are related to this footnote. May include parent objects.
+          description: Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object") that are related to this footnote. May include parent objects.
           items:
             type: object
-        meta:pagination:
-          type: object
-          description: Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
-          items:
-            type: integer
       example:
         data:
           id: "05737"
@@ -3173,44 +3158,23 @@ components:
             code: "05737"
             footnote_type_id: "05"
             footnote_id: "737"
-            description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
-            formatted_description: "For wine not exceeding 22% vol enter default value \"0.00\" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol"
+            description: 'For wine not exceeding 22% vol enter default value "0.00" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol'
+            formatted_description: 'For wine not exceeding 22% vol enter default value "0.00" in the 3rd quantity. Wine exceeding 22% vol requires the actual litres of 100% alcohol'
             extra_large_measures: false
           relationships:
             goods_nomenclatures:
               data:
-              - id: "34659"
-                type: goods_nomenclature
-            measures:
-              data:
-              - id: "3216444"
-                type: measure
+                - id: "34659"
+                  type: goods_nomenclature
         included:
-        - id: "3216444"
-          type: measure
-          attributes:
-            id: "3216444"
-            validity_start_date: "2011-11-01T00:00:00.000Z"
-            validity_end_date: null
-            "goods_nomenclature_item_id": "2204101900"
-          relationships:
-            goods_nomenclature:
-              data:
-                id: "34659"
-                type: goods_nomenclature
-        - id: "34659"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "2204101900"
-            goods_nomenclature_sid: 34658
-            description: "Other"
-            number_indents: 3
-            productline_suffix: "80"
-        meta:
-          pagination:
-            page: 1
-            per_page: 5
-            total_count: 1
+          - id: "34659"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "2204101900"
+              goods_nomenclature_sid: 34658
+              description: "Other"
+              number_indents: 3
+              productline_suffix: "80"
 
     FootnoteTypes:
       description: |
@@ -3225,7 +3189,7 @@ components:
           description: the type of object, i.e. `footnote_type`
         data:attributes:
           description: The footnote_type's attributes, as a [referenced footnote_type object](/reference.html#referencedfootnote_type "see referenced footnote_type object")
-          $ref: '#/components/schemas/ReferencedFootnoteType'
+          $ref: "#/components/schemas/ReferencedFootnoteType"
       example:
         data:
           - id: "WR"
@@ -3251,36 +3215,36 @@ components:
           description: the type of object, i.e. `goods_nomenclature`
         data:attributes:
           description: The goods_nomeclature's attributes, as a [referenced goods_nomenclature object](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object")
-          $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+          $ref: "#/components/schemas/ReferencedGoodsNomenclature"
       example:
         data:
-        - id: "27623"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0100000000"
-            goods_nomenclature_sid: 27623
-            description: LIVE ANIMALS
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/chapters/01
-        - id: "27810"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101000000"
-            goods_nomenclature_sid: 27624
-            description: Live horses, asses, mules and hinnies
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/headings/0101
-        - id: "93797"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101210000"
-            goods_nomenclature_sid: 93797
-            description: Horses
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/commodities/0101210000
+          - id: "27623"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0100000000"
+              goods_nomenclature_sid: 27623
+              description: LIVE ANIMALS
+              number_indents: 0
+              productline_suffix: "80"
+              href: /api/v2/chapters/01
+          - id: "27810"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0101000000"
+              goods_nomenclature_sid: 27624
+              description: Live horses, asses, mules and hinnies
+              number_indents: 0
+              productline_suffix: "80"
+              href: /api/v2/headings/0101
+          - id: "93797"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0101210000"
+              goods_nomenclature_sid: 93797
+              description: Horses
+              number_indents: 0
+              productline_suffix: "80"
+              href: /api/v2/commodities/0101210000
 
     GoodsNomenclaturesExtended:
       description: "Commodity codes"
@@ -3294,61 +3258,61 @@ components:
           description: the type of object, i.e. `goods_nomenclature`
         data:attributes:
           description: The goods_nomeclature's attributes, as a [referenced goods_nomenclature object](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object")
-          $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+          $ref: "#/components/schemas/ReferencedGoodsNomenclature"
       example:
         data:
-        - id: "27623"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0100000000"
-            goods_nomenclature_sid: 27623
-            description: LIVE ANIMALS
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/chapters/01
-            formatted_description: "Live animals"
-            validity_start_date: "1971-12-31T00:00:00.000Z"
-            validity_end_date: null
-            declarable: false
-          relationships:
-            parent:
-              data: null
-        - id: "27810"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101000000"
-            goods_nomenclature_sid: 27624
-            description: Live horses, asses, mules and hinnies
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/headings/0101
-            formatted_description: "Live horses, asses, mules and hinnies"
-            validity_start_date: "1972-01-01T00:00:00.000Z"
-            validity_end_date: null
-            declarable: false
-          relationships:
-            parent:
-              data:
-                id: "27623"
-                type: "goods_nomenclature"
-        - id: "93797"
-          type: goods_nomenclature
-          attributes:
-            goods_nomenclature_item_id: "0101210000"
-            goods_nomenclature_sid: 93797
-            description: Horses
-            number_indents: 0
-            productline_suffix: "80"
-            href: /api/v2/subheadings/0101210000-80
-            formatted_description: "Horses"
-            validity_start_date: "2012-01-01T00:00:00.000Z"
-            validity_end_date: null
-            declarable: false
-          relationships:
-            parent:
-              data:
-                id: "27810"
-                type: "goods_nomenclature"
+          - id: "27623"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0100000000"
+              goods_nomenclature_sid: 27623
+              description: LIVE ANIMALS
+              number_indents: 0
+              productline_suffix: "80"
+              href: /api/v2/chapters/01
+              formatted_description: "Live animals"
+              validity_start_date: "1971-12-31T00:00:00.000Z"
+              validity_end_date: null
+              declarable: false
+            relationships:
+              parent:
+                data: null
+          - id: "27810"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0101000000"
+              goods_nomenclature_sid: 27624
+              description: Live horses, asses, mules and hinnies
+              number_indents: 0
+              productline_suffix: "80"
+              href: /api/v2/headings/0101
+              formatted_description: "Live horses, asses, mules and hinnies"
+              validity_start_date: "1972-01-01T00:00:00.000Z"
+              validity_end_date: null
+              declarable: false
+            relationships:
+              parent:
+                data:
+                  id: "27623"
+                  type: "goods_nomenclature"
+          - id: "93797"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0101210000"
+              goods_nomenclature_sid: 93797
+              description: Horses
+              number_indents: 0
+              productline_suffix: "80"
+              href: /api/v2/subheadings/0101210000-80
+              formatted_description: "Horses"
+              validity_start_date: "2012-01-01T00:00:00.000Z"
+              validity_end_date: null
+              declarable: false
+            relationships:
+              parent:
+                data:
+                  id: "27810"
+                  type: "goods_nomenclature"
 
     SearchReferences:
       description: "Curated terms and associated headings, subheadings or commodity codes"
@@ -3362,7 +3326,7 @@ components:
           description: the type of object, i.e. `search_reference`
         data:attributes:
           description: The search_reference's attributes, as a [referenced search_reference object](/reference.html#referencedsearchreference "see referenced search_reference object")
-          $ref: '#/components/schemas/ReferencedSearchReference'
+          $ref: "#/components/schemas/ReferencedSearchReference"
       example:
         data:
           - id: "888"
@@ -3402,7 +3366,7 @@ components:
           description: the type of object, i.e. `geographical_area`
         data:attributes:
           description: The geographical area's attributes, as a [referenced geographical area object](/reference.html#referencedgeographicalarea "see referenced geographical area object")
-          $ref: '#/components/schemas/ReferencedGeographicalArea'
+          $ref: "#/components/schemas/ReferencedGeographicalArea"
         data:relationships:
           type: object
           description: Zero, one or many [referenced geographical area](/reference.html#referencedgeographicalarea "see referenced geographical area object") objects.
@@ -3414,42 +3378,41 @@ components:
             # $ref: '#/components/schemas/ReferencedGeographicalArea'
       example:
         data:
-        - id: "GB"
-          type: geographical_area
-          attributes:
-            id: "GB"
-            description: "United Kingdom"
-            geographical_area_id: "GB"
-          relationships:
-            children_geographical_areas:
-              data: []
-        - id: "2501"
-          type: geographical_area
-          attributes:
-            id: "2501"
-            description: "Countries not members of the WTO"
-            geographical_area_id: "2501"
-          relationships:
-            children_geographical_areas:
-              data:
-              - id: "AD"
-                type: geographical_area
-              - id: "AI"
-                type: geographical_area
+          - id: "GB"
+            type: geographical_area
+            attributes:
+              id: "GB"
+              description: "United Kingdom"
+              geographical_area_id: "GB"
+            relationships:
+              children_geographical_areas:
+                data: []
+          - id: "2501"
+            type: geographical_area
+            attributes:
+              id: "2501"
+              description: "Countries not members of the WTO"
+              geographical_area_id: "2501"
+            relationships:
+              children_geographical_areas:
+                data:
+                  - id: "AD"
+                    type: geographical_area
+                  - id: "AI"
+                    type: geographical_area
         included:
-        - id: "AD"
-          type: geographical_area
-          attributes:
-            id: "AD"
-            description: "Andorra"
-            geographical_area_id: "AD"
-          relationships:
-            children_geographical_areas:
-              data: []
+          - id: "AD"
+            type: geographical_area
+            attributes:
+              id: "AD"
+              description: "Andorra"
+              geographical_area_id: "AD"
+            relationships:
+              children_geographical_areas:
+                data: []
 
     ReferencedSection:
-      description:
-        A section object referenced elsewhere.
+      description: A section object referenced elsewhere.
       type: object
       properties:
         id:
@@ -3489,8 +3452,7 @@ components:
         section_note: "* 1\\. Any reference in this section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species.\r\n* 2\\. Except where the context otherwise requires, throughout the nomenclature any reference to 'dried' products also covers products which have been dehydrated, evaporated or freeze-dried.\r\n"
 
     ReferencedChapter:
-      description:
-        A chapter object referenced elsewhere.
+      description: A chapter object referenced elsewhere.
       type: object
       # required:
       # - goods_nomenclature_item_id
@@ -3528,7 +3490,7 @@ components:
           type: integer
           description: The `section_id` of the section containing this chapter.
       example:
-        goods_nomenclature_item_id: '0100000000'
+        goods_nomenclature_item_id: "0100000000"
         description: LIVE ANIMALS
         formatted_description: Live animals
         headings_from: "0101"
@@ -3542,8 +3504,7 @@ components:
         section_id: 1
 
     ReferencedHeading:
-      description:
-        A heading object referenced elsewhere.
+      description: A heading object referenced elsewhere.
       type: object
       properties:
         goods_nomenclature_sid:
@@ -3574,7 +3535,7 @@ components:
           type: string
           description: a URL for more information about this heading
       example:
-        goods_nomenclature_item_id: '0201000000'
+        goods_nomenclature_item_id: "0201000000"
         description: Meat of bovine animals, fresh or chilled
         bti_url: "http://ec.europa.eu/taxation_customs/dds2/ebti/ebti_consultation.jsp?Lang=en&nomenc=0201000000&Expand=true"
         formatted_description: Meat of bovine animals, fresh or chilled
@@ -3777,7 +3738,7 @@ components:
           type: string
           description: Either the document code or the threshold requirement
       example:
-        id: '20060275'
+        id: "20060275"
         type: measure_condition
         attributes:
           action: Import/export allowed after control
@@ -3821,11 +3782,11 @@ components:
           type: string
           description: The `formatted_description` for the additional_code.
       example:
-          additional_code_type_id: "C"
-          additional_code: "371"
-          code: "C371"
-          description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-          formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+        additional_code_type_id: "C"
+        additional_code: "371"
+        code: "C371"
+        description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+        formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
     ReferencedAdditionalCodeType:
       description: An additional_code_type object referenced elsewhere.
@@ -3889,13 +3850,13 @@ components:
           type: string
           description: The `formatted_description` for the footnote.
       example:
-          code: TN701
-          description: "According to  the Council Regulation (EU) No 692/2014
-            (OJ L183, p. 9) it shall be prohibited to import into European Union
-            goods originating in Crimea or Sevastopol.\n..."
-          formatted_description: 'According to  the Council Regulation (EU)
-            No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
-            European Union goods originating in Crimea or Sevastopol.<br/>...'
+        code: TN701
+        description: "According to  the Council Regulation (EU) No 692/2014
+          (OJ L183, p. 9) it shall be prohibited to import into European Union
+          goods originating in Crimea or Sevastopol.\n..."
+        formatted_description: "According to  the Council Regulation (EU)
+          No 692/2014 (OJ L183, p. 9) it shall be prohibited to import into
+          European Union goods originating in Crimea or Sevastopol.<br/>..."
 
     ReferencedFootnoteType:
       description: An footnote_type object referenced elsewhere.
@@ -4067,7 +4028,7 @@ components:
         attributes:
           type: object
           description: The changed goods nomenclature attributes.
-          $ref: '#/components/schemas/ChangeAttributes'
+          $ref: "#/components/schemas/ChangeAttributes"
       example:
         id: "106193"
         type: "change"
@@ -4122,7 +4083,7 @@ components:
           description: the type of object, i.e. `quota_order_number`
         data:attributes:
           description: The quota_order_number's attributes, as a [referenced quota_order_number object](/reference.html#referencedquotaordernumber "see referenced quota_order_number object")
-          $ref: '#/components/schemas/ReferencedQuotaOrderNumber'
+          $ref: "#/components/schemas/ReferencedQuotaOrderNumber"
         data:relationships:
           type: object
           description: Has One [ReferencedQuotaDefinition](/reference.html#referencedquotadefinition)
@@ -4151,9 +4112,9 @@ components:
           description: The validity end date of the quota_order_number.
           format: date-time
       example:
-          quota_order_number_sid: "2750"
-          validity_start_date: "2021-08-01T00:00:00.000Z"
-          validity_end_date: "2022-07-31T00:00:00.000Z"
+        quota_order_number_sid: "2750"
+        validity_start_date: "2021-08-01T00:00:00.000Z"
+        validity_end_date: "2022-07-31T00:00:00.000Z"
 
     ReferencedQuotaDefinition:
       type: object
@@ -4196,125 +4157,126 @@ components:
           type: array
           description: A collection of [product-specific rules](#rulesoforiginrule) a product must fulfil
           items:
-            $ref: '#/components/schemas/RulesOfOriginRule'
+            $ref: "#/components/schemas/RulesOfOriginRule"
         links:
           type: array
           description: A collection of [links](#rulesoforiginlink) with further information relating to the scheme
           items:
-            $ref: '#/components/schemas/RulesOfOriginLink'
+            $ref: "#/components/schemas/RulesOfOriginLink"
         proofs:
           type: array
           description: A collection of [proofs of origin](#rulesoforiginproof) necessary to claim preferential tariff treatment
           items:
-            $ref: '#/components/schemas/RulesOfOriginProof'
+            $ref: "#/components/schemas/RulesOfOriginProof"
       example:
         data:
-        - id: eu
-          type: rules_of_origin_scheme
-          attributes:
-            scheme_code: eu
-            title: UK / EU Trade and Co-operation Agreement
-            countries:
-            - EU
-            - AT
-            - BE
-            - BG
-            - CY
-            - CZ
-            - DE
-            - DK
-            - EE
-            - ES
-            - FI
-            - FR
-            - GR
-            - HR
-            - HU
-            - IE
-            - IT
-            - LT
-            - LU
-            - LV
-            - MT
-            - NL
-            - PL
-            - PT
-            - RO
-            - SE
-            - SI
-            - SK
-            - SM
-            - AD
-            footnote:
-            unilateral:
-            fta_intro: |-
-              ### UK / EU Trade and Co-operation Agreement
+          - id: eu
+            type: rules_of_origin_scheme
+            attributes:
+              scheme_code: eu
+              title: UK / EU Trade and Co-operation Agreement
+              countries:
+                - EU
+                - AT
+                - BE
+                - BG
+                - CY
+                - CZ
+                - DE
+                - DK
+                - EE
+                - ES
+                - FI
+                - FR
+                - GR
+                - HR
+                - HU
+                - IE
+                - IT
+                - LT
+                - LU
+                - LV
+                - MT
+                - NL
+                - PL
+                - PT
+                - RO
+                - SE
+                - SI
+                - SK
+                - SM
+                - AD
+              footnote:
+              unilateral:
+              fta_intro: |-
+                ### UK / EU Trade and Co-operation Agreement
 
-              The UK moved to trading based on a new Free Trade Agreement (FTA) - the Trade and Cooperation Agreement (TCA) between the UK and the EU.
+                The UK moved to trading based on a new Free Trade Agreement (FTA) - the Trade and Cooperation Agreement (TCA) between the UK and the EU.
 
-              To import / export tariff-free under the TCA, goods must meet the UK-EU preferential rules of origin. This means that there must be a qualifying level of processing in the country of export to access zero tariffs. This applies to EU origin goods imported and moving through the UK from a Member State to another EU Member State, as well as goods imported from the Rest of World.
+                To import / export tariff-free under the TCA, goods must meet the UK-EU preferential rules of origin. This means that there must be a qualifying level of processing in the country of export to access zero tariffs. This applies to EU origin goods imported and moving through the UK from a Member State to another EU Member State, as well as goods imported from the Rest of World.
 
-              These rules are set out in the TCA and determine the origin of goods based on where the products or materials (or inputs) used in their production come from. Their purpose is to ensure that preferential tariffs are only given to goods that originate in the UK or EU and not from third countries (those apart from UK and the EU Member States).
+                These rules are set out in the TCA and determine the origin of goods based on where the products or materials (or inputs) used in their production come from. Their purpose is to ensure that preferential tariffs are only given to goods that originate in the UK or EU and not from third countries (those apart from UK and the EU Member States).
 
-              #### Andorra and San Marino
-              Andorra and San Marino are part of customs unions with the EU. The UK has agreed with the EU that all products originating in San Marino and all non-agricultural products (chapters 25-97) originating in Andorra are to be treated as originating in the EU under the UK-EU Trade and Cooperation Agreement as long as Andorra and San Marino apply to UK products the same preferences that the EU applies to them. These products benefit from zero tariffs, where they meet the relevant rules of origin. Trade with Andorra of agricultural products (chapters 01-24) is not in scope of the UK-EU Trade and Cooperation Agreement and takes place under WTO terms.
-            introductory_notes: "### Note 1 - General principles\n\n1. This Annex sets out
-              the general rules for the applicable requirements of Annex ORIG-2 \\[Product-specific
-              rules of origin\\] as provided for in point (c) of Article ORIG 3(1) \\[General
-              requirements\\] of this Agreement."
-          relationships:
-            rules:
-              data:
-              - id: '10000096'
-                type: rules_of_origin_rule
-            links:
-              data:
-              - id: fd431ebe2833f8753e90e93cbbe64ef4
-                type: rules_of_origin_link
-              - id: 71ce11df10c4c03e61ce0702f3802ce7
-                type: rules_of_origin_link
-            proofs:
-              data:
-              - id: 506eb2e258484e97bc25568b864c4fd0
-                type: rules_of_origin_proof
-              - id: 724fc25dcaf6a7d21e9015f065344a52
-                type: rules_of_origin_proof
+                #### Andorra and San Marino
+                Andorra and San Marino are part of customs unions with the EU. The UK has agreed with the EU that all products originating in San Marino and all non-agricultural products (chapters 25-97) originating in Andorra are to be treated as originating in the EU under the UK-EU Trade and Cooperation Agreement as long as Andorra and San Marino apply to UK products the same preferences that the EU applies to them. These products benefit from zero tariffs, where they meet the relevant rules of origin. Trade with Andorra of agricultural products (chapters 01-24) is not in scope of the UK-EU Trade and Cooperation Agreement and takes place under WTO terms.
+              introductory_notes:
+                "### Note 1 - General principles\n\n1. This Annex sets out
+                the general rules for the applicable requirements of Annex ORIG-2 \\[Product-specific
+                rules of origin\\] as provided for in point (c) of Article ORIG 3(1) \\[General
+                requirements\\] of this Agreement."
+            relationships:
+              rules:
+                data:
+                  - id: "10000096"
+                    type: rules_of_origin_rule
+              links:
+                data:
+                  - id: fd431ebe2833f8753e90e93cbbe64ef4
+                    type: rules_of_origin_link
+                  - id: 71ce11df10c4c03e61ce0702f3802ce7
+                    type: rules_of_origin_link
+              proofs:
+                data:
+                  - id: 506eb2e258484e97bc25568b864c4fd0
+                    type: rules_of_origin_proof
+                  - id: 724fc25dcaf6a7d21e9015f065344a52
+                    type: rules_of_origin_proof
         included:
-        - id: fd431ebe2833f8753e90e93cbbe64ef4
-          type: rules_of_origin_link
-          attributes:
-            text: Check your goods meet the rules of origin
-            url: https://www.gov.uk/guidance/check-your-goods-meet-the-rules-of-origin
-        - id: 71ce11df10c4c03e61ce0702f3802ce7
-          type: rules_of_origin_link
-          attributes:
-            text: 'UK/EU and EAEC: Trade and Cooperation Agreement'
-            url: https://www.gov.uk/government/publications/ukeu-and-eaec-trade-and-cooperation-agreement-ts-no82021
-        - id: 506eb2e258484e97bc25568b864c4fd0
-          type: rules_of_origin_proof
-          attributes:
-            summary: Statement on origin
-            subtext: ''
-            url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration
-        - id: 724fc25dcaf6a7d21e9015f065344a52
-          type: rules_of_origin_proof
-          attributes:
-            summary: Importer's knowledge
-            subtext: ''
-            url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#importers-knowledge
-        - id: '10000096'
-          type: rules_of_origin_rule
-          attributes:
-            id_rule: 10000096
-            heading: 39.21-39.22
-            description: |-
-              3921: Other plates, sheets, film, foil and strip, of plastics
+          - id: fd431ebe2833f8753e90e93cbbe64ef4
+            type: rules_of_origin_link
+            attributes:
+              text: Check your goods meet the rules of origin
+              url: https://www.gov.uk/guidance/check-your-goods-meet-the-rules-of-origin
+          - id: 71ce11df10c4c03e61ce0702f3802ce7
+            type: rules_of_origin_link
+            attributes:
+              text: "UK/EU and EAEC: Trade and Cooperation Agreement"
+              url: https://www.gov.uk/government/publications/ukeu-and-eaec-trade-and-cooperation-agreement-ts-no82021
+          - id: 506eb2e258484e97bc25568b864c4fd0
+            type: rules_of_origin_proof
+            attributes:
+              summary: Statement on origin
+              subtext: ""
+              url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#origin-declaration
+          - id: 724fc25dcaf6a7d21e9015f065344a52
+            type: rules_of_origin_proof
+            attributes:
+              summary: Importer's knowledge
+              subtext: ""
+              url: https://www.gov.uk/guidance/get-proof-of-origin-for-your-goods#importers-knowledge
+          - id: "10000096"
+            type: rules_of_origin_rule
+            attributes:
+              id_rule: 10000096
+              heading: 39.21-39.22
+              description: |-
+                3921: Other plates, sheets, film, foil and strip, of plastics
 
-              3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics
-            rule: |-
-              A change from any other heading  - CTH;
-              or
-              Maximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}
+                3922: Baths, shower-baths, wash-basins, bidets, lavatory pans, seats and covers, flushing cisterns and similar sanitary ware, of plastics
+              rule: |-
+                A change from any other heading  - CTH;
+                or
+                Maximum of non-originating materials - MaxNOM 50% (EXW).{{EXW}}{{CTH}}
 
     RulesOfOriginLink:
       type: object
@@ -4385,7 +4347,7 @@ components:
           type: array
           description: A collection of [measure condition permutation objects](/reference.html#measureconditionpermutation "see measure condition permutation object")
           items:
-            $ref: '#/components/schemas/MeasureConditionPermutation'
+            $ref: "#/components/schemas/MeasureConditionPermutation"
       example:
         id: "20098001-n/a"
         type: "measure_condition_permutation_group"
@@ -4394,12 +4356,12 @@ components:
         relationships:
           permutations:
             data:
-            - id: c9982ee465cf7dcc85a926f409a91f94
-              type: measure_condition_permutation
-            - id: 4d3b48c99972647c2f067a667703f311
-              type: measure_condition_permutation
-            - id: 2cbaf3625f27ae2236f643c9def204eb
-              type: measure_condition_permutation
+              - id: c9982ee465cf7dcc85a926f409a91f94
+                type: measure_condition_permutation
+              - id: 4d3b48c99972647c2f067a667703f311
+                type: measure_condition_permutation
+              - id: 2cbaf3625f27ae2236f643c9def204eb
+                type: measure_condition_permutation
 
     MeasureConditionPermutation:
       description: Contains references to one or two measure conditions. Where two conditions are referenced, this indicates that there is a requirement for the trader to fulfil both of the noted conditions, for example both supply a waiver and to not exceed a weight or volume threshold.
@@ -4415,17 +4377,17 @@ components:
           type: array
           description: A collection of referenced measure condition objects
           items:
-            $ref: '#/components/schemas/ReferencedMeasureCondition'
+            $ref: "#/components/schemas/ReferencedMeasureCondition"
       example:
         id: "2cbaf3625f27ae2236f643c9def204eb"
         type: "measure_condition_permutation"
         relationships:
           measure_conditions:
             data:
-            - id: "20060277"
-              type: "measure_condition"
-            - id: "20060276"
-              type: "measure_condition"
+              - id: "20060277"
+                type: "measure_condition"
+              - id: "20060276"
+                type: "measure_condition"
 
     PreferenceCodes:
       type: object
@@ -4486,16 +4448,16 @@ components:
           description: The nomen field. This indicates which taxonomy the chemical substance originates
       example:
         data:
-        - id: "0153778-6-30725"
-          type: "chemical_substance"
-          attributes:
-            cus: "0153778-6"
-            goods_nomenclature_sid: 30725
-            goods_nomenclature_item_id: "0712909090"
-            producline_suffix: "80"
-            name: "Spinacia oleracea, as dried vegetables"
-            cas_rn: "90131-25-2"
-            nomen: "INCI"
+          - id: "0153778-6-30725"
+            type: "chemical_substance"
+            attributes:
+              cus: "0153778-6"
+              goods_nomenclature_sid: 30725
+              goods_nomenclature_item_id: "0712909090"
+              producline_suffix: "80"
+              name: "Spinacia oleracea, as dried vegetables"
+              cas_rn: "90131-25-2"
+              nomen: "INCI"
 
     SimplifiedProceduralCodeMeasure:
       type: object
