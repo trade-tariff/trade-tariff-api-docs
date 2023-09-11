@@ -73,6 +73,8 @@ workflows:
           context: trade-tariff-terraform-aws-development
           environment: "844815912454"
           <<: *filter-not-main
+          requires:
+            - build-dev
 
   deploy-to-staging:
     jobs:
@@ -86,6 +88,8 @@ workflows:
           context: trade-tariff-terraform-aws-staging
           environment: "451934005581"
           <<: *filter-main
+          requires:
+            - build-staging
 
   deploy-to-production:
     jobs:
