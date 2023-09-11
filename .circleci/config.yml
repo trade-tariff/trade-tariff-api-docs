@@ -1,5 +1,20 @@
 version: 2.1
 
+filter-not-main: &filter-not-main
+  filters:
+    branches:
+      ignore:
+        - main
+        - /^dependabot/(?!docker/).*/
+        - /^hotfix\/.+/
+
+filter-main: &filter-main
+  filters:
+    branches:
+      only:
+        - main
+        - /^hotfix\/.+/
+
 orbs:
   aws-cli: circleci/aws-cli@3.1.5
 
@@ -45,41 +60,78 @@ jobs:
 
 workflows:
   version: 2
-  ci:
+
+  deploy-to-development:
     jobs:
       - build:
+          name: build-dev
           context: trade-tariff
+          <<: *filter-not-main
 
       - deploy:
-          name: deploy_development
+          name: deploy-dev-paas
           context: trade-tariff-bot-aws-development
           environment: development
-          filters:
-            branches:
-              ignore: [main]
-          requires: [build]
+          <<: *filter-not-main
+          requires:
+            - build-dev
 
       - deploy:
-          name: deploy_staging
+          name: deploy-dev
+          context: trade-tariff-terraform-aws-development
+          environment: "844815912454"
+          <<: *filter-not-main
+          requires:
+            - build-dev
+
+  deploy-to-staging:
+    jobs:
+      - build:
+          name: build-staging
+          context: trade-tariff
+          <<: *filter-main
+
+      - deploy:
+          name: deploy-staging-paas
           context: trade-tariff-bot-aws-staging
           environment: staging
-          filters:
-            branches:
-              only: [main]
-          requires: [build]
-
-      - hold_deploy_production:
-          type: approval
-          requires: [deploy_staging]
-          filters:
-            branches:
-              only: [main]
+          <<: *filter-main
+          requires:
+            - build-staging
 
       - deploy:
-          name: deploy_production
+          name: deploy-staging
+          context: trade-tariff-terraform-aws-staging
+          environment: "451934005581"
+          <<: *filter-main
+          requires:
+            - build-staging
+
+  deploy-to-production:
+    jobs:
+      - build:
+          name: build-prod
+          context: trade-tariff
+          <<: *filter-main
+
+      - promote-to-production?:
+          type: approval
+          <<: *filter-main
+
+      - deploy:
+          name: deploy-prod-paas
           context: trade-tariff-bot-aws-production
           environment: production
-          filters:
-            branches:
-              only: [main]
-          requires: [build, hold_deploy_production]
+          <<: *filter-not-main
+          requires:
+            - build-prod
+            - promote-to-production?
+
+      - deploy:
+          name: deploy-prod
+          context: trade-tariff-terraform-aws-production
+          environment: "382373577178"
+          <<: *filter-not-main
+          requires:
+            - build-prod
+            - promote-to-production?
