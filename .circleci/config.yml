@@ -69,6 +69,14 @@ workflows:
           <<: *filter-not-main
 
       - deploy:
+          name: deploy-dev-paas
+          context: trade-tariff-bot-aws-development
+          environment: development
+          <<: *filter-not-main
+          requires:
+            - build-dev
+
+      - deploy:
           name: deploy-dev
           context: trade-tariff-terraform-aws-development
           environment: "844815912454"
@@ -82,6 +90,14 @@ workflows:
           name: build-staging
           context: trade-tariff
           <<: *filter-main
+
+      - deploy:
+          name: deploy-staging-paas
+          context: trade-tariff-bot-aws-staging
+          environment: staging
+          <<: *filter-main
+          requires:
+            - build-staging
 
       - deploy:
           name: deploy-staging
@@ -103,18 +119,18 @@ workflows:
           <<: *filter-main
 
       - deploy:
-          name: deploy-prod
-          context: trade-tariff-terraform-aws-production
-          environment: "382373577178"
+          name: deploy-prod-paas
+          context: trade-tariff-bot-aws-production
+          environment: production
           <<: *filter-not-main
           requires:
             - build-prod
             - promote-to-production?
 
       - deploy:
-          name: deploy-prod-paas
-          context: trade-tariff-bot-aws-production
-          environment: production
+          name: deploy-prod
+          context: trade-tariff-terraform-aws-production
+          environment: "382373577178"
           <<: *filter-not-main
           requires:
             - build-prod
