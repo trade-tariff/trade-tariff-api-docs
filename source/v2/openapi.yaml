@@ -221,6 +221,94 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note
 
+  /exchange_rates/period_list/{year}:
+    get:
+      summary: Retrieves the exchange rates period list.
+      description: >
+        This resource represents the exchange rates period and exchange rates years.
+      tags:
+        - Exchange Rates
+      parameters:
+        - name: year
+          in: path
+          required: false
+          description: |
+            The `year` of the period list.
+          schema:
+            type: integer
+            example: 2022
+        - in: query
+          name: filter[type]
+          schema:
+            type: string
+            enum:
+              - spot
+              - monthly
+              - average
+          description: "Possible values: spot, monthly, average"
+      responses:
+        200:
+          description: "200 Success"
+        400:
+          description: "Bad request. For example type is not spot, monthly or average"
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/exchange_rates/period_list:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists/2022?filter[type]=monthly
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists?filter[type]=spot
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists?filter[type]=average
+
+  /exchange_rates/{year}-{month}:
+    get:
+      summary: Retrieves the exchange rates.
+      description: >
+        This resource represents the exchange rates and exchange rate files.
+      tags:
+        - Exchange Rates
+      parameters:
+        - name: year
+          in: path
+          required: true
+          description: |
+            The `year` of the exchange rate.
+          schema:
+            type: integer
+            example: 2022
+        - name: month
+          in: path
+          required: true
+          description: |
+            The `year` of the exchange rate.
+          schema:
+            type: integer
+            example: 12
+        - in: query
+          name: filter[type]
+          schema:
+            type: string
+            enum:
+              - spot
+              - monthly
+              - average
+          description: "Possible values: spot, monthly, average"
+      responses:
+        200:
+          description: "200 Success"
+        400:
+          description: "Bad request. For example type is not spot, monthly or average"
+        5XX:
+          description: Unexpected error.
+      x-code-samples:
+        /api/v2/exchange_rates:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2021-10?filter[type]=monthly
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2022-8?filter[type]=spot
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2021-8?filter[type]=average
+
   /headings/{heading_id}:
     get:
       summary: Retrieves a heading
