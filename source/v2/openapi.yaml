@@ -1397,15 +1397,17 @@ paths:
           description: |
             Possible values: spot, monthly, average.<br>
             <ul>
-              <li>Monthly: published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>
+              <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>
               <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>
               <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li>
             </ul>
       responses:
         200:
-          description: "200 Success"
+          description: "200 Success."
         400:
-          description: "Bad request. For example type is not spot, monthly or average"
+          description: "Bad request. For example type is not spot, monthly or average."
+        404:
+          description: "Not found. There are no Exchange rate periods for the requested year."
         5XX:
           description: Unexpected error.
       x-code-samples:
@@ -1453,15 +1455,15 @@ paths:
           description: |
             Possible values: spot, monthly, average.<br>
             <ul>
-              <li>Monthly: published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>
+              <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>
               <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>
               <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li>
             </ul>
       responses:
         200:
-          description: "200 Success"
+          description: "200 Success."
         400:
-          description: "Bad request. For example type is not spot, monthly or average"
+          description: "Bad request. For example type is not spot, monthly or average."
         5XX:
           description: Unexpected error.
       x-code-samples:
