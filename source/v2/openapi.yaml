@@ -1406,8 +1406,6 @@ paths:
           description: "200 Success."
         400:
           description: "Bad request. For example type is not spot, monthly or average."
-        404:
-          description: "Not found. There are no Exchange rate periods for the requested year."
         5XX:
           description: Unexpected error.
       x-code-samples:
