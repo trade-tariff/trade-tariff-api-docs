@@ -114,24 +114,18 @@ workflows:
           context: trade-tariff
           <<: *filter-main
 
-      - promote-to-production?:
-          type: approval
-          <<: *filter-main
-
       - deploy:
           name: deploy-prod-paas
           context: trade-tariff-bot-aws-production
           environment: production
-          <<: *filter-not-main
+          <<: *filter-main
           requires:
             - build-prod
-            - promote-to-production?
 
       - deploy:
           name: deploy-prod
           context: trade-tariff-terraform-aws-production
           environment: "382373577178"
-          <<: *filter-not-main
+          <<: *filter-main
           requires:
             - build-prod
-            - promote-to-production?
