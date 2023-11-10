@@ -727,6 +727,37 @@ paths:
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quota_order_numbers
 
+  /measures/{measure_sid}:
+    get:
+      summary: Retrieves a measure
+      tags:
+        - Measures
+      description: >
+        This resource represents a single measure.
+        For this resource, `measure_sid` is used to uniquely identify a measure and request it from the API.
+      parameters:
+        - name: "measure_sid"
+          in: path
+          required: true
+          description: |
+            The `measure_sid` of the measure to be retrieved.
+          schema:
+            type: integer
+            example: 20227202
+      responses:
+        200:
+          description: A measure was found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Measure"
+              example:
+                $ref: "#/components/schemas/Measure/example"
+        404:
+          description: Measure was not found.
+        5XX:
+          description: Unexpected error.
+
   /measure_actions:
     get:
       summary: Retrieves a list of the measure actions.
@@ -3152,6 +3183,135 @@ components:
         id: "110"
         measure_type_series_description: "Supplementary unit"
 
+    Measure:
+      description: A measure object referenced elsewhere.
+      type: object
+      properties:
+        data:id:
+          type: string
+          description: The unique `id` of the measure.
+        data:type:
+          type: string
+          description: the type of object, i.e. `measure`
+        data:attributes:
+          origin:
+            type: string
+            description: The origin of the measure.
+          import:
+            type: boolean
+            description: The import of the measure.
+          export:
+            type: boolean
+            description: The export of the measure.
+          excise:
+            type: boolean
+            description: The excise of the measure.
+          vat:
+            type: boolean
+            description: The vat of the measure.
+          effective_start_date:
+            type: string
+            description: The effective start date of the measure.
+            format: date-time
+          effective_end_date:
+            type: string
+            description: The effective end date of the measure.
+            format: date-time
+        data:relationships:
+          type: object
+          description: |-
+            Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"),<br>
+            [referenced geographical_area objects](/reference.html#referencedgeographicalarea "see referenced geographical_area object"),<br>
+            [referenced measure_type objects](/reference.html#referencedmeasuretype "see referenced measure_type object"),<br>
+            [referenced measure_condition objects](/reference.html#referencedmeasurecondition "see referenced measure_condition object"),<br>
+            [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object"),<br>
+            [referenced additional_code objects](/reference.html#referencedadditionalcode "see referenced additional_code object"),<br>
+            measure_excluded_geographical_area
+            duty_expression<br>
+            legal_act objects<br>
+            order_number objects<br>
+            measure_generating_legal_act<br>
+            justification_legal_act
+          goods_nomenclature:
+            data:
+              id: "7317000000"
+              type: goods_nomenclature
+          geographical_area:
+            data:
+              id: "EG"
+              type: geographical_area
+          measure_type:
+            data:
+              id: "410"
+              type: measure_type
+          measure_conditions:
+            data:
+              - id: "20060275"
+                type: measure_condition
+              - id: "20060277"
+                type: measure_condition
+              - id: "20060278"
+          measure_excluded_geographical_areas:
+            data: []
+          quota_order_number:
+            data: null
+          footnotes:
+            data:
+              - id: CD624
+      example:
+        data:
+          id: "20098001"
+          type: measure
+          attributes:
+            origin: eu
+            import: true
+            export: false
+            excise: false
+            vat: false
+            effective_start_date: "2021-01-01T00:00:00.000Z"
+            effective_end_date: null
+          relationships:
+            goods_nomenclature:
+              data:
+                id: "7317000000"
+                type: goods_nomenclature
+            geographical_area:
+              data:
+                id: "EG"
+                type: geographical_area
+            measure_type:
+              data:
+                id: "410"
+                type: measure_type
+            measure_conditions:
+              data:
+                - id: "20060275"
+                  type: measure_condition
+                - id: "20060277"
+                  type: measure_condition
+            measure_excluded_geographical_areas:
+              data: []
+            quota_order_number:
+              data: null
+            footnotes:
+              data:
+                - id: CD624
+                  type: footnote
+        included:
+          - id: "7317000000"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "7317000000"
+              goods_nomenclature_sid: 46392
+              number_indents: 0
+              description: "Nails, tacks, drawing pins, corrugated nails, staples ..."
+              productline_suffix: "80"
+          - id: "EG"
+            type: geographical_area
+            attributes:
+              id: EG
+              description: Egypt
+              geographical_area_id: EG
     MeasureActions:
       description: List of measure actions
       type: object
