@@ -1,0 +1,17 @@
+---
+title: Windsor Framework - Green Lanes API documentation
+---
+<% content_for :head do %>
+  <link href="/green-lanes.xml" type="application/atom+xml" rel="alternate" title="Green Lanes api changes feed" />
+<% end %>
+
+# Windsor Framework - Green Lanes API documentation
+
+### Updates to the Green Lanes apis
+
+These changes can be subscribed to at the [Atom (RSS) feed](/green-lanes.xml)
+
+<% data.green_lanes_changes.sort_by(&:date).reverse.each do |change| %>
+## <%= change.date.strftime('%-d %B %Y') %>
+<%= change.content %>
+<% end %>
