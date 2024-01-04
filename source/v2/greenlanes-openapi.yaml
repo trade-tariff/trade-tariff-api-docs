@@ -81,6 +81,88 @@ paths:
           schema:
             type: string
             format: date
+      responses:
+        200:
+          description: An array of Permutations and their Categorisation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Permutation" # FIXME
+        401:
+          description: Authorization header is missing or contains an invalid token
+        422:
+          description: Unprocessable Content, likely incorrectly formatted `as_of` param
+        5xx:
+          description: Unexpected error, something went wrong internally
+      x-code-samples:
+        /api/v2/green_lanes/categorisations:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/categorisations
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/categorisations?as_of=2024-01-01
+
+  /green_lanes/goods_nomenclatures/{id}:
+    get:
+      summary: Returns possible categorisations for the requested Goods Nomenclature
+      description: >
+        Returns a list of the different permutations and their categorisation for the Goods Nomenclature Item Id specified in the path
+      tags:
+        - Green Lanes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: |
+            Item Id of the Goods Nomenclature you are requesting categorisation information for.
+
+            This is the full 10 digit item id of either a Subheading or Commodity. If you are working with truncated item ids, ie truncated to 6 or 8 significant digits, then pad to 10 with trailing zero's - so 123456 would submitted as 1234560000.
+          schema:
+            type: string
+            minimum: 10
+            maximum: 10
+            example: "392113"
+        - name: as_of
+          in: query
+          required: false
+          description: |
+            Returns the permutations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
+
+            While this is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct. As caching is used
+            on the API this will ensure the data returned is as expected.
+          schema:
+            type: string
+            format: date
+        - name: origin
+          in: query
+          required: false
+          description: |
+            Something
+          schema:
+            type: string
+            minimum: 1
+            example: "US"
+      responses:
+        200:
+          description: A GoodsNomenclature and a list of possible Categorisations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GoodsNomenclature" # FIXME
+        401:
+          description: Authorization header is missing or contains an invalid token
+        422:
+          description: Unprocessable Content, likely missing or incorrect params
+        5xx:
+          description: Unexpected error, something went wrong internally
+      x-code-samples:
+        /api/v2/chemical_substances:
+          lang: shell
+          source: |-
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?origin=US
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&origin=US
 
 components:
   schemas:
