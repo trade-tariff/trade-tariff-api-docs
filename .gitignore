@@ -22,6 +22,7 @@ Staticfile.auth
 /node_modules
 /source/reference.html.md.erb
 /source/reference-beta.html.md.erb
+/source/green-lanes.html.md.erb
 
 .idea/*
 .ruby-gemset
