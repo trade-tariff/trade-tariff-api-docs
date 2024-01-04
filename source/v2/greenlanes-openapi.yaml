@@ -11,7 +11,13 @@ info:
       <link href="/green-lanes.xml" type="application/atom+xml" rel="alternate" title="Green Lanes api changes feed" />
     <% end %>
 
-    # Windsor Framework - Green Lanes API documentation
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        These APIs are currently considered Experimental and are subject to change or removal
+      </strong>
+    </div>
 
     The Green Lanes Categorisation api's provide access to categorisation data for the different Commodities and Subheadings within the Tariff.
 
@@ -25,30 +31,33 @@ info:
     Authorization: Bearer <SUPPLIED TOKEN>
     ```
 
-    ## Provided APIs
-
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-visually-hidden">Warning</span>
-        These APIs are currently considered Experimental and are subject to change or removal
-      </strong>
-    </div>
-
-    Two APIs are provided
-
-    * A listing of all categorisation data
-      - see [All categorisations](/)
-    * An API to provide possible categorisations for a requested Goods Nomenclature
-      - see [Goods Nomenclature categorisations](/)
-
-    ## Updates to the Green Lanes apis
+    ## Latest changes
 
     _These changes can be subscribed to at the [Atom (RSS) feed](/green-lanes.xml)_
 
-    <% data.green_lanes_changes.sort_by(&:date).reverse.slice(0...3).each do |change| %>
-    ### <%= change.date.strftime('%-d %B %Y') %>
-    <%= change.content %>
+    <% changes = data.green_lanes_changes.sort_by(&:date).reverse %>
+    <% latest = changes.pop %>
+
+    ### <%= latest.date.strftime('%-d %B %Y') %>
+    <%= simple_format latest.content %>
+
+    <% unless changes.length == 0 %>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Previous changes
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <% changes.each do |change| %>
+          <h3 id="change-<%= change.date.strftime('%Y-%m-%d') %>" class="anchored-heading">
+            <%= change.date.strftime '%d %b %Y' %>
+          </h3>
+
+          <%= simple_format change.content %>
+        <% end %>
+      </div>
+    </details>
     <% end %>
 
 paths:
