@@ -195,6 +195,7 @@ components:
           type: string
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
+          nullable: true
         applicable_categorisations:
           type: array
           description: A list of potential categorisations for this Goods Nomenclature
@@ -250,6 +251,16 @@ components:
           description: The geographical areas excluded from this potential categorisation
           items:
             $ref: '#/components/scheme/GeographicalArea'
+        exemptions:
+          type: array
+          description: |
+            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this categorisation
+
+            _NB - Polymorphic array of Certificate and Additional Code objects_
+          items:
+            oneOf:
+              - $ref: '#/components/scheme/Certificate'
+              - $ref: '#/components/scheme/AdditionalCode'
       required:
         - id
         - category
@@ -260,7 +271,7 @@ components:
           id: abc1234
           type: categorisation
         attributes:
-          category: 2
+          category: 1
         relationships:
           geographical_area:
             data:
@@ -268,6 +279,16 @@ components:
               type: geographical_area
           excluded_geographical_areas:
             data: []
+          theme:
+            data:
+              id: 1.1
+              type: theme
+          exemptions:
+            data:
+              - id: D005
+                type: certificate
+              - id: C371
+                type: additional_code
 
     Theme:
       description: A Green Lane Theme within the Windsor Framework
@@ -297,9 +318,9 @@ components:
           id: 1.1
           type: theme
         attributes:
-          theme:
-          description:
-          implied_category:
+          theme: Sanctions
+          description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
+          implied_category: 1
     
     GeographicalArea:
       description: A geographical_area object
@@ -325,3 +346,73 @@ components:
         attributes:
           description: ERGA OMNES
           geographical_area_id: "1011"
+
+    Certificate:
+      description: A certificate object
+      type: object
+      properties:
+        id:
+          type: string
+          description: The uniq identifier for this description
+        certificate_type_code:
+          type: string
+          description: The `certificate_type_code` for the certificate
+        certificate_code:
+          type: string
+          description: The `certificate_code` for the certificate
+        description:
+          type: string
+          description: The `description` for the certificate
+      required:
+        - id
+        - certificate_type_code
+        - certificate_code
+        - description
+      example:
+        data:
+          id: D005
+          type: certificate
+        attributes:
+          certificate_type_code: D
+          certificate_code: "005"
+          description: "Commercial invoice within the framework of undertakings"
+
+    AdditionalCode:
+      description: An additional_code object
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this additional_code object
+        additional_code_type_id:
+          type: string
+          description: The `additional_code_type_id` for the additional_code
+        additional_code:
+          type: string
+          description: The `additional_code` for the additional_code
+        code:
+          type: string
+          description: The `code` for the additional_code. Equal to `additional_code_type_id + additional_code`
+        description:
+          type: string
+          description: The `description` for the additional_code
+        formatted_description:
+          type: string
+          description: The `formatted_description` for the additional_code
+      required:
+        - id
+        - additional_code_type_id
+        - additional_code
+        - code
+        - description
+        - formatted_description
+      example:
+        data:
+          id: C371
+          type: additional_code
+        attributes:
+          additional_code_type_id: C
+          additional_code: "371"
+          code: C371
+          description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+          formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
