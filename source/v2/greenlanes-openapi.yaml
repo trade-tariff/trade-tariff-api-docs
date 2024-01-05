@@ -172,9 +172,12 @@ components:
       description: A goods_nomenclature object
       type: object
       properties:
+        id:
+          type: string
+          description: The unique id for this revision of this Goods Nomenclature
         goods_nomenclature_item_id:
           type: string
-          description: The `goods_nomenclature_item_id` of the goods nomenclature.
+          description: The `goods_nomenclature_item_id` of this Goods Nomenclature
         description:
           type: string
           description: The `description` of the goods nomenclature
@@ -197,6 +200,14 @@ components:
           description: A list of potential categorisations for this Goods Nomenclature
           items:
             $ref: '#/components/schemas/Categorisation'
+      required:
+        - id
+        - goods_nomenclature_item_id
+        - description
+        - number_indents
+        - productline_suffix
+        - validity_start_date
+        - validity_end_date
       example:
         data:
           id: 70361
@@ -220,6 +231,9 @@ components:
       description: A potential categorisation for a Goods Nomenclature
       type: object
       properties:
+        id:
+          type: string
+          description: The uniq identifier for this categorisation
         category:
           type: integer
           description: The category applicable unless exemption criteria are met
@@ -236,23 +250,74 @@ components:
           description: The geographical areas excluded from this potential categorisation
           items:
             $ref: '#/components/scheme/GeographicalArea'
+      required:
+        - id
+        - category
+        - theme
+        - geographical_area
       example:
         data:
           id: abc1234
           type: categorisation
         attributes:
           category: 2
+        relationships:
+          geographical_area:
+            data:
+              id: 1011
+              type: geographical_area
+          excluded_geographical_areas:
+            data: []
+
+    Theme:
+      description: A Green Lane Theme within the Windsor Framework
+      type: object
+      properties:
+        id:
+          type: string
+          description: The relevant section number for this Green Lanes theme
+        theme:
+          type: string
+          description: Green Lanes Theme
+        description:
+          type: string
+          description: Full description text of theme
+        implied_category:
+          type: integer
+          minimum: 1
+          maximum: 3
+          description: The green lanes category for the theme in the absence of an exemption
+      required:
+        - id
+        - theme
+        - description
+        - implied_category
+      example:
+        data:
+          id: 1.1
+          type: theme
+        attributes:
+          theme:
+          description:
+          implied_category:
     
     GeographicalArea:
       description: A geographical_area object
       type: object
       properties:
+        id:
+          type: string
+          description: The id of this geographical area
         description:
           type: string
-          description: The `description` of the geographical area.
+          description: The `description` of the geographical area
         geographical_area_id:
           type: string
-          description: The `geographical_area_id` of the geographical area.
+          description: The `geographical_area_id` of the geographical area
+      required:
+        - id
+        - description
+        - geographical_area_id
       example:
         data:
           id: 1011
