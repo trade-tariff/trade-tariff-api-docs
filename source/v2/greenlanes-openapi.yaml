@@ -196,9 +196,9 @@ components:
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
           nullable: true
-        applicable_categorisations:
+        possible_categorisations:
           type: array
-          description: A list of potential categorisations for this Goods Nomenclature
+          description: A list of possible categorisations for this Goods Nomenclature
           items:
             $ref: '#/components/schemas/Categorisation'
       required:
@@ -221,7 +221,7 @@ components:
           validity_start_date: "1999-01-01T00:00:00.000Z"
           validity_end_date: null
         relationships:
-          applicable_categorisations:
+          possible_categorisations:
             data:
               - id: abc1234
                 type: categorisation
@@ -229,26 +229,26 @@ components:
                 type: categorisation
 
     Categorisation:
-      description: A potential categorisation for a Goods Nomenclature
+      description: A possible categorisation for a Goods Nomenclature
       type: object
       properties:
         id:
           type: string
-          description: The uniq identifier for this categorisation
+          description: The unique identifier for this categorisation
         category:
           type: integer
           description: The category applicable unless exemption criteria are met
           minimum: 1
           maximum: 3
         theme:
-          description: The Green Lanes Theme used as the basis for this potential categorisation
+          description: The Green Lanes Theme used as the basis for this possible categorisation
           $ref: '#/components/scheme/Theme'
         geographical_area:
-          description: The geographical area this potential categorisation applies to
+          description: The geographical area this possible categorisation applies to
           $ref: '#/components/scheme/GeographicalArea'
         excluded_geographical_areas:
           type: array
-          description: The geographical areas excluded from this potential categorisation
+          description: The geographical areas excluded from this possible categorisation
           items:
             $ref: '#/components/scheme/GeographicalArea'
         exemptions:
