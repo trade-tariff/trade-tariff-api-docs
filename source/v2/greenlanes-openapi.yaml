@@ -11,6 +11,8 @@ info:
       <link href="/green-lanes.xml" type="application/atom+xml" rel="alternate" title="Green Lanes api changes feed" />
     <% end %>
 
+    The Green Lanes Categorisation api's provide access to categorisation data for the different Commodities and Subheadings within the Tariff.
+
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
@@ -19,11 +21,9 @@ info:
       </strong>
     </div>
 
-    The Green Lanes Categorisation api's provide access to categorisation data for the different Commodities and Subheadings within the Tariff.
+    ## Authentication
 
-    ## Access control
-
-    Access to these APIs will be restricted initially whilst they are in development - if you are an approved partner and require an access token, please contact the Online Trade Tariff team.
+    Access to these APIs is initially restricted whilst they are in development - if you are an approved partner and require an access token, please contact the Online Trade Tariff team.
 
     The token should be included with the API request via the standard HTTP Authorization header, eg.
 
