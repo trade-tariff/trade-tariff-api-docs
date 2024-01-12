@@ -201,6 +201,16 @@ components:
           description: A list of possible categorisations for this Goods Nomenclature
           items:
             $ref: '#/components/schemas/Categorisation'
+        ancestors:
+          type: array
+          description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
+          items:
+            $ref: '#/components/schemas/GoodsNomenclature'
+        measures:
+          type: array
+          description: A list of green lanes relevant measures against this GoodsNomenclature
+          items:
+            $ref: '#/components/schemas/Measure'
       required:
         - id
         - goods_nomenclature_item_id
@@ -209,6 +219,7 @@ components:
         - productline_suffix
         - validity_start_date
         - validity_end_date
+        - measures
       example:
         data:
           id: 70361
@@ -223,9 +234,9 @@ components:
         relationships:
           possible_categorisations:
             data:
-              - id: abc1234
+              - id: abcd1234
                 type: categorisation
-              - id: c5678de
+              - id: c5678def
                 type: categorisation
 
     Categorisation:
@@ -268,7 +279,7 @@ components:
         - geographical_area
       example:
         data:
-          id: abc1234
+          id: abcd1234
           type: categorisation
         attributes:
           category: 1
@@ -416,3 +427,132 @@ components:
           code: C371
           description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
           formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+
+    Measure:
+      description: A green lanes measure object.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this measure
+        import:
+          type: boolean
+          description: The import of the measure.
+        export:
+          type: boolean
+          description: The export of the measure.
+        excise:
+          type: boolean
+          description: The excise of the measure.
+        vat:
+          type: boolean
+          description: The vat of the measure.
+        effective_start_date:
+          type: string
+          description: The effective start date of the measure.
+          format: date-time
+        effective_end_date:
+          type: string
+          description: The effective end date of the measure.
+          format: date-time
+          nullable: true
+        categorisation:
+          description: The possible_categorisation derived from this measure
+          $ref: '#/components/scheme/PossibleCategorisation'
+        measure_type:
+          description: The measure type associated with this measure
+          $ref: '#/components/scheme/MeasureType'
+        geographical_area:
+          description: The geographical area this geographical area applies to
+          $ref: '#/components/scheme/GeographicalArea'
+        excluded_geographical_areas:
+          type: array
+          description: The geographical areas excluded from this geographical area
+          items:
+            $ref: '#/components/scheme/GeographicalArea'
+        footnotes:
+          type: array
+          description: The footnotes for this measure
+          items:
+            $ref: '#/components/scheme/Footnote'
+      required:
+        - id
+        - import
+        - export
+        - excise
+        - vat
+        - effective_start_date
+        - effective_end_date
+        - categorisation
+        - geographical_area
+      example:
+        data:
+          id: "20098001"
+          type: measure
+          attributes:
+            import: true
+            export: false
+            excise: false
+            vat: false
+            effective_start_date: "2021-01-01T00:00:00.000Z"
+            effective_end_date: null
+          relationships:
+            categorisation:
+              data:
+                id: abcd1234
+                type: categorisation
+            measure_type:
+              data:
+                id: "410"
+                type: measure_type
+            geographical_area:
+              data:
+                id: "EG"
+                type: geographical_area
+            excluded_geographical_areas:
+              data: []
+            footnotes:
+              data:
+                - id: CD624
+                  type: footnote
+
+    MeasureType:
+      description: A referenced measure_type object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this measure
+        description:
+          type: string
+          description: The description for the measure type
+        measure_type_series_description:
+          type: string
+          description: The description of the measure type series
+        validity_start_date:
+          type: string
+          description: The validity start date of the measure type
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The validity end date of the measure type
+          format: date-time
+          nullable: true
+        measure_type_series_id:
+          type: string
+          description: A single char representing measure type series.
+          format: byte
+        trade_movement_code:
+          type: integer
+          description: The code of trade movement.
+      example:
+        data:
+          id: "110"
+          type: measure_type
+        attributes:
+          description: "Supplementary unit import"
+          measure_type_series_description: "Supplementary unit"
+          validity_start_date: "1972-01-01T00:00:00.000Z"
+          validity_end_date: null
+          measure_type_series_id: "O"
+          trade_movement_code: 0
