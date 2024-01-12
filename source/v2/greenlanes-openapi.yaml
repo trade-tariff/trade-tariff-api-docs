@@ -84,10 +84,10 @@ paths:
       responses:
         200:
           description: An array of Categorisations
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Categorisation"
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/Categorisation"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -145,10 +145,10 @@ paths:
       responses:
         200:
           description: A GoodsNomenclature and a list of possible Categorisations
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GoodsNomenclature" # FIXME
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/GoodsNomenclature"
         401:
           description: Authorization header is missing or contains an invalid token
         404:
