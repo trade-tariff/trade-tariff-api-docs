@@ -137,10 +137,11 @@ paths:
           in: query
           required: false
           description: |
-            Something
+            A geographical area code you wish to use to filter the possible
+            categorisation information
           schema:
             type: string
-            minimum: 1
+            minimum: 2
             example: "US"
       responses:
         200:
