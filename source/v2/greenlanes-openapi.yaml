@@ -63,9 +63,9 @@ info:
 paths:
   /green_lanes/categorisations:
     get:
-      summary: Returns a list of all permutations and their categorisation
+      summary: Returns a list of all categorisations
       description: >
-        Returns a list of the different permutations and their categorisation
+        Returns a list of the different categorisations
       tags:
         - Green Lanes
       parameters:
@@ -73,7 +73,7 @@ paths:
           in: query
           required: false
           description: |
-            Returns the permutations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
+            Returns the categorisations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
 
             While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used
@@ -83,11 +83,11 @@ paths:
             format: date
       responses:
         200:
-          description: An array of Permutations and their Categorisation
+          description: An array of Categorisations
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Permutation" # FIXME
+                $ref: "#/components/schemas/Categorisation"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -105,7 +105,7 @@ paths:
     get:
       summary: Returns possible categorisations for the requested Goods Nomenclature
       description: >
-        Returns a list of the different permutations and their categorisation for the Goods Nomenclature Item Id specified in the path
+        Returns the requested Goods Nomenclature together with relevant data including a list of the different possible categorisations for the Goods Nomenclature
       tags:
         - Green Lanes
       parameters:
@@ -125,7 +125,7 @@ paths:
           in: query
           required: false
           description: |
-            Returns the permutations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
+            Returns tariff data as it applies on the `as_of` date
 
             While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used
@@ -556,3 +556,26 @@ components:
           validity_end_date: null
           measure_type_series_id: "O"
           trade_movement_code: 0
+
+    Footnote:
+      description: A referenced footnote object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the footnote
+        code:
+          type: string
+          description: The `code` for the footnote
+        description:
+          type: string
+          description: The `description` for the footnote
+      example:
+        data:
+          id: TN701
+          type: footnote
+        attributes:
+          code: TN701
+          description: "According to  the Council Regulation (EU) No 692/2014
+            (OJ L183, p. 9) it shall be prohibited to import into European Union
+            goods originating in Crimea or Sevastopol.\n..."
