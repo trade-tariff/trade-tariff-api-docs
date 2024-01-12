@@ -219,7 +219,6 @@ components:
         - productline_suffix
         - validity_start_date
         - validity_end_date
-        - measures
       example:
         data:
           id: 70361
