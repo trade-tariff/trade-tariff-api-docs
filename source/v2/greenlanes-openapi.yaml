@@ -83,11 +83,13 @@ paths:
             format: date
       responses:
         200:
-          description: An array of PossibleCategorisations
-          # content:
-          #   application/json:
-          #     schema:
-          #       $ref: "#/components/schemas/Categorisation"
+          description: An array of Categorisations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PossibleCategorisation"
+              example:
+                $ref: "#/components/schemas/PossibleCategorisation/example"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -98,8 +100,8 @@ paths:
         /api/v2/green_lanes/possible_categorisations:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations?as_of=2024-01-01
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations?as_of=2024-01-01
 
   /green_lanes/goods_nomenclatures/{id}:
     get:
@@ -146,10 +148,12 @@ paths:
       responses:
         200:
           description: A GoodsNomenclature and a list of possible Categorisations
-          # content:
-          #   application/json:
-          #     schema:
-          #       $ref: "#/components/schemas/GoodsNomenclature"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GoodsNomenclature"
+              example:
+                $ref: "#/components/schemas/GoodsNomenclature/example"
         401:
           description: Authorization header is missing or contains an invalid token
         404:
@@ -162,10 +166,10 @@ paths:
         /api/v2/chemical_substances:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?origin=US
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&origin=US
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?origin=US
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&origin=US
 
 components:
   schemas:
@@ -281,25 +285,52 @@ components:
         data:
           id: abcd1234
           type: possible_categorisation
-        attributes:
-          category: 1
-        relationships:
-          geographical_area:
-            data:
-              id: 1011
-              type: geographical_area
-          excluded_geographical_areas:
-            data: []
-          theme:
-            data:
-              id: 1.1
-              type: theme
-          exemptions:
-            data:
-              - id: D005
-                type: certificate
-              - id: C371
-                type: additional_code
+          attributes:
+            category: 1
+          relationships:
+            geographical_area:
+              data:
+                id: 1011
+                type: geographical_area
+            excluded_geographical_areas:
+              data: []
+            theme:
+              data:
+                id: 1.1
+                type: theme
+            exemptions:
+              data:
+                - id: D005
+                  type: certificate
+                - id: C371
+                  type: additional_code
+        included:
+          - id: 1011
+            type: geographical_area
+            attributes:
+              description: ERGA OMNES
+              geographical_area_id: "1011"
+          - id: 1.1
+            type: theme
+            attributes:
+              theme: Sanctions
+              description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
+              implied_category: 1
+          - id: D005
+            type: certificate
+            attributes:
+              certificate_type_code: D
+              certificate_code: "005"
+              description: "Commercial invoice within the framework of undertakings"
+          - id: C371
+            type: additional_code
+            attributes:
+              additional_code_type_id: C
+              additional_code: "371"
+              code: C371
+              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+
 
     Theme:
       description: A Green Lane Theme within the Windsor Framework
@@ -328,10 +359,10 @@ components:
         data:
           id: 1.1
           type: theme
-        attributes:
-          theme: Sanctions
-          description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
-          implied_category: 1
+          attributes:
+            theme: Sanctions
+            description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
+            implied_category: 1
     
     GeographicalArea:
       description: A geographical_area object
@@ -354,9 +385,9 @@ components:
         data:
           id: 1011
           type: geographical_area
-        attributes:
-          description: ERGA OMNES
-          geographical_area_id: "1011"
+          attributes:
+            description: ERGA OMNES
+            geographical_area_id: "1011"
 
     Certificate:
       description: A certificate object
@@ -383,10 +414,10 @@ components:
         data:
           id: D005
           type: certificate
-        attributes:
-          certificate_type_code: D
-          certificate_code: "005"
-          description: "Commercial invoice within the framework of undertakings"
+          attributes:
+            certificate_type_code: D
+            certificate_code: "005"
+            description: "Commercial invoice within the framework of undertakings"
 
     AdditionalCode:
       description: An additional_code object
@@ -421,12 +452,12 @@ components:
         data:
           id: C371
           type: additional_code
-        attributes:
-          additional_code_type_id: C
-          additional_code: "371"
-          code: C371
-          description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-          formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+          attributes:
+            additional_code_type_id: C
+            additional_code: "371"
+            code: C371
+            description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+            formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
     Measure:
       description: A green lanes measure object.
