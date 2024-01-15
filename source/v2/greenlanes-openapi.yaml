@@ -28,7 +28,7 @@ info:
     The token should be included with the API request via the standard HTTP Authorization header, eg.
 
     ```
-    Authorization: Bearer <SUPPLIED TOKEN>
+    Authorization: Token <SUPPLIED TOKEN>
     ```
 
     ## Latest changes
@@ -61,11 +61,11 @@ info:
     <% end %>
 
 paths:
-  /green_lanes/categorisations:
+  /green_lanes/possible_categorisations:
     get:
-      summary: Returns a list of all categorisations
+      summary: Returns a list of all possible categorisations
       description: >
-        Returns a list of the different categorisations
+        Returns a list of the all possible categorisations
       tags:
         - Green Lanes
       parameters:
@@ -73,7 +73,7 @@ paths:
           in: query
           required: false
           description: |
-            Returns the categorisations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
+            Returns the possible categorisations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
 
             While this is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct. As caching is used
@@ -83,7 +83,7 @@ paths:
             format: date
       responses:
         200:
-          description: An array of Categorisations
+          description: An array of PossibleCategorisations
           # content:
           #   application/json:
           #     schema:
@@ -95,11 +95,11 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/green_lanes/categorisations:
+        /api/v2/green_lanes/possible_categorisations:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/categorisations
-            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/categorisations?as_of=2024-01-01
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations
+            curl -X GET https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations?as_of=2024-01-01
 
   /green_lanes/goods_nomenclatures/{id}:
     get:
@@ -133,7 +133,7 @@ paths:
           schema:
             type: string
             format: date
-        - name: origin
+        - name: filter[geographical_area_id]
           in: query
           required: false
           description: |
@@ -201,7 +201,7 @@ components:
           type: array
           description: A list of possible categorisations for this Goods Nomenclature
           items:
-            $ref: '#/components/schemas/Categorisation'
+            $ref: '#/components/schemas/PossibleCategorisation'
         ancestors:
           type: array
           description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
@@ -235,11 +235,11 @@ components:
           possible_categorisations:
             data:
               - id: abcd1234
-                type: categorisation
+                type: possible_categorisation
               - id: c5678def
-                type: categorisation
+                type: possible_categorisation
 
-    Categorisation:
+    PossibleCategorisation:
       description: A possible categorisation for a Goods Nomenclature
       type: object
       properties:
@@ -280,7 +280,7 @@ components:
       example:
         data:
           id: abcd1234
-          type: categorisation
+          type: possible_categorisation
         attributes:
           category: 1
         relationships:
@@ -456,7 +456,7 @@ components:
           description: The effective end date of the measure.
           format: date-time
           nullable: true
-        categorisation:
+        possible_categorisation:
           description: The possible_categorisation derived from this measure
           $ref: '#/components/scheme/PossibleCategorisation'
         measure_type:
@@ -483,7 +483,7 @@ components:
         - vat
         - effective_start_date
         - effective_end_date
-        - categorisation
+        - possible_categorisation
         - geographical_area
       example:
         data:
@@ -497,10 +497,10 @@ components:
             effective_start_date: "2021-01-01T00:00:00.000Z"
             effective_end_date: null
           relationships:
-            categorisation:
+            possible_categorisation:
               data:
                 id: abcd1234
-                type: categorisation
+                type: possible_categorisation
             measure_type:
               data:
                 id: "410"
