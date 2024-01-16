@@ -157,8 +157,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GoodsNomenclature"
-              example:
-                $ref: "#/components/schemas/GoodsNomenclature/example"
         401:
           description: Authorization header is missing or contains an invalid token
         404:
@@ -216,16 +214,16 @@ components:
           description: A list of possible categorisations for this Goods Nomenclature
           items:
             $ref: '#/components/schemas/Categorisation'
-        ancestors:
-          type: array
-          description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
-          items:
-            $ref: '#/components/schemas/GoodsNomenclature'
-        measures:
-          type: array
-          description: A list of green lanes relevant measures against this GoodsNomenclature
-          items:
-            $ref: '#/components/schemas/Measure'
+        # ancestors:
+        #   type: array
+        #   description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
+        #   items:
+        #     $ref: '#/components/schemas/GoodsNomenclature'
+        # measures:
+        #   type: array
+        #   description: A list of green lanes relevant measures against this GoodsNomenclature
+        #   items:
+        #     $ref: '#/components/schemas/Measure'
       required:
         - id
         - goods_nomenclature_item_id
