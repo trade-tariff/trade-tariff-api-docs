@@ -250,6 +250,69 @@ components:
                   type: categorisation
                 - id: c5678def
                   type: categorisation
+        included:
+          - id: abcd1234
+            type: categorisation
+            attributes:
+              category: 1
+            relationships:
+              geographical_area:
+                data:
+                  id: 1011
+                  type: geographical_area
+              excluded_geographical_areas:
+                data: []
+              theme:
+                data:
+                  id: 1.1
+                  type: theme
+              exemptions:
+                data:
+                  - id: D005
+                    type: certificate
+                  - id: C371
+                    type: additional_code
+          - id: c5678def
+            type: categorisation
+            attributes:
+              category: 1
+            relationships:
+              geographical_area:
+                data:
+                  id: 1011
+                  type: geographical_area
+              excluded_geographical_areas:
+                data: []
+              theme:
+                data:
+                  id: 1.1
+                  type: theme
+              exemptions: []
+          - id: 1011
+            type: geographical_area
+            attributes:
+              description: ERGA OMNES
+              geographical_area_id: "1011"
+          - id: 1.1
+            type: theme
+            attributes:
+              theme: Sanctions
+              description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
+              implied_category: 1
+          - id: D005
+            type: certificate
+            attributes:
+              certificate_type_code: D
+              certificate_code: "005"
+              description: "Commercial invoice within the framework of undertakings"
+          - id: C371
+            type: additional_code
+            attributes:
+              additional_code_type_id: C
+              additional_code: "371"
+              code: C371
+              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
     Categorisation:
       description: A possible categorisation for a Goods Nomenclature
