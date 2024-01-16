@@ -3,6 +3,9 @@ openapi: 3.1.0
 servers:
   - url: https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes
 
+security:
+- bearerAuth: []
+
 info:
   version: "2"
   title: Windsor Framework Green Lanes Categorisation API
@@ -11,19 +14,23 @@ info:
       <link href="/green-lanes.xml" type="application/atom+xml" rel="alternate" title="Green Lanes api changes feed" />
     <% end %>
 
-    The Green Lanes Categorisation api's provide access to categorisation data for the different Commodities and Subheadings within the Tariff.
+    The Green Lanes Categorisation API's provide access to categorisation data for the different Commodities and Subheadings within the Tariff.
 
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-visually-hidden">Warning</span>
-        These APIs are currently considered Experimental and are subject to change or removal
+        DRAFT: These APIs are currently in development and not yet available.
+        <br /><br />
+        The APIs are subject to change and this document will be updated as the API development evolves.
+        <br /><br />
+        An RSS feed is available for notification of changes - see below.
       </strong>
     </div>
 
     ## Authentication
 
-    Access to these APIs is initially restricted whilst they are in development - if you are an approved partner and require an access token, please contact the Online Trade Tariff team.
+    Access to these APIs will be restricted initially whilst they are in development. Approved partners requiring access should contact the Online Trade Tariff team.
 
     The token should be included with the API request via the standard HTTP Authorization header, eg.
 
@@ -88,8 +95,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Categorisation"
-              example:
-                $ref: "#/components/schemas/Categorisation/example"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -172,6 +177,11 @@ paths:
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&origin=US
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
   schemas:
     GoodsNomenclature:
       description: A goods_nomenclature object
@@ -239,9 +249,9 @@ components:
             possible_categorisations:
               data:
                 - id: abcd1234
-                  type: possible_categorisation
+                  type: categorisation
                 - id: c5678def
-                  type: possible_categorisation
+                  type: categorisation
 
     Categorisation:
       description: A possible categorisation for a Goods Nomenclature
@@ -284,7 +294,7 @@ components:
       example:
         data:
           id: abcd1234
-          type: possible_categorisation
+          type: categorisation
           attributes:
             category: 1
           relationships:
@@ -531,7 +541,7 @@ components:
             possible_categorisation:
               data:
                 id: abcd1234
-                type: possible_categorisation
+                type: categorisation
             measure_type:
               data:
                 id: "410"
