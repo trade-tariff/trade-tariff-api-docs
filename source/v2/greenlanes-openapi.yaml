@@ -61,7 +61,7 @@ info:
     <% end %>
 
 paths:
-  /green_lanes/possible_categorisations:
+  /green_lanes/categorisations:
     get:
       summary: Returns a list of all possible categorisations
       description: >
@@ -87,9 +87,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PossibleCategorisation"
+                $ref: "#/components/schemas/Categorisation"
               example:
-                $ref: "#/components/schemas/PossibleCategorisation/example"
+                $ref: "#/components/schemas/Categorisation/example"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -97,7 +97,7 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/green_lanes/possible_categorisations:
+        /api/v2/green_lanes/categorisations:
           lang: shell
           source: |-
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations
@@ -163,7 +163,7 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/chemical_substances:
+        /api/v2/goods_nomenclatures/0712909000:
           lang: shell
           source: |-
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
@@ -205,7 +205,7 @@ components:
           type: array
           description: A list of possible categorisations for this Goods Nomenclature
           items:
-            $ref: '#/components/schemas/PossibleCategorisation'
+            $ref: '#/components/schemas/Categorisation'
         ancestors:
           type: array
           description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
@@ -228,22 +228,22 @@ components:
         data:
           id: 70361
           type: goods_nomenclature
-        attributes:
-          goods_nomenclature_item_id: "0702000007"
-          description: Cherry tomatoes
-          number_indents: 1
-          productline_suffix: "80"
-          validity_start_date: "1999-01-01T00:00:00.000Z"
-          validity_end_date: null
-        relationships:
-          possible_categorisations:
-            data:
-              - id: abcd1234
-                type: possible_categorisation
-              - id: c5678def
-                type: possible_categorisation
+          attributes:
+            goods_nomenclature_item_id: "0702000007"
+            description: Cherry tomatoes
+            number_indents: 1
+            productline_suffix: "80"
+            validity_start_date: "1999-01-01T00:00:00.000Z"
+            validity_end_date: null
+          relationships:
+            possible_categorisations:
+              data:
+                - id: abcd1234
+                  type: possible_categorisation
+                - id: c5678def
+                  type: possible_categorisation
 
-    PossibleCategorisation:
+    Categorisation:
       description: A possible categorisation for a Goods Nomenclature
       type: object
       properties:
@@ -489,7 +489,7 @@ components:
           nullable: true
         possible_categorisation:
           description: The possible_categorisation derived from this measure
-          $ref: '#/components/scheme/PossibleCategorisation'
+          $ref: '#/components/scheme/Categorisation'
         measure_type:
           description: The measure type associated with this measure
           $ref: '#/components/scheme/MeasureType'
@@ -580,13 +580,13 @@ components:
         data:
           id: "110"
           type: measure_type
-        attributes:
-          description: "Supplementary unit import"
-          measure_type_series_description: "Supplementary unit"
-          validity_start_date: "1972-01-01T00:00:00.000Z"
-          validity_end_date: null
-          measure_type_series_id: "O"
-          trade_movement_code: 0
+          attributes:
+            description: "Supplementary unit import"
+            measure_type_series_description: "Supplementary unit"
+            validity_start_date: "1972-01-01T00:00:00.000Z"
+            validity_end_date: null
+            measure_type_series_id: "O"
+            trade_movement_code: 0
 
     Footnote:
       description: A referenced footnote object
@@ -605,8 +605,8 @@ components:
         data:
           id: TN701
           type: footnote
-        attributes:
-          code: TN701
-          description: "According to  the Council Regulation (EU) No 692/2014
-            (OJ L183, p. 9) it shall be prohibited to import into European Union
-            goods originating in Crimea or Sevastopol.\n..."
+          attributes:
+            code: TN701
+            description: "According to  the Council Regulation (EU) No 692/2014
+              (OJ L183, p. 9) it shall be prohibited to import into European Union
+              goods originating in Crimea or Sevastopol.\n..."
