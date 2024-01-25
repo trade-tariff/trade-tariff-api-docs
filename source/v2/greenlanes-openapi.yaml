@@ -254,6 +254,7 @@ components:
             type: category_assessments
             attributes:
               category: 1
+              theme: 1.1 Sanctions
             relationships:
               geographical_area:
                 data:
@@ -261,10 +262,6 @@ components:
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
-              theme:
-                data:
-                  id: 1.1
-                  type: theme
               exemptions:
                 data:
                   - id: D005
@@ -275,6 +272,7 @@ components:
             type: category_assessment
             attributes:
               category: 1
+              theme: 1.1 Sanctions
             relationships:
               geographical_area:
                 data:
@@ -282,22 +280,12 @@ components:
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
-              theme:
-                data:
-                  id: 1.1
-                  type: theme
               exemptions: []
           - id: 1011
             type: geographical_area
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: 1.1
-            type: theme
-            attributes:
-              theme: Sanctions
-              description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
-              implied_category: 1
           - id: D005
             type: certificate
             attributes:
@@ -325,9 +313,6 @@ components:
           description: The category applicable unless exemption criteria are met
           minimum: 1
           maximum: 3
-        theme:
-          description: The Green Lanes Theme used as the basis for this possible Category Assessment
-          $ref: '#/components/scheme/Theme'
         geographical_area:
           description: The geographical area this possible Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
@@ -349,7 +334,6 @@ components:
       required:
         - id
         - category
-        - theme
         - geographical_area
       example:
         data:
@@ -357,6 +341,7 @@ components:
           type: category_assessment
           attributes:
             category: 1
+            theme: 1.1 Sanctions
           relationships:
             geographical_area:
               data:
@@ -364,10 +349,6 @@ components:
                 type: geographical_area
             excluded_geographical_areas:
               data: []
-            theme:
-              data:
-                id: 1.1
-                type: theme
             exemptions:
               data:
                 - id: D005
@@ -380,12 +361,6 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: 1.1
-            type: theme
-            attributes:
-              theme: Sanctions
-              description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
-              implied_category: 1
           - id: D005
             type: certificate
             attributes:
@@ -400,39 +375,6 @@ components:
               code: C371
               description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
               formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-
-
-    Theme:
-      description: A Green Lane Theme within the Windsor Framework
-      type: object
-      properties:
-        id:
-          type: string
-          description: The relevant section number for this Green Lanes theme
-        theme:
-          type: string
-          description: Green Lanes Theme
-        description:
-          type: string
-          description: Full description text of theme
-        implied_category:
-          type: integer
-          minimum: 1
-          maximum: 3
-          description: The green lanes category for the theme in the absence of an exemption
-      required:
-        - id
-        - theme
-        - description
-        - implied_category
-      example:
-        data:
-          id: 1.1
-          type: theme
-          attributes:
-            theme: Sanctions
-            description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
-            implied_category: 1
     
     GeographicalArea:
       description: A geographical_area object
