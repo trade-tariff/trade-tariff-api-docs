@@ -68,11 +68,11 @@ info:
     <% end %>
 
 paths:
-  /green_lanes/categorisations:
+  /green_lanes/category_assessments:
     get:
-      summary: Returns a list of all possible categorisations
+      summary: Returns a list of all possible category assessments
       description: >
-        Returns a list of the all possible categorisations
+        Returns a list of the all possible category assessments
       tags:
         - Green Lanes
       parameters:
@@ -80,21 +80,20 @@ paths:
           in: query
           required: false
           description: |
-            Returns the possible categorisations as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
+            Returns the possible category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
 
-            While this is not a required field it is advised to include it with all requests even
-            if requesting data for today to ensure the data returned is correct. As caching is used
-            on the API this will ensure the data returned is as expected.
+            While `as_of` is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct.
           schema:
             type: string
             format: date
       responses:
         200:
-          description: An array of Categorisations
+          description: An array of CategoryAssessment's
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Categorisation"
+                $ref: "#/components/schemas/CategoryAssessment"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -102,17 +101,17 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/green_lanes/categorisations:
+        /api/v2/green_lanes/category_assessments:
           lang: shell
           source: |-
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/possible_categorisations?as_of=2024-01-01
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments?as_of=2024-01-01
 
   /green_lanes/goods_nomenclatures/{id}:
     get:
-      summary: Returns possible categorisations for the requested Goods Nomenclature
+      summary: Returns possible Category Assessments for the requested Goods Nomenclature
       description: >
-        Returns the requested Goods Nomenclature together with relevant data including a list of the different possible categorisations for the Goods Nomenclature
+        Returns the requested Goods Nomenclature together with relevant data including a list of the different possible Category Assessments for the Goods Nomenclature
       tags:
         - Green Lanes
       parameters:
@@ -120,7 +119,7 @@ paths:
           in: path
           required: true
           description: |
-            Item Id of the Goods Nomenclature you are requesting categorisation information for.
+            Item Id of the Goods Nomenclature you are requesting Category Assessments information for.
 
             This is the full 10 digit item id of either a Subheading or Commodity. If you are working with truncated item ids, ie truncated to 6 or 8 significant digits, then pad to 10 with trailing zero's - so 123456 would submitted as 1234560000.
           schema:
@@ -145,14 +144,14 @@ paths:
           required: false
           description: |
             A geographical area code you wish to use to filter the possible
-            categorisation information
+            Category Assessment information
           schema:
             type: string
             minimum: 2
             example: "US"
       responses:
         200:
-          description: A GoodsNomenclature and a list of possible Categorisations
+          description: A GoodsNomenclature and a list of possible Category Assessments
           content:
             application/json:
               schema:
@@ -209,11 +208,11 @@ components:
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
           nullable: true
-        possible_categorisations:
+        applicable_category_assessments:
           type: array
-          description: A list of possible categorisations for this Goods Nomenclature
+          description: A list of applicable Category Assessments for this Goods Nomenclature
           items:
-            $ref: '#/components/schemas/Categorisation'
+            $ref: '#/components/schemas/CategoryAssessment'
         # ancestors:
         #   type: array
         #   description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
@@ -244,15 +243,15 @@ components:
             validity_start_date: "1999-01-01T00:00:00.000Z"
             validity_end_date: null
           relationships:
-            possible_categorisations:
+            applicable_category_assessments:
               data:
                 - id: abcd1234
-                  type: categorisation
+                  type: category_assessment
                 - id: c5678def
-                  type: categorisation
+                  type: category_assessment
         included:
           - id: abcd1234
-            type: categorisation
+            type: category_assessments
             attributes:
               category: 1
             relationships:
@@ -273,7 +272,7 @@ components:
                   - id: C371
                     type: additional_code
           - id: c5678def
-            type: categorisation
+            type: category_assessment
             attributes:
               category: 1
             relationships:
@@ -314,33 +313,33 @@ components:
               description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
               formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
-    Categorisation:
-      description: A possible categorisation for a Goods Nomenclature
+    CategoryAssessment:
+      description: An possible Category Assessment for a Goods Nomenclature
       type: object
       properties:
         id:
           type: string
-          description: The unique identifier for this categorisation
+          description: The unique identifier for this category assessement
         category:
           type: integer
           description: The category applicable unless exemption criteria are met
           minimum: 1
           maximum: 3
         theme:
-          description: The Green Lanes Theme used as the basis for this possible categorisation
+          description: The Green Lanes Theme used as the basis for this possible Category Assessment
           $ref: '#/components/scheme/Theme'
         geographical_area:
-          description: The geographical area this possible categorisation applies to
+          description: The geographical area this possible Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
         excluded_geographical_areas:
           type: array
-          description: The geographical areas excluded from this possible categorisation
+          description: The geographical areas excluded from this possible Category Assessment
           items:
             $ref: '#/components/scheme/GeographicalArea'
         exemptions:
           type: array
           description: |
-            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this categorisation
+            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment
 
             _NB - Polymorphic array of Certificate and Additional Code objects_
           items:
@@ -355,7 +354,7 @@ components:
       example:
         data:
           id: abcd1234
-          type: categorisation
+          type: category_assessment
           attributes:
             category: 1
           relationships:
