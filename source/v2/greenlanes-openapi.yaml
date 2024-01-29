@@ -310,9 +310,13 @@ components:
           description: The unique identifier for this category assessement
         category:
           type: integer
-          description: The category applicable unless exemption criteria are met
-          minimum: 1
-          maximum: 3
+          enum: [ 1, 2, 3 ]
+          description: |
+            The category applicable unless exemption criteria are met<br>
+            <br>
+            Category 1 = Prohibited<br>
+            Category 2 = Controlled<br>
+            Category 3 = Exempted
         geographical_area:
           description: The geographical area this possible Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
@@ -324,8 +328,8 @@ components:
         exemptions:
           type: array
           description: |
-            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment
-
+            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment<br>
+            <br>
             _NB - Polymorphic array of Certificate and Additional Code objects_
           items:
             oneOf:
