@@ -275,6 +275,10 @@ components:
               excluded_geographical_areas:
                 data: []
               exemptions: []
+              measures:
+                data:
+                  - id: "20098001"
+                    type: measure
           - id: 1011
             type: geographical_area
             attributes:
@@ -294,6 +298,53 @@ components:
               code: C371
               description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
               formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+          - id: "20098001"
+            type: measure
+            attributes:
+              import: true
+              export: false
+              excise: false
+              vat: false
+              effective_start_date: "2021-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              goods_nomenclature:
+              data:
+                id: "30256"
+                type: goods_nomenclature
+              measure_type:
+                data:
+                  id: "410"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: CD624
+                    type: footnote
+          - id: 30256
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "0702000000"
+              description: Tomatoes, fresh or chilled
+              number_indents: 0
+              productline_suffix: "80"
+              validity_start_date: "1999-01-01T00:00:00.000Z"
+              validity_end_date: null
+          - id: "110"
+            type: measure_type
+            attributes:
+              description: "Supplementary unit import"
+              measure_type_series_description: "Supplementary unit"
+              validity_start_date: "1972-01-01T00:00:00.000Z"
+              validity_end_date: null
+              measure_type_series_id: "O"
+              trade_movement_code: 0
+          - id: TN701
+            type: footnote
+            attributes:
+              code: TN701
+              description: "According to  the Council Regulation (EU) No 692/2014
+                (OJ L183, p. 9) it shall be prohibited to import into European Union
+                goods originating in Crimea or Sevastopol.\n..."
 
     CategoryAssessment:
       description: An possible CategoryAssessment for the requested GoodsNomenclature
@@ -533,6 +584,10 @@ components:
             effective_start_date: "2021-01-01T00:00:00.000Z"
             effective_end_date: null
           relationships:
+            goods_nomenclature:
+              data:
+                id: "30256"
+                type: goods_nomenclature
             measure_type:
               data:
                 id: "410"
