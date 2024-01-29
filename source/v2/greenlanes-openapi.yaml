@@ -227,7 +227,7 @@ components:
         - validity_end_date
       example:
         data:
-          id: 70361
+          id: "70361"
           type: goods_nomenclature
           attributes:
             goods_nomenclature_item_id: "0702000007"
@@ -252,7 +252,7 @@ components:
             relationships:
               geographical_area:
                 data:
-                  id: 1011
+                  id: "1011"
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
@@ -270,7 +270,7 @@ components:
             relationships:
               geographical_area:
                 data:
-                  id: 1011
+                  id: "1011"
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
@@ -279,7 +279,7 @@ components:
                 data:
                   - id: "20098001"
                     type: measure
-          - id: 1011
+          - id: "1011"
             type: geographical_area
             attributes:
               description: ERGA OMNES
@@ -320,7 +320,7 @@ components:
                 data:
                   - id: CD624
                     type: footnote
-          - id: 30256
+          - id: "30256"
             type: goods_nomenclature
             attributes:
               goods_nomenclature_item_id: "0702000000"
@@ -399,7 +399,7 @@ components:
           relationships:
             geographical_area:
               data:
-                id: 1011
+                id: "1011"
                 type: geographical_area
             excluded_geographical_areas:
               data: []
@@ -410,7 +410,7 @@ components:
                 - id: C371
                   type: additional_code
         included:
-          - id: 1011
+          - id: "1011"
             type: geographical_area
             attributes:
               description: ERGA OMNES
@@ -449,7 +449,7 @@ components:
         - geographical_area_id
       example:
         data:
-          id: 1011
+          id: "1011"
           type: geographical_area
           attributes:
             description: ERGA OMNES
@@ -699,7 +699,7 @@ components:
         - validity_end_date
       example:
         data:
-          id: 70361
+          id: "70361"
           type: goods_nomenclature
           attributes:
             goods_nomenclature_item_id: "0702000000"
@@ -758,7 +758,7 @@ components:
             relationships:
               geographical_area:
                 data:
-                  id: 1011
+                  id: "1011"
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
@@ -776,14 +776,14 @@ components:
             relationships:
               geographical_area:
                 data:
-                  id: 1011
+                  id: "1011"
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
               exemptions:
                 data: []
         included:
-          - id: 1011
+          - id: "1011"
             type: geographical_area
             attributes:
               description: ERGA OMNES
