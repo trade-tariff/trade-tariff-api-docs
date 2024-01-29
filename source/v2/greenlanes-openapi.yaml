@@ -93,7 +93,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CategoryAssessment"
+                $ref: "#/components/schemas/CategoryAssessmentListing"
         401:
           description: Authorization header is missing or contains an invalid token
         422:
@@ -626,3 +626,97 @@ components:
     #         description: "According to  the Council Regulation (EU) No 692/2014
     #           (OJ L183, p. 9) it shall be prohibited to import into European Union
     #           goods originating in Crimea or Sevastopol.\n..."
+
+    CategoryAssessmentListing:
+      description: Listing of all category assessments
+      type: array
+      properties:
+        properties:
+        id:
+          type: string
+          description: The unique identifier for this category assessement
+        category:
+          type: integer
+          enum: [ 1, 2, 3 ]
+          description: |
+            The category applicable unless exemption criteria are met<br>
+            <br>
+            Category 1 = Prohibited<br>
+            Category 2 = Controlled<br>
+            Category 3 = Exempted
+        geographical_area:
+          description: The geographical area this possible Category Assessment applies to
+          $ref: '#/components/scheme/GeographicalArea'
+        excluded_geographical_areas:
+          type: array
+          description: The geographical areas excluded from this possible Category Assessment
+          items:
+            $ref: '#/components/scheme/GeographicalArea'
+        exemptions:
+          type: array
+          description: |
+            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment<br>
+            <br>
+            _NB - Polymorphic array of Certificate and Additional Code objects_
+          items:
+            oneOf:
+              - $ref: '#/components/scheme/Certificate'
+              - $ref: '#/components/scheme/AdditionalCode'
+      required:
+        - id
+        - category
+        - geographical_area
+      example:
+        data:
+          - id: abcd1234
+            type: category_assessment
+            attributes:
+              category: 1
+              theme: 1.1 Sanctions
+            relationships:
+              geographical_area:
+                data:
+                  id: 1011
+                  type: geographical_area
+              excluded_geographical_areas:
+                data: []
+              exemptions:
+                data:
+                  - id: D005
+                    type: certificate
+                  - id: C371
+                    type: additional_code
+          - id: abcd1234
+            type: category_assessment
+            attributes:
+              category: 1
+              theme: 1.1 Sanctions
+            relationships:
+              geographical_area:
+                data:
+                  id: 1011
+                  type: geographical_area
+              excluded_geographical_areas:
+                data: []
+              exemptions:
+                data: []
+        included:
+          - id: 1011
+            type: geographical_area
+            attributes:
+              description: ERGA OMNES
+              geographical_area_id: "1011"
+          - id: D005
+            type: certificate
+            attributes:
+              certificate_type_code: D
+              certificate_code: "005"
+              description: "Commercial invoice within the framework of undertakings"
+          - id: C371
+            type: additional_code
+            attributes:
+              additional_code_type_id: C
+              additional_code: "371"
+              code: C371
+              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
