@@ -213,16 +213,6 @@ components:
           description: A list of applicable Category Assessments for this Goods Nomenclature
           items:
             $ref: '#/components/schemas/CategoryAssessment'
-        # ancestors:
-        #   type: array
-        #   description: A list of ancestor GoodsNomenclature ordered according to the Tariff hierarchy
-        #   items:
-        #     $ref: '#/components/schemas/GoodsNomenclature'
-        # measures:
-        #   type: array
-        #   description: A list of green lanes relevant measures against this GoodsNomenclature
-        #   items:
-        #     $ref: '#/components/schemas/Measure'
       required:
         - id
         - goods_nomenclature_item_id
@@ -302,7 +292,7 @@ components:
               formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
     CategoryAssessment:
-      description: An possible Category Assessment for a Goods Nomenclature
+      description: An possible CategoryAssessment for the requested GoodsNomenclature
       type: object
       properties:
         id:
@@ -335,6 +325,11 @@ components:
             oneOf:
               - $ref: '#/components/scheme/Certificate'
               - $ref: '#/components/scheme/AdditionalCode'
+        measures:
+          type: array
+          description: A list of Measures resulting in this CategoryAssessment
+          items:
+            $ref: '#/components/schemas/Measure'
       required:
         - id
         - category
@@ -381,7 +376,7 @@ components:
               formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
     
     GeographicalArea:
-      description: A geographical_area object
+      description: A GeographicalArea object
       type: object
       properties:
         id:
@@ -406,7 +401,7 @@ components:
             geographical_area_id: "1011"
 
     Certificate:
-      description: A certificate object
+      description: A Certificate object
       type: object
       properties:
         id:
@@ -436,7 +431,7 @@ components:
             description: "Commercial invoice within the framework of undertakings"
 
     AdditionalCode:
-      description: An additional_code object
+      description: An AdditionalCode object
       type: object
       properties:
         id:
@@ -475,157 +470,185 @@ components:
             description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
             formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
-    # Measure:
-    #   description: A green lanes measure object.
-    #   type: object
-    #   properties:
-    #     id:
-    #       type: string
-    #       description: The unique identifier for this measure
-    #     import:
-    #       type: boolean
-    #       description: The import of the measure.
-    #     export:
-    #       type: boolean
-    #       description: The export of the measure.
-    #     excise:
-    #       type: boolean
-    #       description: The excise of the measure.
-    #     vat:
-    #       type: boolean
-    #       description: The vat of the measure.
-    #     effective_start_date:
-    #       type: string
-    #       description: The effective start date of the measure.
-    #       format: date-time
-    #     effective_end_date:
-    #       type: string
-    #       description: The effective end date of the measure.
-    #       format: date-time
-    #       nullable: true
-    #     possible_categorisation:
-    #       description: The possible_categorisation derived from this measure
-    #       $ref: '#/components/scheme/Categorisation'
-    #     measure_type:
-    #       description: The measure type associated with this measure
-    #       $ref: '#/components/scheme/MeasureType'
-    #     geographical_area:
-    #       description: The geographical area this geographical area applies to
-    #       $ref: '#/components/scheme/GeographicalArea'
-    #     excluded_geographical_areas:
-    #       type: array
-    #       description: The geographical areas excluded from this geographical area
-    #       items:
-    #         $ref: '#/components/scheme/GeographicalArea'
-    #     footnotes:
-    #       type: array
-    #       description: The footnotes for this measure
-    #       items:
-    #         $ref: '#/components/scheme/Footnote'
-    #   required:
-    #     - id
-    #     - import
-    #     - export
-    #     - excise
-    #     - vat
-    #     - effective_start_date
-    #     - effective_end_date
-    #     - possible_categorisation
-    #     - geographical_area
-    #   example:
-    #     data:
-    #       id: "20098001"
-    #       type: measure
-    #       attributes:
-    #         import: true
-    #         export: false
-    #         excise: false
-    #         vat: false
-    #         effective_start_date: "2021-01-01T00:00:00.000Z"
-    #         effective_end_date: null
-    #       relationships:
-    #         possible_categorisation:
-    #           data:
-    #             id: abcd1234
-    #             type: categorisation
-    #         measure_type:
-    #           data:
-    #             id: "410"
-    #             type: measure_type
-    #         geographical_area:
-    #           data:
-    #             id: "EG"
-    #             type: geographical_area
-    #         excluded_geographical_areas:
-    #           data: []
-    #         footnotes:
-    #           data:
-    #             - id: CD624
-    #               type: footnote
+    Measure:
+      description: A Measure object which generates this Category Assessment.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this measure
+        import:
+          type: boolean
+          description: The import of the measure.
+        export:
+          type: boolean
+          description: The export of the measure.
+        excise:
+          type: boolean
+          description: The excise of the measure.
+        vat:
+          type: boolean
+          description: The vat of the measure.
+        effective_start_date:
+          type: string
+          description: The effective start date of the measure.
+          format: date-time
+        effective_end_date:
+          type: string
+          description: The effective end date of the measure.
+          format: date-time
+          nullable: true
+        measure_type:
+          description: The measure type associated with this measure
+          $ref: '#/components/scheme/MeasureType'
+        footnotes:
+          type: array
+          description: The footnotes for this measure
+          items:
+            $ref: '#/components/scheme/Footnote'
+        goods_nomenclature:
+          description: The goods nomenclature this measure is directly against
+          $ref: '#/components/scheme/ReferencedGoodsNomenclature'
+      required:
+        - id
+        - import
+        - export
+        - excise
+        - vat
+        - effective_start_date
+        - effective_end_date
+      example:
+        data:
+          id: "20098001"
+          type: measure
+          attributes:
+            import: true
+            export: false
+            excise: false
+            vat: false
+            effective_start_date: "2021-01-01T00:00:00.000Z"
+            effective_end_date: null
+          relationships:
+            measure_type:
+              data:
+                id: "410"
+                type: measure_type
+            footnotes:
+              data:
+                - id: CD624
+                  type: footnote
 
-    # MeasureType:
-    #   description: A referenced measure_type object
-    #   type: object
-    #   properties:
-    #     id:
-    #       type: string
-    #       description: Unique identifier for this measure
-    #     description:
-    #       type: string
-    #       description: The description for the measure type
-    #     measure_type_series_description:
-    #       type: string
-    #       description: The description of the measure type series
-    #     validity_start_date:
-    #       type: string
-    #       description: The validity start date of the measure type
-    #       format: date-time
-    #     validity_end_date:
-    #       type: string
-    #       description: The validity end date of the measure type
-    #       format: date-time
-    #       nullable: true
-    #     measure_type_series_id:
-    #       type: string
-    #       description: A single char representing measure type series.
-    #       format: byte
-    #     trade_movement_code:
-    #       type: integer
-    #       description: The code of trade movement.
-    #   example:
-    #     data:
-    #       id: "110"
-    #       type: measure_type
-    #       attributes:
-    #         description: "Supplementary unit import"
-    #         measure_type_series_description: "Supplementary unit"
-    #         validity_start_date: "1972-01-01T00:00:00.000Z"
-    #         validity_end_date: null
-    #         measure_type_series_id: "O"
-    #         trade_movement_code: 0
+    MeasureType:
+      description: A referenced MeasureType object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this measure
+        description:
+          type: string
+          description: The description for the measure type
+        measure_type_series_description:
+          type: string
+          description: The description of the measure type series
+        validity_start_date:
+          type: string
+          description: The validity start date of the measure type
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The validity end date of the measure type
+          format: date-time
+          nullable: true
+        measure_type_series_id:
+          type: string
+          description: A single char representing measure type series.
+          format: byte
+        trade_movement_code:
+          type: integer
+          description: The code of trade movement.
+      example:
+        data:
+          id: "110"
+          type: measure_type
+          attributes:
+            description: "Supplementary unit import"
+            measure_type_series_description: "Supplementary unit"
+            validity_start_date: "1972-01-01T00:00:00.000Z"
+            validity_end_date: null
+            measure_type_series_id: "O"
+            trade_movement_code: 0
 
-    # Footnote:
-    #   description: A referenced footnote object
-    #   type: object
-    #   properties:
-    #     id:
-    #       type: string
-    #       description: Unique identifier for the footnote
-    #     code:
-    #       type: string
-    #       description: The `code` for the footnote
-    #     description:
-    #       type: string
-    #       description: The `description` for the footnote
-    #   example:
-    #     data:
-    #       id: TN701
-    #       type: footnote
-    #       attributes:
-    #         code: TN701
-    #         description: "According to  the Council Regulation (EU) No 692/2014
-    #           (OJ L183, p. 9) it shall be prohibited to import into European Union
-    #           goods originating in Crimea or Sevastopol.\n..."
+    Footnote:
+      description: A referenced Footnote object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the footnote
+        code:
+          type: string
+          description: The `code` for the footnote
+        description:
+          type: string
+          description: The `description` for the footnote
+      example:
+        data:
+          id: TN701
+          type: footnote
+          attributes:
+            code: TN701
+            description: "According to  the Council Regulation (EU) No 692/2014
+              (OJ L183, p. 9) it shall be prohibited to import into European Union
+              goods originating in Crimea or Sevastopol.\n..."
+
+    ReferencedGoodsNomenclature:
+      description: A referenced GoodsNomenclature which a measure is against
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique id for this revision of this Goods Nomenclature
+        goods_nomenclature_item_id:
+          type: string
+          description: The `goods_nomenclature_item_id` of this Goods Nomenclature
+        description:
+          type: string
+          description: The `description` of the goods nomenclature
+        number_indents:
+          type: integer
+          description: The indentation of the goods nomenclature within the Tariff hierarchy
+        productline_suffix:
+          type: string
+          description: The `productline_suffix` of the goods nomenclature
+        validity_start_date:
+          type: string
+          description: The date this Goods Nomenclature is valid from
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The date this Goods Nomenclature is valid until, null if valid indefinitely
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - goods_nomenclature_item_id
+        - description
+        - number_indents
+        - productline_suffix
+        - validity_start_date
+        - validity_end_date
+      example:
+        data:
+          id: 70361
+          type: goods_nomenclature
+          attributes:
+            goods_nomenclature_item_id: "0702000000"
+            description: Tomatoes, fresh or chilled
+            number_indents: 0
+            productline_suffix: "80"
+            validity_start_date: "1999-01-01T00:00:00.000Z"
+            validity_end_date: null
 
     CategoryAssessmentListing:
       description: Listing of all category assessments
