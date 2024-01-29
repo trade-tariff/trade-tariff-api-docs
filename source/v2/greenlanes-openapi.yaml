@@ -47,7 +47,7 @@ info:
     _These changes can be subscribed to at the [Atom (RSS) feed](/green-lanes.xml)_
 
     <% changes = data.green_lanes_changes.sort_by(&:date).reverse %>
-    <% latest = changes.pop %>
+    <% latest = changes.shift %>
 
     ### <%= latest.date.strftime('%-d %B %Y') %>
     <%= simple_format latest.content %>
