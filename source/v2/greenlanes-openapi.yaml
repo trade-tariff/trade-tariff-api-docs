@@ -356,12 +356,7 @@ components:
         category:
           type: integer
           enum: [ 1, 2, 3 ]
-          description: |
-            The category applicable unless exemption criteria are met<br>
-            <br>
-            Category 1 = Prohibited<br>
-            Category 2 = Controlled<br>
-            Category 3 = Exempted
+          description: The category applicable unless exemption criteria are met
         geographical_area:
           description: The geographical area this possible Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
