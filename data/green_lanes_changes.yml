@@ -4,3 +4,13 @@
 
     Implementation of this API is currently in progress and access will be provided to approved partners on request once the implementation is sufficiently progressed
 
+- date: 2024-01-30
+  content: |
+    Revised Green Lanes API documentation
+
+    * Renamed `Categorisation` entity to `CategoryAssessment` entity
+    * Renamed `GoodsNomenclature.possible_categorisations` relationship to `GoodsNomenclature.application_category_assessments`
+    * Replaced `Theme` entity and `CategoryAssessment.theme` relationship with simpler plain text `CategoryAssessment.theme`
+    * Clarified definition of `CategoryAssessment.category`
+    * Added Measures, Footnotes and MeasureTypes relationships to CategoryAssessments to provide further context, and include these in the API response
+    * Added links to top of the page providing further information for the JSON-API format we utilize
