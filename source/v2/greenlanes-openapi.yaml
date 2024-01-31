@@ -301,10 +301,6 @@ components:
           - id: "20098001"
             type: measure
             attributes:
-              import: true
-              export: false
-              excise: false
-              vat: false
               effective_start_date: "2021-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
@@ -531,18 +527,6 @@ components:
         id:
           type: string
           description: The unique identifier for this measure
-        import:
-          type: boolean
-          description: The import of the measure.
-        export:
-          type: boolean
-          description: The export of the measure.
-        excise:
-          type: boolean
-          description: The excise of the measure.
-        vat:
-          type: boolean
-          description: The vat of the measure.
         effective_start_date:
           type: string
           description: The effective start date of the measure.
@@ -565,10 +549,6 @@ components:
           $ref: '#/components/scheme/ReferencedGoodsNomenclature'
       required:
         - id
-        - import
-        - export
-        - excise
-        - vat
         - effective_start_date
         - effective_end_date
       example:
@@ -576,10 +556,6 @@ components:
           id: "20098001"
           type: measure
           attributes:
-            import: true
-            export: false
-            excise: false
-            vat: false
             effective_start_date: "2021-01-01T00:00:00.000Z"
             effective_end_date: null
           relationships:
