@@ -357,6 +357,9 @@ components:
           type: integer
           enum: [ 1, 2, 3 ]
           description: The category applicable unless exemption criteria are met
+        theme:
+          type: string
+          description: The Green Lanes theme relevant for this Category Assessment
         geographical_area:
           description: The geographical area this possible Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
@@ -383,6 +386,7 @@ components:
       required:
         - id
         - category
+        - theme
         - geographical_area
       example:
         data:
