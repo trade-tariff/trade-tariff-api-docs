@@ -14,7 +14,7 @@ info:
       <link href="/green-lanes.xml" type="application/atom+xml" rel="alternate" title="Green Lanes api changes feed" />
     <% end %>
 
-    The Green Lanes Categorisation API's provide access to categorisation data for the different Commodities and Subheadings within the Tariff.
+    The Green Lanes Categorisation API's provide access to Category Assessment data for the different Commodities and Subheadings within the Tariff.
 
     These APIs follow the [JSON-API](https://jsonapi.org/) format for both request and response, in common with the other OTT APIs documented on this site.
 
@@ -93,7 +93,7 @@ paths:
             format: date
       responses:
         200:
-          description: An array of CategoryAssessment's
+          description: An array of CategoryAssessments
           content:
             application/json:
               schema:
