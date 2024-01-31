@@ -74,9 +74,9 @@ info:
 paths:
   /green_lanes/category_assessments:
     get:
-      summary: Returns a list of all possible category assessments
+      summary: Returns a list of all category assessments
       description: >
-        Returns a list of the all possible category assessments
+        Returns a list of the all category assessments
       tags:
         - Green Lanes
       parameters:
@@ -84,7 +84,7 @@ paths:
           in: query
           required: false
           description: |
-            Returns the possible category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
+            Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
 
             While `as_of` is not a required field it is advised to include it with all requests even
             if requesting data for today to ensure the data returned is correct.
@@ -113,9 +113,9 @@ paths:
 
   /green_lanes/goods_nomenclatures/{id}:
     get:
-      summary: Returns possible Category Assessments for the requested Goods Nomenclature
+      summary: Returns Category Assessments for the requested Goods Nomenclature
       description: >
-        Returns the requested Goods Nomenclature together with relevant data including a list of the different possible Category Assessments for the Goods Nomenclature
+        Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments for the Goods Nomenclature
       tags:
         - Green Lanes
       parameters:
@@ -147,7 +147,7 @@ paths:
           in: query
           required: false
           description: |
-            A geographical area code you wish to use to filter the possible
+            A geographical area code you wish to use to filter the
             Category Assessment information
           schema:
             type: string
@@ -155,7 +155,7 @@ paths:
             example: "US"
       responses:
         200:
-          description: A GoodsNomenclature and a list of possible Category Assessments
+          description: A GoodsNomenclature and a list of Category Assessments
           content:
             application/json:
               schema:
@@ -343,7 +343,7 @@ components:
                 goods originating in Crimea or Sevastopol.\n..."
 
     CategoryAssessment:
-      description: An possible CategoryAssessment for the requested GoodsNomenclature
+      description: A CategoryAssessment for the requested GoodsNomenclature
       type: object
       properties:
         id:
@@ -357,11 +357,11 @@ components:
           type: string
           description: The Green Lanes theme relevant for this Category Assessment
         geographical_area:
-          description: The geographical area this possible Category Assessment applies to
+          description: The geographical area this Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
         excluded_geographical_areas:
           type: array
-          description: The geographical areas excluded from this possible Category Assessment
+          description: The geographical areas excluded from this Category Assessment
           items:
             $ref: '#/components/scheme/GeographicalArea'
         exemptions:
@@ -702,11 +702,11 @@ components:
             Category 2 = Controlled<br>
             Category 3 = Exempted
         geographical_area:
-          description: The geographical area this possible Category Assessment applies to
+          description: The geographical area this Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
         excluded_geographical_areas:
           type: array
-          description: The geographical areas excluded from this possible Category Assessment
+          description: The geographical areas excluded from this Category Assessment
           items:
             $ref: '#/components/scheme/GeographicalArea'
         exemptions:
