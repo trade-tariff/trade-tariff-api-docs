@@ -14,3 +14,9 @@
     * Clarified definition of `CategoryAssessment.category`
     * Added Measures, Footnotes and MeasureTypes relationships to CategoryAssessments to provide further context, and include these in the API response
     * Added links to top of the page providing further information for the JSON-API format we utilize
+
+- date: 2024-03-10
+  content: |
+    Revised and extended API structure
+
+    * Reverted to a relationship to separate Theme entity in place of `Category.theme`
