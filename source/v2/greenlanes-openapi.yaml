@@ -59,7 +59,7 @@ info:
           Previous changes
         </span>
       </summary>
-      <div class="govuk-details__text">
+      <div class="govuk-details__text govuk-body">
         <% changes.each do |change| %>
           <h3 id="change-<%= change.date.strftime('%Y-%m-%d') %>" class="anchored-heading">
             <%= change.date.strftime '%d %b %Y' %>
@@ -365,7 +365,7 @@ components:
           enum: [ 1, 2, 3 ]
           description: The category applicable unless exemption criteria are met
         theme:
-          description: The Green Lanes Theme used as the basis for this possible Category Assessment
+          description: The Green Lanes Theme used as the basis for this Category Assessment
           $ref: '#/components/scheme/Theme'
         geographical_area:
           description: The geographical area this Category Assessment applies to
