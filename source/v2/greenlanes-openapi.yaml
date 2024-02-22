@@ -294,7 +294,7 @@ components:
             type: theme
             attributes:
               theme: Sanctions
-              implied_category: 1
+              category: 1
           - id: D005
             type: certificate
             attributes:
@@ -428,7 +428,7 @@ components:
             type: theme
             attributes:
               theme: Sanctions
-              implied_category: 1
+              category: 1
           - id: D005
             type: certificate
             attributes:
@@ -455,7 +455,7 @@ components:
         theme:
           type: string
           description: Green Lanes Theme
-        implied_category:
+        category:
           type: integer
           minimum: 1
           maximum: 3
@@ -463,14 +463,14 @@ components:
       required:
         - id
         - theme
-        - implied_category
+        - category
       example:
         data:
           id: "1.1"
           type: theme
           attributes:
             theme: Sanctions
-            implied_category: 1
+            category: 1
     
     GeographicalArea:
       description: A GeographicalArea object
@@ -815,7 +815,7 @@ components:
             type: theme
             attributes:
               theme: Sanctions
-              implied_category: 1
+              category: 1
           - id: "1011"
             type: geographical_area
             attributes:
