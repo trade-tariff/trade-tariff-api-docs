@@ -174,8 +174,8 @@ paths:
           source: |-
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?origin=US
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&origin=US
+            curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
+            curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
 
 components:
   securitySchemes:
