@@ -257,7 +257,7 @@ components:
                 data: []
               theme:
                 data:
-                  id: 1.1
+                  id: "1.1"
                   type: theme
               exemptions:
                 data:
@@ -278,7 +278,7 @@ components:
                 data: []
               theme:
                 data:
-                  id: 1.1
+                  id: "1.1"
                   type: theme
               exemptions: []
               measures:
@@ -290,11 +290,10 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: 1.1
+          - id: "1.1"
             type: theme
             attributes:
               theme: Sanctions
-              description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
               implied_category: 1
           - id: D005
             type: certificate
@@ -411,7 +410,7 @@ components:
               data: []
             theme:
               data:
-                id: 1.1
+                id: "1.1"
                 type: theme
             exemptions:
               data:
@@ -425,11 +424,10 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: 1.1
+          - id: "1.1"
             type: theme
             attributes:
               theme: Sanctions
-              description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
               implied_category: 1
           - id: D005
             type: certificate
@@ -457,9 +455,6 @@ components:
         theme:
           type: string
           description: Green Lanes Theme
-        description:
-          type: string
-          description: Full description text of theme
         implied_category:
           type: integer
           minimum: 1
@@ -468,15 +463,13 @@ components:
       required:
         - id
         - theme
-        - description
         - implied_category
       example:
         data:
-          id: 1.1
+          id: "1.1"
           type: theme
           attributes:
             theme: Sanctions
-            description: 1.1. Restrictive measures in force based on Article 215 Treaty on the Functioning of the European Union, insofar as they relate to trade in goods between the Union and third countries;
             implied_category: 1
     
     GeographicalArea:
@@ -783,8 +776,11 @@ components:
             type: category_assessment
             attributes:
               category: 1
-              theme: 1.1 Sanctions
             relationships:
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
               geographical_area:
                 data:
                   id: "1011"
@@ -801,8 +797,11 @@ components:
             type: category_assessment
             attributes:
               category: 1
-              theme: 1.1 Sanctions
             relationships:
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
               geographical_area:
                 data:
                   id: "1011"
@@ -812,6 +811,11 @@ components:
               exemptions:
                 data: []
         included:
+          - id: "1.1"
+            type: theme
+            attributes:
+              theme: Sanctions
+              implied_category: 1
           - id: "1011"
             type: geographical_area
             attributes:
