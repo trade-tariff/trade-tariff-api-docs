@@ -14,3 +14,9 @@
     * Clarified definition of `CategoryAssessment.category`
     * Added Measures, Footnotes and MeasureTypes relationships to CategoryAssessments to provide further context, and include these in the API response
     * Added links to top of the page providing further information for the JSON-API format we utilize
+
+- date: 2024-02-22
+  content: |
+    Small update to describe api client logic around Category Assessment selection
+
+    Also corrects the api example when filtering by goods origin.
