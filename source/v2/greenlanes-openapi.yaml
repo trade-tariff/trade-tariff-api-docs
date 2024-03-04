@@ -59,7 +59,7 @@ info:
           Previous changes
         </span>
       </summary>
-      <div class="govuk-details__text">
+      <div class="govuk-details__text govuk-body">
         <% changes.each do |change| %>
           <h3 id="change-<%= change.date.strftime('%Y-%m-%d') %>" class="anchored-heading">
             <%= change.date.strftime '%d %b %Y' %>
@@ -248,7 +248,6 @@ components:
             type: category_assessments
             attributes:
               category: 1
-              theme: 1.1 Sanctions
             relationships:
               geographical_area:
                 data:
@@ -256,6 +255,10 @@ components:
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
               exemptions:
                 data:
                   - id: D005
@@ -266,7 +269,6 @@ components:
             type: category_assessment
             attributes:
               category: 1
-              theme: 1.1 Sanctions
             relationships:
               geographical_area:
                 data:
@@ -274,6 +276,10 @@ components:
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
               exemptions: []
               measures:
                 data:
@@ -284,6 +290,11 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
+          - id: "1.1"
+            type: theme
+            attributes:
+              theme: Sanctions
+              category: 1
           - id: D005
             type: certificate
             attributes:
@@ -354,8 +365,8 @@ components:
           enum: [ 1, 2, 3 ]
           description: The category applicable unless exemption criteria are met
         theme:
-          type: string
-          description: The Green Lanes theme relevant for this Category Assessment
+          description: The Green Lanes Theme used as the basis for this Category Assessment
+          $ref: '#/components/scheme/Theme'
         geographical_area:
           description: The geographical area this Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
@@ -390,7 +401,6 @@ components:
           type: category_assessment
           attributes:
             category: 1
-            theme: 1.1 Sanctions
           relationships:
             geographical_area:
               data:
@@ -398,6 +408,10 @@ components:
                 type: geographical_area
             excluded_geographical_areas:
               data: []
+            theme:
+              data:
+                id: "1.1"
+                type: theme
             exemptions:
               data:
                 - id: D005
@@ -410,6 +424,11 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
+          - id: "1.1"
+            type: theme
+            attributes:
+              theme: Sanctions
+              category: 1
           - id: D005
             type: certificate
             attributes:
@@ -424,6 +443,34 @@ components:
               code: C371
               description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
               formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+
+
+    Theme:
+      description: A Green Lane Theme within the Windsor Framework
+      type: object
+      properties:
+        id:
+          type: string
+          description: The relevant section number for this Green Lanes theme
+        theme:
+          type: string
+          description: Green Lanes Theme
+        category:
+          type: integer
+          minimum: 1
+          maximum: 3
+          description: The green lanes category for the theme in the absence of an exemption
+      required:
+        - id
+        - theme
+        - category
+      example:
+        data:
+          id: "1.1"
+          type: theme
+          attributes:
+            theme: Sanctions
+            category: 1
     
     GeographicalArea:
       description: A GeographicalArea object
@@ -729,8 +776,11 @@ components:
             type: category_assessment
             attributes:
               category: 1
-              theme: 1.1 Sanctions
             relationships:
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
               geographical_area:
                 data:
                   id: "1011"
@@ -747,8 +797,11 @@ components:
             type: category_assessment
             attributes:
               category: 1
-              theme: 1.1 Sanctions
             relationships:
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
               geographical_area:
                 data:
                   id: "1011"
@@ -758,6 +811,11 @@ components:
               exemptions:
                 data: []
         included:
+          - id: "1.1"
+            type: theme
+            attributes:
+              theme: Sanctions
+              category: 1
           - id: "1011"
             type: geographical_area
             attributes:
