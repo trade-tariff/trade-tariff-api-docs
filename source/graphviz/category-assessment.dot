@@ -1,0 +1,22 @@
+digraph {
+    rankdir="LR"
+    fontname="Arial,sans-serif"
+    node [fontname="Arial,sans-serif"]
+    edge [fontname="Arial,sans-serif"]
+
+    node [shape=diamond,style=filled,color=lightgrey];
+    "Excluded\nGeo Areas";
+    "Exemptions";
+
+    node [shape=ellipse,style=unfilled,color=black];
+    "Category\nAssessment" -> "Exemptions"
+    "Exemptions" -> "Certificate"
+    "Exemptions" -> "AdditionalCode"
+    "Exemptions" -> "Certificate 2"
+    "Category\nAssessment" -> "Geographical\nArea"
+    "Category\nAssessment" -> "Excluded\nGeo Areas"
+    "Excluded\nGeo Areas" -> "Geographical\nArea 2"
+    "Excluded\nGeo Areas" -> "Geographical\nArea 3"
+    "Category\nAssessment" -> "Theme"
+    "Category\nAssessment" -> "Measure"
+}

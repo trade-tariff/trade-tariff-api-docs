@@ -185,7 +185,10 @@ components:
 
   schemas:
     GoodsNomenclature:
-      description: A goods_nomenclature object
+      description: |
+        A goods_nomenclature object
+
+        <% graphviz 'declarations-A' %>
       type: object
       properties:
         id:
@@ -354,7 +357,10 @@ components:
                 goods originating in Crimea or Sevastopol.\n..."
 
     CategoryAssessment:
-      description: A CategoryAssessment for the requested GoodsNomenclature
+      description: |
+        A CategoryAssessment for the requested GoodsNomenclature
+
+        <% graphviz 'category-assessment' %>
       type: object
       properties:
         id:
@@ -568,8 +574,11 @@ components:
             formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
 
     Measure:
-      description: A Measure object which generates this Category Assessment.
       type: object
+      description: |
+        A Measure object which generates this Category Assessment.
+
+        <% graphviz 'measure' %>
       properties:
         id:
           type: string
