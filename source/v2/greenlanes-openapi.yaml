@@ -230,14 +230,14 @@ components:
         - validity_end_date
       example:
         data:
-          id: "70361"
+          id: "106662"
           type: goods_nomenclature
           attributes:
-            goods_nomenclature_item_id: "0702000007"
-            description: Cherry tomatoes
-            number_indents: 1
+            goods_nomenclature_item_id: "2404120000"
+            description: Other, containing nicotine
+            number_indents: 2
             productline_suffix: "80"
-            validity_start_date: "1999-01-01T00:00:00.000Z"
+            validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
           relationships:
             applicable_category_assessments:
@@ -250,7 +250,7 @@ components:
           - id: abcd1234
             type: category_assessments
             attributes:
-              category: 1
+              category: 2
             relationships:
               geographical_area:
                 data:
@@ -260,14 +260,18 @@ components:
                 data: []
               theme:
                 data:
-                  id: "1.1"
+                  id: "2.1"
                   type: theme
               exemptions:
                 data:
-                  - id: D005
+                  - id: L135
                     type: certificate
-                  - id: C371
+                  - id: "3200"
                     type: additional_code
+              measures:
+                - data:
+                    - id: "3871192"
+                      type: measure
           - id: c5678def
             type: category_assessment
             attributes:
@@ -281,80 +285,152 @@ components:
                 data: []
               theme:
                 data:
-                  id: "1.1"
+                  id: "2.1"
                   type: theme
-              exemptions: []
+              exemptions:
+                - id: "3200"
+                  type: additional_code
+                - id: "3249"
+                  type: additional_code
               measures:
-                data:
-                  - id: "20098001"
-                    type: measure
+                - data:
+                    - id: "3871193"
+                      type: measure
           - id: "1011"
             type: geographical_area
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: "1.1"
+          - id: "2.1"
             type: theme
             attributes:
-              theme: Sanctions
-              category: 1
-          - id: D005
+              theme: Drug precursors
+              category: 2
+          - id: L135
             type: certificate
             attributes:
-              certificate_type_code: D
-              certificate_code: "005"
-              description: "Commercial invoice within the framework of undertakings"
-          - id: C371
+              certificate_type_code: L
+              certificate_code: "135"
+              description: "certificate_type_code = 'L' and certificate_code = '135'"
+          - id: "3200"
             type: additional_code
             attributes:
-              additional_code_type_id: C
-              additional_code: "371"
-              code: C371
-              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-          - id: "20098001"
+              additional_code_type_id: "3"
+              additional_code: "200"
+              code: "3200"
+              description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+              formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+          - id: "3871192"
             type: measure
             attributes:
-              effective_start_date: "2021-01-01T00:00:00.000Z"
+              effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
               goods_nomenclature:
-              data:
-                id: "30256"
-                type: goods_nomenclature
+                data:
+                  id: "106676"
+                  type: goods_nomenclature
               measure_type:
                 data:
-                  id: "410"
+                  id: "475"
                   type: measure_type
               footnotes:
                 data:
-                  - id: CD624
+                  - id: CD437
                     type: footnote
-          - id: "30256"
+          - id: "3871193"
+            type: measure
+            attributes:
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              goods_nomenclature:
+                data:
+                  id: "106676"
+                  type: goods_nomenclature
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: TM135
+                    type: footnote
+          - id: "3871247"
+            type: measure
+            attributes:
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              goods_nomenclature:
+                data:
+                  id: "107156"
+                  type: goods_nomenclature
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: CD437
+                    type: footnote
+                  - id: TM135
+                    type: footnote
+          - id: "3871247"
+            type: measure
+            attributes:
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              goods_nomenclature:
+                data:
+                  id: "107156"
+                  type: goods_nomenclature
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: TM135
+                    type: footnote
+          - id: "106676"
             type: goods_nomenclature
             attributes:
               goods_nomenclature_item_id: "0702000000"
-              description: Tomatoes, fresh or chilled
-              number_indents: 0
+              description: Cartridges and refills, filled, for electronic cigarettes, preparations for use in cartridges and refills for electronic cigarettes
+              number_indents: 3
               productline_suffix: "80"
-              validity_start_date: "1999-01-01T00:00:00.000Z"
+              validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
-          - id: "110"
+          - id: "107156"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "2404120090"
+              description: Other
+              number_indents: 3
+              productline_suffix: "80"
+              validity_start_date: "2022-01-01T00:00:00.000Z"
+              validity_end_date: null
+          - id: "475"
             type: measure_type
             attributes:
-              description: "Supplementary unit import"
-              measure_type_series_description: "Supplementary unit"
+              description: "Restriction on entry into free circulation"
+              measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
               validity_start_date: "1972-01-01T00:00:00.000Z"
               validity_end_date: null
-              measure_type_series_id: "O"
+              measure_type_series_id: "B"
               trade_movement_code: 0
-          - id: TN701
+          - id: CD437
             type: footnote
             attributes:
-              code: TN701
-              description: "According to  the Council Regulation (EU) No 692/2014
-                (OJ L183, p. 9) it shall be prohibited to import into European Union
-                goods originating in Crimea or Sevastopol.\n..."
+              code: CD437
+              description: "\"Import authorization\" and \"Specific import requirements\" - see Articles 20-25 of Regulation (EC) No 111/05 (OJ L 22) implemented by Regulation (EC) No 2015/1011 (OJ L 162)."
+          - id: TM135
+            type: footnote
+            attributes:
+              code: TM135
+              description: "The surveillance does not apply to mixtures and natural products which contain scheduled substances and which are compounded in such a way that the scheduled substances cannot be easily used or extracted by readily applicable or economically viable means, to medicinal products as defined in point 2 of Article 1 of Directive 2001/83/EC of the European Parliament and of the Council and to veterinary medicinal products as defined in point 2 of Article 1 of Directive 2001/82/EC of the European Parliament and of the Council."
 
     CategoryAssessment:
       description: |
