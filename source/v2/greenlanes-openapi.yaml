@@ -188,7 +188,7 @@ components:
       description: |
         A goods_nomenclature object
 
-        <% graphviz 'declarations-A' %>
+        <% graphviz 'goods-nomenclature' %>
       type: object
       properties:
         id:
@@ -197,6 +197,10 @@ components:
         goods_nomenclature_item_id:
           type: string
           description: The `goods_nomenclature_item_id` of this Goods Nomenclature
+        parent_sid:
+          type: string
+          description: The goods_nomenclature_sid of the Goods Nomenclature this GoodsNomenclature sits directly below in the Tariff
+          nullable: true
         description:
           type: string
           description: The `description` of the goods nomenclature
@@ -220,9 +224,35 @@ components:
           description: A list of applicable Category Assessments for this Goods Nomenclature
           items:
             $ref: '#/components/schemas/CategoryAssessment'
+        descendant_category_assessments:
+          type: array
+          description: |
+            A list of Category Assessments which apply only to some descendants,
+            so require further classification to determine their applicability
+          items:
+            $ref: '#/components/schemas/CategoryAssessment'
+        ancestors:
+          type: array
+          description: |
+            List of GoodsNomenclatures above the requested Goods Nomenclature in
+            the Tariff, ordered by Chapter first
+          items:
+            $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+        descendants:
+          description: |
+            List of GoodsNomenclatures below the requested one in the Tariff,
+            ordered by Goods Nomenclature Item Id
+          items:
+            $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+        measures:
+          type: array
+          description: The measures directly against this GoodsNomenclature
+          items:
+            $ref: '#/components/scheme/Measure'
       required:
         - id
         - goods_nomenclature_item_id
+        - parent_sid
         - description
         - number_indents
         - productline_suffix
@@ -230,14 +260,15 @@ components:
         - validity_end_date
       example:
         data:
-          id: "70361"
+          id: "106662"
           type: goods_nomenclature
           attributes:
-            goods_nomenclature_item_id: "0702000007"
-            description: Cherry tomatoes
-            number_indents: 1
+            goods_nomenclature_item_id: "2404120000"
+            parent_sid: "106659"
+            description: Other, containing nicotine
+            number_indents: 2
             productline_suffix: "80"
-            validity_start_date: "1999-01-01T00:00:00.000Z"
+            validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
           relationships:
             applicable_category_assessments:
@@ -246,11 +277,27 @@ components:
                   type: category_assessment
                 - id: c5678def
                   type: category_assessment
+            descendant_category_assessments:
+              data: []
+            ancestors:
+              data:
+                - id: "35246"
+                  type: goods_nomenclature
+                - id: "106659"
+                  type: goods_nomenclature
+            descendants:
+              data:
+                - id: "106676"
+                  type: goods_nomenclature
+                - id: "107156"
+                  type: goods_nomenclature
+            measures:
+              data: []
         included:
           - id: abcd1234
             type: category_assessments
             attributes:
-              category: 1
+              category: 2
             relationships:
               geographical_area:
                 data:
@@ -260,14 +307,21 @@ components:
                 data: []
               theme:
                 data:
-                  id: "1.1"
+                  id: "2.1"
                   type: theme
               exemptions:
                 data:
-                  - id: D005
+                  - id: L135
                     type: certificate
-                  - id: C371
+                  - id: "3200"
                     type: additional_code
+              measures:
+                - data:
+                    - id: "3871192"
+                      type: measure
+                - data:
+                    - id: "3871247"
+                      type: measure
           - id: c5678def
             type: category_assessment
             attributes:
@@ -281,80 +335,180 @@ components:
                 data: []
               theme:
                 data:
-                  id: "1.1"
+                  id: "2.1"
                   type: theme
-              exemptions: []
+              exemptions:
+                - id: "3200"
+                  type: additional_code
+                - id: "3249"
+                  type: additional_code
               measures:
-                data:
-                  - id: "20098001"
-                    type: measure
+                - data:
+                    - id: "3871193"
+                      type: measure
+                    - id: "3871248"
+                      type: measure
           - id: "1011"
             type: geographical_area
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: "1.1"
+          - id: "2.1"
             type: theme
             attributes:
-              theme: Sanctions
-              category: 1
-          - id: D005
+              theme: Drug precursors
+              category: 2
+          - id: L135
             type: certificate
             attributes:
-              certificate_type_code: D
-              certificate_code: "005"
-              description: "Commercial invoice within the framework of undertakings"
-          - id: C371
+              certificate_type_code: L
+              certificate_code: "135"
+              description: "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
+          - id: "3200"
             type: additional_code
             attributes:
-              additional_code_type_id: C
-              additional_code: "371"
-              code: C371
-              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-          - id: "20098001"
+              additional_code_type_id: "3"
+              additional_code: "200"
+              code: "3200"
+              description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+              formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+          - id: "3871192"
             type: measure
             attributes:
-              effective_start_date: "2021-01-01T00:00:00.000Z"
+              goods_nomenclature_item_id: "2404120010"
+              goods_nomenclature_sid: "106676"
+              effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
-              goods_nomenclature:
-              data:
-                id: "30256"
-                type: goods_nomenclature
               measure_type:
                 data:
-                  id: "410"
+                  id: "475"
                   type: measure_type
               footnotes:
                 data:
-                  - id: CD624
+                  - id: CD437
                     type: footnote
-          - id: "30256"
+          - id: "3871193"
+            type: measure
+            attributes:
+              goods_nomenclature_item_id: "2404120010"
+              goods_nomenclature_sid: "106676"
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: TM135
+                    type: footnote
+          - id: "3871247"
+            type: measure
+            attributes:
+              goods_nomenclature_item_id: "2404120090"
+              goods_nomenclature_sid: "107156"
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: CD437
+                    type: footnote
+                  - id: TM135
+                    type: footnote
+          - id: "3871248"
+            type: measure
+            attributes:
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              footnotes:
+                data:
+                  - id: TM135
+                    type: footnote
+          - id: "35246"
             type: goods_nomenclature
             attributes:
-              goods_nomenclature_item_id: "0702000000"
-              description: Tomatoes, fresh or chilled
+              goods_nomenclature_item_id: "2400000000"
+              parent_sid: null
+              description: Tobacco and manufactured tobacco substitutes; products, whether or not containing nicotine, intended for inhalation without combustion; other nicotine containing products intended for the intake of nicotine into the human body
               number_indents: 0
               productline_suffix: "80"
-              validity_start_date: "1999-01-01T00:00:00.000Z"
+              validity_start_date: "1971-12-31T00:00:00.000Z"
               validity_end_date: null
-          - id: "110"
+          - id: "106659"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "2404000000"
+              parent_sid: 35246
+              description: Products containing tobacco, reconstituted tobacco, nicotine, or tobacco or nicotine substitutes, intended for inhalation without combustion; other nicotine containing products intended for the intake of nicotine into the human body
+              number_indents: 0
+              productline_suffix: "80"
+              validity_start_date: "2022-01-01T00:00:00.000Z"
+              validity_end_date: null
+          - id: "106676"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "2404120010"
+              parent_sid: 106662
+              description: Cartridges and refills, filled, for electronic cigarettes, preparations for use in cartridges and refills for electronic cigarettes
+              number_indents: 3
+              productline_suffix: "80"
+              validity_start_date: "2022-01-01T00:00:00.000Z"
+              validity_end_date: null
+            relationships:
+              measures:
+                data:
+                  - id: "3871192"
+                    type: "measure"
+                  - id: "3871193"
+                    type: "measure"
+          - id: "107156"
+            type: goods_nomenclature
+            attributes:
+              goods_nomenclature_item_id: "2404120090"
+              parent_sid: 106662
+              description: Other
+              number_indents: 3
+              productline_suffix: "80"
+              validity_start_date: "2022-01-01T00:00:00.000Z"
+              validity_end_date: null
+            relationships:
+              measures:
+                data:
+                  - id: "3871247"
+                    type: "measure"
+                  - id: "3871248"
+                    type: "measure"
+          - id: "475"
             type: measure_type
             attributes:
-              description: "Supplementary unit import"
-              measure_type_series_description: "Supplementary unit"
+              description: "Restriction on entry into free circulation"
+              measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
               validity_start_date: "1972-01-01T00:00:00.000Z"
               validity_end_date: null
-              measure_type_series_id: "O"
+              measure_type_series_id: "B"
               trade_movement_code: 0
-          - id: TN701
+          - id: CD437
             type: footnote
             attributes:
-              code: TN701
-              description: "According to  the Council Regulation (EU) No 692/2014
-                (OJ L183, p. 9) it shall be prohibited to import into European Union
-                goods originating in Crimea or Sevastopol.\n..."
+              code: CD437
+              description: "\"Import authorization\" and \"Specific import requirements\" - see Articles 20-25 of Regulation (EC) No 111/05 (OJ L 22) implemented by Regulation (EC) No 2015/1011 (OJ L 162)."
+          - id: TM135
+            type: footnote
+            attributes:
+              code: TM135
+              description: "The surveillance does not apply to mixtures and natural products which contain scheduled substances and which are compounded in such a way that the scheduled substances cannot be easily used or extracted by readily applicable or economically viable means, to medicinal products as defined in point 2 of Article 1 of Directive 2001/83/EC of the European Parliament and of the Council and to veterinary medicinal products as defined in point 2 of Article 1 of Directive 2001/82/EC of the European Parliament and of the Council."
 
     CategoryAssessment:
       description: |
@@ -416,13 +570,13 @@ components:
               data: []
             theme:
               data:
-                id: "1.1"
+                id: "2.1"
                 type: theme
             exemptions:
               data:
-                - id: D005
+                - id: L135
                   type: certificate
-                - id: C371
+                - id: "3200"
                   type: additional_code
         included:
           - id: "1011"
@@ -430,26 +584,25 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: "1.1"
+          - id: "2.1"
             type: theme
             attributes:
-              theme: Sanctions
-              category: 1
-          - id: D005
+              theme: Drug precursors
+              category: 2
+          - id: L135
             type: certificate
             attributes:
-              certificate_type_code: D
-              certificate_code: "005"
-              description: "Commercial invoice within the framework of undertakings"
-          - id: C371
+              certificate_type_code: L
+              certificate_code: "135"
+              description: "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
+          - id: "3200"
             type: additional_code
             attributes:
-              additional_code_type_id: C
-              additional_code: "371"
-              code: C371
-              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-
+              additional_code_type_id: "3"
+              additional_code: "200"
+              code: "3200"
+              description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+              formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
 
     Theme:
       description: A Green Lane Theme within the Windsor Framework
@@ -564,14 +717,14 @@ components:
         - formatted_description
       example:
         data:
-          id: C371
+          id: "3200"
           type: additional_code
           attributes:
-            additional_code_type_id: C
-            additional_code: "371"
-            code: C371
-            description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-            formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+            additional_code_type_id: "3"
+            additional_code: "200"
+            code: "3200"
+            description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+            formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
 
     Measure:
       type: object
@@ -583,6 +736,13 @@ components:
         id:
           type: string
           description: The unique identifier for this measure
+        goods_nomenclature_item_id:
+          type: string
+          description: |
+            The item id of the GoodsNomenclature this Measure is against.
+        goods_nomenclature_sid:
+          type: string
+          description: The item id of the GoodsNomenclature this Measure is against
         effective_start_date:
           type: string
           description: The effective start date of the measure.
@@ -600,32 +760,29 @@ components:
           description: The footnotes for this measure
           items:
             $ref: '#/components/scheme/Footnote'
-        goods_nomenclature:
-          description: The goods nomenclature this measure is directly against
-          $ref: '#/components/scheme/ReferencedGoodsNomenclature'
       required:
         - id
+        - goods_nomenclature_item_id
+        - goods_nomenclature_sid
         - effective_start_date
         - effective_end_date
       example:
         data:
-          id: "20098001"
+          id: "3871192"
           type: measure
           attributes:
-            effective_start_date: "2021-01-01T00:00:00.000Z"
+            goods_nomenclature_item_id: "2404120010"
+            goods_nomenclature_sid: "106676"
+            effective_start_date: "2022-01-01T00:00:00.000Z"
             effective_end_date: null
           relationships:
-            goods_nomenclature:
-              data:
-                id: "30256"
-                type: goods_nomenclature
             measure_type:
               data:
-                id: "410"
+                id: "475"
                 type: measure_type
             footnotes:
               data:
-                - id: CD624
+                - id: CD437
                   type: footnote
 
     MeasureType:
@@ -659,14 +816,14 @@ components:
           description: The code of trade movement.
       example:
         data:
-          id: "110"
+          id: "475"
           type: measure_type
           attributes:
-            description: "Supplementary unit import"
-            measure_type_series_description: "Supplementary unit"
+            description: "Restriction on entry into free circulation"
+            measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
             validity_start_date: "1972-01-01T00:00:00.000Z"
             validity_end_date: null
-            measure_type_series_id: "O"
+            measure_type_series_id: "B"
             trade_movement_code: 0
 
     Footnote:
@@ -684,16 +841,14 @@ components:
           description: The `description` for the footnote
       example:
         data:
-          id: TN701
+          id: CD437
           type: footnote
           attributes:
-            code: TN701
-            description: "According to  the Council Regulation (EU) No 692/2014
-              (OJ L183, p. 9) it shall be prohibited to import into European Union
-              goods originating in Crimea or Sevastopol.\n..."
+            code: CD437
+            description: "\"Import authorization\" and \"Specific import requirements\" - see Articles 20-25 of Regulation (EC) No 111/05 (OJ L 22) implemented by Regulation (EC) No 2015/1011 (OJ L 162)."
 
     ReferencedGoodsNomenclature:
-      description: A referenced GoodsNomenclature which a measure is against
+      description: A GoodsNomenclature referenced from either Ancestors or Descendants lists
       type: object
       properties:
         id:
@@ -702,6 +857,10 @@ components:
         goods_nomenclature_item_id:
           type: string
           description: The `goods_nomenclature_item_id` of this Goods Nomenclature
+        parent_sid:
+          type: string
+          description: The goods_nomenclature_sid of the Goods Nomenclature this GoodsNomenclature sits directly below in the Tariff
+          nullable: true
         description:
           type: string
           description: The `description` of the goods nomenclature
@@ -720,9 +879,16 @@ components:
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
           nullable: true
+        measures:
+          type: array
+          description: The measures directly against this GoodsNomenclature
+          items:
+            $ref: '#/components/scheme/Measure'
       required:
         - id
         - goods_nomenclature_item_id
+        - goods_nomenclatur_sid
+        - parent_sid
         - description
         - number_indents
         - productline_suffix
@@ -730,15 +896,23 @@ components:
         - validity_end_date
       example:
         data:
-          id: "70361"
+          id: "106659"
           type: goods_nomenclature
           attributes:
-            goods_nomenclature_item_id: "0702000000"
-            description: Tomatoes, fresh or chilled
+            goods_nomenclature_item_id: "2404000000"
+            parent_sid: "30240"
+            description: Products containing tobacco, reconstituted tobacco, nicotine, or tobacco or nicotine substitutes, intended for inhalation without combustion; other nicotine containing products intended for the intake of nicotine into the human body
             number_indents: 0
             productline_suffix: "80"
-            validity_start_date: "1999-01-01T00:00:00.000Z"
+            validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
+          relationships:
+            measures:
+              data:
+                - id: "3871192"
+                  type: "measure"
+                - id: "3871193"
+                  type: "measure"
 
     CategoryAssessmentListing:
       description: Listing of all category assessments
@@ -783,12 +957,10 @@ components:
         data:
           - id: abcd1234
             type: category_assessment
-            attributes:
-              category: 1
             relationships:
               theme:
                 data:
-                  id: "1.1"
+                  id: "2.1"
                   type: theme
               geographical_area:
                 data:
@@ -798,14 +970,12 @@ components:
                 data: []
               exemptions:
                 data:
-                  - id: D005
+                  - id: L135
                     type: certificate
-                  - id: C371
+                  - id: "3200"
                     type: additional_code
           - id: abcd1234
             type: category_assessment
-            attributes:
-              category: 1
             relationships:
               theme:
                 data:
@@ -830,17 +1000,22 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
-          - id: D005
+          - id: "2.1"
+            type: theme
+            attributes:
+              theme: Drug precursors
+              category: 2
+          - id: L135
             type: certificate
             attributes:
-              certificate_type_code: D
-              certificate_code: "005"
-              description: "Commercial invoice within the framework of undertakings"
-          - id: C371
+              certificate_type_code: L
+              certificate_code: "135"
+              description: "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
+          - id: "3200"
             type: additional_code
             attributes:
-              additional_code_type_id: C
-              additional_code: "371"
-              code: C371
-              description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
-              formatted_description: "Shanghai Huayi Group Corp. Ltd Double Coin Group (Jiang Su) Tyre Co., Ltd"
+              additional_code_type_id: "3"
+              additional_code: "200"
+              code: "3200"
+              description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+              formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
