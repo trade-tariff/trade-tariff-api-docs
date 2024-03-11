@@ -273,12 +273,14 @@ components:
           relationships:
             applicable_category_assessments:
               data:
+                - id: 123456cd
+                  type: category_assessment
+            descendant_category_assessments:
+              data:
                 - id: abcd1234
                   type: category_assessment
                 - id: c5678def
                   type: category_assessment
-            descendant_category_assessments:
-              data: []
             ancestors:
               data:
                 - id: "35246"
@@ -294,10 +296,29 @@ components:
             measures:
               data: []
         included:
+          - id: 123456cd
+            type: category_assessments
+            relationships:
+              geographical_area:
+                data:
+                  id: "1011"
+                  type: geographical_area
+              excluded_geographical_areas:
+                data: []
+              theme:
+                data:
+                  id: "1.1"
+                  type: theme
+              exemptions:
+                data:
+                  - id: Y069
+                    type: certificate
+              measures:
+                data:
+                  - id: "3871194"
+                    type: measure
           - id: abcd1234
             type: category_assessments
-            attributes:
-              category: 2
             relationships:
               geographical_area:
                 data:
@@ -324,8 +345,6 @@ components:
                       type: measure
           - id: c5678def
             type: category_assessment
-            attributes:
-              category: 1
             relationships:
               geographical_area:
                 data:
@@ -353,6 +372,11 @@ components:
             attributes:
               description: ERGA OMNES
               geographical_area_id: "1011"
+          - id: "1.1"
+            type: theme
+            attributes:
+              theme: Sanctions
+              category: 1
           - id: "2.1"
             type: theme
             attributes:
@@ -372,6 +396,24 @@ components:
               code: "3200"
               description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
               formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+          - id: Y069
+            type: certificate
+            attributes:
+              certificate_type_code: Y
+              certificate_code: "069"
+              description: "Goods not consigned from Iran"
+          - id: "3871194"
+            type: measure
+            attributes:
+              goods_nomenclature_item_id: "2404120000"
+              goods_nomenclature_sid: "106662"
+              effective_start_date: "2022-01-01T00:00:00.000Z"
+              effective_end_date: null
+            relationships:
+              measure_type:
+                data:
+                  id: "714"
+                  type: measure_type
           - id: "3871192"
             type: measure
             attributes:
@@ -499,6 +541,14 @@ components:
               validity_end_date: null
               measure_type_series_id: "B"
               trade_movement_code: 0
+          - id: "714"
+            attributes:
+              description: "Import control"
+              measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
+              validity_start_date: "2017-02-01 00:00:00.000"
+              validity_end_date: null
+              measure_type_series_id: "B"
+              trade_movement_code: 0
           - id: CD437
             type: footnote
             attributes:
@@ -559,8 +609,6 @@ components:
         data:
           id: abcd1234
           type: category_assessment
-          attributes:
-            category: 1
           relationships:
             geographical_area:
               data:
