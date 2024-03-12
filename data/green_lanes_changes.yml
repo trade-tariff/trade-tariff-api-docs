@@ -15,8 +15,19 @@
     * Added Measures, Footnotes and MeasureTypes relationships to CategoryAssessments to provide further context, and include these in the API response
     * Added links to top of the page providing further information for the JSON-API format we utilize
 
-- date: 2024-03-10
+- date: 2024-02-22
+  content: |
+    Small update to describe api client logic around Category Assessment selection
+
+    Also corrects the api example when filtering by goods origin.
+
+- date: 2024-03-11
   content: |
     Revised and extended API structure
 
     * Reverted to a relationship to separate Theme entity in place of `Category.theme`
+    * Added `descendant_category_assessments` to the GoodsNomenclature API
+    * Added `ancestors` and their `measures` and related entities to the GoodsNomenclature API
+    * Added `descendants` and their `measures` and related entities to the GoodsNomenclature API
+    * Removed Measures.goods_nomenclature relationship to avoid circular parsing issues for simpler client implementations
+
