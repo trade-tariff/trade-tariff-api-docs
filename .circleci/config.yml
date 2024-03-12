@@ -34,6 +34,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install graphviz
+          command: sudo apt-get update && sudo apt-get install -yy graphviz
+      - run:
           name: Build static site
           command: make html
       - persist_to_workspace:

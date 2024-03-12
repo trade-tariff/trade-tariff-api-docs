@@ -155,6 +155,8 @@ Setting up the documentation requires Ruby and Node. Run the following to instal
 make requirements
 ```
 
+**Note:** You will also need to manually install Graphviz via your package manager
+
 ### Preview changes
 
 Whilst writing documentation we can run a middleman server to preview how the
