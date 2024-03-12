@@ -30,4 +30,5 @@
     * Added `ancestors` and their `measures` and related entities to the GoodsNomenclature API
     * Added `descendants` and their `measures` and related entities to the GoodsNomenclature API
     * Removed Measures.goods_nomenclature relationship to avoid circular parsing issues for simpler client implementations
+    * Brought Certificate structure inline with AdditionalCode to ease parsing of Exemptions
 

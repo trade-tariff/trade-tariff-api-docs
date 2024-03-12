@@ -397,7 +397,9 @@ components:
             attributes:
               certificate_type_code: L
               certificate_code: "135"
-              description: "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
+              code: L135
+              description: Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established
+              formatted_description: Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established
           - id: "3200"
             type: additional_code
             attributes:
@@ -411,7 +413,9 @@ components:
             attributes:
               certificate_type_code: Y
               certificate_code: "069"
-              description: "Goods not consigned from Iran"
+              code: Y069
+              description: Goods not consigned from Iran
+              formatted_description: Goods not consigned from Iran
           - id: "3871194"
             type: measure
             attributes:
@@ -652,7 +656,9 @@ components:
             attributes:
               certificate_type_code: L
               certificate_code: "135"
-              description: "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
+              code: L135
+              description: Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established
+              formatted_description: Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established
           - id: "3200"
             type: additional_code
             attributes:
@@ -727,14 +733,22 @@ components:
         certificate_code:
           type: string
           description: The `certificate_code` for the certificate
+        code:
+          type: string
+          description: The code identifying the Certificate - combination of `certificate_type_code` and `certficate_code`
         description:
           type: string
           description: The `description` for the certificate
+        formatted_description:
+          type: string
+          description: A version of the description including html formatting tags
       required:
         - id
         - certificate_type_code
         - certificate_code
+        - code
         - description
+        - formatted_description
       example:
         data:
           id: D005
@@ -742,7 +756,9 @@ components:
           attributes:
             certificate_type_code: D
             certificate_code: "005"
-            description: "Commercial invoice within the framework of undertakings"
+            code: D005
+            description: Commercial invoice within the framework of undertakings
+            formatted_description: Commercial invoice within the framework of undertakings
 
     AdditionalCode:
       description: An AdditionalCode object
@@ -1068,7 +1084,9 @@ components:
             attributes:
               certificate_type_code: L
               certificate_code: "135"
-              description: "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
+              code: L135
+              description: Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established
+              formatted_description: Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established
           - id: "3200"
             type: additional_code
             attributes:
