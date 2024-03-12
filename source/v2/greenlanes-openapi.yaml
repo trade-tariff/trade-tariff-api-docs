@@ -115,7 +115,13 @@ paths:
     get:
       summary: Returns Category Assessments for the requested Goods Nomenclature
       description: >
-        Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments for the Goods Nomenclature
+        Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br>
+        <br>
+        Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br>
+        <br>
+        The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br>
+        <br>
+        If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
       tags:
         - Green Lanes
       parameters:
@@ -174,8 +180,8 @@ paths:
           source: |-
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?origin=US
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&origin=US
+            curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
+            curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
 
 components:
   securitySchemes:
