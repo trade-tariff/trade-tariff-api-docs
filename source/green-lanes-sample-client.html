@@ -12,6 +12,19 @@
   <link rel="apple-touch-icon" href="/assets/images/govuk-icon-180.png">
   <link rel="manifest" href="/assets/manifest.json">
   <link rel="stylesheet" href="https://unpkg.com/govuk-frontend@5.2.0/dist/govuk/govuk-frontend.min.css">
+  <script type="module">
+    import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+    window.Stimulus = Application.start()
+
+    Stimulus.register("hello", class extends Controller {
+      static targets = [ "name", "output" ]
+
+      greet() {
+        this.outputTarget.textContent =
+          `Hello, ${this.nameTarget.value}!`
+      }
+    })
+  </script>
 </head>
 
 <body class="govuk-template__body">
@@ -42,6 +55,21 @@
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper" id="main-content" role="main">
       <h1 class="govuk-heading-xl">Default page template</h1>
+
+      <div data-controller="hello">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="user-name">
+            What is your name
+          </label>
+          <input class="govuk-input" id="user-name" type="text" data-hello-target="name" >
+        </div>
+
+        <button class="govuk-button" data-action="click->hello#greet">
+          Greet
+        </button>
+
+        <h2 class="govuk-heading-m" data-hello-target="output"></h2>
+      </div>
     </main>
   </div>
   <footer class="govuk-footer" role="contentinfo">
