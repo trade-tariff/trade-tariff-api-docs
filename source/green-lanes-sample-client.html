@@ -16,12 +16,11 @@
     import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
     window.Stimulus = Application.start()
 
-    Stimulus.register("hello", class extends Controller {
-      static targets = [ "name", "output" ]
+    Stimulus.register("query", class extends Controller {
+      static targets = [ "domain", "token", "commodity", "origin" ]
 
-      greet() {
-        this.outputTarget.textContent =
-          `Hello, ${this.nameTarget.value}!`
+      fetch() {
+        this.outputTarget.textContent = this.outputTarget.value ;
       }
     })
   </script>
@@ -54,21 +53,62 @@
   </header>
   <div class="govuk-width-container">
     <main class="govuk-main-wrapper" id="main-content" role="main">
-      <h1 class="govuk-heading-xl">Default page template</h1>
+      <h1 class="govuk-heading-xl">GreenLanes API client</h1>
 
-      <div data-controller="hello">
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="user-name">
-            What is your name
-          </label>
-          <input class="govuk-input" id="user-name" type="text" data-hello-target="name" >
-        </div>
+      <div data-controller="query">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+              Server connection
+            </h2>
+          </legend>
 
-        <button class="govuk-button" data-action="click->hello#greet">
-          Greet
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="domain">
+              App Domain
+            </label>
+            <input class="govuk-input" id="domain" type="text" data-query-target="domain" >
+          </div>
+
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="token">
+              API Token
+            </label>
+            <input class="govuk-input" id="token" type="text" data-query-target="token" >
+          </div>
+        </fieldset>
+
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+              Data to fetch
+            </h2>
+          </legend>
+
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="commodity">
+              Commodity code
+            </label>
+            <input class="govuk-input" id="commodity" type="text" data-query-target="commodity" >
+          </div>
+
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="origin">
+              Origin
+            </label>
+            <input class="govuk-input" id="origin" type="text" data-query-target="origin" >
+          </div>
+        </fieldset>
+
+        <button class="govuk-button" data-action="click->query#fetch">
+          Fetch from API
         </button>
 
-        <h2 class="govuk-heading-m" data-hello-target="output"></h2>
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></hr>
+
+        <h2 class="govuk-heading-m">Output data</h2>
+
+        <pre class="govuk-heading-m" data-query-target="output"></pre>
       </div>
     </main>
   </div>
