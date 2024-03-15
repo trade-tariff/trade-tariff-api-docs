@@ -20,8 +20,19 @@
     const models = new Store();
 
     Stimulus.register("query", class extends Controller {
-      static targets = [ "domain", "token", "commodity", "origin", "output", "gnCode", "gnDescription" ]
       commodity = null ;
+      static targets = [
+        "domain",
+        "token",
+        "commodity",
+        "origin",
+        "output",
+        "gnCode",
+        "gnDescription",
+        "gnPls",
+        "gnStartDate",
+        "gnEndDate"
+      ]
 
       apifetch() {
         fetch(this.apiurl(), {
@@ -57,6 +68,13 @@
       renderResult() {
         this.gnCodeTarget.textContent = this.commodity.goods_nomenclature_item_id;
         this.gnDescriptionTarget.textContent = this.commodity.description;
+        this.gnPlsTarget.textContent = this.commodity.producline_suffix;
+        this.gnStartDateTarget.textContent = (new Date(Date.parse(this.commodity.validity_start_date))).toDateString() ;
+
+        if (this.commodity.validity_end_date)
+          this.gnEndDateTarget.textContent = (new Date(Date.parse(this.commodity.validity_end_date))).toDateString() ;
+        else
+          this.gnEndDateTarget.innerHTML = '<em>indefinite</em>' ;
       }
     })
   </script>
@@ -149,18 +167,35 @@
             <dt class="govuk-summary-list__key">
               Commodity Code
             </dt>
-            <dd class="govuk-summary-list__value" data-query-target="gnCode">
-
-            </dd>
+            <dd class="govuk-summary-list__value" data-query-target="gnCode"></dd>
           </div>
 
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Description
             </dt>
-            <dd class="govuk-summary-list__value" data-query-target="gnDescription">
+            <dd class="govuk-summary-list__value" data-query-target="gnDescription"></dd>
+          </div>
 
-            </dd>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Productline suffix
+            </dt>
+            <dd class="govuk-summary-list__value" data-query-target="gnPls"></dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Valid from
+            </dt>
+            <dd class="govuk-summary-list__value" data-query-target="gnStartDate"></dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Valid until
+            </dt>
+            <dd class="govuk-summary-list__value" data-query-target="gnEndDate"></dd>
           </div>
         </dl>
 
