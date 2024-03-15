@@ -26,12 +26,18 @@
         "token",
         "commodity",
         "origin",
-        "output",
         "gnCode",
         "gnDescription",
         "gnPls",
         "gnStartDate",
-        "gnEndDate"
+        "gnEndDate",
+        "categoryAssessments",
+        "caTheme",
+        "caCategory",
+        "caGeoArea",
+        "caExcludedGeo",
+        "caExemptions",
+        "caTemplate"
       ]
 
       apifetch() {
@@ -41,7 +47,6 @@
         })
         .then(response => response.json())
         .then((document) => {
-          this.outputTarget.textContent = JSON.stringify(document, null, 2) ;
           this.processData(document) ;
         })
         .catch((error) => {
@@ -66,6 +71,11 @@
       }
 
       renderResult() {
+        this.renderCommodity() ;
+        this.renderCategoryAssessments() ;
+      }
+
+      renderCommodity() {
         this.gnCodeTarget.textContent = this.commodity.goods_nomenclature_item_id;
         this.gnDescriptionTarget.textContent = this.commodity.description;
         this.gnPlsTarget.textContent = this.commodity.producline_suffix;
@@ -75,6 +85,45 @@
           this.gnEndDateTarget.textContent = (new Date(Date.parse(this.commodity.validity_end_date))).toDateString() ;
         else
           this.gnEndDateTarget.innerHTML = '<em>indefinite</em>' ;
+      }
+
+      renderCategoryAssessments() {
+        this.categoryAssessmentsTarget.textContent = '' ;
+
+        for(let index in this.commodity.applicable_category_assessments) {
+          this.renderCategoryAssessment(index, this.commodity.applicable_category_assessments[index]) ;
+        }
+      }
+
+      renderCategoryAssessment(index, caData) {
+        const ca = this.caTemplateTarget.content.cloneNode(true);
+
+        this.categoryAssessmentsTarget.appendChild(ca) ;
+
+        this.caThemeTargets[index].textContent = caData.theme;
+        this.caCategoryTargets[index].textContent = caData.category;
+        this.caGeoAreaTargets[index].textContent = caData.geographical_area.description ;
+        if (caData.excluded_geographical_areas.length == 0)
+          this.caExcludedGeoTargets[index].innerHTML = '<em>no excluded areas</em>' ;
+        else
+          this.caExcludedGeoTargets[index].textContent = caData.excluded_geographical_areas.map(exGeo => exGeo.description).join(', ') ;
+
+        let list = document.createElement('ul') ;
+
+        if (caData.exemptions.length > 0)
+          this.caExemptionsTargets[index].appendChild(list) ;
+
+        for(let exemption of caData.exemptions) {
+          let exemptionText = null ;
+          if (exemption.type == 'certificate')
+            exemptionText = `<strong>Certificate ${exemption.certificate_type_code}${exemption.certificate_code}</strong>: ${exemption.description}`
+          else
+            exemptionText = `<strong>Additional code ${exemption.code}</strong>: ${exemption.description}`
+
+          const exemptionNode = document.createElement('li');
+          exemptionNode.innerHTML = exemptionText ;
+          list.appendChild(exemptionNode) ;
+        }
       }
     })
   </script>
@@ -160,7 +209,7 @@
 
         <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></hr>
 
-        <h2 class="govuk-heading-m">Output data</h2>
+        <h2 class="govuk-heading-m">Commodity</h2>
 
         <dl class="govuk-summary-list">
           <div class="govuk-summary-list__row">
@@ -199,7 +248,50 @@
           </div>
         </dl>
 
-        <pre class="govuk-body" data-query-target="output"></pre>
+        <h2 class="govuk-heading-m">Category Assessments</h2>
+
+        <div data-query-target="categoryAssessments"></div>
+
+        <template data-query-target="caTemplate">
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Theme
+              </dt>
+              <dd class="govuk-summary-list__value" data-query-target="caTheme"></dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Category
+              </dt>
+              <dd class="govuk-summary-list__value" data-query-target="caCategory"></dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Geographical Area
+              </dt>
+              <dd class="govuk-summary-list__value" data-query-target="caGeoArea"></dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Excluded geographical areas
+              </dt>
+              <dd class="govuk-summary-list__value" data-query-target="caExcludedGeo"></dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Exemptions
+              </dt>
+              <dd class="govuk-summary-list__value" data-query-target="caExemptions"></dd>
+            </div>
+          </dl>
+
+          <hr class="govuk-section-break govuk-section-break--l"></hr>
+        </template>
       </div>
     </main>
   </div>
