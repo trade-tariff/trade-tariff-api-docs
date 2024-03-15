@@ -17,10 +17,31 @@
     window.Stimulus = Application.start()
 
     Stimulus.register("query", class extends Controller {
-      static targets = [ "domain", "token", "commodity", "origin" ]
+      static targets = [ "domain", "token", "commodity", "origin", "output" ]
 
-      fetch() {
-        this.outputTarget.textContent = this.outputTarget.value ;
+      apifetch() {
+        fetch(this.apiurl(), {
+          method: 'GET',
+          headers: this.apiHeaders(),
+        })
+        .then(response => response.json())
+        .then((sections) => {
+          this.outputTarget.textContent = JSON.stringify(sections, null, 2) ;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      }
+
+      apiurl() {
+        return `https://${this.domainTarget.value}/xi/api/v2/green_lanes/goods_nomenclatures/${this.commodityTarget.value}.json`
+      }
+
+      apiHeaders() {
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${this.tokenTarget.value}`);
+
+        return headers ;
       }
     })
   </script>
@@ -100,7 +121,7 @@
           </div>
         </fieldset>
 
-        <button class="govuk-button" data-action="click->query#fetch">
+        <button class="govuk-button" data-action="click->query#apifetch">
           Fetch from API
         </button>
 
@@ -108,7 +129,7 @@
 
         <h2 class="govuk-heading-m">Output data</h2>
 
-        <pre class="govuk-heading-m" data-query-target="output"></pre>
+        <pre class="govuk-body" data-query-target="output"></pre>
       </div>
     </main>
   </div>
