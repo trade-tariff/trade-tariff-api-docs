@@ -16,8 +16,12 @@
     import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
     window.Stimulus = Application.start()
 
+    import { Store } from 'https://unpkg.com/json-api-models@0.1.0-beta.8/dist/index.es.js';
+    const models = new Store();
+
     Stimulus.register("query", class extends Controller {
-      static targets = [ "domain", "token", "commodity", "origin", "output" ]
+      static targets = [ "domain", "token", "commodity", "origin", "output", "gnCode", "gnDescription" ]
+      commodity = null ;
 
       apifetch() {
         fetch(this.apiurl(), {
@@ -25,8 +29,9 @@
           headers: this.apiHeaders(),
         })
         .then(response => response.json())
-        .then((sections) => {
-          this.outputTarget.textContent = JSON.stringify(sections, null, 2) ;
+        .then((document) => {
+          this.outputTarget.textContent = JSON.stringify(document, null, 2) ;
+          this.processData(document) ;
         })
         .catch((error) => {
           console.error(error);
@@ -42,6 +47,16 @@
         headers.append('Authorization', `Bearer ${this.tokenTarget.value}`);
 
         return headers ;
+      }
+
+      processData(document) {
+        this.commodity = models.sync(document) ;
+        this.renderResult() ;
+      }
+
+      renderResult() {
+        this.gnCodeTarget.textContent = this.commodity.goods_nomenclature_item_id;
+        this.gnDescriptionTarget.textContent = this.commodity.description;
       }
     })
   </script>
@@ -128,6 +143,26 @@
         <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></hr>
 
         <h2 class="govuk-heading-m">Output data</h2>
+
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Commodity Code
+            </dt>
+            <dd class="govuk-summary-list__value" data-query-target="gnCode">
+
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Description
+            </dt>
+            <dd class="govuk-summary-list__value" data-query-target="gnDescription">
+
+            </dd>
+          </div>
+        </dl>
 
         <pre class="govuk-body" data-query-target="output"></pre>
       </div>
