@@ -32,3 +32,6 @@
     * Removed Measures.goods_nomenclature relationship to avoid circular parsing issues for simpler client implementations
     * Brought Certificate structure inline with AdditionalCode to ease parsing of Exemptions
 
+- date: 2024-03-12
+  content: |
+    Added sample API client implementation in Javascript and HTML. Key lines for JSON:API parsing are 19, 20, 73
