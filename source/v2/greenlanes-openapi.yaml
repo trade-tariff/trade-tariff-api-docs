@@ -46,6 +46,15 @@ info:
     Authorization: Token <SUPPLIED TOKEN>
     ```
 
+    ## Sample client
+
+    There's a very simple html page client as an example of parsing these APIs in Javascript
+
+    [View sample client](/green-lanes-sample-client.html) &nbsp; | &nbsp;
+    <a download="green-lanes-sample-client.html" href="/green-lanes-sample-client.html">
+      Download
+    <a>
+
     ## Latest changes
 
     _These changes can be subscribed to at the [Atom (RSS) feed](/green-lanes.xml)_
