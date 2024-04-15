@@ -2,7 +2,7 @@
 
 {{~ data.securityDefinitions :sd}}
 {{? sd.type == 'apiKey' }}
-- API Key: Parameter **{{=sd.name}}**, in {{=sd.in}}.
+API Key: Parameter **{{=sd.name}}**, in {{=sd.in}}.
 
 {{=sd.description}}
 {{?}}
