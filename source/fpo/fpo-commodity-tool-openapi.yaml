@@ -5,12 +5,26 @@ info:
   description: |
     The FPO Commodity Code Identification Tool is a tool specifically designed for Fast Parcel Operators (FPOs) registered on the UK Authorised Carrier (UKC) scheme to find a best-guess commodity code for a given item description.
 
+    > Note that this API is currently in invite-only private beta
+
     This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
 
+    ## Authentication
+
+    Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invitedt to test the service.
+    Those eligible organisations will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+    ```
+    X-Api-Key: a1b2c3defg4567
+    ```
   version: "1"
 
 servers:
-  - url: https://search.trade-tariff.service.gov.uk/
+  - url: https://search.trade-tariff.service.gov.uk
+
+
+security:
+- ApiKeyAuth: []
 
 paths:
   /fpo-code-search:
@@ -19,43 +33,19 @@ paths:
       description: |
         Carries out a search for potential commodity codes for a single line item within a parcel
 
-
-      parameters:
-        - in: header
-          name: X-Api-Key
-          description: The API key for authentication
-          schema:
-            type: string
-          required: true
-          example: "my-api-key"
-
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              required: 
-                - description
-              properties:
-                description:
-                  type: string
-                  description: The English description of the line item within the parcel
-                  example: "plastic toothbrush holder"
-                digits:
-                  type: integer
-                  minimum: 6
-                  maximum: 8
-                  multipleOf: 2
-                  default: 6
-                  description: The number of commodity code digits the response should return
-                limit:
-                  type: integer
-                  minimum: 1
-                  maximum: 10
-                  default: 5
-                  description: The maximum number of results to send back
-
+              $ref: "#/components/schemas/ItemSearchRequest"
+      x-code-samples:
+        /fpo-code-search:
+          lang: shell
+          source: |-
+            curl -d '{"description": "plastic toothbrush holder", "digits": 8}' \
+              -H "Content-Type: application/json" -H "X-Api-Key: <your-api-key-here>" \
+              -X POST https://search.trade-tariff.service.gov.uk/fpo-code-search
 
       responses:
         200:
@@ -63,25 +53,73 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: 
-                  results:
-                    type: array
-                    description: The array of results, up to the specified limit, in order - best match first.
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                          description: The 6 (or 8) digit code​
-                          example: "123456"
-                        score:
-                          type: number
-                          description: A rating for how well the code matches. A higher number signifies a better match.
-                          minimum: 0
-                          maximum: 1000
-                          example: 123.45
-                    minItems: 0
-                    maxItems: 10
-        5XX:
-          description: Unexpected error.
+                $ref: "#/components/schemas/ItemSearchResponse"
+                
+        400:
+          description: There was an issue with the request (e.g. bad JSON)
+        401:
+          description: You need to supply an API key
+        403:
+          description: Invalid API key supplied
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  
+  schemas:
+    ItemSearchRequest:
+      type: object
+      required: 
+        - description
+      properties:
+        description:
+          type: string
+          description: The English description of the line item within the parcel
+          example: "plastic toothbrush holder"
+        digits:
+          type: integer
+          minimum: 6
+          maximum: 8
+          multipleOf: 2
+          default: 6
+          description: The number of commodity code digits the response should return
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 5
+          description: The maximum number of results to send back
+
+    ItemSearchResponse:
+      type: object
+      properties: 
+        results:
+          type: array
+          description: The array of results, up to the specified limit, in order - best match first.
+          items:
+            $ref: "#/components/schemas/ItemSearchResponseResult"
+          minItems: 0
+          maxItems: 10
+      example: 
+        results:
+          - code: "123456"
+            score: 123.45
+          - code: "987654"
+            score: 98.76
+            
+    ItemSearchResponseResult:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The 6 (or 8) digit code​
+          example: "123456"
+        score:
+          type: number
+          description: A rating for how well the code matches. A higher number signifies a better match.
+          minimum: 0
+          maximum: 1000
+          example: 123.45
