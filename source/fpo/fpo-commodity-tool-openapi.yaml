@@ -9,14 +9,7 @@ info:
 
     This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
 
-    ## Authentication
 
-    Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invitedt to test the service.
-    Those eligible organisations will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
-
-    ```
-    X-Api-Key: a1b2c3defg4567
-    ```
   version: "1"
 
 servers:
@@ -44,7 +37,7 @@ paths:
         /fpo-code-search:
           lang: shell
           source: |-
-            curl -d '{"description": "plastic toothbrush holder", "digits": 8}' \
+            curl -d '{"description": "plastic toothbrush", "digits": 8}' \
               -H "Content-Type: application/json" -H "X-Api-Key: <your-api-key-here>" \
               -X POST https://search.trade-tariff.service.gov.uk/fpo-code-search
 
@@ -52,16 +45,27 @@ paths:
         200:
           description: Successful response
           content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ItemSearchResponse"
-                
+            schema:
+              $ref: "#/components/schemas/ItemSearchResponse"
+          headers:
+            X-Request-Id:
+              type: string
+              description: Unique ID for this request
         400:
           description: There was an issue with the request (e.g. bad JSON)
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
         401:
           description: You need to supply an API key
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Invalid API key supplied
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
 
 components:
   securitySchemes:
@@ -69,6 +73,14 @@ components:
       type: apiKey
       in: header
       name: X-Api-Key
+      description: |
+          Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invited to test the service.
+
+          Those eligible organisations will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+          ```
+          X-Api-Key: a1b2c3defg4567
+          ```
   
   schemas:
     ItemSearchRequest:
@@ -79,7 +91,7 @@ components:
         description:
           type: string
           description: The English description of the line item within the parcel
-          example: "plastic toothbrush holder"
+          example: "plastic toothbrush"
         digits:
           type: integer
           minimum: 6
@@ -96,12 +108,14 @@ components:
 
     ItemSearchResponse:
       type: object
+      required:
+        - results
       properties: 
         results:
           type: array
           description: The array of results, up to the specified limit, in order - best match first.
           items:
-            $ref: "#/components/schemas/ItemSearchResponseResult"
+            $ref: "#/responses/ItemSearchResponseResult"
           minItems: 0
           maxItems: 10
       example: 
@@ -113,6 +127,9 @@ components:
 
     ItemSearchResponseResult:
       type: object
+      required:
+        - code
+        - score
       properties:
         code:
           type: string
@@ -124,3 +141,15 @@ components:
           minimum: 0
           maximum: 1000
           example: 123.45
+
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: The error message summary
+        detail:
+          type: string
+          description: Extra information about the error
