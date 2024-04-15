@@ -45,27 +45,17 @@ paths:
         200:
           description: Successful response
           content:
-            schema:
-              $ref: "#/components/schemas/ItemSearchResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemSearchResponse"
           headers:
             X-Request-Id:
               type: string
               description: Unique ID for this request
         400:
-          description: There was an issue with the request (e.g. bad JSON)
-          content:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
-        401:
-          description: You need to supply an API key
-          content:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
+          description: There was an issue with the request (e.g. invalid JSON)
         403:
-          description: Invalid API key supplied
-          content:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
+          description: Missing API key, or the supplied key was invalid
 
 components:
   securitySchemes:
@@ -98,7 +88,7 @@ components:
           maximum: 8
           multipleOf: 2
           default: 6
-          description: The number of commodity code digits the response should return
+          description: The number of commodity code digits the response should return. '6' will return 6-digit HS (Harmonized System) codes, '8' will return 8-digit CN (Combined Nomenclature) codes.
         limit:
           type: integer
           minimum: 1
@@ -133,7 +123,7 @@ components:
       properties:
         code:
           type: string
-          description: The 6 (or 8) digit code​
+          description: The 6 digit HS code, or 8 digit CN code​ (depending on the 'digits' request parameter)
           example: "123456"
         score:
           type: number
