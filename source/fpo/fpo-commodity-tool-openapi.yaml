@@ -3,7 +3,7 @@ openapi: 3.1.0
 info:
   title: FPO Commodity Code Identification Tool API
   description: |
-    The FPO Commodity Code Identification Tool is a tool specifically designed for Fast Parcel Operators (FPOs) registered on the UK Authorised Carrier (UKC) scheme to find a best-guess commodity code for a given item description.
+    The <abbr title="Fast Parcel Operator">FPO</abbr> Commodity Code Identification Tool is a tool specifically designed for Fast Parcel Operators (FPOs) registered on the UK Authorised Carrier (UKC) scheme to find a likely commodity code for a given item description.
 
     > Note that this API is currently in invite-only private beta
 
@@ -39,6 +39,7 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/ItemSearchRequest"
+
       x-code-samples:
         /fpo-code-search:
           lang: shell
@@ -109,7 +110,7 @@ components:
             score: 123.45
           - code: "987654"
             score: 98.76
-            
+
     ItemSearchResponseResult:
       type: object
       properties:
