@@ -1,0 +1,87 @@
+openapi: 3.1.0
+
+info:
+  title: FPO Commodity Code Identification Tool API
+  description: |
+    The FPO Commodity Code Identification Tool is a tool specifically designed for Fast Parcel Operators (FPOs) registered on the UK Authorised Carrier (UKC) scheme to find a best-guess commodity code for a given item description.
+
+    This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
+
+  version: "1"
+
+servers:
+  - url: https://search.trade-tariff.service.gov.uk/
+
+paths:
+  /fpo-code-search:
+    post:
+      summary: Identifies potential commodity codes for a goods item description
+      description: |
+        Carries out a search for potential commodity codes for a single line item within a parcel
+
+
+      parameters:
+        - in: header
+          name: X-Api-Key
+          description: The API key for authentication
+          schema:
+            type: string
+          required: true
+          example: "my-api-key"
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: 
+                - description
+              properties:
+                description:
+                  type: string
+                  description: The English description of the line item within the parcel
+                  example: "plastic toothbrush holder"
+                digits:
+                  type: integer
+                  minimum: 6
+                  maximum: 8
+                  multipleOf: 2
+                  default: 6
+                  description: The number of commodity code digits the response should return
+                limit:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                  default: 5
+                  description: The maximum number of results to send back
+
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  results:
+                    type: array
+                    description: The array of results, up to the specified limit, in order - best match first.
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: The 6 (or 8) digit code​
+                          example: "123456"
+                        score:
+                          type: number
+                          description: A rating for how well the code matches. A higher number signifies a better match.
+                          minimum: 0
+                          maximum: 1000
+                          example: 123.45
+                    minItems: 0
+                    maxItems: 10
+        5XX:
+          description: Unexpected error.
