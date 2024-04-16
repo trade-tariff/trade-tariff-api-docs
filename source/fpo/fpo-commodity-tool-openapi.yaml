@@ -4,21 +4,25 @@ info:
   version: "1"
   title: FPO Commodity Code Identification Tool APIs
   description: |
-    The <abbr>FPO</abbr> (Fast Parcel Operator) Commodity Code Identification Tool is a tool specifically designed for FPOs registered on the UK Authorised Carrier (UKC) scheme to identify 6-digit <abbr>HS</abbr> (Harmonized System) codes or 8-digit <abbr>CN</abbr> (Combined Nomenclature) codes for goods item descriptions.
+    The <abbr>FPO</abbr> (Fast Parcel Operator) Commodity Code Identification Tool is a tool specifically designed for FPOs registered on the UK Authorised Carrier (UKC) scheme to identify 6-digit <abbr>HS</abbr> (Harmonized System) codes or 8-digit <abbr>CN</abbr> (Combined Nomenclature) codes for English language goods item descriptions.
 
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-visually-hidden">Warning</span>
         Note that this API is currently in invite-only private beta
-        </br>
-        </br>
-        The APIs are subject to change and this document will be updated as the API development evolves.
       </strong>
     </div>
 
+    If you represent a UK FPO, are planning to move parcels under the new UK Authorised Carrier Scheme and would like to be included in the beta service, contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+
+    For more information see the [guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024](https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024)
 
     This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
+ 
+    ## Support
+
+    If you experience any issues or have questions regarding this API please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
 
 servers:
   - url: https://search.trade-tariff.service.gov.uk
@@ -59,67 +63,12 @@ paths:
           headers:
             X-Request-Id:
               type: string
-              description: Unique ID for this request
+              description: Unique ID for this request. Use this if you need to raise an issue or a query for this specific response.
         400:
           description: There was an issue with the request (e.g. invalid JSON)
         403:
           description: Missing API key, or the supplied key was invalid
 
-    get:
-      summary: Identifies potential commodity codes for a goods item description
-      description: |
-        Carries out a search for potential commodity codes for a single line item within a parcel
-      tags:
-        - FPO endpoints
-      parameters:
-        - name: q
-          in: query
-          required: true
-          description: The English description of the line item within the parcel
-          example: "plastic toothbrush"
-          schema:
-            type: string
-        - name: digits
-          in: query
-          required: false
-          description: The number of commodity code digits the response should return. '6' will return 6-digit HS codes, '8' will return 8-digit CN codes.
-          example: 8
-          default: 6
-          schema:
-            type: integer
-            enum:
-              - 6
-              - 8
-        - name: limit
-          in: query
-          required: false
-          description: The number of results to return
-          default: 5
-          schema:
-            type: string
-
-      x-code-samples:
-        /fpo-code-search:
-          lang: shell
-          source: |-
-            curl -H "Content-Type: application/json" -H "X-Api-Key: <your-api-key-here>" \
-              https://search.trade-tariff.service.gov.uk/fpo-code-search?q=plastic+toothbrush&digits=8
-
-      responses:
-        200:
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ItemSearchResponse"
-          headers:
-            X-Request-Id:
-              type: string
-              description: Unique ID for this request
-        400:
-          description: There was an issue with the request (e.g. invalid JSON)
-        403:
-          description: Missing API key, or the supplied key was invalid
 components:
   securitySchemes:
     ApiKeyAuth:
