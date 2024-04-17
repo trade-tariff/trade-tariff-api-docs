@@ -19,6 +19,12 @@ info:
     For more information see the [guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024](https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024)
 
     This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
+
+    ## Bulk processing
+
+    Due to the synchronous operation of the API, if you're dealing with large volumes of data or are batch processing it's recommended to use a multi-threaded or asynchronous client to process several connections simultaneously.
+    
+    This will be subject to rate limiting (to be implemented before 30 September 2024) which will allow up to 100 requests per second for each FPO.
  
     ## Support
 
@@ -63,11 +69,13 @@ paths:
           headers:
             X-Request-Id:
               type: string
-              description: Unique ID for this request. Use this if you need to raise an issue or a query for this specific response.
+              description: Unique ID for this request. Use this if you need to raise an issue or a query for this specific response
         400:
           description: There was an issue with the request (e.g. invalid JSON)
         403:
           description: Missing API key, or the supplied key was invalid
+        429:
+          description: You are being rate limited. The API will be rate limited to 100 requests per second for each FPO
 
 components:
   securitySchemes:
@@ -92,7 +100,7 @@ components:
       properties:
         description:
           type: string
-          description: A brief plain English description of the item in the parcel. For example, it may include the type of product such as ‘shampoo’, ‘plastic cups’ or ‘iPhone’. You should avoid generic terms that do not allow the good to be identified such as ‘goods’, ‘gifts’, ‘samples’ or ‘parts’.
+          description: A brief plain English description of the item in the parcel. For example, it may include the type of product such as ‘shampoo’, ‘plastic cups’ or ‘iPhone’. You should avoid generic terms that do not allow the good to be identified such as ‘goods’, ‘gifts’, ‘samples’ or ‘parts’
           example: "plastic toothbrush"
         digits:
           type: integer
@@ -100,7 +108,7 @@ components:
           maximum: 8
           multipleOf: 2
           default: 6
-          description: The number of commodity code digits the response should return. '6' will return 6-digit HS codes, '8' will return 8-digit CN codes.
+          description: The number of commodity code digits the response should return. '6' will return 6-digit HS codes, '8' will return 8-digit CN codes
         limit:
           type: integer
           minimum: 1
@@ -115,7 +123,7 @@ components:
       properties:
         results:
           type: array
-          description: The array of results, up to the specified limit, in order - best match first.
+          description: The array of results, up to the specified limit, in order - best match first
           items:
             $ref: "#/responses/ItemSearchResponseResult"
           minItems: 0
@@ -139,7 +147,7 @@ components:
           example: "123456"
         score:
           type: number
-          description: A rating for how well the code matches. A higher number signifies a better match.
+          description: A rating for how well the code matches. A higher number signifies a better match
           minimum: 0
           maximum: 1000
           example: 123.45
