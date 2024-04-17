@@ -4,7 +4,7 @@ info:
   version: "1"
   title: FPO Commodity Code Identification Tool APIs
   description: |
-    The <abbr>FPO</abbr> (Fast Parcel Operator) Commodity Code Identification Tool is a tool specifically designed for FPOs registered on the UK Authorised Carrier (UKC) scheme to identify 6-digit <abbr>HS</abbr> (Harmonized System) codes or 8-digit <abbr>CN</abbr> (Combined Nomenclature) codes for English language goods item descriptions.
+    The <abbr>FPO</abbr> (Fast Parcel Operator) Commodity Code Identification Tool is a tool specifically for use by FPOs moving goods under the UK Authorised Carrier (UKC) scheme to identify 6-digit <abbr>HS</abbr> (Harmonized System) codes or 8-digit <abbr>CN</abbr> (Combined Nomenclature) codes for English language goods item descriptions.
 
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -92,7 +92,7 @@ components:
       properties:
         description:
           type: string
-          description: The English description of the line item within the parcel
+          description: A brief plain English description of the item in the parcel. For example, it may include the type of product such as ‘shampoo’, ‘plastic cups’ or ‘iPhone’. You should avoid generic terms that do not allow the good to be identified such as ‘goods’, ‘gifts’, ‘samples’ or ‘parts’.
           example: "plastic toothbrush"
         digits:
           type: integer
