@@ -131,6 +131,10 @@ Information on `$ref`: <https://swagger.io/specification/#documentStructure>
 
 ## Running documentation locally
 
+### Pre Requisite
+
+Graphviz installed in your local environment
+
 ### Manual Build and Deploy
 
 Manual build and deploy is not necessary if automated deploy is used.
