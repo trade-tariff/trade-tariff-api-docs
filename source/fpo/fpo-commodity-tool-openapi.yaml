@@ -1,0 +1,165 @@
+openapi: 3.1.0
+
+info:
+  version: "1"
+  title: FPO Commodity Code Identification Tool APIs
+  description: |
+    The <abbr>FPO</abbr> (Fast Parcel Operator) Commodity Code Identification Tool is a tool specifically for use by FPOs moving goods under the UK Authorised Carrier (UKC) scheme to identify 6-digit <abbr>HS</abbr> (Harmonized System) codes or 8-digit <abbr>CN</abbr> (Combined Nomenclature) codes for English language goods item descriptions.
+
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span>
+        Note that this API is currently in invite-only private beta
+      </strong>
+    </div>
+
+    If you represent a UK FPO, are planning to move parcels under the new UK Authorised Carrier Scheme and would like to be included in the beta service, contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+
+    For more information see the [guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024](https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024)
+
+    This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
+
+    ## Bulk processing
+
+    Due to the synchronous operation of the API, if you're dealing with large volumes of data or are batch processing it's recommended to use a multi-threaded or asynchronous client to process several connections simultaneously.
+    
+    This will be subject to rate limiting (to be implemented before 30 September 2024) which will allow up to 100 requests per second for each FPO.
+ 
+    ## Support
+
+    If you experience any issues or have questions regarding this API please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+
+servers:
+  - url: https://search.trade-tariff.service.gov.uk
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /fpo-code-search:
+    post:
+      summary: Identifies potential commodity codes for a goods item description
+      description: |
+        Carries out a search for potential commodity codes for a single line item within a parcel
+      tags:
+        - FPO endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemSearchRequest"
+
+      x-code-samples:
+        /fpo-code-search:
+          lang: shell
+          source: |-
+            curl -d '{"description": "plastic toothbrush", "digits": 8}' \
+              -H "Content-Type: application/json" -H "X-Api-Key: <your-api-key-here>" \
+              -X POST https://search.trade-tariff.service.gov.uk/fpo-code-search
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemSearchResponse"
+          headers:
+            X-Request-Id:
+              type: string
+              description: Unique ID for this request. Use this if you need to raise an issue or a query for this specific response
+        400:
+          description: There was an issue with the request (e.g. invalid JSON)
+        403:
+          description: Missing API key, or the supplied key was invalid
+        429:
+          description: You are being rate limited. The API will be rate limited to 100 requests per second for each FPO
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: |
+        Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invited to test the service.
+
+        Those eligible organisations will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+        ```
+        X-Api-Key: a1b2c3defg4567
+        ```
+
+  schemas:
+    ItemSearchRequest:
+      type: object
+      required:
+        - description
+      properties:
+        description:
+          type: string
+          description: A brief plain English description of the item in the parcel. For example, it may include the type of product such as ‘shampoo’, ‘plastic cups’ or ‘iPhone’. You should avoid generic terms that do not allow the good to be identified such as ‘goods’, ‘gifts’, ‘samples’ or ‘parts’
+          example: "plastic toothbrush"
+        digits:
+          type: integer
+          minimum: 6
+          maximum: 8
+          multipleOf: 2
+          default: 6
+          description: The number of commodity code digits the response should return. '6' will return 6-digit HS codes, '8' will return 8-digit CN codes
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 5
+          description: The maximum number of results to send back
+
+    ItemSearchResponse:
+      type: object
+      required:
+        - results
+      properties:
+        results:
+          type: array
+          description: The array of results, up to the specified limit, in order - best match first
+          items:
+            $ref: "#/responses/ItemSearchResponseResult"
+          minItems: 0
+          maxItems: 10
+      example:
+        results:
+          - code: "123456"
+            score: 123.45
+          - code: "987654"
+            score: 98.76
+
+    ItemSearchResponseResult:
+      type: object
+      required:
+        - code
+        - score
+      properties:
+        code:
+          type: string
+          description: The 6 digit HS code, or 8 digit CN code​ (depending on the 'digits' request parameter)
+          example: "123456"
+        score:
+          type: number
+          description: A rating for how well the code matches. A higher number signifies a better match
+          minimum: 0
+          maximum: 1000
+          example: 123.45
+
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: The error message summary
+        detail:
+          type: string
+          description: Extra information about the error

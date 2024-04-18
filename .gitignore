@@ -23,6 +23,8 @@ Staticfile.auth
 /source/reference.html.md.erb
 /source/reference-beta.html.md.erb
 /source/green-lanes.html.md.erb
+/source/green-lanes-old.html.md.erb
+/source/fpo.html.md.erb
 
 .idea/*
 .ruby-gemset
