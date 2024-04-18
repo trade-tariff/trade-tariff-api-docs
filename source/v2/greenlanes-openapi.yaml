@@ -195,6 +195,29 @@ paths:
             curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
             curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
             curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
+  /green_lanes/themes:
+    get:
+      summary: Returns a list of all themes
+      description: >
+        Returns a list of the all Green Lane themes within the Windsor Framework
+      tags:
+        - Green Lanes
+      responses:
+        200:
+          description: An array of Themes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Themes"
+        401:
+          description: Authorization header is missing or contains an invalid token
+        5xx:
+          description: Unexpected error, something went wrong internally
+      x-code-samples:
+        /api/v2/green_lanes/themes:
+          lang: shell
+          source: |-
+            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/themes
 
 components:
   securitySchemes:
