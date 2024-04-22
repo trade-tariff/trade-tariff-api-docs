@@ -113,8 +113,8 @@
 
         this.categoryAssessmentsTarget.appendChild(ca) ;
 
-        this.caThemeTargets[index].textContent = caData.theme;
-        this.caCategoryTargets[index].textContent = caData.category;
+        this.caThemeTargets[index].textContent = `${caData.theme.id} ${caData.theme.theme}`;
+        this.caCategoryTargets[index].textContent = caData.theme.category;
         this.caGeoAreaTargets[index].textContent = caData.geographical_area.description ;
         if (caData.excluded_geographical_areas.length == 0)
           this.caExcludedGeoTargets[index].innerHTML = '<em>no excluded areas</em>' ;
