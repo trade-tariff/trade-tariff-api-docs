@@ -15,8 +15,8 @@ helpers do
       return
     end
 
-    out, err, status = Open3.capture3( "dot -Tsvg", stdin_data: data )
-    svg = out.gsub( /.*<svg/m, "<svg" ).gsub( /\n/m, "").html_safe
+    out, err, _status = Open3.capture3('dot -Tsvg', stdin_data: data)
+    svg = out.gsub(/.*<svg/m, '<svg').gsub(/\n/m, '').html_safe
 
     concat_content(svg.html_safe)
   end
