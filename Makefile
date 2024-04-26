@@ -1,7 +1,7 @@
 requirements:
 	npm install
 	bundle install
-	which dot || (echo "Please install Graphviz via your package manager" && exit 1)
+	which dot || (echo "Please install Graphviz via your system package manager" && exit 1)
 
 clean:
 	rm -rf build

@@ -35,3 +35,9 @@
 - date: 2024-03-12
   content: |
     Added sample API client implementation in Javascript and HTML. Key lines for JSON:API parsing are 19, 20, 73
+
+- date: 2024-04-18
+  content: |
+    Revised Green Lanes API documentation
+
+    * Added Theme API
