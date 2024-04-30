@@ -1,5 +1,5 @@
-# Terms and Conditions for use of the FPO Commodity Code Identification Tool
-By using this service you the customer indicate that you accept these terms and conditions and agree to abide by them.
+# Terms and conditions for use of the FPO Commodity Code Identification Tool
+By using this service you (the software developer) indicate that you accept these terms and conditions and agree to abide by them.
 
 The service is owned and operated by the Online Trade Tariff Team within His Majesty's Revenue and Customs (HMRC).
 
@@ -21,8 +21,10 @@ You may not conduct performance or security testing on the API.
 ## What you can expect from us
 We will:
 
-- give you at least 6 months’ notice of major changes to API documentation on the Hub (any minor changes will be notified immediately but will always be backwards compatible, once our APIs become stable they should not change frequently, but APIs in beta status may change fairly rapidly)
-- warn you in advance if an API is to be removed, giving the date of removal
+- give you at least 6 months’ notice of major/breaking changes affecting any stable APIs
+- make sure any minor changes made to stable APIs are backwards compatible
+- provide reasonable notice of changes affecting beta APIs, which can change fairly frequently
+- warn you before we retire an API
 
 ## Accuracy of data
 Although HMRC shall take all reasonable steps to ensure that the data provided is accurate and up to date before it is transmitted, no legal responsibility is accepted for any errors, omissions or misleading statements.
@@ -31,12 +33,12 @@ Although HMRC shall take all reasonable steps to ensure that the data provided i
 HMRC reserves the right to carry out audits and reviews of your compliance with the terms of this service, and you the customer shall agree to co-operate fully with any such audit or review.
 
 ## General Enquiries
-For general technical enquiries for this service, HMRC Trade Tariff Technical Support can be contacted between the hours of 09:00 and 17:00 Monday to Friday (excluding bank holidays) by e-mailing [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+For general technical enquiries for this service, HMRC Trade Tariff Technical Support can be contacted between the hours of 09:00 and 17:00 Monday to Friday (excluding English bank holidays) by e-mailing [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
 
 ## Suspension and Termination
 Where HMRC considers the service to have been misused by the customer it reserves the right to suspend the service offering immediately until appropriate evidence is supplied to allay concerns.
 
-HMRC reserves the right to withdraw the service at any point and will provide you the customer with 7 working days' notice.
+HMRC reserves the right to withdraw the service at any point and will provide you with 7 working days' notice.
 
 ## Disabling and Deactivation
 Should your API account remain unused for a period of 90 days, this may result in the disablement of your API key. If we do not receive contact from you within 120 days from the start of the unused period, your API account may be deleted. You will receive electronic notifications to give you notice of the above.
@@ -51,7 +53,7 @@ HMRC will endeavour when possible to contact you with advance notice of any plan
 HMRC will limit the rate of requests made to the API service to ensure full functionality is maintained. We reserve the right to monitor usage of the service and to amend rate plans where necessary.
 
 ## Service Incidents
-For issues with the service, the HMRC Trade Tariff Technical Support team can be contacted between the hours of 09:00 and 17:00 Monday to Friday (excluding bank holidays) by e-mailing [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+For issues with the service, the HMRC Trade Tariff Technical Support team can be contacted between the hours of 09:00 and 17:00 Monday to Friday (excluding English bank holidays) by e-mailing [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
 
 ## Disclaimer
 HMRC does not accept liability for loss or damage incurred by users of this service, whether direct, indirect or consequential, whether caused by tort, breach of contract or otherwise, in connection with our service, its use, the inability to use, or results of the use of our service, any websites linked to it and any materials posted on it.
@@ -66,7 +68,6 @@ This includes loss of:
 - goodwill
 - tangible property
 - wasted management or office time
-
 
 ## Virus protection
 HMRC will make every effort to check and test material at all stages of production. However, you must take your own precautions to ensure that the process you employ for accessing this service does not expose you to the risk of viruses, malicious computer code or other forms of interference which may damage your own computer system.
