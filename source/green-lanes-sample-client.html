@@ -40,8 +40,8 @@
         "caTemplate"
       ]
 
-      apifetch() {
-        fetch(this.apiurl(), {
+      apiFetch() {
+        fetch(this.apiUrl(), {
           method: 'GET',
           headers: this.apiHeaders(),
         })
@@ -54,17 +54,26 @@
         });
       }
 
-      apiurl() {
+      apiUrl() {
         let originFilter = '' ;
         if (this.originTarget.value.trim() != '')
           originFilter = `?filter[geographical_area_id]=${this.originTarget.value.trim()}`
 
-        return `https://${this.domainTarget.value}/xi/api/v2/green_lanes/goods_nomenclatures/${this.commodityTarget.value}.json${originFilter}`
+        return `${this.domainAndProtocol()}/green_lanes/goods_nomenclatures/${this.commodityTarget.value}.json${originFilter}`
+      }
+
+      domainAndProtocol() {
+        if (this.domainTarget.value.match(/^localhost/))
+          return `http://${this.domainTarget.value}` ;
+        else
+          return `https://${this.domainTarget.value}/xi/api/v2` ;
       }
 
       apiHeaders() {
         const headers = new Headers();
-        headers.append('Authorization', `Bearer ${this.tokenTarget.value}`);
+
+        if (this.tokenTarget.value != '')
+          headers.append('Authorization', `Bearer ${this.tokenTarget.value}`);
 
         return headers ;
       }
@@ -104,8 +113,8 @@
 
         this.categoryAssessmentsTarget.appendChild(ca) ;
 
-        this.caThemeTargets[index].textContent = caData.theme;
-        this.caCategoryTargets[index].textContent = caData.category;
+        this.caThemeTargets[index].textContent = `${caData.theme.id} ${caData.theme.theme}`;
+        this.caCategoryTargets[index].textContent = caData.theme.category;
         this.caGeoAreaTargets[index].textContent = caData.geographical_area.description ;
         if (caData.excluded_geographical_areas.length == 0)
           this.caExcludedGeoTargets[index].innerHTML = '<em>no excluded areas</em>' ;
@@ -207,7 +216,7 @@
           </div>
         </fieldset>
 
-        <button class="govuk-button" data-action="click->query#apifetch">
+        <button class="govuk-button" data-action="click->query#apiFetch">
           Fetch from API
         </button>
 
