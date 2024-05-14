@@ -1205,9 +1205,9 @@ paths:
 
   /changes/{as_of}:
     get:
-      summary: Retrieves a list of goods nomenclature objects that have changed on a given day
+      summary: Retrieves a list of goods nomenclature objects that have changed on the given day
       description: |
-        Retrieves a list of goods nomenclature objects that have changed on a given day
+        Retrieves a list of goods nomenclature objects that have changed on the given day
 
         Note that changes only go back 30 days
       tags:
@@ -1234,7 +1234,7 @@ paths:
         /api/v2/changes:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-01-01
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-04-13
 
   /rules_of_origin_schemes/{subheading}/{country_code}:
     get:
@@ -4291,6 +4291,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Change"
+      required:
+        - data
       example:
         data:
         - id: "106193"
