@@ -1205,11 +1205,11 @@ paths:
 
   /changes/{as_of}:
     get:
-      summary: Retrieves a list of goods nomenclature objects that have changed on the given day
+      summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
       description: |
-        Retrieves a list of goods nomenclature objects that have changed on the given day
+        Retrieves a list of goods nomenclature objects that have changed since the previous day
 
-        Note that changes only go back 30 days
+        Note that changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
       tags:
         - Changes
       parameters:
