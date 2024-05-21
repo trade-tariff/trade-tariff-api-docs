@@ -4298,7 +4298,7 @@ components:
         - id: "106193"
           type: "change"
           attributes:
-            goods_nomenclature_sid: "106193"
+            goods_nomenclature_sid: 106193
             goods_nomenclature_item_id: "7606129292"
             productline_suffix: "10"
             end_line: false
@@ -4308,7 +4308,7 @@ components:
         - id: "125323"
           type: "change"
           attributes:
-            goods_nomenclature_sid: "125323"
+            goods_nomenclature_sid: 125323
             goods_nomenclature_item_id: "2204109100"
             productline_suffix: "80"
             end_line: true
@@ -4320,8 +4320,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+          type: string
+          description: The id of the change within this response. This is always the `goods_nomenclature_sid` of the goods nomenclature that has changed.
         type:
           type: string
           description: Always 'change'.
@@ -4337,7 +4337,7 @@ components:
         id: "106193"
         type: "change"
         attributes:
-          goods_nomenclature_sid: "106193"
+          goods_nomenclature_sid: 106193
           goods_nomenclature_item_id: "7606129292"
           productline_suffix: "10"
           end_line: false
@@ -4375,7 +4375,7 @@ components:
         - change_type
         - change_date
       example:
-        goods_nomenclature_sid: "106193"
+        goods_nomenclature_sid: 106193
         goods_nomenclature_item_id: "7606129292"
         productline_suffix: "10"
         end_line: false
