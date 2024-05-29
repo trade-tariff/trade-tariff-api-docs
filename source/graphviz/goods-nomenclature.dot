@@ -7,13 +7,14 @@ digraph {
     node [shape=diamond,style=filled,color=lightgrey];
     "Applicable\nCAs";
     "Descendants\nCAs";
-    "Measures";
+    "Licences";
+    "Descendants\nLicences";
     "Ancestors";
     "Descendants";
 
     node [shape=ellipse,style=unfilled,color=black];
     "Goods\nNomenclature" -> "Applicable\nCAs"
-    "Goods\nNomenclature" -> "Measures"
+    "Goods\nNomenclature" -> "Licences"
     "Applicable\nCAs" -> "Category\nAssessment"
     "Category\nAssessment 2" -> "Measure 2"
     "Applicable\nCAs" -> "Category\nAssessment 2"
@@ -23,11 +24,12 @@ digraph {
     "Category\nAssessment 3" -> "Measure 3"
     "Goods\nNomenclature" -> "Ancestors"
     "Ancestors" -> "Chapter GN"
-    "Chapter GN" -> "Measure 2"
     "Ancestors" -> "Heading GN"
     "Goods\nNomenclature" -> "Descendants"
     "Descendants" -> "Commodity GN 1"
     "Descendants" -> "Commodity GN 2"
-    "Commodity GN 2" -> "Measure 3"
-    "Measures" -> "Measure"
+    "Licences" -> "Licence\nCertificate"
+    "Commodity GN 2" -> "Descendants\nLicences"
+    "Descendants\nLicences" -> "Licence\nCertificate"
+    "Descendants\nLicences" -> "Licence\nCertificate 2"
 }

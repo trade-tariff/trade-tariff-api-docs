@@ -285,11 +285,17 @@ components:
           items:
             $ref: '#/components/schemas/ReferencedGoodsNomenclature'
         descendants:
+          type: array
           description: |
             List of GoodsNomenclatures below the requested one in the Tariff,
             ordered by Goods Nomenclature Item Id
           items:
             $ref: '#/components/schemas/ReferencedGoodsNomenclature'
+        licences:
+          type: array
+          description: List of licences applicable to this GoodsNomenclature
+          items:
+            $ref: '#/components/schemas/Certificate'
       required:
         - id
         - goods_nomenclature_item_id
@@ -335,6 +341,10 @@ components:
                   type: goods_nomenclature
                 - id: "107156"
                   type: goods_nomenclature
+            licences:
+              data:
+                - id: L100
+                  type: certificate
         included:
           - id: 123456cd
             type: category_assessments
@@ -593,6 +603,15 @@ components:
             attributes:
               code: TM135
               description: "The surveillance does not apply to mixtures and natural products which contain scheduled substances and which are compounded in such a way that the scheduled substances cannot be easily used or extracted by readily applicable or economically viable means, to medicinal products as defined in point 2 of Article 1 of Directive 2001/83/EC of the European Parliament and of the Council and to veterinary medicinal products as defined in point 2 of Article 1 of Directive 2001/82/EC of the European Parliament and of the Council."
+          - id: L100
+            type: certificate
+            attributes:
+              certificate_type_code: L
+              certificate_code: "100"
+              code: L100
+              description: Import licence "controlled substances" (ozone), issued by the Commission
+              formatted_description: Import licence "controlled substances" (ozone), issued by the Commission
+
 
     CategoryAssessment:
       description: |
@@ -1092,6 +1111,11 @@ components:
           type: string
           description: The supplementary measure unit applicable to this GoodsNomenclature, if one is applicable
           nullable: true
+        licences:
+          type: array
+          description: List of licences applicable to this GoodsNomenclature
+          items:
+            $ref: '#/components/schemas/Certificate'
       required:
         - id
         - goods_nomenclature_item_id
@@ -1115,6 +1139,11 @@ components:
             validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
             supplementary_measure_unit: 1000 items (1000 p/st)
+          relationships:
+            licences:
+              data:
+                - id: L100
+                  type: certificate
 
     CategoryAssessmentListing:
       description: Listing of all category assessments
