@@ -720,6 +720,14 @@ components:
                   type: additional_code
                 - id: WFE001
                   type: exemption
+            measure_type:
+              data:
+                id: "475"
+                type: measure_type
+            regulation:
+              data:
+                id: D1908540
+                type: legal_act
         included:
           - id: "1011"
             type: geographical_area
@@ -1174,85 +1182,44 @@ components:
 
     CategoryAssessmentListing:
       description: Listing of all category assessments
-      type: array
       properties:
-        properties:
-        id:
-          type: string
-          description: The unique identifier for this category assessement
-        category:
-          type: integer
-          enum: [ 1, 2, 3 ]
-          description: |
-            The category applicable unless exemption criteria are met<br>
-            <br>
-            Category 1 = Prohibited<br>
-            Category 2 = Controlled<br>
-            Category 3 = Exempted
-        geographical_area:
-          description: The geographical area this Category Assessment applies to
-          $ref: '#/components/scheme/GeographicalArea'
-        excluded_geographical_areas:
+        data:
           type: array
-          description: The geographical areas excluded from this Category Assessment
+          description: An individual CategoryAssessment
           items:
-            $ref: '#/components/scheme/GeographicalArea'
-        exemptions:
-          type: array
-          description: |
-            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment<br>
-            <br>
-            _NB - Polymorphic array of Certificate and Additional Code objects_
-          items:
-            oneOf:
-              - $ref: '#/components/scheme/Certificate'
-              - $ref: '#/components/scheme/AdditionalCode'
-      required:
-        - id
-        - category
-        - geographical_area
+            $ref: '#/components/scheme/CategoryAssessment'
       example:
         data:
           - id: abcd1234
             type: category_assessment
             relationships:
-              theme:
-                data:
-                  id: "2.1"
-                  type: theme
               geographical_area:
                 data:
                   id: "1011"
                   type: geographical_area
               excluded_geographical_areas:
                 data: []
+              theme:
+                data:
+                  id: "2.1"
+                  type: theme
               exemptions:
                 data:
                   - id: L135
                     type: certificate
                   - id: "3200"
                     type: additional_code
-          - id: abcd1234
-            type: category_assessment
-            relationships:
-              theme:
+                  - id: WFE001
+                    type: exemption
+              measure_type:
                 data:
-                  id: "1.1"
-                  type: theme
-              geographical_area:
+                  id: "475"
+                  type: measure_type
+              regulation:
                 data:
-                  id: "1011"
-                  type: geographical_area
-              excluded_geographical_areas:
-                data: []
-              exemptions:
-                data: []
+                  id: D1908540
+                  type: legal_act
         included:
-          - id: "1.1"
-            type: theme
-            attributes:
-              theme: Sanctions
-              category: 1
           - id: "1011"
             type: geographical_area
             attributes:
@@ -1279,3 +1246,29 @@ components:
               code: "3200"
               description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
               formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+          - id: WFE001
+            type: exemption
+            attributes:
+              code: WFE001
+              description: Seed potatoes of a particular variety
+              formatted_description: Seed potatoes of a particular variety
+          - id: "475"
+            type: measure_type
+            attributes:
+              description: "Restriction on entry into free circulation"
+              measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
+              validity_start_date: "1972-01-01T00:00:00.000Z"
+              validity_end_date: null
+              measure_type_series_id: "B"
+              trade_movement_code: 0
+          - id: D1908540
+            type: legal_act
+            attributes:
+              validity_start_date: "2019-09-20T00:00:00.000Z"
+              validity_end_date: null
+              officialjournal_number: "L 147"
+              officialjournal_page: 1
+              published_date: "2019-06-05"
+              regulation_code: D0854/19
+              regulation_url: "http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D147,YEAR_OJ%3D2019,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en"
+              description: null
