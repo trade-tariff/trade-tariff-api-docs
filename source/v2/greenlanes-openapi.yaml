@@ -367,6 +367,14 @@ components:
                 data:
                   - id: "3871194"
                     type: measure
+              measure_type:
+                data:
+                  id: "714"
+                  type: measure_type
+              regulation:
+                data:
+                  id: D1908540
+                  type: legal_act
           - id: abcd1234
             type: category_assessments
             relationships:
@@ -393,6 +401,14 @@ components:
                 - data:
                     - id: "3871247"
                       type: measure
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              regulation:
+                data:
+                  id: D1908540
+                  type: legal_act
           - id: c5678def
             type: category_assessment
             relationships:
@@ -417,6 +433,14 @@ components:
                       type: measure
                     - id: "3871248"
                       type: measure
+              measure_type:
+                data:
+                  id: "475"
+                  type: measure_type
+              regulation:
+                data:
+                  id: D1908540
+                  type: legal_act
           - id: "1011"
             type: geographical_area
             attributes:
@@ -463,11 +487,6 @@ components:
               goods_nomenclature_sid: "106662"
               effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
-            relationships:
-              measure_type:
-                data:
-                  id: "714"
-                  type: measure_type
           - id: "3871192"
             type: measure
             attributes:
@@ -476,10 +495,6 @@ components:
               effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
-              measure_type:
-                data:
-                  id: "475"
-                  type: measure_type
               footnotes:
                 data:
                   - id: CD437
@@ -492,10 +507,6 @@ components:
               effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
-              measure_type:
-                data:
-                  id: "475"
-                  type: measure_type
               footnotes:
                 data:
                   - id: TM135
@@ -508,10 +519,6 @@ components:
               effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
-              measure_type:
-                data:
-                  id: "475"
-                  type: measure_type
               footnotes:
                 data:
                   - id: CD437
@@ -524,10 +531,6 @@ components:
               effective_start_date: "2022-01-01T00:00:00.000Z"
               effective_end_date: null
             relationships:
-              measure_type:
-                data:
-                  id: "475"
-                  type: measure_type
               footnotes:
                 data:
                   - id: TM135
@@ -543,6 +546,9 @@ components:
               validity_start_date: "1971-12-31T00:00:00.000Z"
               validity_end_date: null
               supplementary_measure_unit: null
+            relationships:
+              licences:
+                data: []
           - id: "106659"
             type: goods_nomenclature
             attributes:
@@ -554,6 +560,9 @@ components:
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
               supplementary_measure_unit: null
+            relationships:
+              licences:
+                data: []
           - id: "106676"
             type: goods_nomenclature
             attributes:
@@ -565,6 +574,9 @@ components:
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
               supplementary_measure_unit: 1000 items (1000 p/st)
+            relationships:
+              licences:
+                data: []
           - id: "107156"
             type: goods_nomenclature
             attributes:
@@ -576,6 +588,9 @@ components:
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
               supplementary_measure_unit: 1000 items (1000 p/st)
+            relationships:
+              licences:
+                data: []
           - id: "475"
             type: measure_type
             attributes:
@@ -586,6 +601,7 @@ components:
               measure_type_series_id: "B"
               trade_movement_code: 0
           - id: "714"
+            type: measure_type
             attributes:
               description: "Import control"
               measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
@@ -611,6 +627,17 @@ components:
               code: L100
               description: Import licence "controlled substances" (ozone), issued by the Commission
               formatted_description: Import licence "controlled substances" (ozone), issued by the Commission
+          - id: D1908540
+            type: legal_act
+            attributes:
+              validity_start_date: "2019-09-20T00:00:00.000Z"
+              validity_end_date: null
+              officialjournal_number: "L 147"
+              officialjournal_page: 1
+              published_date: "2019-06-05"
+              regulation_code: D0854/19
+              regulation_url: "http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D147,YEAR_OJ%3D2019,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en"
+              description: null
 
 
     CategoryAssessment:
