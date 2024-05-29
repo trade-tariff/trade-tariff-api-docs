@@ -261,6 +261,10 @@ components:
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
           nullable: true
+        supplementary_measure_unit:
+          type: string
+          description: The supplementary measure unit applicable to this GoodsNomenclature, if one is applicable
+          nullable: true
         applicable_category_assessments:
           type: array
           description: A list of applicable Category Assessments for this Goods Nomenclature
@@ -307,6 +311,7 @@ components:
             productline_suffix: "80"
             validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
+            supplementary_measure_unit: 1000 items (1000 p/st)
           relationships:
             applicable_category_assessments:
               data:
@@ -527,6 +532,7 @@ components:
               productline_suffix: "80"
               validity_start_date: "1971-12-31T00:00:00.000Z"
               validity_end_date: null
+              supplementary_measure_unit: null
           - id: "106659"
             type: goods_nomenclature
             attributes:
@@ -537,6 +543,7 @@ components:
               productline_suffix: "80"
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
+              supplementary_measure_unit: null
           - id: "106676"
             type: goods_nomenclature
             attributes:
@@ -547,6 +554,7 @@ components:
               productline_suffix: "80"
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
+              supplementary_measure_unit: 1000 items (1000 p/st)
           - id: "107156"
             type: goods_nomenclature
             attributes:
@@ -557,6 +565,7 @@ components:
               productline_suffix: "80"
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
+              supplementary_measure_unit: 1000 items (1000 p/st)
           - id: "475"
             type: measure_type
             attributes:
@@ -1079,6 +1088,10 @@ components:
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
           nullable: true
+        supplementary_measure_unit:
+          type: string
+          description: The supplementary measure unit applicable to this GoodsNomenclature, if one is applicable
+          nullable: true
       required:
         - id
         - goods_nomenclature_item_id
@@ -1101,6 +1114,7 @@ components:
             productline_suffix: "80"
             validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
+            supplementary_measure_unit: 1000 items (1000 p/st)
 
     CategoryAssessmentListing:
       description: Listing of all category assessments
