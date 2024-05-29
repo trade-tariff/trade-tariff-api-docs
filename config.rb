@@ -1,4 +1,5 @@
 require 'govuk_tech_docs'
+require 'kramdown'
 
 GovukTechDocs.configure(self)
 
@@ -19,5 +20,9 @@ helpers do
     svg = out.gsub(/.*<svg/m, '<svg').gsub(/\n/m, '').html_safe
 
     concat_content(svg.html_safe)
+  end
+
+  def convert_markdown(markdown_content)
+    ::Kramdown::Document.new(markdown_content).to_html
   end
 end
