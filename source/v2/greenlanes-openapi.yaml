@@ -286,11 +286,6 @@ components:
             ordered by Goods Nomenclature Item Id
           items:
             $ref: '#/components/schemas/ReferencedGoodsNomenclature'
-        measures:
-          type: array
-          description: The measures directly against this GoodsNomenclature
-          items:
-            $ref: '#/components/scheme/Measure'
       required:
         - id
         - goods_nomenclature_item_id
@@ -335,8 +330,6 @@ components:
                   type: goods_nomenclature
                 - id: "107156"
                   type: goods_nomenclature
-            measures:
-              data: []
         included:
           - id: 123456cd
             type: category_assessments
@@ -554,13 +547,6 @@ components:
               productline_suffix: "80"
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
-            relationships:
-              measures:
-                data:
-                  - id: "3871192"
-                    type: "measure"
-                  - id: "3871193"
-                    type: "measure"
           - id: "107156"
             type: goods_nomenclature
             attributes:
@@ -571,13 +557,6 @@ components:
               productline_suffix: "80"
               validity_start_date: "2022-01-01T00:00:00.000Z"
               validity_end_date: null
-            relationships:
-              measures:
-                data:
-                  - id: "3871247"
-                    type: "measure"
-                  - id: "3871248"
-                    type: "measure"
           - id: "475"
             type: measure_type
             attributes:
@@ -623,6 +602,12 @@ components:
         theme:
           description: The Green Lanes Theme used as the basis for this Category Assessment
           $ref: '#/components/scheme/Theme'
+        measure_type:
+          description: The Measure Type resulting in this Category Assessment
+          $ref: '#/components/scheme/MeasureType'
+        regulation:
+          description: The Regulation resulting in this Category Assessment
+          $ref: '#/components/scheme/LegalAct'
         geographical_area:
           description: The geographical area this Category Assessment applies to
           $ref: '#/components/scheme/GeographicalArea'
@@ -634,9 +619,9 @@ components:
         exemptions:
           type: array
           description: |
-            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment<br>
-            <br>
-            _NB - Polymorphic array of Certificate, Additional Code and Exemption objects_
+            The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment
+            <br><br>
+            _NB: Polymorphic array of *Certificate*, *AdditionalCode* and *Exemption* objects_
           items:
             oneOf:
               - $ref: '#/components/scheme/Certificate'
@@ -644,7 +629,10 @@ components:
               - $ref: '#/components/scheme/Exemption'
         measures:
           type: array
-          description: A list of Measures resulting in this CategoryAssessment
+          description: |
+            A list of Measures resulting in this CategoryAssessment
+            <br><br>
+            _NB: Not present on `/green_lanes/category_assessments` endpoint due to volume of data_
           items:
             $ref: '#/components/schemas/Measure'
       required:
@@ -652,6 +640,8 @@ components:
         - category
         - theme
         - geographical_area
+        - measure_type
+        - regulation
       example:
         data:
           id: abcd1234
@@ -708,6 +698,26 @@ components:
               code: WFE001
               description: Seed potatoes of a particular variety
               formatted_description: Seed potatoes of a particular variety
+          - id: "475"
+            type: measure_type
+            attributes:
+              description: "Restriction on entry into free circulation"
+              measure_type_series_description: "Entry into free circulation or exportation subject to conditions"
+              validity_start_date: "1972-01-01T00:00:00.000Z"
+              validity_end_date: null
+              measure_type_series_id: "B"
+              trade_movement_code: 0
+          - id: D1908540
+            type: legal_act
+            attributes:
+              validity_start_date: "2019-09-20T00:00:00.000Z"
+              validity_end_date: null
+              officialjournal_number: "L 147"
+              officialjournal_page: 1
+              published_date: "2019-06-05"
+              regulation_code: D0854/19
+              regulation_url: "http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D147,YEAR_OJ%3D2019,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en"
+              description: null
 
     Theme:
       description: A Green Lane Theme within the Windsor Framework
@@ -875,8 +885,6 @@ components:
       type: object
       description: |
         A Measure object which generates this Category Assessment.
-
-        <% graphviz 'measure' %>
       properties:
         id:
           type: string
@@ -897,9 +905,6 @@ components:
           description: The effective end date of the measure.
           format: date-time
           nullable: true
-        measure_type:
-          description: The measure type associated with this measure
-          $ref: '#/components/scheme/MeasureType'
         footnotes:
           type: array
           description: The footnotes for this measure
@@ -971,6 +976,56 @@ components:
             measure_type_series_id: "B"
             trade_movement_code: 0
 
+    LegalAct:
+      description: The Regulations which the Category Assessment is derived from.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this legal act
+        validity_start_date:
+          type: string
+          description: The validity start date of this legal act
+          format: date-time
+        validity_end_date:
+          type: string
+          description: The validity end date of this legal act
+          format: date-time
+          nullable: true
+        officialjournal_number:
+          type: string
+          description: The journal describing this legal act
+        officialjournal_page:
+          type: integer
+          description: The page within the journal describing this legal act
+        published_date:
+          type: string
+          description: The date this legal was published
+          format: date
+        regulation_code:
+          type: string
+          description: Formatted code identifying this legal act
+        regulation_url:
+          type: string
+          description: URL descripting this legal act
+          format: uri
+        description:
+          type: string
+          description: A description of this legal act
+      example:
+        data:
+          id: D1908540
+          type: legal_act
+          attributes:
+            validity_start_date: "2019-09-20T00:00:00.000Z"
+            validity_end_date: null
+            officialjournal_number: "L 147"
+            officialjournal_page: 1
+            published_date: "2019-06-05"
+            regulation_code: D0854/19
+            regulation_url: "http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D147,YEAR_OJ%3D2019,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en"
+            description: null
+
     Footnote:
       description: A referenced Footnote object
       type: object
@@ -1024,11 +1079,6 @@ components:
           description: The date this Goods Nomenclature is valid until, null if valid indefinitely
           format: date-time
           nullable: true
-        measures:
-          type: array
-          description: The measures directly against this GoodsNomenclature
-          items:
-            $ref: '#/components/scheme/Measure'
       required:
         - id
         - goods_nomenclature_item_id
@@ -1051,13 +1101,6 @@ components:
             productline_suffix: "80"
             validity_start_date: "2022-01-01T00:00:00.000Z"
             validity_end_date: null
-          relationships:
-            measures:
-              data:
-                - id: "3871192"
-                  type: "measure"
-                - id: "3871193"
-                  type: "measure"
 
     CategoryAssessmentListing:
       description: Listing of all category assessments
