@@ -11,8 +11,9 @@ digraph {
     node [shape=ellipse,style=unfilled,color=black];
     "Category\nAssessment" -> "Exemptions"
     "Exemptions" -> "Certificate"
-    "Exemptions" -> "Additional Code"
+    "Exemptions" -> "Exemption"
     "Exemptions" -> "Certificate 2"
+    "Exemptions" -> "Additional Code"
     "Category\nAssessment" -> "Geographical\nArea"
     "Category\nAssessment" -> "Excluded\nGeo Areas"
     "Excluded\nGeo Areas" -> "Geographical\nArea 2"

@@ -636,11 +636,12 @@ components:
           description: |
             The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment<br>
             <br>
-            _NB - Polymorphic array of Certificate and Additional Code objects_
+            _NB - Polymorphic array of Certificate, Additional Code and Exemption objects_
           items:
             oneOf:
               - $ref: '#/components/scheme/Certificate'
               - $ref: '#/components/scheme/AdditionalCode'
+              - $ref: '#/components/scheme/Exemption'
         measures:
           type: array
           description: A list of Measures resulting in this CategoryAssessment
@@ -672,6 +673,8 @@ components:
                   type: certificate
                 - id: "3200"
                   type: additional_code
+                - id: WFE001
+                  type: exemption
         included:
           - id: "1011"
             type: geographical_area
@@ -699,6 +702,12 @@ components:
               code: "3200"
               description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
               formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+          - id: WFE001
+            type: exemption
+            attributes:
+              code: WFE001
+              description: Seed potatoes of a particular variety
+              formatted_description: Seed potatoes of a particular variety
 
     Theme:
       description: A Green Lane Theme within the Windsor Framework
@@ -831,6 +840,36 @@ components:
             code: "3200"
             description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
             formatted_description: "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
+
+    Exemption:
+      description: A non-tariff Exemption which exempts the CategoryAssessment when the Exemption is applicable
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for this description
+        code:
+          type: string
+          description: The `code` identifying the Exemption
+        description:
+          type: string
+          description: The `description` for the Exemption
+        formatted_description:
+          type: string
+          description: A version of the description potentially including html formatting tags
+      required:
+        - id
+        - code
+        - description
+        - formatted_description
+      example:
+        data:
+          id: WFE001
+          type: exemption
+          attributes:
+            code: WFE001
+            description: Seed potatoes of a particular variety
+            formatted_description: Seed potatoes of a particular variety
 
     Measure:
       type: object
