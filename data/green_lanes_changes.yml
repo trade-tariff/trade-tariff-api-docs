@@ -41,3 +41,15 @@
     Revised Green Lanes API documentation
 
     * Added Theme API
+
+- date: 2024-05-30
+  content: |
+    * Added Supplementary Measure Unit attribute on Goods Nomenclatures entities
+    * Added Licences relationship on Goods Nomenclatures entities
+    * Removed measures relationship from GoodsNomenclatures - this is superceded by the SMUs and Licences changes
+    * Various corrections to the examples
+    * Documented the MeasureType and Regulation relationships on CategoryAssessments
+    * Added (pseudo) Exemption entity - pseudo measures are serialized as regular tariff measures
+    * Changed listing of CategoryAssessments to just reference the existing CategoryAssessment entity
+    * Cleaned up rendering of changes content
+    * Removed historic copy of GreenLanes API docs
