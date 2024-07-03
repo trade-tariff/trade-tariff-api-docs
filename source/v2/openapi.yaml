@@ -1202,13 +1202,14 @@ paths:
           lang: shell
           source: |-
             curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
+
   /changes/{as_of}:
     get:
       summary: Retrieves a list of goods nomenclature objects that have changed since the previous day
       description: |
         Retrieves a list of goods nomenclature objects that have changed since the previous day
 
-        Changes only go back 30 days
+        Note that changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
       tags:
         - Changes
       parameters:
@@ -1226,16 +1227,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Change"
-              example:
-                $ref: "#/components/schemas/Change/example"
+                $ref: "#/components/schemas/ChangesResponse"
         5XX:
           description: Unexpected error.
       x-code-samples:
         /api/v2/changes:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-01-01
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-04-13
+
   /rules_of_origin_schemes/{subheading}/{country_code}:
     get:
       summary: Retrieves relevant Rules of Origin schemes and rules
@@ -4283,13 +4283,45 @@ components:
         referenced_class: "Heading"
         productline_suffix: "80"
 
+    ChangesResponse:
+      description: A list of changes to goods nomenclature
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Change"
+      required:
+        - data
+      example:
+        data:
+        - id: "106193"
+          type: "change"
+          attributes:
+            goods_nomenclature_sid: 106193
+            goods_nomenclature_item_id: "7606129292"
+            productline_suffix: "10"
+            end_line: false
+            change_type: "commodity"
+            change_date: "2021-04-13"
+        
+        - id: "125323"
+          type: "change"
+          attributes:
+            goods_nomenclature_sid: 125323
+            goods_nomenclature_item_id: "2204109100"
+            productline_suffix: "80"
+            end_line: true
+            change_type: "commodity"
+            change_date: "2021-04-13"
+
     Change:
       description: Indicates a change to a given goods nomenclature.
       type: object
       properties:
         id:
-          type: integer
-          description: The `goods_nomenclature_sid` of the goods nomenclature. This is a unique identifier.
+          type: string
+          description: The id of the change within this response. This is always the `goods_nomenclature_sid` of the goods nomenclature that has changed.
         type:
           type: string
           description: Always 'change'.
@@ -4297,11 +4329,15 @@ components:
           type: object
           description: The changed goods nomenclature attributes.
           $ref: "#/components/schemas/ChangeAttributes"
+      required:
+        - id
+        - type
+        - attributes
       example:
         id: "106193"
         type: "change"
         attributes:
-          goods_nomenclature_sid: "106193"
+          goods_nomenclature_sid: 106193
           goods_nomenclature_item_id: "7606129292"
           productline_suffix: "10"
           end_line: false
@@ -4331,8 +4367,15 @@ components:
           type: string
           description: Date of the change.
           format: date
+      required:
+        - goods_nomenclature_sid
+        - goods_nomenclature_item_id
+        - productline_suffix
+        - end_line
+        - change_type
+        - change_date
       example:
-        goods_nomenclature_sid: "106193"
+        goods_nomenclature_sid: 106193
         goods_nomenclature_item_id: "7606129292"
         productline_suffix: "10"
         end_line: false

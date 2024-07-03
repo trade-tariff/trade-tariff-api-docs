@@ -130,8 +130,10 @@
           let exemptionText = null ;
           if (exemption.type == 'certificate')
             exemptionText = `<strong>Certificate ${exemption.certificate_type_code}${exemption.certificate_code}</strong>: ${exemption.description}`
-          else
+          else if (exemption.type == 'additional_code')
             exemptionText = `<strong>Additional code ${exemption.code}</strong>: ${exemption.description}`
+          else
+            exemptionText = `<strong>Exemption ${exemption.code}</strong>: ${exemption.description}`
 
           const exemptionNode = document.createElement('li');
           exemptionNode.innerHTML = exemptionText ;

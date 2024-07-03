@@ -5,15 +5,10 @@ digraph {
     edge [fontname="Arial,sans-serif"]
 
     node [shape=diamond,style=filled,color=lightgrey];
-    "Measure\nConditions"
+    "Footnotes"
 
     node [shape=ellipse,style=unfilled,color=black];
-    "Measure" -> "Measure\nType"
-    "Measure" -> "Additional\nCode"
-    "Measure" -> "Footnote"
-    "Measure" -> "Measure\nConditions"
-    "Measure\nConditions" -> "Measure\nCondition 1"
-    "Measure\nCondition 1" -> "Certificate"
-    "Measure\nConditions" -> "Measure\nCondition 2"
-    "Measure\nCondition 2" -> "Certificate 2"
+    "Measure" -> "Footnotes"
+    "Footnotes" -> "Footnote 1"
+    "Footnotes" -> "Footnote 2"
 }
