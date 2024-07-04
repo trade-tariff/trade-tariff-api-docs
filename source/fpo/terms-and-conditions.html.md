@@ -1,4 +1,4 @@
-# Terms and conditions for use of the FPO Commodity Code Identification Tool
+# Terms and conditions for use of the Fast Parcel Operator (FPO) Commodity Code Identification Tool
 By using this service you (the software developer) indicate that you accept these terms and conditions and agree to abide by them.
 
 The service is owned and operated by the Online Trade Tariff Team within His Majesty's Revenue and Customs (HMRC).
@@ -6,11 +6,11 @@ The service is owned and operated by the Online Trade Tariff Team within His Maj
 ## Conditions of use
 The API is designated for backend operations only and should not be directly integrated into any customer-facing interfaces, applications, or websites.
 
-Any access credentials are for the sole use of the UK Carrier Scheme (UKC) registered FPO to which they have been granted. They may be shared and used by third party suppliers but must only be used for the purposes of providing services to the FPO. It is the responsibility of the FPO to ensure that their suppliers adhere to these terms and that access credentials are kept confidential.
+Any access credentials are for the sole use of the UK Carrier Scheme (UKC) registered Fast Parcel Operator (FPO) to which they have been granted. They may be shared and used by third party suppliers but must only be used for the purposes of providing services to the FPO. It is the responsibility of the FPO to ensure that their suppliers adhere to these terms and that access credentials are kept confidential.
 
 The API is only intended for generating commodity codes for parcels being transported from Great Britain to Northern Ireland that are classified as "Not at Risk" of onward movement out of Northern Ireland, where Northern Ireland is their final destination and place of use/consumption. This includes goods moved under the UK Carrier Scheme (UKC).
 
-The API is only available to UK Carrier Scheme (UKC) registered FPO's. No access will be given without this authorisation. You can [apply for the UK Carrier scheme here](https://www.gov.uk/guidance/apply-for-the-uk-carrier-scheme).
+The API is only available to UK Carrier Scheme (UKC) registered FPOs. No access will be given without this authorisation. You can [apply for the UK Carrier scheme here](https://www.gov.uk/guidance/apply-for-the-uk-carrier-scheme).
 
 By using the API, you agree not to discuss or publicly disclose any details, functionalities, or details of the performance of the API without prior written consent from HMRC.
 
