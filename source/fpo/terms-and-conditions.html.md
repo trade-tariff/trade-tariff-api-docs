@@ -6,11 +6,11 @@ The service is owned and operated by the Online Trade Tariff Team within His Maj
 ## Conditions of use
 The API is designated for backend operations only and should not be directly integrated into any customer-facing interfaces, applications, or websites.
 
-The API is solely for internal use and must not be shared with external parties. Access credentials should remain confidential and not be disclosed to anyone outside the organisation.
+Any access credentials are for the sole use of the UK Carrier Scheme (UKC) registered FPO to which they have been granted. They may be shared and used by third party suppliers but must only be used for the purposes of providing services to the FPO. It is the responsibility of the FPO to ensure that their suppliers adhere to these terms and that access credentials are kept confidential.
 
-The API is specifically intended for generating commodity codes for parcels being transported from Great Britain to Northern Ireland that are classified as "Not at Risk."
+The API is only intended for generating commodity codes for parcels being transported from Great Britain to Northern Ireland that are classified as "Not at Risk" of onward movement out of Northern Ireland, where Northern Ireland is their final destination and place of use/consumption. This includes goods moved under the UK Carrier Scheme (UKC).
 
-Users of the API are required to verify themselves using their UK authorised carrier scheme number before 30 September 2024. Failure to complete verification by this deadline may result in access being revoked.
+The API is only available to UK Carrier Scheme (UKC) registered FPO's. No access will be given without this authorisation. You can [apply for the UK Carrier scheme here](https://www.gov.uk/guidance/apply-for-the-uk-carrier-scheme).
 
 By using the API, you agree not to discuss or publicly disclose any details, functionalities, or details of the performance of the API without prior written consent from HMRC.
 
@@ -41,7 +41,7 @@ Where HMRC considers the service to have been misused by the customer it reserve
 HMRC reserves the right to withdraw the service at any point and will provide you with 7 working days' notice.
 
 ## Disabling and Deactivation
-Should your API account remain unused for a period of 90 days, this may result in the disablement of your API key. If we do not receive contact from you within 120 days from the start of the unused period, your API account may be deleted. You will receive electronic notifications to give you notice of the above.
+Should your API account remain unused for a period of 90 days, this may result in the disablement of your API key. If we do not receive contact from you within 120 days from the start of the unused period, your API account may be deleted.
 
 ## Continuity of service
 Where possible, HMRC will use reasonable endeavours to ensure that there is no break in the continuity of service and will only make changes when required.
@@ -80,7 +80,7 @@ You the customer will not misuse the service by knowingly introducing viruses, t
 By breaching this provision, you would commit a criminal offence under the Computer Misuse Act 1990. We will report any such breach to the relevant law enforcement authorities and we will co-operate with those authorities by disclosing your identity to them.
 
 ## Use of HMRC's logo
-The names, images and logos identifying HMRC are proprietary marks of HMRC. Copying our logos and/or any other third party logos is not permitted without prior approval from the relevant copyright owner.
+The names, images and logos identifying HMRC are proprietary marks of HMRC. The use or copying of our logos and/or any other third party logos is not permitted without prior approval from the relevant copyright owner.
 
 ## Changes
 HMRC reserves the right, at its discretion, to make changes to any part of this service, the information, or these terms. Should HMRC change these terms and conditions, the customer will be notified by email using the contact details provided at registration.
