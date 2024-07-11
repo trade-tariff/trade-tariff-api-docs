@@ -23,9 +23,9 @@ info:
     ## Bulk processing
 
     Due to the synchronous operation of the API, if you're dealing with large volumes of data or are batch processing it's recommended to use a multi-threading, multi-processing or asynchronous approach to process several connections simultaneously.
-    
+
     This will be subject to rate limiting (to be implemented before 30 September 2024) which will allow up to 100 requests per second for each FPO.
- 
+
     ## Support
 
     If you experience any issues or have questions regarding this API please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
