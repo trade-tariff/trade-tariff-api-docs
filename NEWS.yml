@@ -40,11 +40,6 @@
     - [measure_condition_permutation_group](/reference.html#measureconditionpermutationgroup)
     - [measure_condition_permutation](/reference.html#measureconditionpermutation)
 
-- date: 2022-08-01
-  title: BETA commodity code API released
-  content: |
-    See documentation for the [commodity code search API BETA](/reference-beta.html).
-
 - date: 2022-07-01
   title: New measure condition permutations nodes in the commodities API
   content: |
