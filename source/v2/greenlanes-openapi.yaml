@@ -141,7 +141,7 @@ paths:
           description: |
             Item Id of the Goods Nomenclature you are requesting Category Assessments information for.
 
-            This is the full 10 digit item id of either a Subheading or Commodity. If you are working with truncated item ids, ie truncated to 6 or 8 significant digits, then pad to 10 with trailing zero's - so 123456 would submitted as 1234560000.
+            This is the full 10 digit item ID of either a Subheading or Commodity. Valid input IDs can be provided in 4, 6, 8, or 10 significant digits, depending on the level of detail available in the XI Tariff. If your input ID is shorter than 10 digits (e.g., 4, 6, or 8 digits), it will be automatically padded with trailing zeros to reach the full 10-digit format. For example, an ID of 1234 would be processed as 1234000000.
           schema:
             type: string
             minimum: 10
