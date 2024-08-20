@@ -4,7 +4,7 @@ servers:
   - url: https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes
 
 security:
-- bearerAuth: []
+- ApiKeyAuth: []
 
 info:
   version: "2"
@@ -31,16 +31,6 @@ info:
         An RSS feed is available for notification of changes - see below.
       </strong>
     </div>
-
-    ## Authentication
-
-    Access to these APIs will be restricted initially whilst they are in development. Approved partners requiring access should contact the Online Trade Tariff team.
-
-    The token should be included with the API request via the standard HTTP Authorization header, eg.
-
-    ```
-    Authorization: Token <SUPPLIED TOKEN>
-    ```
 
     ## Sample client
 
@@ -81,6 +71,10 @@ info:
     </details>
     <% end %>
 
+    ## Terms and Conditions
+
+      By using this API you agree to the [Terms and Conditions for use of the Green Lanes Categorisation Tool](/green-lanes-terms-and-conditions.html)
+
 paths:
   /green_lanes/category_assessments:
     get:
@@ -118,8 +112,8 @@ paths:
         /api/v2/green_lanes/category_assessments:
           lang: shell
           source: |-
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments?as_of=2024-01-01
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments?as_of=2024-01-01
 
   /green_lanes/goods_nomenclatures/{id}:
     get:
@@ -188,10 +182,10 @@ paths:
         /api/v2/goods_nomenclatures/0712909000:
           lang: shell
           source: |-
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
-            curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
-            curl -X GET -H "Authorization: Token TOKEN123" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
   /green_lanes/themes:
     get:
       summary: Returns a list of all themes
@@ -214,13 +208,22 @@ paths:
         /api/v2/green_lanes/themes:
           lang: shell
           source: |-
-            curl -X GET -H "Authorization: Token TOKEN123" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/themes
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/themes
 
 components:
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+      description: |
+        Access to these APIs will be restricted. Approved partners requiring access should contact the Online Trade Tariff team.
+
+        Those eligible traders will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+        ```
+        X-Api-Key: a1b2c3defg4567
+        ```
 
   schemas:
     GoodsNomenclature:

@@ -23,7 +23,7 @@
       commodity = null ;
       static targets = [
         "domain",
-        "token",
+        "key",
         "commodity",
         "origin",
         "gnCode",
@@ -72,8 +72,8 @@
       apiHeaders() {
         const headers = new Headers();
 
-        if (this.tokenTarget.value != '')
-          headers.append('Authorization', `Bearer ${this.tokenTarget.value}`);
+        if (this.keyTarget.value != '')
+          headers.append('X-Api-Key', `${this.keyTarget.value}`);
 
         return headers ;
       }
@@ -189,10 +189,10 @@
           </div>
 
           <div class="govuk-form-group">
-            <label class="govuk-label" for="token">
-              API Token
+            <label class="govuk-label" for="key">
+              API Key
             </label>
-            <input class="govuk-input" id="token" type="text" data-query-target="token" >
+            <input class="govuk-input" id="key" type="text" data-query-target="key" >
           </div>
         </fieldset>
 
