@@ -75,6 +75,62 @@ info:
 
       By using this API you agree to the [Terms and Conditions for use of the Green Lanes Categorisation Tool](/green-lanes-terms-and-conditions.html)
 
+    ## Instructions for requesting an API Key
+
+    <div class="govuk-details__text">
+        <h3>Prepare Your Details:</h3>
+        <p>Before sending the email, ensure you have the following information:</p>
+        <ul class="govuk-list--bullet">
+            <li>Your company’s name</li>
+            <li>Your EORI (Economic Operators Registration and Identification) number</li>
+            <li>A valid contact email address</li>
+            <li>Confirmation of your UKIMS (UK Integrated Tariff System) authorisation status</li>
+        </ul>
+    </div>
+
+    <div class="govuk-details__text">
+        <h3>Fill in the Template:</h3>
+        <p>Replace the placeholder text in the template with your actual information:</p>
+        <ul class="govuk-list--bullet">
+            <li>Insert your company name where it says <strong>[Your Company Name]</strong></li>
+            <li>Provide your EORI number where it says <strong>[Your EORI Number]</strong></li>
+            <li>Use your contact email in place of <strong>[Your Contact Email]</strong></li>
+            <li>Confirm your UKIMS authorisation where indicated.</li>
+        </ul>
+    </div>
+
+    <div class="govuk-details__text">
+        <h3>Send the Email:</h3>
+        <p>Send the completed email to <a href="mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk">hmrc-trade-tariff-support-g@digital.hmrc.gov.uk</a>.</p>
+    </div>
+
+    <div class="govuk-details__text">
+      <h3>E-mail template:</h3>
+    </div>
+
+    <div class="govuk-details__text">
+      <pre class="email-template">
+    <strong>Subject:</strong> Request for API Key - [Your Company Name]
+
+    Dear HMRC Trade Tariff Support Team,
+
+    I hope this message finds you well. I am writing to request an API key to access the HMRC Trade Tariff Categorisation API.
+
+    Please find our details below:
+
+    <strong>Company Name:</strong> [Your Company Name]
+    <strong>EORI Number:</strong> [Your EORI Number]
+    <strong>Contact Email:</strong> [Your Contact Email]
+    <strong>UKIMS Authorisation:</strong> [Please confirm your UKIMS authorisation status, e.g., “We confirm that our company is authorised under the UKIMS system.“]
+
+    Kind regards,
+    [Your Full Name]
+    [Your Position]
+      </pre>
+    </div>
+
+
+
 paths:
   /green_lanes/category_assessments:
     get:
