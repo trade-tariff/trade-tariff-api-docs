@@ -35,3 +35,15 @@ img {
         font-size: 0.65em;
     }
 }
+
+.email-template {
+  padding: 15px;
+  border: 1px solid #ddd;
+  white-space: pre-wrap;
+  text-align: left;
+  line-height: 1em;
+}
+
+.email-template strong {
+  font-weight: bold;
+}
