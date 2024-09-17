@@ -53,3 +53,16 @@
     * Changed listing of CategoryAssessments to just reference the existing CategoryAssessment entity
     * Cleaned up rendering of changes content
     * Removed historic copy of GreenLanes API docs
+
+- date: 2024-09-16
+  content: |
+    * Removed additional code from the category assessment permutation key
+    * Added a whitelist for additional codes as exemptions
+    * Returning GoodsNomenclature with the lowest PLS and indent number if multiple are available
+    * Extended the categorization function to account for GB-specific measures
+    * Added theme to the category assessment's unique key
+    * Extended the API to allow categorization of 4-digit commodities that are end leaves
+    * Added X-Api-Key authentication
+    * Implemented throttling based on X-Api-Key
+
+
