@@ -4,10 +4,10 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
   site_url = "https://#{site_domain}/"
 
   xml.id "tag:#{site_domain},2005:/GreenLanesApi"
-  xml.link 'href' => URI.join(site_url, '/green-lanes.html'),
+  xml.link 'href' => URI.join(site_url, '/categorisation.html'),
            'rel' => 'alternate',
            'type' => 'text/html'
-  xml.link 'href' => URI.join(site_url, '/green-lanes.xml'),
+  xml.link 'href' => URI.join(site_url, '/categorisation.xml'),
            'rel' => 'self',
            'type' => 'application/atom+xml'
   xml.title "Online Trade Tariff API"
@@ -17,7 +17,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
   data.green_lanes_changes.sort_by(&:date).each do |change|
     xml.entry do
       xml.id "tag:#{site_domain},2005:GreenLanesApi/#{change.date.strftime('%Y-%m-%d')}"
-      xml.link "rel" => "alternate", "href" => URI.join(site_url, '/green-lanes.html')
+      xml.link "rel" => "alternate", "href" => URI.join(site_url, '/categorisation.html')
       xml.title change.date.strftime('%D %b %Y')
       xml.content change.content
       xml.published change.date.to_time.iso8601
