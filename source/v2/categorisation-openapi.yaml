@@ -138,7 +138,7 @@ paths:
       description: >
         Returns a list of the all category assessments
       tags:
-        - Green Lanes
+        - Categorisation
       parameters:
         - name: as_of
           in: query
@@ -183,7 +183,7 @@ paths:
         <br>
         If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
       tags:
-        - Green Lanes
+        - Categorisation
       parameters:
         - name: id
           in: path
@@ -246,9 +246,9 @@ paths:
     get:
       summary: Returns a list of all themes
       description: >
-        Returns a list of the all Green Lane themes within the Windsor Framework
+        Returns a list of the all Categorisation themes within the Windsor Framework
       tags:
-        - Green Lanes
+        - Categorisation
       responses:
         200:
           description: An array of Themes
@@ -839,7 +839,7 @@ components:
               description: null
 
     Theme:
-      description: A Green Lane Theme within the Windsor Framework
+      description: A Categorisation Theme within the Windsor Framework
       type: object
       properties:
         id:
