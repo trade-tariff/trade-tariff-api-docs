@@ -64,7 +64,7 @@ jobs:
           name: Invalidate cache
           command: |
             DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-              --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='trade-tariff-api-docs-<< parameters.environment >>'].id" \
+              --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
               --output text
             )
             aws cloudfront create-invalidation \
