@@ -59,7 +59,17 @@ jobs:
           name: Upload to S3
           command: |
             cd build/
-            aws s3 sync . s3://trade-tariff-api-docs-<< parameters.environment >>
+            aws s3 sync . s3://trade-tariff-api-docs-<< parameters.environment >> --delete
+      - run:
+          name: Invalidate cache
+          command: |
+            DISTRIBUTION_ID=$(aws cloudfront list-distributions \
+              --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
+              --output text
+            )
+            aws cloudfront create-invalidation \
+              --distribution-id "${DISTRIBUTION_ID}" \
+              --paths "/*"
 
 workflows:
   version: 2
