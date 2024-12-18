@@ -7,8 +7,6 @@ info:
     The FPO (Fast Parcel Operator) Commodity Code Identification Tool API is a free-to-use API available to UK Carrier scheme (UKC) registered organisations to assist with identifying 6-digit HS (Harmonized System) codes or 8-digit CN (Combined Nomenclature) codes for not-at-risk goods being moved from Great Britain into Northern Ireland under the UK Carrier Scheme within the Windsor Framework.
 
     The API accepts English language goods item descriptions and responds with a list of potential commodity codes for the item.
-    
-    <div class="govuk-inset-text">If you represent a UK FPO, are planning to move parcels under the new UK Carrier Scheme and would like to make use of the service, you can register for an account for your organisation using the <a href="https://hub.trade-tariff.service.gov.uk/" class="govuk-link">Commodity Code Identification Tool Developer Hub</a></div>
 
     For more information see the [guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024](https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024)
 
