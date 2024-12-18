@@ -24,7 +24,6 @@ info:
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-visually-hidden">Warning</span>
-        <br /><br />
         The APIs are subject to change and this document will be updated as the API development evolves.
         <br /><br />
         An RSS feed is available for notification of changes - see below.
