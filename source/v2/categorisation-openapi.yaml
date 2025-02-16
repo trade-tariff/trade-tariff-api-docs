@@ -200,11 +200,10 @@ paths:
           in: query
           required: false
           description: |
-            Returns tariff data as it applies on the `as_of` date
+            Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`
 
-            While this is not a required field it is advised to include it with all requests even
-            if requesting data for today to ensure the data returned is correct. As caching is used
-            on the API this will ensure the data returned is as expected.
+            While `as_of` is not a required field it is advised to include it with all requests even
+            if requesting data for today to ensure the data returned is correct.
           schema:
             type: string
             format: date
