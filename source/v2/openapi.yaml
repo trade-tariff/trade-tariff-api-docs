@@ -492,21 +492,21 @@ paths:
       parameters:
         - name: code
           in: query
-          required: false
+          required: conditional
           description: |
-            Retrieve additional_codes with this exact `code`, or if additional_code's `code` begins with `code`.
+            Retrieve additional_codes with this exact `code`. This parameter must be passed together with the `type` parameter.
           schema:
             type: string
         - name: type
           in: query
-          required: false
+          required: conditional
           description: |
-            Retrieve additional_codes with this exact `type` equal to `additional_code_type_id`.
+            Retrieve additional_codes with this exact `type` equal to `additional_code_type_id`. This parameter must be passed together with the `code` parameter.
           schema:
             type: string
         - name: description
           in: query
-          required: false
+          required: conditional
           description: |
             Retrieve additional_codes with description that contains `description`
           schema:
@@ -527,7 +527,7 @@ paths:
         /api/v2/additional_codes/search:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=B005&type=B
+            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=200&type=B
 
   /additional_code_types:
     get:
@@ -2940,10 +2940,10 @@ components:
             type: additional_code
             attributes:
               additional_code_type_id: "B"
-              additional_code: "067"
-              code: "B067"
-              description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
-              formatted_description: "SHANGHAI HANHUA PLASTIC PACKAGE PRODUCT CO., LTD, Shanghai"
+              additional_code: "200"
+              code: "B200"
+              description: "Kim Hin Ceramics (Shanghai) Co. Ltd"
+              formatted_description: "Kim Hin Ceramics (Shanghai) Co. Ltd"
             relationships:
               measures:
                 data:
@@ -4304,7 +4304,7 @@ components:
             end_line: false
             change_type: "commodity"
             change_date: "2021-04-13"
-        
+
         - id: "125323"
           type: "change"
           attributes:
