@@ -1,5 +1,4 @@
 ---
-files: (.pre\-commit\-config.yaml)|(.circleci\/\S+)
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -7,3 +6,21 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+
+  - repo: https://github.com/zahorniak/pre-commit-circleci.git
+    rev: v1.1.0
+    hooks:
+      - id: circleci_validate
+        args:
+          - --org-id=da607531-93bb-4321-90ed-08710434ce1c
+
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.88.16
+    hooks:
+      - id: trufflehog
+
+  - repo: https://github.com/mattlqx/pre-commit-ruby
+    rev: v1.3.6
+    hooks:
+      - id: rubocop
+        args: ["--autocorrect"]
