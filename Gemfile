@@ -8,7 +8,11 @@ gem 'benchmark'
 gem 'bigdecimal'
 gem 'builder'
 gem 'govuk_tech_docs'
-gem 'logger'
+gem 'logger', require: true
 gem 'middleman-gh-pages'
 gem 'openapi3_parser'
 gem 'ostruct'
+
+group :development do
+  gem 'solargraph'
+end

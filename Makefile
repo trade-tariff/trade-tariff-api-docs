@@ -15,7 +15,7 @@ html: requirements clean api
 	bundle exec rake build
 
 serve: html
-	bundle exec middleman server
+	bin/middleman server
 
 all: html
 
