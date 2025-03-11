@@ -29,3 +29,7 @@ Staticfile.auth
 .idea/*
 .ruby-gemset
 /vendor
+
+.direnv
+.nix
+.envrc
