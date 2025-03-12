@@ -174,6 +174,13 @@ Type the following to start the server:
 make serve
 ```
 
+### VS Code Dev Container
+
+You can now clone the solution and open the folder in VS Code.
+Go to the command menu > Show and Run Commands
+Select "Dev-Containers: Open Folder in Container..."
+The container will be started and then the application will be built and started.
+
 You should now be able to view a live preview at <http://localhost:4567>.
 
 ## Publishing documentation

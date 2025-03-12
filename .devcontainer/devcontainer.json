@@ -1,0 +1,9 @@
+{
+  "name": "trade_tariff_api_docs",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "containerEnv": {},
+  "postCreateCommand": "make requirements",
+  "postStartCommand": "cd /workspace && make serve"
+}
