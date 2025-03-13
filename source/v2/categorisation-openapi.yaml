@@ -74,6 +74,48 @@ info:
 
       By using this API you agree to the [Terms and Conditions for use of the Windsor Framework Categorisation API](/categorisation-terms-and-conditions.html)
 
+
+    ## Introduction
+
+    
+    <p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e727-61-1" target="_blank">Article 11, section 2</a> of the Windsor Framework establishes the role of these APIs within the broader policy and SPIMM deliverables for trade. It states:</p>
+    <p><i>Applicants shall be able to determine whether the goods they bring into Northern Ireland correspond to any of the categories set out in Annex IV to this Decision.</i></p>
+    <p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e32-82-1" target="_blank">Annex IV</a> defines the criteria for categorising goods as:</p>
+    <p>
+    <ul>
+      <li><b>Category 1</b>: Not eligible for SPIMM.</li>
+      <li><b>Category 2</b>: Eligible for SPIMM and must be declared at the 8-digit level.</li>
+      <li><b>Standard Goods</b>: If goods do not fall under Category 1 or 2, they are considered “Standard Goods,” which are eligible for SPIMM and can be declared at the 6-digit level.</li>
+    </ul>
+    </p>
+    <p>The following APIs will allow you to determine which category your goods belong to, following the rules set out in Annex IV. This process is known as categorisation.</p>
+    <p>To support this categorisation, three APIs are available:</p>
+    <p>
+    <ul>
+      <li><b>GET /green_lanes/goods_nomenclatures/{id}</b> → This is the main categorisation API which returns applicable category assessments for a given goods nomenclature, including assessments for all its descendants if queried at a higher hierarchical level. Additionally, can specify the date that the categorisation applies to and the origin of the goods.</li>
+      <li><b>GET /green_lanes/category_assessments</b> → Returns a global list of all possible category assessments.</li>
+      <li><b>GET /green_lanes/themes</b> → Returns a list of all the Categorisation themes corresponding to the line items of Annex IV within the Windsor Framework.</li>
+    </ul>
+    </p>
+    <p>A <b>Category Assessment</b> indicates when a commodity <i>may</i> fall under one of the rules outlined in Annex IV. However, exemptions can apply, meaning categorisation is not always definitive.</p>
+    <h3>Key Considerations</h3>
+    <ul>
+      <li><b>Legal Scope</b>: The rules in Annex IV exclusively reference EU legislation, not UK legislation. This is because the EU is focused on controlling goods entering the single market via Northern Ireland. The UK, on the other hand, does not regulate “internal movements” between Great Britain and Northern Ireland in this context.</li>
+      <li><b>Regulatory Updates</b>: Annex IV also encompasses subsequent or replacement EU policies, as legislation is frequently updated. Additionally, overarching laws may have subordinate regulations that provide the legal basis for specific trade measures. As a result, you may encounter legislative references not explicitly listed in Annex IV but still falling within its scope.</li>
+      <li><b>Data Structure</b>: For an overview of the data structure of a Category Assessment, refer to the objects listed in the lower sections of this page.</li>
+      <li><b>API as a Data Provider</b>: These APIs do not provide a definitive category for a trade. Since exemptions may apply, the responsibility of determining the correct category remains with the user. The API serves only as a data source to support categorisation.</li>
+      <li><b>Frequent Data Changes</b>: The dataset is updated regularly, often daily. Users should consider this when categorizing future trades.</li>
+      <li><b>Glossary of terms</b>: a glossary of terms is available at the bottom of this document</li>
+      <li>
+        <b>Limitations on the /goods_nomenclatures API</b>: the API accepts only the following inputs (please note that the more specific the query is - i.e. the further down the hierarchy a goods nomenclature is - the fewer Category ssessments will be returned):
+        <ol>
+          <li>Goods Nomenclature IDs with 4 significant digits, only if the 4 digit codes have no descendants to be categorised (i.e. if the 4 significant digit code is the end commodity in the hierarchy; e.g.: 4906000000)</li>
+          <li>All Goods Nomenclature IDs with 6, 8 or 10 significant digits, provided the Goods Nomenclature IDs exist on the OTT : <a href="https://www.trade-tariff.service.gov.uk/xi/find_commodity" target="_blank">https://www.trade-tariff.service.gov.uk/xi/find_commodity</a></li>
+        </ol>
+      </li>
+    </ul>
+
+
     ## Instructions for requesting an API Key
 
     <div class="govuk-details__text">
@@ -129,6 +171,23 @@ info:
     </div>
 
 
+    ## Glossary
+
+    | Term         | Definition                       |
+    |--------------|----------------------------------|
+    | **EU Market** <br><br> **EU customs territory** <br><br> **Single Market** | <br><br>The customs territory of the EU. The nations/territories where the EU has control of what goes in (and out?). EU trade rules apply throughout the UCC |
+    | **NI** | Northern Ireland |
+    | **SPIMM** | Simplified Process for Internal Market Movements - The post-EU Exit system designed to ease trade between Great Britain and Northern Ireland by reducing customs checks and paperwork. |
+    | **XI** | The two-letter code used in trade tariffs to represent Northern Ireland, which operates under a dual tariff system involving both UK and EU rules. |
+    | **UKIMS** | UK Internal Market Scheme - A system that allows traders to move goods from Great Britain to Northern Ireland under simplified customs procedures, provided they meet eligibility requirements. |
+    | **Category** | A classification system under the Windsor Framework: Category 1 (not eligible for SPIMM), Category 2 (eligible for SPIMM with additional reporting requirements), and 'Standard Goods' (eligible for SPIMM with minimal reporting). |
+    | **Category Assessment (CA)** | A determination of whether a trade may fall under one of the rules in Annex IV of the Windsor Framework. |
+    | **Theme** | A data point uniquely created for this API to establish a connection between categorisation assessments and the relevant provisions in Annex IV of the Windsor Framework. While a categorisation assessment is determined by a combination of Regulation ID and Measure, the "theme" data point was introduced to link this combination to the appropriate line item in Annex IV. The theme numbering follows the structure of Annex IV, beginning with 1.1 and ending with 2.26. The first part of the theme represents the category (1 or 2), while the second part corresponds to the specific legislative provision in Annex IV that the category assessment relates to. |
+    | **Goods Nomenclature (GN)** | A structured classification system for goods in the tariff, ranging from broad categories (e.g., "live animals") to highly specific product classifications. |
+    | **Exemption** | A certificate or additional code or pseudo-exemption that allows a trade to bypass certain regulatory requirements under SPIMM, effectively nullifying the impact of a Category Assessment. |
+    | **Pseudo Measures** | Custom-defined regulatory data points that mimic official tariff measures, used when no official EU measures exist for certain SPIMM rules (e.g.: excise) |
+    | **Measure** | Measures are the building blocks of any trade tariff. They link everything together. Any law that has an effect on the trade of goods becomes one or more measures. You can read more about them in the data manual: <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/measures.html#measures" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/measures.html#measures</a> |
+    | **Regulation** | Every measure entered into the tariff database must be associated with a regulation, i.e. a piece of legislation. <br><br> This is so there's a 'legal base' for all tariff and regulatory activity. Without this, measures cannot be traced back to why they were created. <br><br> You can read more about them in the data manual :  <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations</a> |
 
 paths:
   /green_lanes/category_assessments:
@@ -211,8 +270,7 @@ paths:
           in: query
           required: false
           description: |
-            A geographical area code you wish to use to filter the
-            Category Assessment information
+            This parameter can be used to filter down for the origin of your goods. Without passing a value for this parameter, the API will return the potentially applicable CAs for all the origins. To better understand this data point, please consult the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html</a>.
           schema:
             type: string
             minimum: 2
@@ -282,6 +340,10 @@ components:
   schemas:
     GoodsNomenclature:
       description: |
+        The full list of products in the UK Tariff is called the 'goods classification'. Sometimes it is also referred to as the 'goods nomenclature' or 'nomenclature'. Commodity codes classify goods for import and export. You can read more about them in the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/commodity-codes.html#commodity-codes" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/commodity-codes.html#commodity-codes</a>.  
+        
+        For the purposes of this API, a Goods Nomenclature object is defined as per the below:
+
         A goods_nomenclature object
 
         <% graphviz 'goods-nomenclature' %>
