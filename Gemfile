@@ -8,3 +8,5 @@ gem 'builder'
 gem 'govuk_tech_docs'
 gem 'middleman-gh-pages'
 gem 'openapi3_parser'
+
+gem 'rubocop', '~> 1.75'

@@ -50,7 +50,7 @@ piece of content as some pieces of content
 ```
 {
   ...
-  "import_measures": [ 
+  "import_measures": [
     {
       "id": 3563221,
       ...

@@ -52,7 +52,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v2
         with:
-          ruby-version: 3.3.4
+          ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
           bundler-cache: true
 
       - run: pip install pre-commit
@@ -102,7 +102,7 @@ jobs:
         DISTRIBUTION_ID=$(aws cloudfront list-distributions \
           --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
           --output text)
-          
+
         aws cloudfront create-invalidation \
           --distribution-id "${DISTRIBUTION_ID}" \
           --paths "/*"
