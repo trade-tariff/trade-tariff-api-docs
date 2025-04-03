@@ -7,13 +7,6 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
 
-  - repo: https://github.com/zahorniak/pre-commit-circleci.git
-    rev: v1.1.0
-    hooks:
-      - id: circleci_validate
-        args:
-          - --org-id=da607531-93bb-4321-90ed-08710434ce1c
-
   - repo: https://github.com/trufflesecurity/trufflehog
     rev: v3.88.16
     hooks:
@@ -24,3 +17,8 @@ repos:
     hooks:
       - id: rubocop
         args: ["--autocorrect"]
+
+  - repo: https://github.com/rhysd/actionlint.git
+    rev: v1.7.7
+    hooks:
+      - id: actionlint-docker

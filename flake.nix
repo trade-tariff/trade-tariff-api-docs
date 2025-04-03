@@ -46,7 +46,6 @@
 
           buildInputs = [
             lint
-            pkgs.circleci-cli
             pkgs.graphviz
             pkgs.nodejs_latest
             ruby

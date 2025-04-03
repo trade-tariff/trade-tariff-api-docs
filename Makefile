@@ -21,4 +21,3 @@ all: html
 
 validate:
 	bin/swagger_validate
-
