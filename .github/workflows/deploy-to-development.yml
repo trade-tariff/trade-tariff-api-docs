@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/cache@4
+      - uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
           key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
@@ -50,7 +50,7 @@ jobs:
       - id: ruby-version
         run: echo "RUBY_VERSION=$(cat .ruby-version)" >> "$GITHUB_OUTPUT"
 
-      - uses: ruby/setup-ruby@v2
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
           bundler-cache: true
@@ -65,13 +65,28 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - id: ruby-version
+      run: echo "RUBY_VERSION=$(cat .ruby-version)" >> "$GITHUB_OUTPUT"
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
+        bundler-cache: true
+
     - name: Install graphviz
       run: sudo apt-get update && sudo apt-get install -yy graphviz
 
-    - name: Build static site
-      run: make html
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '23' 
 
-    - uses: actions/upload-artifact@v4.1.0
+    - name: Build static site
+      run: 
+        npm install
+        bundle install
+        make html
+
+    - uses: actions/upload-artifact@v4
       with:
         path: build/.
 
