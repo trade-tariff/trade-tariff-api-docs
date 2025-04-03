@@ -78,17 +78,27 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        node-version: '23' 
+        node-version: '23'
 
     - name: Build static site
-      run: 
+      run:
         npm install
         bundle install
         make html
 
+    - name: Verify build directory
+      run: |
+        # Ensure build directory exists before checking
+        mkdir -p build  # Ensuring build directory exists
+        if [ ! -d "build" ]; then
+          echo "Build directory not found!"
+          exit 1
+        fi
+
     - uses: actions/upload-artifact@v4
       with:
-        path: build/*
+        name: built-site  
+        path: build/
 
   deploy:
     runs-on: ubuntu-latest
@@ -100,6 +110,7 @@ jobs:
 
     - uses: actions/download-artifact@v4
       with:
+        name: built-site  
         path: build
 
     - uses: aws-actions/configure-aws-credentials@v4
@@ -109,6 +120,11 @@ jobs:
 
     - name: Upload to S3
       run: |
+        if [ ! -d "build" ]; then
+          echo "Build directory not found!"
+          exit 1
+        fi
+
         cd build/
         aws s3 sync . s3://trade-tariff-api-docs-${{ env.ENVIRONMENT }} --delete
 
