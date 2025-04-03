@@ -57,7 +57,9 @@ jobs:
 
       - run: pip install pre-commit
       - run: pre-commit run --all-files
-      - run: bundle exec brakeman
+      - run: |
+          bundle install
+          bundle exec brakeman
 
   build:
     runs-on: ubuntu-latest
