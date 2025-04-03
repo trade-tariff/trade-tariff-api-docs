@@ -14,14 +14,17 @@ The GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov
 curl https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 ```
 
-If you would like to view the equivalent data for the EU Tariff as applies to certain trades in
-Northern Ireland (known as the XI Tariff), then access via this API:
+This will return a [`commodity`][commodity] object. Within this object are fields that describe the commodity itself, its import and export measures, footnotes, metadata and associations and other content from the UK Tariff.
+
+For trade with Northern Ireland (known as the XI Tariff), you may need to apply measures from the EU Tariff as per terms of the UK's exit from the EU (see [Trading and moving goods in and out of Northern Ireland - GOV.UK](https://www.gov.uk/guidance/trading-and-moving-goods-in-and-out-of-northern-ireland) for more information). EU Measures for Northern Ireland (XI) may need to be combined with Measures from the UK Tariff e.g. VAT and excise measures.
+
+If you would like to view the EU Tariff Measures then access via this API (adding /xi):
 
 ```shell
 curl https://www.trade-tariff.service.gov.uk/xi/api/v2/commodities/0101210000
 ```
 
-This will return a [`commodity`][commodity] object. Within this object are fields that describe the commodity itself, it import and export measures, footnotes, metadata and associations and other content.
+Note: The /xi API does not contain EU quotas. If VAT and/or excise measures are required, these are listed in the UK Tariff. The /xi Online Trade Tariff website front end follows this principle.
 
 ### Harmonized System
 
