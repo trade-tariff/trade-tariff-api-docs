@@ -1,0 +1,73 @@
+name: Deploy to staging
+on:
+  push:
+    branches:
+    - main
+    - hotfix/*
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'The git ref to deploy'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: eu-west-2
+  BUNDLE_JOBS: "3"
+  BUNDLE_RETRY: "3"
+  ENVIRONMENT: staging
+  IAM_ROLE_ARN: arn:aws:iam::451934005581:role/GithubActions-ECS-Deployments-Role
+  SKIP: terraform_docs,actionlint-docker
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4.
+
+    - name: Install graphviz
+      run: sudo apt-get update && sudo apt-get install -yy graphviz
+
+    - name: Build static site
+      run: make html
+
+    - uses: actions/upload-artifact@v4
+      with:
+        path: build/.
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    needs: build
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/download-artifact@v4
+      with:
+        path: build
+    
+    - uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ env.IAM_ROLE_ARN }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Upload to S3
+      run: |
+        cd build/
+        aws s3 sync . s3://trade-tariff-api-docs-${{ env.ENVIRONMENT }} --delete
+
+    - name: Invalidate cache
+      run: |
+        DISTRIBUTION_ID=$(aws cloudfront list-distributions \
+          --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
+          --output text)
+
+        aws cloudfront create-invalidation \
+          --distribution-id "${DISTRIBUTION_ID}" \
+          --paths "/*"
