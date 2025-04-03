@@ -8,7 +8,7 @@ This guide introduces a number of key concepts in GOV.UK Trade Tariff API throug
 
 ## Accessing Content
 
-GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff). For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:
+The GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff) for a given commodity. For example, [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/commodities/0101210000), with a commodity code of 0101210000, can be viewed through this API:
 
 ```shell
 curl https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
@@ -50,7 +50,7 @@ piece of content as some pieces of content
 ```
 {
   ...
-  "import_measures": [ 
+  "import_measures": [
     {
       "id": 3563221,
       ...
@@ -88,7 +88,7 @@ content = "<h1>GOV.UK Tariff Information</h1><div>#{commodity}</div>"
 
 In this example we utilise the Rails cache so that we can infrequently can minimise the number of times we call the API. The Trade Tariff is updated daily so a cache of 1 day is recommended.
 
-We then use the API to access the content for [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000). In the response we access the `body` field from within the `details` object. We store this to a variable `commodity`.
+We then use the API to access the content for [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/commodities/0101210000). In the response we access the `body` field from within the `details` object. We store this to a variable `commodity`.
 
 Finally we embed this in our own Ruby on Rails app and are ready to output to users.
 
