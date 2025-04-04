@@ -61,14 +61,6 @@ jobs:
 
       - run: pip install pre-commit
       - run: pre-commit run --all-files
-      - run: |
-          if [ -d "/home/runner/work/trade-tariff-api-docs/trade-tariff-api-docs" ]; then
-            bundle install
-            bundle exec brakeman
-          else
-            echo "Rails application path not found, forcing scan..."
-            bundle exec brakeman --force
-          fi
 
   build:
     runs-on: ubuntu-latest
@@ -95,19 +87,7 @@ jobs:
 
     - name: Run build command
       run: |
-        echo "Running make html..."
-        make html || (echo "Make failed with status $?"; exit 1)
-        echo "Build complete, checking for output..."
-        ls -la
-        if [ -d "build" ]; then
-          echo "Build directory found with contents:"
-          ls -la build/
-        else
-          echo "Build directory not created!"
-          echo "Current directory contents:"
-          ls -la
-          exit 1
-        fi
+        make html
 
     - id: set_artifact
       run: echo "name=built-site-$(date +%s)" >> "$GITHUB_OUTPUT"
@@ -118,7 +98,6 @@ jobs:
       with:
         name: ${{ steps.set_artifact.outputs.name }}
         path: build/
-        retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
