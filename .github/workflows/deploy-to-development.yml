@@ -27,7 +27,7 @@ env:
   BUNDLE_JOBS: "3"
   BUNDLE_RETRY: "3"
   ENVIRONMENT: "844815912454"
-  IAM_ROLE_ARN: arn:aws:iam::844815912454:role/GithubActions-ECS-Deployments-Role
+  IAM_ROLE_ARN: arn:aws:iam::844815912454:role/GithubActions-API-Docs-Role
   SKIP: terraform_docs,actionlint-docker
 
 jobs:
@@ -36,12 +36,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pre-commit
-          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-pre-commit-
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: ~/.cache/pre-commit
+      #     key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}-${{ github.run_id }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pre-commit-
 
       - uses: actions/setup-python@v5
         with:
