@@ -12,5 +12,6 @@ gem 'govuk_tech_docs'
 gem 'middleman-gh-pages'
 gem 'mutex_m'
 gem 'openapi3_parser'
+gem 'sprockets', '~> 4.0'
 
 gem 'rubocop', '~> 1.75'

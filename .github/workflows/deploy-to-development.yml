@@ -55,6 +55,10 @@ jobs:
           ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
           bundler-cache: true
 
+      - uses: trade-tariff/trade-tariff-tools/.github/actions/setup-ssh@main
+        with:
+          ssh-key: ${{ secrets.PRIVATE_SSH_KEY }}
+
       - run: pip install pre-commit
       - run: pre-commit run --all-files
       - run: |
