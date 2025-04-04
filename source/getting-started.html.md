@@ -8,20 +8,23 @@ This guide introduces a number of key concepts in GOV.UK Trade Tariff API throug
 
 ## Accessing Content
 
-GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff). For a given commodity, for example [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000), we can look this up through this API:
+The GOV.UK Trade Tariff API is used to access content that is hosted on [www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff) for a given commodity. For example, [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/commodities/0101210000), with a commodity code of 0101210000, can be viewed through this API:
 
 ```shell
 curl https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 ```
 
-If you would like to view the equivalent data for the EU Tariff as applies to certain trades in
-Northern Ireland (known as the XI Tariff), then access via this API:
+This will return a [`commodity`][commodity] object. Within this object are fields that describe the commodity itself, its import and export measures, footnotes, metadata and associations and other content from the UK Tariff.
+
+For trade with Northern Ireland (known as the XI Tariff), you may need to apply measures from the EU Tariff as per terms of the UK's exit from the EU (see [Trading and moving goods in and out of Northern Ireland - GOV.UK](https://www.gov.uk/guidance/trading-and-moving-goods-in-and-out-of-northern-ireland) for more information). EU Measures for Northern Ireland (XI) may need to be combined with Measures from the UK Tariff e.g. VAT and excise measures.
+
+If you would like to view the EU Tariff Measures then access via this API (adding /xi):
 
 ```shell
 curl https://www.trade-tariff.service.gov.uk/xi/api/v2/commodities/0101210000
 ```
 
-This will return a [`commodity`][commodity] object. Within this object are fields that describe the commodity itself, it import and export measures, footnotes, metadata and associations and other content.
+Note: The /xi API does not contain EU quotas. If VAT and/or excise measures are required, these are listed in the UK Tariff. The /xi Online Trade Tariff website front end follows this principle.
 
 ### Harmonized System
 
@@ -50,7 +53,7 @@ piece of content as some pieces of content
 ```
 {
   ...
-  "import_measures": [ 
+  "import_measures": [
     {
       "id": 3563221,
       ...
@@ -88,7 +91,7 @@ content = "<h1>GOV.UK Tariff Information</h1><div>#{commodity}</div>"
 
 In this example we utilise the Rails cache so that we can infrequently can minimise the number of times we call the API. The Trade Tariff is updated daily so a cache of 1 day is recommended.
 
-We then use the API to access the content for [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/0101210000). In the response we access the `body` field from within the `details` object. We store this to a variable `commodity`.
+We then use the API to access the content for [Pure-bred breeding animals](https://www.trade-tariff.service.gov.uk/commodities/0101210000). In the response we access the `body` field from within the `details` object. We store this to a variable `commodity`.
 
 Finally we embed this in our own Ruby on Rails app and are ready to output to users.
 
