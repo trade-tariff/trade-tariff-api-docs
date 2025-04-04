@@ -26,7 +26,7 @@ env:
   AWS_REGION: eu-west-2
   BUNDLE_JOBS: "3"
   BUNDLE_RETRY: "3"
-  ENVIRONMENT: development
+  ENVIRONMENT: "844815912454"
   IAM_ROLE_ARN: arn:aws:iam::844815912454:role/GithubActions-ECS-Deployments-Role
   SKIP: terraform_docs,actionlint-docker
 
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
-          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-pre-commit-
 
@@ -62,8 +62,13 @@ jobs:
       - run: pip install pre-commit
       - run: pre-commit run --all-files
       - run: |
-          bundle install
-          bundle exec brakeman
+          if [ -d "/home/runner/work/trade-tariff-api-docs/trade-tariff-api-docs" ]; then
+            bundle install
+            bundle exec brakeman
+          else
+            echo "Rails application path not found, forcing scan..."
+            bundle exec brakeman --force
+          fi
 
   build:
     runs-on: ubuntu-latest
@@ -72,10 +77,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-      # Debug
-    - name: Show current directory structure
-      run: ls -la
 
     - id: ruby-version
       run: echo "RUBY_VERSION=$(cat .ruby-version)" >> "$GITHUB_OUTPUT"
@@ -90,13 +91,7 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        node-version: '23'
-
-    - name: Install npm dependencies
-      run: npm install
-
-    - name: Install Ruby dependencies
-      run: bundle install
+        node-version: '23.11.0'
 
     - name: Run build command
       run: |
