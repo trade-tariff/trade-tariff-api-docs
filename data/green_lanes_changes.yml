@@ -64,5 +64,3 @@
     * Extended the API to allow categorization of 4-digit commodities that are end leaves
     * Added X-Api-Key authentication
     * Implemented throttling based on X-Api-Key
-
-

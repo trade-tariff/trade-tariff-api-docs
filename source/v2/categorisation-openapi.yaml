@@ -11,7 +11,7 @@ info:
   title: Windsor Framework Categorisation API
   description: |
     <% content_for :head do %>
-      <link href="/green-lanes.xml" type="application/atom+xml" rel="alternate" title="Windsor Framework Categorisation API changes feed" />
+      <link href="/green_lanes.xml" type="application/atom+xml" rel="alternate" title="Windsor Framework Categorisation API changes feed" />
     <% end %>
 
     The Windsor Framework Categorisation API's provide access to Category Assessment data for the different Commodities and Subheadings within the Tariff.
@@ -42,7 +42,7 @@ info:
 
     ## Latest changes
 
-    _These changes can be subscribed to at the [Atom (RSS) feed](/green-lanes.xml)_
+    _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
 
     <% changes = data.green_lanes_changes.sort_by(&:date).reverse %>
     <% latest = changes.shift %>
@@ -77,7 +77,7 @@ info:
 
     ## Introduction
 
-    
+
     <p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e727-61-1" target="_blank">Article 11, section 2</a> of the Windsor Framework establishes the role of these APIs within the broader policy and SPIMM deliverables for trade. It states:</p>
     <p><i>Applicants shall be able to determine whether the goods they bring into Northern Ireland correspond to any of the categories set out in Annex IV to this Decision.</i></p>
     <p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e32-82-1" target="_blank">Annex IV</a> defines the criteria for categorising goods as:</p>
@@ -340,8 +340,8 @@ components:
   schemas:
     GoodsNomenclature:
       description: |
-        The full list of products in the UK Tariff is called the 'goods classification'. Sometimes it is also referred to as the 'goods nomenclature' or 'nomenclature'. Commodity codes classify goods for import and export. You can read more about them in the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/commodity-codes.html#commodity-codes" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/commodity-codes.html#commodity-codes</a>.  
-        
+        The full list of products in the UK Tariff is called the 'goods classification'. Sometimes it is also referred to as the 'goods nomenclature' or 'nomenclature'. Commodity codes classify goods for import and export. You can read more about them in the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/commodity-codes.html#commodity-codes" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/commodity-codes.html#commodity-codes</a>.
+
         For the purposes of this API, a Goods Nomenclature object is defined as per the below:
 
         A goods_nomenclature object
