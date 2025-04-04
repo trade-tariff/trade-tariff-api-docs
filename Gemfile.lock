@@ -12,6 +12,7 @@ GEM
     autoprefixer-rails (10.4.16.0)
       execjs (~> 2)
     backports (3.24.1)
+    benchmark (0.4.0)
     bigdecimal (3.1.9)
     brakeman (7.0.0)
       racc
@@ -137,6 +138,7 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.20.0)
     multi_json (1.15.0)
+    mutex_m (0.3.0)
     nokogiri (1.18.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -207,11 +209,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  benchmark
   bigdecimal (>= 1.4.0)
   brakeman
   builder
   govuk_tech_docs
   middleman-gh-pages
+  mutex_m
   openapi3_parser
   rubocop (~> 1.75)
 
