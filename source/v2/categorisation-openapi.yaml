@@ -77,17 +77,28 @@ info:
 
     ## Introduction
 
+    <p><b>Categorisation</b> refers to determining whether goods fall under <b>Category 1</b>, <b>Category 2</b>, or <b>Category 3</b> (often called “standard goods”) when moving them under the Windsor Framework. <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e727-61-1" target="_blank">Article 11, section 2</a> of the Windsor Framework establishes the role of these APIs within the broader policy and SPIMM deliverables for trade. It states:</p>
 
-    <p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e727-61-1" target="_blank">Article 11, section 2</a> of the Windsor Framework establishes the role of these APIs within the broader policy and SPIMM deliverables for trade. It states:</p>
     <p><i>Applicants shall be able to determine whether the goods they bring into Northern Ireland correspond to any of the categories set out in Annex IV to this Decision.</i></p>
-    <p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:22023D0819#d1e32-82-1" target="_blank">Annex IV</a> defines the criteria for categorising goods as:</p>
-    <p>
+    <p>The category assigned affects the level of checks, declarations, or paperwork required:</p>
     <ul>
-      <li><b>Category 1</b>: Not eligible for SPIMM.</li>
-      <li><b>Category 2</b>: Eligible for SPIMM and must be declared at the 8-digit level.</li>
-      <li><b>Standard Goods</b>: If goods do not fall under Category 1 or 2, they are considered “Standard Goods,” which are eligible for SPIMM and can be declared at the 6-digit level.</li>
+      <li><b>Category 1</b> typically carries the highest regulatory scrutiny or special requirements.</li>
+      <li><b>Category 2</b> applies a moderate level of checks or controls.</li>
+      <li><b>Standard Goods</b> is for “standard goods,” which generally require fewer formalities.</li>
     </ul>
     </p>
+
+    <p>This categorisation depends on factors such as:</p>
+
+    <ol>
+      <li><b>Commodity code</b> (the classification of the goods).</li>
+      <li><b>Country of origin</b> (where the goods are produced or obtained).</li>
+      <li><b>Date of movement</b> (sometimes different rules or requirements apply at different times).</li>
+      <li><b>Exemptions</b> or documentation (if the trader possesses certain certificates, additional codes, or conditions, these may remove or reduce certain category rules).</li>
+    </ol>
+
+    <p>The Online Tariff Tool’s categorisation API returns a set of <b>Category Assessments</b> for each commodity code and origin (though origin agnostic queries can also be made). Each assessment indicates whether the goods could be Category 1 or 2, along with any associated <b>exemptions</b> that would nullify (or “exempt”) that particular category requirement. If an assessment is nullified by one of the trader’s valid exemptions—or if no assessments apply at all—the goods default to <b>Category 3</b>.</p>
+
     <p>The following APIs will allow you to determine which category your goods belong to, following the rules set out in Annex IV. This process is known as categorisation.</p>
     <p>To support this categorisation, three APIs are available:</p>
     <p>
@@ -115,6 +126,41 @@ info:
       </li>
     </ul>
 
+    <p>For more informations about categorisation, please consult our FAQ page available at: <a href="https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq" target="_blank">https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq</a></p>
+
+    ## Determining the actual Category for leaf commodities
+    <p>To determine the final category for a trade:</p>
+    <ol>
+      <li><b>Call the</b> <code>/goods_nomenclatures/:id</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
+      <li><b>Extract</b> <code>applicable_category_assessments</code> from the response.</li>
+      <li>For each assessment:</li>
+      <ul>
+        <li>If the trader <b>holds any exemption</b> listed under exemptions, ignore (treat as Category 3).</li>
+        <li>Otherwise, use the category field (typically 1 or 2).</li>
+      </ul>
+      <li><b>Select the lowest remaining category</b> (most restrictive).</li>
+      <ul>
+        <li>If <b>all assessments are exempted</b> or none returned, assign <b>Category 3</b>.</li>
+      </ul>
+    </ol>
+
+    ## Determining the actual Category for non-leaf commodities
+
+    <p>To determine the final category for a trade:</p>
+    <ol>
+      <li><b>Call the</b> <code>/goods_nomenclatures/:id</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
+      <li><b>Extract</b> <code>applicable_category_assessments</code> & <code>descendant_category_assessments</code> from the response.</li>
+      <li>For each assessment:</li>
+      <ul>
+        <li>If the trader <b>holds any exemption</b> listed under exemptions, ignore (treat as Category 3).</li>
+        <li>Otherwise, use the category field (typically 1 or 2).</li>
+      </ul>
+      <li><b>Select the lowest remaining category</b> (most restrictive).</li>
+      <ul>
+        <li>If <b>all assessments are exempted</b> or none returned, assign <b>Category 3</b>.</li>
+        <li>If the API call fails, handle gracefully (e.g., display error or mark as uncategorised).</li>
+      </ul>
+    </ol>
 
     ## Instructions for requesting an API Key
 
