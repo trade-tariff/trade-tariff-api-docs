@@ -1,0 +1,83 @@
+name: Deploy to development
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - hotfix/*
+  pull_request:
+    branches-ignore:
+      - main
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'The git ref to deploy'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: eu-west-2
+  ENVIRONMENT: "844815912454"
+  IAM_ROLE_ARN: arn:aws:iam::844815912454:role/GithubActions-API-Docs-Role
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - id: ruby-version
+        run: echo "RUBY_VERSION=$(cat .ruby-version)" >> "$GITHUB_OUTPUT"
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
+          bundler-cache: true
+
+      - uses: trade-tariff/trade-tariff-tools/.github/actions/setup-ssh@main
+        with:
+          ssh-key: ${{ secrets.PRIVATE_SSH_KEY }}
+
+      - run: pip install pre-commit
+      - run: pre-commit run --all-files
+
+  build-dev:
+   uses: ./.github/workflows/build.yml
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-dev
+
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: build-artifact
+        path: build/
+
+    - uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ env.IAM_ROLE_ARN }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Upload to S3
+      run: |
+        cd build/
+        aws s3 sync . s3://trade-tariff-api-docs-${{ env.ENVIRONMENT }} --delete
+
+    - name: Invalidate cache
+      run: |
+        DISTRIBUTION_ID=$(aws cloudfront list-distributions \
+          --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
+          --output text)
+
+        aws cloudfront create-invalidation \
+          --distribution-id "${DISTRIBUTION_ID}" \
+          --paths "/*"
