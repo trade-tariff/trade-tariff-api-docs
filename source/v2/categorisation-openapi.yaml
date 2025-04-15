@@ -129,7 +129,7 @@ info:
 
     <p>For more informations about categorisation, please consult our FAQ page available at: <a href="https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq" target="_blank">https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq</a></p>
 
-    ## Determining the actual Category for leaf commodities
+    ## Determining the actual Category for commodities with no descendants
     <p>To determine the final category for a trade:</p>
     <ol>
       <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
@@ -145,7 +145,7 @@ info:
       </ul>
     </ol>
 
-    ## Determining the actual Category for non-leaf commodities
+    ## Determining the actual Category for commodities with descendants
 
     <p>To determine the final category for a trade:</p>
     <ol>
