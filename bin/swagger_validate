@@ -1,20 +1,26 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
+require 'bundler/setup'
 require 'openapi3_parser'
 
 files = %w[
-  source/beta/openapi.yaml,
-  source/v2/openapi.yaml,
-  source/v1/openapi.yaml,
+  source/v2/openapi.yaml
+  source/v1/openapi.yaml
 ]
 
 files.each do |file|
+  puts "🔍 Validating #{file}..."
   swagger_file = Openapi3Parser.load(file)
 
-  unless swagger_file.valid?
-    puts swagger_file.errors
-    exit 1
+  next if swagger_file.valid?
+
+  puts "❌ Validation failed for #{file}:"
+  swagger_file.errors.each do |error|
+    puts "- #{error}"
   end
+  exit 1
 end
 
+puts '✅ All OpenAPI specs are valid.'
 exit 0

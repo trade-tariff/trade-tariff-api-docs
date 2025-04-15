@@ -8,7 +8,7 @@ This guide gives an overview of how to use the most common and useful tariff API
 
 The JSON:API principles noted in this document also apply to other data objects, such as headings, chapters and  geographical areas, which will be documented in future blog pages.
 
-Please also see the new section on [reference data](/reference-data.html) which provides lookup values 
+Please also see the new section on [reference data](/reference-data.html) which provides lookup values
 for regularly-used entities such as:
 
 - measure types
@@ -190,7 +190,7 @@ The rules are, for a given geographical area ID (2-digit country):
 
 **So how is this represented in data?**
 
-Let's look at an example commodity code ([0103911000](https://www.trade-tariff.service.gov.uk/api/v2/commodities/0103911000) - domestic swine species). Imagine we are importing 
+Let's look at an example commodity code ([0103911000](https://www.trade-tariff.service.gov.uk/api/v2/commodities/0103911000) - domestic swine species). Imagine we are importing
 domestic swine from a European Union member state, such as Belgium.
 
 The image below shows the import controls in place on this commodity:
@@ -256,7 +256,7 @@ pictured:
 
 The reason this example is chosen is to show the importance of always checking on the geographical applicability of a measure.
 
-A third-country duty has a [measure type](/reference-data.html#measure_types) of `103`. Even though the UK-<abbr title="Crown Dependencies">CD</abbr> Customs Union measure is labelled as such, this is actually also a third-country duty 
+A third-country duty has a [measure type](/reference-data.html#measure_types) of `103`. Even though the UK-<abbr title="Crown Dependencies">CD</abbr> Customs Union measure is labelled as such, this is actually also a third-country duty
 measure of type `103`, assigned solely to the Channel Islands which are among the UK's Crown Dependencies: only the label is different on the Online Tariff UI.
 
 Follow these steps to find the third-country measure:
@@ -330,7 +330,7 @@ https://www.trade-tariff.service.gov.uk/api/v2/commodities/8415900099
       }
     ```
    - look for measures of a type that matches the `id` of the located measure type in the `included` section of the API.
-   
+
   ```json
   {
       "id": "724",
@@ -393,7 +393,7 @@ Let's say you are building an application which will calculate duties, and in or
 
 If a measure is duty-related, then it will be accompanied by one or more measure components, or in exceptional circumstances, by measure condition components.
 
-- A measure component is a logical part of a duty, sometimes known as a duty expression. 
+- A measure component is a logical part of a duty, sometimes known as a duty expression.
 - A duty may be made up of one or more measure components.
 - Each measure component features the following key fields:
 
