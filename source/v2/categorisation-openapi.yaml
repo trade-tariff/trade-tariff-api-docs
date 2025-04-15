@@ -343,8 +343,8 @@ paths:
           source: |-
             curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
             curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter[geographical_area_id]=US"
+            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter[geographical_area_id]=US"
   /green_lanes/themes:
     get:
       summary: Returns a list of all themes
