@@ -274,7 +274,7 @@ apiKey
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|query|string(date)|false|Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`  While `as_of` is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. 
+as_of|query|string(date)|false|Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`  While `as_of` is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct.
 
 **Example Request**
 
@@ -437,9 +437,9 @@ apiKey
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-id|path|string|true|Item Id of the Goods Nomenclature you are requesting Category Assessments information for.  This is the full 10 digit item ID of either a Subheading or Commodity. Valid input IDs can be provided in 4, 6, 8, or 10 significant digits, depending on the level of detail available in the XI Tariff. If your input ID is shorter than 10 digits (e.g., 4, 6, or 8 digits), it will be automatically padded with trailing zeros to reach the full 10-digit format. For example, an ID of 1234 would be processed as 1234000000. 
-as_of|query|string(date)|false|Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`  While `as_of` is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. 
-filter[geographical_area_id]|query|string|false|This parameter can be used to filter down for the origin of your goods. Without passing a value for this parameter, the API will return the potentially applicable CAs for all the origins. To better understand this data point, please consult the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html</a>. 
+id|path|string|true|Item Id of the Goods Nomenclature you are requesting Category Assessments information for.  This is the full 10 digit item ID of either a Subheading or Commodity. Valid input IDs can be provided in 4, 6, 8, or 10 significant digits, depending on the level of detail available in the XI Tariff. If your input ID is shorter than 10 digits (e.g., 4, 6, or 8 digits), it will be automatically padded with trailing zeros to reach the full 10-digit format. For example, an ID of 1234 would be processed as 1234000000.
+as_of|query|string(date)|false|Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`  While `as_of` is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct.
+filter[geographical_area_id]|query|string|false|This parameter can be used to filter down for the origin of your goods. Without passing a value for this parameter, the API will return the potentially applicable CAs for all the origins. To better understand this data point, please consult the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html</a>.
 
 **Example Request**
 
@@ -1588,9 +1588,9 @@ validity_start_date|string(date-time)|true|The date this Goods Nomenclature is v
 validity_end_date|string(date-time)|true|The date this Goods Nomenclature is valid until, null if valid indefinitely
 supplementary_measure_unit|string|false|The supplementary measure unit applicable to this GoodsNomenclature, if one is applicable
 applicable_category_assessments|[[CategoryAssessment](#schemacategoryassessment)]|false|A list of applicable Category Assessments for this Goods Nomenclature
-descendant_category_assessments|[[CategoryAssessment](#schemacategoryassessment)]|false|A list of Category Assessments which apply only to some descendants, so require further classification to determine their applicability 
-ancestors|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|false|List of GoodsNomenclatures above the requested Goods Nomenclature in the Tariff, ordered by Chapter first 
-descendants|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|false|List of GoodsNomenclatures below the requested one in the Tariff, ordered by Goods Nomenclature Item Id 
+descendant_category_assessments|[[CategoryAssessment](#schemacategoryassessment)]|false|A list of Category Assessments which apply only to some descendants, so require further classification to determine their applicability
+ancestors|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|false|List of GoodsNomenclatures above the requested Goods Nomenclature in the Tariff, ordered by Chapter first
+descendants|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|false|List of GoodsNomenclatures below the requested one in the Tariff, ordered by Goods Nomenclature Item Id
 licences|[[Certificate](#schemacertificate)]|false|List of licences applicable to this GoodsNomenclature
 
 ## CategoryAssessment
@@ -1746,8 +1746,8 @@ measure_type|[MeasureType](#schemameasuretype)|true|The Measure Type resulting i
 regulation|[LegalAct](#schemalegalact)|true|The Regulation resulting in this Category Assessment
 geographical_area|[GeographicalArea](#schemageographicalarea)|true|The geographical area this Category Assessment applies to
 excluded_geographical_areas|[[GeographicalArea](#schemageographicalarea)]|false|The geographical areas excluded from this Category Assessment
-exemptions|[Unknown]|false|The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment <br><br> _NB: Polymorphic array of *Certificate*, *AdditionalCode* and *Exemption* objects_ 
-measures|[[Measure](#schemameasure)]|false|A list of Measures resulting in this CategoryAssessment <br><br> _NB: Not present on `/green_lanes/category_assessments` endpoint due to volume of data_ 
+exemptions|[Unknown]|false|The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment <br><br> _NB: Polymorphic array of *Certificate*, *AdditionalCode* and *Exemption* objects_
+measures|[[Measure](#schemameasure)]|false|A list of Measures resulting in this CategoryAssessment <br><br> _NB: Not present on `/green_lanes/category_assessments` endpoint due to volume of data_
 
 ## Theme
 
@@ -1970,7 +1970,7 @@ A Measure object which generates this Category Assessment.
 Name|Type|Required|Description
 ---|---|---|---|
 id|string|true|The unique identifier for this measure
-goods_nomenclature_item_id|string|true|The item id of the GoodsNomenclature this Measure is against. 
+goods_nomenclature_item_id|string|true|The item id of the GoodsNomenclature this Measure is against.
 goods_nomenclature_sid|string|true|The item id of the GoodsNomenclature this Measure is against
 effective_start_date|string(date-time)|true|The effective start date of the measure.
 effective_end_date|string(date-time)|true|The effective end date of the measure.

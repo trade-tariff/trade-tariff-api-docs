@@ -99,7 +99,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-position|path|integer|true|The `position` of the section to be retrieved 
+position|path|integer|true|The `position` of the section to be retrieved
 
 **Example Request**
 
@@ -217,7 +217,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-section_id|path|integer|true|The `section_id` of the section. 
+section_id|path|integer|true|The `section_id` of the section.
 
 **Example Request**
 
@@ -312,7 +312,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits. 
+chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
 
 **Example Request**
 
@@ -428,7 +428,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-chapter_id|path|integer|true|The `chapter_id` of the chapter. 
+chapter_id|path|integer|true|The `chapter_id` of the chapter.
 
 **Example Request**
 
@@ -469,7 +469,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits. 
+heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
 
 **Example Request**
 
@@ -668,7 +668,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-goods_nomenclature_item_id|path|string|true|The goods_nomenclature_item_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits. 
+goods_nomenclature_item_id|path|string|true|The goods_nomenclature_item_id of the subheading to be retrieved, e.g. the first ten (10) digits of the goods_nomenclature_item_id. This should be a zero-padded string of ten (10) digits.
 productline_suffix|path|string|true|The two-digit product line suffix of the subheading to retrieve
 
 **Example Request**
@@ -867,7 +867,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-id|path|string|true|The `id` of the commodity to be retrieved. This should be a string of ten (10) digits. 
+id|path|string|true|The `id` of the commodity to be retrieved. This should be a string of ten (10) digits.
 
 **Example Request**
 
@@ -1655,16 +1655,16 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-goods_nomenclature_item_id|query|string|false|Retrieve quotas only for goods with this `goods_nomenclature_item_id` 
-geographical_area_id|query|string|false|Retrieve quotas only with this `geographical_area_id` 
-order_number|query|string|false|Retrieve quotas only with this `order_number` 
-critical|query|string|false|Retrieve quotas only with `critical` status equal to ['Y', 'N'] 
-status|query|string|false|Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not_blocked', 'not_exhausted'] 
-year|query|string|false|Retrieve quotas only for this specific `year`. Note: this, along with `month` and `day`, is part of a full date field, but the `year` part can be used on its own. ``` /quotas/search?year=2019 ``` and via the body of a JSON request: ``` {   "year": "2019" } ``` 
-month|query|string|false|Retrieve quotas only for this specific `month`. Note: this, along with `year` and `day`, is part of a full date field, and will be ignored if the other two parameters are missing. ``` /quotas/search?year=2019&month=01&day=01 ``` and via the body of a JSON request: ``` {   "year": "2019",   "month": "01",   "day": "01" } ``` 
-day|query|string|false|Retrieve quotas only for this specific `day`. Note: this, along with `year` and `month`, is part of a full date field, and will be ignored if the other two parameters are missing. ``` /quotas/search?year=2019&month=01&day=01 ``` and via the body of a JSON request: ``` {   "year": "2019",   "month": "01",   "day": "01" } ``` 
-page|query|integer|false|Retrieve search page with number 
-include|query|string|false|Retrieve quota balance events which show the history of updates to the returned quota definition. 
+goods_nomenclature_item_id|query|string|false|Retrieve quotas only for goods with this `goods_nomenclature_item_id`
+geographical_area_id|query|string|false|Retrieve quotas only with this `geographical_area_id`
+order_number|query|string|false|Retrieve quotas only with this `order_number`
+critical|query|string|false|Retrieve quotas only with `critical` status equal to ['Y', 'N']
+status|query|string|false|Retrieve quotas only for goods with `status` equal to ['blocked', 'exhausted', 'not_blocked', 'not_exhausted']
+year|query|string|false|Retrieve quotas only for this specific `year`. Note: this, along with `month` and `day`, is part of a full date field, but the `year` part can be used on its own. ``` /quotas/search?year=2019 ``` and via the body of a JSON request: ``` {   "year": "2019" } ```
+month|query|string|false|Retrieve quotas only for this specific `month`. Note: this, along with `year` and `day`, is part of a full date field, and will be ignored if the other two parameters are missing. ``` /quotas/search?year=2019&month=01&day=01 ``` and via the body of a JSON request: ``` {   "year": "2019",   "month": "01",   "day": "01" } ```
+day|query|string|false|Retrieve quotas only for this specific `day`. Note: this, along with `year` and `month`, is part of a full date field, and will be ignored if the other two parameters are missing. ``` /quotas/search?year=2019&month=01&day=01 ``` and via the body of a JSON request: ``` {   "year": "2019",   "month": "01",   "day": "01" } ```
+page|query|integer|false|Retrieve search page with number
+include|query|string|false|Retrieve quota balance events which show the history of updates to the returned quota definition.
 
 **Example Request**
 
@@ -1826,9 +1826,9 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-code|query|string|conditional|Retrieve additional_codes with this exact `code`. This parameter must be passed together with the `type` parameter. 
-type|query|string|conditional|Retrieve additional_codes with this exact `type` equal to `additional_code_type_id`. This parameter must be passed together with the `code` parameter. 
-description|query|string|conditional|Retrieve additional_codes with description that contains `description` 
+code|query|string|conditional|Retrieve additional_codes with this exact `code`. This parameter must be passed together with the `type` parameter.
+type|query|string|conditional|Retrieve additional_codes with this exact `type` equal to `additional_code_type_id`. This parameter must be passed together with the `code` parameter.
+description|query|string|conditional|Retrieve additional_codes with description that contains `description`
 
 **Example Request**
 
@@ -1973,7 +1973,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|query|string(date)|false|Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+as_of|query|string(date)|false|Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2031,9 +2031,9 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-code|query|string|false|Retrieve certificates with this exact `code` or the certificate's `code` begins with `code`. 
-type|query|string|false|Retrieve certificates with this exact `type` equal to `certificate_type_code`. 
-description|query|string|false|Retrieve certificates with `description` that contains `description`. 
+code|query|string|false|Retrieve certificates with this exact `code` or the certificate's `code` begins with `code`.
+type|query|string|false|Retrieve certificates with this exact `type` equal to `certificate_type_code`.
+description|query|string|false|Retrieve certificates with `description` that contains `description`.
 
 **Example Request**
 
@@ -2159,7 +2159,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|query|string(date)|false|Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+as_of|query|string(date)|false|Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2211,7 +2211,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|query|string(date)|false|Retrieve the quota_order_numbers as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+as_of|query|string(date)|false|Retrieve the quota_order_numbers as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2258,7 +2258,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-measure_sid|path|integer|true|The `measure_sid` of the measure to be retrieved. 
+measure_sid|path|integer|true|The `measure_sid` of the measure to be retrieved.
 
 **Example Request**
 
@@ -2375,7 +2375,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|query|string(date)|false|Retrieve the measure_actions as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+as_of|query|string(date)|false|Retrieve the measure_actions as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2420,7 +2420,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|query|string(date)|false|Retrieve the measure_condition_codes as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+as_of|query|string(date)|false|Retrieve the measure_condition_codes as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2467,9 +2467,9 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-type|query|string|false|Retrieve footnotes with this exact `type` equal to `footnote_type_id`. **Must be combined with a code**. 
-code|query|string|false|Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`. **Must be combined with a type**. 
-description|query|string|false|Retrieve footnotes with `description` that contains `description`. Can be combined with `type` and `code`. 
+type|query|string|false|Retrieve footnotes with this exact `type` equal to `footnote_type_id`. **Must be combined with a code**.
+code|query|string|false|Retrieve footnotes with this exact `code` or the footnote's `code` begins with `code`. **Must be combined with a type**.
+description|query|string|false|Retrieve footnotes with `description` that contains `description`. Can be combined with `type` and `code`.
 
 **Example Request**
 
@@ -2620,8 +2620,8 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-position|path|integer|true|The `position` of the section to be retrieved 
-as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+position|path|integer|true|The `position` of the section to be retrieved
+as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2758,8 +2758,8 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits. 
-as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits.
+as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -2895,8 +2895,8 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits. 
-as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
+heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits.
+as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected.
 
 **Example Request**
 
@@ -3003,7 +3003,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-query[letter]|query|string|false|Retrieve search references started with  `query[letter]` letter. Without a query parameter all search references are returned in the response. 
+query[letter]|query|string|false|Retrieve search references started with  `query[letter]` letter. Without a query parameter all search references are returned in the response.
 
 **Example Request**
 
@@ -3241,7 +3241,7 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-as_of|path|string(date)|true|Retrieve changes as they existed between the `as_of` date and the previous day. 
+as_of|path|string(date)|true|Retrieve changes as they existed between the `as_of` date and the previous day.
 
 **Example Request**
 
@@ -3622,8 +3622,8 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-year|path|integer|false|The `year` to find available periods for 
-filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul> 
+year|path|integer|false|The `year` to find available periods for
+filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul>
 
 **Example Request**
 
@@ -3654,9 +3654,9 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-year|path|integer|true|The `year` for the exchange rates and files 
-month|path|integer|true|The `month` for the exchange rates and files 
-filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul> 
+year|path|integer|true|The `year` for the exchange rates and files
+month|path|integer|true|The `month` for the exchange rates and files
+filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul>
 
 **Example Request**
 
@@ -4245,8 +4245,8 @@ Name|Type|Required|Description
 data:id|string|false|The `id` of the heading. It may be used to uniquely identify a heading and request its heading_note from the API.
 data:type|string|false|the type of object, i.e. `heading`
 data:attributes|[ReferencedHeading](#schemareferencedheading)|false|The heading's attributes, as a [referenced heading object](/reference.html#referencedheading "see referenced heading object")
-data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this heading. May include parent objects. 
-included|[object]|false|Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects. 
+data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this heading. May include parent objects.
+included|[object]|false|Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects.
 
 ## Subheading
 
@@ -4434,8 +4434,8 @@ Name|Type|Required|Description
 data:id|string|false|The `id` of the subheading. It may be used to uniquely identify a subheading.
 data:type|string|false|the type of object, i.e. `subheading`
 data:attributes|[ReferencedSubheading](#schemareferencedsubheading)|false|The subheading's attributes, as a [referenced subheading object](/reference.html#referencedsubheading "see referenced subheading object")
-data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this subheading. May include parent objects. 
-included|[object]|false|Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects. 
+data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this subheading. May include parent objects.
+included|[object]|false|Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects.
 
 ## Commodity
 
