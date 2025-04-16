@@ -1,0 +1,231 @@
+---
+title: FPO Commodity Code Identification Tool APIs v1
+language_tabs:
+  - shell: Shell
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+---
+
+# FPO Commodity Code Identification Tool APIs
+
+The FPO (Fast Parcel Operator) Commodity Code Identification Tool API is a free-to-use API available to UK Carrier scheme (UKC) registered organisations to assist with identifying 6-digit HS (Harmonized System) codes or 8-digit CN (Combined Nomenclature) codes for not-at-risk goods being moved from Great Britain into Northern Ireland under the UK Carrier Scheme within the Windsor Framework.
+
+The API accepts English language goods item descriptions and responds with a list of potential commodity codes for the item.
+
+For more information see the [guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024](https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024)
+
+This API accepts HTTP requests and responds with [JSON](https://en.wikipedia.org/wiki/JSON) data.
+
+## Bulk processing
+
+Due to the synchronous operation of the API, if you're dealing with large volumes of data or are batch processing it's recommended to use a multi-threading, multi-processing or asynchronous approach to process several connections simultaneously.
+
+This will be subject to rate limiting (to be implemented before 30 September 2024) which will allow up to 100 requests per second for each FPO.
+
+## Support
+
+If you experience any issues or have questions regarding this API please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+
+## Accuracy of results
+
+We are continually updating the tool to improve the accuracy of the results produced. If you notice any incorrectly identified commodity codes, you can let us know through our [inaccurate code feedback form](https://forms.gle/F3NMxoLCkHNPc2MXA).
+
+## Terms and Conditions
+
+By using this API you agree to the [Terms and Conditions for use of the FPO Commodity Code Identification Tool](/fpo/terms-and-conditions.html)
+
+
+## Base URL
+
+All requests to this API should be prefixed with the following URL:
+
+**https://search.trade-tariff.service.gov.uk**
+
+
+
+
+## Authentication
+
+
+API Key: Parameter **X-Api-Key**, in header.
+
+Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invited to test the service.
+
+Those eligible organisations will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+```
+X-Api-Key: a1b2c3defg4567
+```
+
+
+
+# FPO endpoints
+
+## POST /fpo-code-search
+
+*Identifies potential commodity codes for a goods item description*
+
+Carries out a search for potential commodity codes for a single line item within a parcel
+
+To perform this operation, you must be authenticated by means of one of the following methods:
+apiKey
+**Request body**
+```json
+{
+  "description": "plastic toothbrush",
+  "digits": 6,
+  "limit": 5
+}
+```
+
+**Parameters**
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+body|body|[ItemSearchRequest](#schemaitemsearchrequest)|true|No description
+
+**Example Request**
+```shell
+curl -d '{"description": "plastic toothbrush", "digits": 8}' \
+  -H "Content-Type: application/json" -H "X-Api-Key: <your-api-key-here>" \
+  -X POST https://search.trade-tariff.service.gov.uk/fpo-code-search
+```
+
+**Example Response**
+```json
+{
+  "results": [
+    {
+      "code": "123456",
+      "score": 123.45
+    },
+    {
+      "code": "987654",
+      "score": 98.76
+    }
+  ]
+}
+```
+
+**Responses**
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|OK|Successful response|[ItemSearchResponse](#schemaitemsearchresponse)
+400|Bad Request|There was an issue with the request (e.g. invalid JSON)|None
+403|Forbidden|Missing API key, or the supplied key was invalid|None
+429|Too Many Requests|You are being rate limited. The API will be rate limited to 100 requests per second for each FPO|None
+
+**Response Headers**
+
+Status|Header|Type|Format|Description
+---|---|---|---|---|
+200|X-Request-Id|string||Unique ID for this request. Use this if you need to raise an issue or a query for this specific response
+
+# Objects
+
+## ItemSearchRequest
+
+<a name="schemaitemsearchrequest"></a>
+
+<details>
+  <summary>Sample JSON</summary>
+  <pre>
+    <code>
+{
+  "description": "plastic toothbrush",
+  "digits": 6,
+  "limit": 5
+}
+    </code>
+  </pre>
+</details>
+
+**Fields**
+
+Name|Type|Required|Description
+---|---|---|---|
+description|string|true|A brief plain English description of the item in the parcel. For example, it may include the type of product such as ‘shampoo’, ‘plastic cups’ or ‘iPhone’. You should avoid generic terms that do not allow the good to be identified such as ‘goods’, ‘gifts’, ‘samples’ or ‘parts’
+digits|integer|false|The number of commodity code digits the response should return. '6' will return 6-digit HS codes, '8' will return 8-digit CN codes
+limit|integer|false|The maximum number of results to send back
+
+## ItemSearchResponse
+
+<a name="schemaitemsearchresponse"></a>
+
+<details>
+  <summary>Sample JSON</summary>
+  <pre>
+    <code>
+{
+  "results": [
+    {
+      "code": "123456",
+      "score": 123.45
+    },
+    {
+      "code": "987654",
+      "score": 98.76
+    }
+  ]
+}
+    </code>
+  </pre>
+</details>
+
+**Fields**
+
+Name|Type|Required|Description
+---|---|---|---|
+results|[[ItemSearchResponseResult](#schemaitemsearchresponseresult)]|false|The array of results, up to the specified limit, in order - best match first
+
+## ItemSearchResponseResult
+
+<a name="schemaitemsearchresponseresult"></a>
+
+<details>
+  <summary>Sample JSON</summary>
+  <pre>
+    <code>
+{
+  "code": "123456",
+  "score": 123.45
+}
+    </code>
+  </pre>
+</details>
+
+**Fields**
+
+Name|Type|Required|Description
+---|---|---|---|
+code|string|true|The 6 digit HS code, or 8 digit CN code​ (depending on the 'digits' request parameter)
+score|number|true|A rating for how well the code matches. A higher number signifies a better match
+
+## ErrorResponse
+
+<a name="schemaerrorresponse"></a>
+
+<details>
+  <summary>Sample JSON</summary>
+  <pre>
+    <code>
+{
+  "message": "string",
+  "detail": "string"
+}
+    </code>
+  </pre>
+</details>
+
+**Fields**
+
+Name|Type|Required|Description
+---|---|---|---|
+message|string|true|The error message summary
+detail|string|false|Extra information about the error
+
+
+
