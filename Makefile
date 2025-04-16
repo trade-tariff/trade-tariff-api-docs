@@ -6,12 +6,7 @@ requirements:
 clean:
 	rm -rf build
 
-api:
-	./generate.js source/v2/openapi.yaml source/reference.html.md.erb
-	./generate.js source/v2/categorisation-openapi.yaml source/categorisation.html.md.erb
-	./generate.js source/fpo/fpo-commodity-tool-openapi.yaml source/fpo.html.md.erb
-
-html: requirements clean api
+html: requirements clean
 	bundle exec rake build
 
 serve: html
