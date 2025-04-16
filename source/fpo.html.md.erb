@@ -60,7 +60,6 @@ X-Api-Key: a1b2c3defg4567
 ```
 
 
-
 # FPO endpoints
 
 ## POST /fpo-code-search
@@ -70,8 +69,11 @@ X-Api-Key: a1b2c3defg4567
 Carries out a search for potential commodity codes for a single line item within a parcel
 
 To perform this operation, you must be authenticated by means of one of the following methods:
+
 apiKey
+
 **Request body**
+
 ```json
 {
   "description": "plastic toothbrush",
@@ -87,6 +89,7 @@ Parameter|In|Type|Required|Description
 body|body|[ItemSearchRequest](#schemaitemsearchrequest)|true|No description
 
 **Example Request**
+
 ```shell
 curl -d '{"description": "plastic toothbrush", "digits": 8}' \
   -H "Content-Type: application/json" -H "X-Api-Key: <your-api-key-here>" \
@@ -94,6 +97,7 @@ curl -d '{"description": "plastic toothbrush", "digits": 8}' \
 ```
 
 **Example Response**
+
 ```json
 {
   "results": [
@@ -226,6 +230,3 @@ Name|Type|Required|Description
 ---|---|---|---|
 message|string|true|The error message summary
 detail|string|false|Extra information about the error
-
-
-

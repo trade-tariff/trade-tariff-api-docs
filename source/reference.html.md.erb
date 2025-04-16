@@ -40,11 +40,13 @@ Each section has a `position`, which is its numerical order within the Tariff, a
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -100,11 +102,13 @@ Parameter|In|Type|Required|Description
 position|path|integer|true|The `position` of the section to be retrieved 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -216,11 +220,13 @@ Parameter|In|Type|Required|Description
 section_id|path|integer|true|The `section_id` of the section. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note
 ```
 
 **Example Response**
+
 ```json
 {
   "id": 1,
@@ -249,11 +255,13 @@ Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) d
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -307,11 +315,13 @@ Parameter|In|Type|Required|Description
 chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g. the first two (2) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of two digits. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -421,11 +431,13 @@ Parameter|In|Type|Required|Description
 chapter_id|path|integer|true|The `chapter_id` of the chapter. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note
 ```
 
 **Example Response**
+
 ```json
 {
   "id": 46,
@@ -460,11 +472,13 @@ Parameter|In|Type|Required|Description
 heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g. the first four (4) digits of the `goods_nomenclature_item_id`. This should be a zero-padded string of four (4) digits. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -658,11 +672,13 @@ goods_nomenclature_item_id|path|string|true|The goods_nomenclature_item_id of th
 productline_suffix|path|string|true|The two-digit product line suffix of the subheading to retrieve
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/subheadings/0102291000-80
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -854,11 +870,13 @@ Parameter|In|Type|Required|Description
 id|path|string|true|The `id` of the commodity to be retrieved. This should be a string of ten (10) digits. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -1649,11 +1667,13 @@ page|query|integer|false|Retrieve search page with number
 include|query|string|false|Retrieve quota balance events which show the history of updates to the returned quota definition. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -1811,11 +1831,13 @@ type|query|string|conditional|Retrieve additional_codes with this exact `type` e
 description|query|string|conditional|Retrieve additional_codes with description that contains `description` 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=200&type=B
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -1900,11 +1922,13 @@ Retrieves a list of all additional_code_types without pagination and filtering.
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_code_types
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -1952,11 +1976,13 @@ Parameter|In|Type|Required|Description
 as_of|query|string(date)|false|Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -2010,11 +2036,13 @@ type|query|string|false|Retrieve certificates with this exact `type` equal to `c
 description|query|string|false|Retrieve certificates with `description` that contains `description`. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -2082,11 +2110,13 @@ Retrieves a list of all certificate_types without pagination and filtering.
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificate_types
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2132,11 +2162,13 @@ Parameter|In|Type|Required|Description
 as_of|query|string(date)|false|Retrieve the measure_types as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_types
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2182,11 +2214,13 @@ Parameter|In|Type|Required|Description
 as_of|query|string(date)|false|Retrieve the quota_order_numbers as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quota_order_numbers
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2227,12 +2261,14 @@ Parameter|In|Type|Required|Description
 measure_sid|path|integer|true|The `measure_sid` of the measure to be retrieved. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measures/{measure_sid} \
   -H 'Accept: application/json'
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -2342,11 +2378,13 @@ Parameter|In|Type|Required|Description
 as_of|query|string(date)|false|Retrieve the measure_actions as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_actions
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2385,11 +2423,13 @@ Parameter|In|Type|Required|Description
 as_of|query|string(date)|false|Retrieve the measure_condition_codes as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_condition_codes
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2432,11 +2472,13 @@ code|query|string|false|Retrieve footnotes with this exact `code` or the footnot
 description|query|string|false|Retrieve footnotes with `description` that contains `description`. Can be combined with `type` and `code`. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -2495,11 +2537,13 @@ Retrieves a list of all footnote_types without pagination and filtering.
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnote_types
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2580,11 +2624,13 @@ position|path|integer|true|The `position` of the section to be retrieved
 as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2716,11 +2762,13 @@ chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g
 as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2851,11 +2899,13 @@ heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g
 as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on the `as_of` date. Use the format `YYYY-MM-DD`. While this is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct. As caching is used on the API this will ensure the data returned is as expected. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -2956,11 +3006,13 @@ Parameter|In|Type|Required|Description
 query[letter]|query|string|false|Retrieve search references started with  `query[letter]` letter. Without a query parameter all search references are returned in the response. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/search_references.json?query[letter]=c
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3016,11 +3068,13 @@ Retrieves a list of geographical areas
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3097,11 +3151,13 @@ Retrieves a list of contries
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3188,11 +3244,13 @@ Parameter|In|Type|Required|Description
 as_of|path|string(date)|true|Retrieve changes as they existed between the `as_of` date and the previous day. 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-04-13
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3250,11 +3308,13 @@ subheading|path|string|true|The 6 digit subheading of the goods being traded
 country_code|path|string|true|Two letter country code for the country you are trading with
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/rules_of_origin_schemes/392113/FR
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3413,6 +3473,7 @@ filter[goods_nomenclature_item_id]|query|string|false|Filter by a specific goods
 filter[goods_nomenclature_sid]|query|integer|false|Filter by a specific goods nomenclature sid field
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=0153778-6
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=90131-25-2
@@ -3421,6 +3482,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?f
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3467,6 +3529,7 @@ filter[to_date]|query|string(date)|false|Filter measures that end up to and inlu
 filter[simplified_procedural_code]|query|string|false|Filter by the simplified procedural code
 
 **Example Request**
+
 ```shell
 # Fetch all measures
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures
@@ -3479,6 +3542,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural
 ```
 
 **Example Response**
+
 ```json
 {
   "data": [
@@ -3518,11 +3582,13 @@ See [Preference code Guidance](https://www.gov.uk/government/publications/prefer
 This request does not require authentication.
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/preference_codes
 ```
 
 **Example Response**
+
 ```json
 {
   "data:id": "string",
@@ -3560,6 +3626,7 @@ year|path|integer|false|The `year` to find available periods for
 filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul> 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists/2022?filter[type]=monthly
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists?filter[type]=spot
@@ -3592,6 +3659,7 @@ month|path|integer|true|The `month` for the exchange rates and files
 filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul> 
 
 **Example Request**
+
 ```shell
 curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2021-10?filter[type]=monthly
 
@@ -7532,6 +7600,3 @@ attributes:goods_nomenclature_item_ids|string|false|The item ids for the goods n
 attributes:monetary_unit_code|string|false|The monetary unit code for the measure
 attributes:measurement_unit_code|string|false|The measurement unit code for the measure
 attributes:measurement_unit_qualifier_code|string|false|The measurement unit qualifier code for the measure
-
-
-

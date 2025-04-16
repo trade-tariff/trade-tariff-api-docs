@@ -442,6 +442,7 @@ as_of|query|string(date)|false|Returns the category assessments across all commo
 filter[geographical_area_id]|query|string|false|This parameter can be used to filter down for the origin of your goods. Without passing a value for this parameter, the API will return the potentially applicable CAs for all the origins. To better understand this data point, please consult the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html</a>. 
 
 **Example Request**
+
 ```shell
 curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
 curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
@@ -450,6 +451,7 @@ curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov
 ```
 
 **Example Response**
+
 ```json
 {
   "data": {
@@ -1004,6 +1006,7 @@ To perform this operation, you must be authenticated by means of one of the foll
 apiKey
 
 **Example Request**
+
 ```shell
 curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/themes
 ```
