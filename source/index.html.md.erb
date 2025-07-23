@@ -1,124 +1,91 @@
 ---
-title: Trade Tariff API - GOV.UK
+title: About the Trade Tariff API - GOV.UK
 ---
 <% content_for :head do %>
   <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Latest News Atom feed" />
 <% end %>
 
-# GOV.UK Trade Tariff API
+# About
 
-The GOV.UK Trade Tariff API makes it easy to access Trade Tariff data
-from [https://www.gov.uk/trade-tariff](https://www.gov.uk/trade-tariff).
-The data includes commodity codes, duty and VAT rates.
+## GOV.UK Trade Tariff API
 
-It is accessed via [HTTPS][] and returns data in a [JSON][]
-format. The [reference documentation](reference.html) provides a thorough
-overview of the endpoints and the response format.
+The GOV.UK Trade Tariff APIs make it easy to access the [UK Trade Tariff Service data](https://www.gov.uk/trade-tariff). The data includes commodity codes, duties and VAT rates.
 
-For internal documentation on the management of the API, please see the [internal documentation][tech-docs].
+The APIs are useful for any business and individuals wanting to access up-to-date tariff data through a predictable and stable interface.
 
-## What you can do with this API
+## What can you do with the APIs?
 
-The data provided by this API is used on [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff).
+Using the Trade Tariff APIs, you can search for commodities by:
 
-With the Trade Tariff API, you can access Commodity codes, which [classify
-goods](https://www.gov.uk/guidance/finding-commodity-codes-for-imports-or-exports)
-for import and export. Commodity codes allow you to:
+- name
+- code
+- date or data range, including historical data
 
-- fill in declarations and other paperwork
-- check if there’s duty or VAT to pay
-- find out about duty reliefs and preferential rates
-- find out if import or export licenses are needed
-- Search by free-form text or `goods_nomenclature_item_id`
-- Scope some API calls by date, i.e. `/api/v2/goods_nomenclatures/*`
-- Provide resources for all headings and all commodities
-- Search for quota measures with criteria, including goods nomenclature, year, geographic area, etc.
+This allows you to fill in declarations and other paperwork and determine:
 
-This API is useful for applications that incorporate content from [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff) and for keeping that content up to date. It is meant to provide a predictable and stable interface to Trade Tariff data.
+- if duty or VAT applies
+- if duty relief and preferential rates are available
+- if import or export licenses are required
 
-The API documentation is built from an [OpenAPI](https://github.com/OAI/OpenAPI-Specification) specification [file](/v2/openapi.yaml) for the Trade Tariff API. This file describes the API and provides example requests and responses.
+You will also be able to:
 
-## Quick start
+- search the tariff by date or date range, including historical data
+- query quota measures by commodity, year, geographic area and more.
 
-You can use GOV.UK Tariff API to lookup the data that is used on
-[`https://www.gov.uk/trade-tariff`](https://www.gov.uk/trade-tariff).
+## Using the APIs
 
-To get started:
+There are multiple APIs available through the UK Trade Tariff Service covering different user needs and search criteria. Some of the core APIs are:
 
- 1. Using a tool such as [curl](https://curl.haxx.se/),
-    [Postman](https://www.getpostman.com/) or your web browser, make a GET
-    request to [`https://www.trade-tariff.service.gov.uk/api/v2/sections`](https://www.trade-tariff.service.gov.uk/api/v2/sections).
- 2. You’ll receive a JSON response and the fields for this are
-    explained in the [reference documentation](reference.html).
+- The Commodities API provides detailed UK Trade Tariff data for imports and exports. It is ideal if you want to access structured trade tariff data across jurisdictions and time.
+- The Categorisation API relates to bringing goods in and out of Northern Ireland and determines whether goods qualify for the simplified procedures under the Windsor Framework.
+- The Fast Parcel Operator (FPO) Commodity Code Identification Tool API is for express operators handling time-dependent deliveries.
 
-For example, using the curl command line utility tool:
+Additional APIs are available to support specific trade tariff and classification needs.
 
-```shell
-curl https://www.trade-tariff.service.gov.uk/api/v2/sections
-```
+## Useful links
+
+- [JSON:API Specification](https://jsonapi.org/format/)
+- [OpenAPI Specification](https://swagger.io/specification/)
+- [Curl](https://curl.haxx.se/)
+- [Postman](https://www.postman.com/)
+- [Ruby on Rails](https://rubyonrails.org/)
+- [HTTPie](https://httpie.io/)
+- [jq](https://stedolan.github.io/jq/)
 
 ## Authentication
 
-Usage of GOV.UK Trade Tariff API does not require authentication.
-
-## User agent identification
-
-Please identify your application in the User-Agent request header using the following format:
-
-`User-Agent: <product> / <product-version> <comment>`
-
-In line with the above example using curl, the User-Agent header can be set with the `--user-agent` switch:
-
-```shell
-curl --user-agent 'product / product-version' https://www.trade-tariff.service.gov.uk/api/v2/sections
-```
-
-Or as a header by passing the `-H` switch:
-
-```shell
-curl -H 'User-Agent: product / product-version' https://www.trade-tariff.service.gov.uk/api/v2/sections
-```
-
-While this is not currently enforced, we reserve the right to enforce this requirement at a later date.
+Usage of GOV.UK Trade Tariff APIs does not require authentication.
 
 ## Caching
 
-The GOV.UK Trade Tariff is updated on a daily basis, however to reduce the number of API calls please consider caching
-requests for 24 hours.
-
-## API updates
-
-Changes to the API are documented on the [Latest News](/news.html) page
-
-They are also available as a feed to subscribe to at the [API News feed](/feed.xml)
-
-The APIs contain a number of undocumented features which are used for internal Online Trade Tariff operations. Please contact the support email address below before using undocumented features.
+The GOV.UK Trade Tariff is updated daily. To reduce the number of API calls, cache requests for 24 hours.
 
 ## Security and compliance
 
 ### Reporting vulnerabilities
 
-If you believe there is a security issue with GOV.UK Trade Tariff API, please
-[contact us immediately](#support).
+If you believe there is a security issue with GOV.UK Trade Tariff APIs, email [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk) immediately.
 
 Please don’t disclose the suspected breach publicly until it has been fixed.
 
-### HTTPS
+### Security
 
-GOV.UK Tariff API follows government HTTPS security guidelines. The
-Hypertext Transfer Protocol Secure (HTTPS), which involves the Transport Layer
-Security (TLS) protocol, is used by the platform to provide secure connections.
+GOV.UK Trade Tariff APIs follow government HTTPS security guidelines. The Hypertext Transfer Protocol Secure (HTTPS), which involves the Transport Layer Security (TLS) protocol, is used by the platform to provide secure connections.
 
 ### Security patches
 
-We upgrade the framework and library code in GOV.UK Trade Tariff API
-to the latest versions for security and feature enhancements.
+We upgrade the framework and library code in GOV.UK Trade Tariff APIs to the latest versions for security and feature enhancements.
 
 ## Support
 
-If you experience any issues or have questions regarding GOV.UK Trade Tariff API
-please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk?subject=Trade%20Tariff%20API)
+If you experience any issues or have questions regarding GOV.UK Trade Tariff APIs, please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk).
 
-[HTTPS]: https://en.wikipedia.org/wiki/HTTPS
-[JSON]: https://en.wikipedia.org/wiki/JSON
-[tech-docs]: https://docs.trade-tariff.service.gov.uk
+## Terms and Conditions
+
+By using the FPO APIs, you agree to the [terms and conditions](https://api.trade-tariff.service.gov.uk/categorisation-terms-and-conditions.html).
+
+When using the rest of our APIs, you agree to the following [terms](https://www.trade-tariff.service.gov.uk/terms).
+
+## Feedback on the API
+
+Your feedback helps us improve this service. Any suggestions, queries, or issues can be reported to [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk).
