@@ -15,7 +15,7 @@
 
     At the same time, supporting version 1 APIs is time-consuming and detracts from the Tariff team's ability to develop and support new features.
 
-    Your application is using the version 1 APIs if the URLs that you are calling feature the term `/api/v1`.
+    Your application is using the version 1 APIs if the URLs that you are calling feature the term `/uk/api/v1`.
 
     ## Getting in contact
 
@@ -64,11 +64,11 @@
   content: |
     The following new API endpoints have been released:
 
-    * [/measure_actions](https://www.trade-tariff.service.gov.uk/api/v2/measure_actions)
-    * [/certificates](https://www.trade-tariff.service.gov.uk/api/v2/certificates)
-    * [/quota_order_numbers](https://www.trade-tariff.service.gov.uk/api/v2/quota_order_numbers)
-    * [/measure_types](https://www.trade-tariff.service.gov.uk/api/v2/measure_types)
-    * [/measure_condition_codes](https://www.trade-tariff.service.gov.uk/api/v2/measure_condition_codes)
+    * [/measure_actions](https://www.trade-tariff.service.gov.uk/uk/api/measure_actions)
+    * [/certificates](https://www.trade-tariff.service.gov.uk/uk/api/certificates)
+    * [/quota_order_numbers](https://www.trade-tariff.service.gov.uk/uk/api/quota_order_numbers)
+    * [/measure_types](https://www.trade-tariff.service.gov.uk/uk/api/measure_types)
+    * [/measure_condition_codes](https://www.trade-tariff.service.gov.uk/uk/api/measure_condition_codes)
 
     API Documentation:
 

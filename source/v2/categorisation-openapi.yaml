@@ -1,7 +1,7 @@
 openapi: 3.1.0
 
 servers:
-  - url: https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes
+  - url: https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes
 
 security:
 - ApiKeyAuth: []
@@ -153,8 +153,8 @@ paths:
       responses:
         200:
           description: An array of CategoryAssessments
-          content:
-            application/json:
+          example:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: "#/components/schemas/CategoryAssessmentListing"
         401:
@@ -164,11 +164,16 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/green_lanes/category_assessments:
+        /uk/api/green_lanes/category_assessments:
           lang: shell
           source: |-
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/category_assessments?as_of=2024-01-01
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/category_assessments
+
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/category_assessments?as_of=2024-01-01
 
   /green_lanes/goods_nomenclatures/{id}:
     get:
@@ -221,7 +226,7 @@ paths:
         200:
           description: A GoodsNomenclature and a list of Category Assessments
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: "#/components/schemas/GoodsNomenclature"
         401:
@@ -233,13 +238,24 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/goods_nomenclatures/0712909000:
+        /uk/api/goods_nomenclatures/0712909000:
           lang: shell
           source: |-
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" "https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000
+
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
+
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              "https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000?filter\[geographical_area_id\]=US"
+
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              "https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter\[geographical_area_id\]=US"
   /green_lanes/themes:
     get:
       summary: Returns a list of all themes
@@ -251,7 +267,7 @@ paths:
         200:
           description: An array of Themes
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: "#/components/schemas/Themes"
         401:
@@ -259,10 +275,12 @@ paths:
         5xx:
           description: Unexpected error, something went wrong internally
       x-code-samples:
-        /api/v2/green_lanes/themes:
+        /uk/api/green_lanes/themes:
           lang: shell
           source: |-
-            curl -X GET -H "X-Api-Key: a1b2c3defg4567" https://www.trade-tariff.service.gov.uk/xi/api/v2/green_lanes/themes
+            curl -H "X-Api-Key: a1b2c3defg4567" \
+              -H "Accept: application/vnd.hmrc.2.0+json" \
+              https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/themes
 
 components:
   securitySchemes:

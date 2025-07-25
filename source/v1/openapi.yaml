@@ -21,7 +21,7 @@ servers:
 
 paths:
 ### Sections
-  /api/v1/sections:
+  /uk/api/v1/sections:
     get:
       summary: Retrieves all sections
       description: |
@@ -35,7 +35,7 @@ paths:
         200:
           description: Sections were found
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/Sections'
               example:
@@ -43,12 +43,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/sections:
+        /uk/api/v1/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/sections
 
-  /api/v1/sections/{position}:
+  /uk/api/v1/sections/{position}:
     get:
       summary: Retrieves a section by its position
       description: |
@@ -74,7 +74,7 @@ paths:
         200:
           description: Section was found.
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/Section'
               example:
@@ -84,12 +84,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/sections:
+        /uk/api/v1/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/sections/1
 
-  /api/v1/sections/{section_id}/section_note:
+  /uk/api/v1/sections/{section_id}/section_note:
     get:
       summary: Retrieves a section's notes
       description: |
@@ -112,7 +112,7 @@ paths:
         200:
           description: A section's notes were found.
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/SectionNote'
               example:
@@ -122,13 +122,13 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/sections:
+        /uk/api/v1/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/sections/1/section_note
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/sections/1/section_note
 
 ### Chapters
-  /api/v1/chapters:
+  /uk/api/v1/chapters:
     get:
       summary: Retrieves all chapters
       description: >
@@ -141,7 +141,7 @@ paths:
         200:
           description: Chapters were found
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/Chapters'
               example:
@@ -149,12 +149,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/chapters:
+        /uk/api/v1/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/chapters
 
-  /api/v1/chapters/{chapter_id}:
+  /uk/api/v1/chapters/{chapter_id}:
     get:
       summary: Retrieves a chapter
       description: >
@@ -174,7 +174,7 @@ paths:
         200:
           description: A chapter was found.
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/Chapter'
               example:
@@ -184,12 +184,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/chapters:
+        /uk/api/v1/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/chapters/34
 
-  /api/v1/chapters/{chapter_id}/chapter_note:
+  /uk/api/v1/chapters/{chapter_id}/chapter_note:
     get:
       summary: Retrieves a chapter's notes
       description: >
@@ -212,7 +212,7 @@ paths:
         200:
           description: A chapter's notes were found.
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/ChapterNote'
               example:
@@ -222,12 +222,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/chapters/{chapter_id}/chapter_note:
+        /uk/api/v1/chapters/{chapter_id}/chapter_note:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/chapters/34/chapter_note
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/chapters/34/chapter_note
 
-  /api/v1/headings/{heading_id}:
+  /uk/api/v1/headings/{heading_id}:
     get:
       summary: Retrieves a heading
       description: >
@@ -251,7 +251,7 @@ paths:
         200:
           description: A heading was found.
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/Heading'
               example:
@@ -261,12 +261,12 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/chapters:
+        /uk/api/v1/chapters:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/headings/0101
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/headings/0101
 
-  /api/v1/commodities/{goods_nomenclature_item_id}:
+  /uk/api/v1/commodities/{goods_nomenclature_item_id}:
     get:
       summary: Retrieves a commodity
       description: >
@@ -290,7 +290,7 @@ paths:
         200:
           description: A commodity was found.
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: '#/components/schemas/Commodity'
               example:
@@ -300,10 +300,10 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/v1/commodities:
+        /uk/api/v1/commodities:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v1/commodities/0101210000
+            curl https://www.trade-tariff.service.gov.uk/uk/api/v1/commodities/0101210000
 
 components:
   schemas:

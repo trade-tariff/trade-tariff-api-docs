@@ -45,7 +45,7 @@ surveillance, restrictions on import or export, prohibitions, etc. They are the 
 elements that define what a measure is.
 
 This list of measure types is occasionally updated. For the very latest list of measure
-types in use, access the [measure types API](https://www.trade-tariff.service.gov.uk/api/v2/measure_types).
+types in use, access the [measure types API](https://www.trade-tariff.service.gov.uk/uk/api/measure_types).
 
 ### Prohibition-type measures (series A)
 
