@@ -1,19 +1,8 @@
 name: Deploy to development
 
 on:
-  push:
-    branches-ignore:
-      - main
-      - hotfix/*
-  pull_request:
-    branches-ignore:
-      - main
   workflow_dispatch:
-    inputs:
-      ref:
-        description: 'The git ref to deploy'
-        required: true
-        default: 'main'
+  pull_request:
 
 permissions:
   contents: read
@@ -26,7 +15,7 @@ env:
 
 jobs:
   build-dev:
-   uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/build.yml
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,13 +36,3 @@ jobs:
       run: |
         cd build/
         aws s3 sync . s3://trade-tariff-api-docs-${{ env.ENVIRONMENT }} --delete
-
-    - name: Invalidate cache
-      run: |
-        DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-          --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
-          --output text)
-
-        aws cloudfront create-invalidation \
-          --distribution-id "${DISTRIBUTION_ID}" \
-          --paths "/*"

@@ -1,3 +1,9 @@
+serve: html
+	bundle exec middleman server
+
+html: requirements clean
+	bundle exec rake build
+
 requirements:
 	npm install
 	bundle install
@@ -5,12 +11,6 @@ requirements:
 
 clean:
 	rm -rf build
-
-html: requirements clean
-	bundle exec rake build
-
-serve: html
-	bundle exec middleman server
 
 all: html
 
