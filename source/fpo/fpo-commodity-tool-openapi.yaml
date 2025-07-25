@@ -47,7 +47,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/vnd.hmrc.2.0+json:
+          application/json:
             schema:
               $ref: "#/components/schemas/ItemSearchRequest"
 
@@ -63,7 +63,7 @@ paths:
         200:
           description: Successful response
           content:
-            application/vnd.hmrc.2.0+json:
+            application/json:
               schema:
                 $ref: "#/components/schemas/ItemSearchResponse"
           headers:
