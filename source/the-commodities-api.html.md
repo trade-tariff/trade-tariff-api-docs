@@ -33,10 +33,10 @@ The API is available at the URL:
 https://www.trade-tariff.service.gov.uk/uk/api/commodities/{10-digit-commodity}
 ```
 
-So, for example, if you are looking at the API for **cherry tomatoes**, which has a commodity code of **0702000007**, you would access the URL:
+So, for example, if you are looking at the API for **cherry tomatoes**, which has a commodity code of **0702009907**, you would access the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/uk/api/commodities/0702000007
+https://www.trade-tariff.service.gov.uk/uk/api/commodities/0702009907
 ```
 
 It's easy to remember the URL for the commodities API: it's the same as the URL for the commodity on the Online Tariff, but with `/uk/api/` inserted before `commodities`.
@@ -630,7 +630,7 @@ Measure conditions are used to identify where:
 - document codes (such as licences, certificates, waivers or exceptions) are needed
 - weight or volume thresholds are applicable.
 
-For instance, the certificate identified by document code **N002** is needed to import [cherry tomatoes](https://www.trade-tariff.service.gov.uk/commodities/0702000007#uk_import_controls), as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
+For instance, the certificate identified by document code **N002** is needed to import [cherry tomatoes](https://www.trade-tariff.service.gov.uk/commodities/0702009907#uk_import_controls), as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
 
 And importing [champagne](https://www.trade-tariff.service.gov.uk/commodities/2204101100) from Switzerland has a threshold measure on the 'Restriction on entry into free circulation' measure (i.e. if the volume of goods imported does not exceed 100 litres, then the licence is not required).
 
