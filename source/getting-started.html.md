@@ -45,7 +45,7 @@ For trade with Northern Ireland, you might need to apply measures from the EU Ta
 To do this you will need to access the XI tariff. For example, for pure-bred breeding animals, commodity code 0101210000 is accessed by:
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/xi/uk/api/commodities/0101210000 \
+curl https://www.trade-tariff.service.gov.uk/xi/api/commodities/0101210000 \
   -H "Accept: application/vnd.hmrc.2.0+json" | \
   jq
 ```

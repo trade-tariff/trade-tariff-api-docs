@@ -241,7 +241,7 @@ Kind regards,
 
 All requests to this API should be prefixed with the following URL:
 
-**https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes**
+**https://www.trade-tariff.service.gov.uk/xi/api/green_lanes**
 
 ## Authentication
 
@@ -280,11 +280,11 @@ as_of|query|string(date)|false|Returns the category assessments across all commo
 ```shell
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/category_assessments
+  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/category_assessments
 
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/category_assessments?as_of=2024-01-01
+  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/category_assessments?as_of=2024-01-01
 ```
 
 **Example Response**
@@ -451,19 +451,19 @@ filter[geographical_area_id]|query|string|false|This parameter can be used to fi
 ```shell
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000
+  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000
 
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
+  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01
 
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  "https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000?filter[geographical_area_id]=US"
+  "https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?filter[geographical_area_id]=US"
 
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  "https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter[geographical_area_id]=US"
+  "https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter[geographical_area_id]=US"
 ```
 
 **Example Response**
@@ -1026,7 +1026,7 @@ apiKey
 ```shell
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/uk/api/green_lanes/themes
+  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/themes
 ```
 
 **Example Response**
