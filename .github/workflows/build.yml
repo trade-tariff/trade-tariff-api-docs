@@ -21,10 +21,6 @@ jobs:
       - name: Install graphviz
         run: sudo apt-get update && sudo apt-get install -yy graphviz
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '23.11.0'
-
       - name: Build static site
         run: make html
 
