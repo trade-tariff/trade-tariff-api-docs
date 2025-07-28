@@ -20,7 +20,7 @@ curl https://www.trade-tariff.service.gov.uk/uk/api/commodities/0101210000 \
   jq
 ```
 
-Notice that you **need to specify the `Accept`** header with the value `application/vnd.hmrc.2.0+json` to get the response in the correct format.
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 The commodity object includes all the relevant information about the commodity including:
 
@@ -66,8 +66,7 @@ curl -X POST https://search.trade-tariff.service.gov.uk/fpo-code-search \
   jq
 ```
 
-As a Fast Parcel Operator, you'll need to [contact](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk) our team to get an API key to use this API.
-
+Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invited to test the service. If you want access message [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk).
 
 ## Ruby with Rails example
 
@@ -92,8 +91,6 @@ puts "Declarable: #{attributes['declarable']}"
 ```
 
 This example uses the Ruby on Rails cache, which minimises the number of API calls. It is recommended you cache requests for 24 hours.
-
-It fetches the commodity data for pure-bred breeding animals with the commodity code `0101210000`. The response is parsed from JSON and relevant attributes are printed to the console.
 
 ## Node.js example
 

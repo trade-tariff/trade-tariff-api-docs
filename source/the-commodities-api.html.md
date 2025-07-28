@@ -41,7 +41,9 @@ https://www.trade-tariff.service.gov.uk/uk/api/commodities/0702009907
 
 It's easy to remember the URL for the commodities API: it's the same as the URL for the commodity on the Online Tariff, but with `/uk/api/` inserted before `commodities`.
 
-If you need to use the Northern Ireland tariff, then insert `xi/` before the `api/`.
+If you need to use the Northern Ireland tariff, then insert `xi/` instead of `uk/` before the `api/` part of the path.
+
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 ## The structure of the commodities API
 

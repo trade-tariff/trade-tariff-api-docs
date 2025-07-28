@@ -16,3 +16,6 @@ all: html
 
 validate:
 	bin/swagger_validate
+
+update-tech-docs:
+	bundle update govuk_tech_docs && FIRST_TIME=false bundle exec middleman init . -T alphagov/tech-docs-template
