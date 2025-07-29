@@ -17,15 +17,13 @@ This API accepts HTTP requests and responds with
 [JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
 published content as is presented on GOV.UK.
 
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 ## Base URL
 
 All requests to this API should be prefixed with the following URL:
 
-**https://www.trade-tariff.service.gov.uk/api/v2**
-
-
-
+**https://www.trade-tariff.service.gov.uk/uk/api**
 
 # Sections
 
@@ -42,7 +40,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections
+curl https://www.trade-tariff.service.gov.uk/uk/api/sections \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -104,7 +103,8 @@ position|path|integer|true|The `position` of the section to be retrieved
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1
+curl https://www.trade-tariff.service.gov.uk/uk/api/sections/1 \
+  -H "Accept: application/vnd.hmrc.2.0+json"
 ```
 
 **Example Response**
@@ -203,46 +203,6 @@ Status|Meaning|Description|Schema
 404|Not Found|Section was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /sections/{section_id}/section_note
-
-*Retrieves a section's notes*
-
-This resource represents the notes for a particular section.
-
-For this resource, `section_id` is used to uniquely identify a section and request its note from the API.
-
-This request does not require authentication.
-
-**Parameters**
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-section_id|path|integer|true|The `section_id` of the section.
-
-**Example Request**
-
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections/1/section_note
-```
-
-**Example Response**
-
-```json
-{
-  "id": 1,
-  "section_id": 1,
-  "content": "* 1\\. Any reference in this section to a particular genus or species of an animal, except where the context otherwise requires, includes a reference to the young of that genus or species.\r\n* 2\\. Except where the context otherwise requires, throughout the nomenclature any reference to 'dried' products also covers products which have been dehydrated, evaporated or freeze-dried.\r\n"
-}
-```
-
-**Responses**
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A section's notes were found.|[SectionNote](#schemasectionnote)
-404|Not Found|A section's notes were not found.|None
-5XX|Unknown|Unexpected error.|None
-
 # Chapters
 
 ## GET /chapters
@@ -257,7 +217,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters
+curl https://www.trade-tariff.service.gov.uk/uk/api/chapters \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -317,7 +278,8 @@ chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34
+curl https://www.trade-tariff.service.gov.uk/uk/api/chapters/34 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -416,45 +378,6 @@ Status|Meaning|Description|Schema
 404|Not Found|Chapter was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /chapters/{chapter_id}/chapter_note
-
-*Retrieves a chapter's notes*
-
-This resource represents the note for a particular chapter. For this resource, `chapter_id` is used to uniquely identify a chapter and request its note from the API. `chapter_id` is the first two (2) digits of the chapter's `goods_nomenclature_item_id` <p>`chapter_id` should be a zero-padded string of two digits.</p>
-
-This request does not require authentication.
-
-**Parameters**
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-chapter_id|path|integer|true|The `chapter_id` of the chapter.
-
-**Example Request**
-
-```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chapters/34/chapter_note
-```
-
-**Example Response**
-
-```json
-{
-  "id": 46,
-  "section_id": 1,
-  "chapter_id": "01",
-  "content": "* 1\\. This chapter covers all live animals except:\r\n  * (a) fish and crustaceans, molluscs and other aquatic invertebrates, of heading 0301, 0306, 0307 or 0308;\r\n  * (b) cultures of micro-organisms and other products of heading 3002; and\r\n  * (c) animals of heading 9508."
-}
-```
-
-**Responses**
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|A chapter's notes were found.|[ChapterNote](#schemachapternote)
-404|Not Found|A chapter's notes were not found.|None
-5XX|Unknown|Unexpected error.|None
-
 # Headings
 
 ## GET /headings/{heading_id}
@@ -474,7 +397,8 @@ heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/headings/0101
+curl https://www.trade-tariff.service.gov.uk/uk/api/headings/0101 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -674,7 +598,8 @@ productline_suffix|path|string|true|The two-digit product line suffix of the sub
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/subheadings/0102291000-80
+curl https://www.trade-tariff.service.gov.uk/uk/api/subheadings/0102291000-80 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -872,7 +797,8 @@ id|path|string|true|The `id` of the commodity to be retrieved. This should be a 
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
+curl https://www.trade-tariff.service.gov.uk/uk/api/commodities/0101210000 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -1669,7 +1595,8 @@ include|query|string|false|Retrieve quota balance events which show the history 
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1
+curl https://www.trade-tariff.service.gov.uk/uk/api/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -1833,7 +1760,8 @@ description|query|string|conditional|Retrieve additional_codes with description 
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_codes/search?code=200&type=B
+curl https://www.trade-tariff.service.gov.uk/uk/api/additional_codes/search?code=200&type=B \
+     -H "Content-Type: application/vnd.hmrc.2.0+json"
 ```
 
 **Example Response**
@@ -1924,7 +1852,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/additional_code_types
+curl https://www.trade-tariff.service.gov.uk/uk/api/additional_code_types \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -1978,7 +1907,8 @@ as_of|query|string(date)|false|Retrieve the measure_types as they existed on the
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates
+curl https://www.trade-tariff.service.gov.uk/uk/api/certificates \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2038,7 +1968,8 @@ description|query|string|false|Retrieve certificates with `description` that con
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificates/search?code=D005&type=D
+curl https://www.trade-tariff.service.gov.uk/uk/api/certificates/search?code=D005&type=D \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2112,7 +2043,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/certificate_types
+curl https://www.trade-tariff.service.gov.uk/uk/api/certificate_types \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2164,7 +2096,8 @@ as_of|query|string(date)|false|Retrieve the measure_types as they existed on the
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_types
+curl https://www.trade-tariff.service.gov.uk/uk/api/measure_types \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2216,7 +2149,8 @@ as_of|query|string(date)|false|Retrieve the quota_order_numbers as they existed 
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/quota_order_numbers
+curl https://www.trade-tariff.service.gov.uk/uk/api/quota_order_numbers \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2263,7 +2197,7 @@ measure_sid|path|integer|true|The `measure_sid` of the measure to be retrieved.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measures/{measure_sid} \
+curl https://www.trade-tariff.service.gov.uk/uk/api/measures/{measure_sid} \
   -H 'Accept: application/json'
 ```
 
@@ -2380,7 +2314,8 @@ as_of|query|string(date)|false|Retrieve the measure_actions as they existed on t
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_actions
+curl https://www.trade-tariff.service.gov.uk/uk/api/measure_actions \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2425,7 +2360,8 @@ as_of|query|string(date)|false|Retrieve the measure_condition_codes as they exis
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/measure_condition_codes
+curl https://www.trade-tariff.service.gov.uk/uk/api/measure_condition_codes \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2474,7 +2410,8 @@ description|query|string|false|Retrieve footnotes with `description` that contai
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnotes/search?code=134&type=CD
+curl https://www.trade-tariff.service.gov.uk/uk/api/footnotes/search?code=134&type=CD \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2539,7 +2476,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/footnote_types
+curl https://www.trade-tariff.service.gov.uk/uk/api/footnote_types \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2603,15 +2541,15 @@ Here is an example of a response as CSV:
 
 ```
 SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Formatted description,Start date,End date,Declarable,Parent SID
-27623,0100000000,0,LIVE ANIMALS,80,/api/v2/chapters/01,Live animals,1971-12-31 00:00:00 UTC,,false,
-27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
-93797,0101210000,1,Horses,10,/api/v2/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
-93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
-93798,0101290000,2,Other,80,/api/v2/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
-93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
-93800,0101299000,3,Other,80,/api/v2/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
-93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
-72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
+27623,0100000000,0,LIVE ANIMALS,80/uk/api/chapters/01,Live animals,1971-12-31 00:00:00 UTC,,false,
+27624,0101000000,0,"Live horses, asses, mules and hinnies",80/uk/api/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
+93797,0101210000,1,Horses,10/uk/api/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
+93796,0101210000,2,Pure-bred breeding animals,80/uk/api/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
+93798,0101290000,2,Other,80/uk/api/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
+93799,0101291000,3,For slaughter,80/uk/api/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
+93800,0101299000,3,Other,80/uk/api/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
+93801,0101300000,1,Asses,80/uk/api/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
+72763,0101900000,1,Other,80/uk/api/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
 ```
 
 This request does not require authentication.
@@ -2626,7 +2564,8 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/section/1
+curl https://www.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/section/1 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2643,7 +2582,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/s
         "description": "LIVE ANIMALS",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/chapters/01",
+        "href": "/uk/api/chapters/01",
         "formatted_description": "Live animals",
         "validity_start_date": "1971-12-31T00:00:00.000Z",
         "validity_end_date": null,
@@ -2664,7 +2603,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/s
         "description": "Live horses, asses, mules and hinnies",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/headings/0101",
+        "href": "/uk/api/headings/0101",
         "formatted_description": "Live horses, asses, mules and hinnies",
         "validity_start_date": "1972-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -2688,7 +2627,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/s
         "description": "Horses",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/subheadings/0101210000-80",
+        "href": "/uk/api/subheadings/0101210000-80",
         "formatted_description": "Horses",
         "validity_start_date": "2012-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -2741,15 +2680,15 @@ Here is an example of a response as CSV:
 
 ```
 SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Formatted description,Start date,End date,Declarable,Parent SID
-27623,0100000000,0,LIVE ANIMALS,80,/api/v2/chapters/01,Live animals,1971-12-31 00:00:00 UTC,,false,
-27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
-93797,0101210000,1,Horses,10,/api/v2/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
-93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
-93798,0101290000,2,Other,80,/api/v2/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
-93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
-93800,0101299000,3,Other,80,/api/v2/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
-93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
-72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
+27623,0100000000,0,LIVE ANIMALS,80/uk/api/chapters/01,Live animals,1971-12-31 00:00:00 UTC,,false,
+27624,0101000000,0,"Live horses, asses, mules and hinnies",80/uk/api/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
+93797,0101210000,1,Horses,10/uk/api/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
+93796,0101210000,2,Pure-bred breeding animals,80/uk/api/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
+93798,0101290000,2,Other,80/uk/api/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
+93799,0101291000,3,For slaughter,80/uk/api/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
+93800,0101299000,3,Other,80/uk/api/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
+93801,0101300000,1,Asses,80/uk/api/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
+72763,0101900000,1,Other,80/uk/api/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
 ```
 
 This request does not require authentication.
@@ -2764,7 +2703,8 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/chapter/01
+curl https://www.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/chapter/01 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2781,7 +2721,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/c
         "description": "LIVE ANIMALS",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/chapters/01",
+        "href": "/uk/api/chapters/01",
         "formatted_description": "Live animals",
         "validity_start_date": "1971-12-31T00:00:00.000Z",
         "validity_end_date": null,
@@ -2802,7 +2742,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/c
         "description": "Live horses, asses, mules and hinnies",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/headings/0101",
+        "href": "/uk/api/headings/0101",
         "formatted_description": "Live horses, asses, mules and hinnies",
         "validity_start_date": "1972-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -2826,7 +2766,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/c
         "description": "Horses",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/subheadings/0101210000-80",
+        "href": "/uk/api/subheadings/0101210000-80",
         "formatted_description": "Horses",
         "validity_start_date": "2012-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -2879,14 +2819,14 @@ Here is an example of a response as CSV:
 
 ```
 SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Formatted description,Start date,End date,Declarable,Parent SID
-27624,0101000000,0,"Live horses, asses, mules and hinnies",80,/api/v2/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
-93797,0101210000,1,Horses,10,/api/v2/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
-93796,0101210000,2,Pure-bred breeding animals,80,/api/v2/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
-93798,0101290000,2,Other,80,/api/v2/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
-93799,0101291000,3,For slaughter,80,/api/v2/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
-93800,0101299000,3,Other,80,/api/v2/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
-93801,0101300000,1,Asses,80,/api/v2/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
-72763,0101900000,1,Other,80,/api/v2/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
+27624,0101000000,0,"Live horses, asses, mules and hinnies",80/uk/api/headings/0101,"Live horses, asses, mules and hinnies",1972-01-01 00:00:00 UTC,,false,27623
+93797,0101210000,1,Horses,10/uk/api/subheadings/0101210000-10,Horses,2012-01-01 00:00:00 UTC,,false,27624
+93796,0101210000,2,Pure-bred breeding animals,80/uk/api/commodities/0101210000,Pure-bred breeding animals,2012-01-01 00:00:00 UTC,,true,93797
+93798,0101290000,2,Other,80/uk/api/subheadings/0101290000-80,Other,2012-01-01 00:00:00 UTC,,false,93797
+93799,0101291000,3,For slaughter,80/uk/api/commodities/0101291000,For slaughter,2012-01-01 00:00:00 UTC,,true,93798
+93800,0101299000,3,Other,80/uk/api/commodities/0101299000,Other,2012-01-01 00:00:00 UTC,,true,93798
+93801,0101300000,1,Asses,80/uk/api/commodities/0101300000,Asses,2012-01-01 00:00:00 UTC,,true,27624
+72763,0101900000,1,Other,80/uk/api/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
 ```
 
 This request does not require authentication.
@@ -2901,7 +2841,8 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/heading/0101
+curl https://www.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/heading/0101 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2918,7 +2859,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/h
         "description": "LIVE ANIMALS",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/chapters/01",
+        "href": "/uk/api/chapters/01",
         "formatted_description": "Live animals",
         "validity_start_date": "1971-12-31T00:00:00.000Z",
         "validity_end_date": null,
@@ -2939,7 +2880,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/h
         "description": "Live horses, asses, mules and hinnies",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/headings/0101",
+        "href": "/uk/api/headings/0101",
         "formatted_description": "Live horses, asses, mules and hinnies",
         "validity_start_date": "1972-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -2963,7 +2904,7 @@ curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/goods_nomenclatures/h
         "description": "Horses",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/subheadings/0101210000-80",
+        "href": "/uk/api/subheadings/0101210000-80",
         "formatted_description": "Horses",
         "validity_start_date": "2012-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -3008,7 +2949,8 @@ query[letter]|query|string|false|Retrieve search references started with  `query
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/search_references.json?query[letter]=c
+curl https://www.trade-tariff.service.gov.uk/uk/api/search_references.json?query[letter]=c \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3070,7 +3012,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas
+curl https://www.trade-tariff.service.gov.uk/uk/api/geographical_areas \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3153,7 +3096,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/geographical_areas/countries
+curl https://www.trade-tariff.service.gov.uk/uk/api/geographical_areas/countries \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3246,7 +3190,8 @@ as_of|path|string(date)|true|Retrieve changes as they existed between the `as_of
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/changes/2021-04-13
+curl https://www.trade-tariff.service.gov.uk/uk/api/changes/2021-04-13 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3310,7 +3255,8 @@ country_code|path|string|true|Two letter country code for the country you are tr
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/rules_of_origin_schemes/392113/FR
+curl https://www.trade-tariff.service.gov.uk/uk/api/rules_of_origin_schemes/392113/FR \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3475,10 +3421,17 @@ filter[goods_nomenclature_sid]|query|integer|false|Filter by a specific goods no
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=0153778-6
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[cus]=90131-25-2
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_item_id]=0712909090
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/chemical_substances?filter[goods_nomenclature_sid]=30725
+curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=0153778-6 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+
+curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=90131-25-2 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+
+curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_item_id]=0712909090 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+
+curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_sid]=30725 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3532,13 +3485,16 @@ filter[simplified_procedural_code]|query|string|false|Filter by the simplified p
 
 ```shell
 # Fetch all measures
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures
+curl https://www.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch a given 2 week window of measures
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures?filter[from_date]=2023-05-12&filter[to_date]=2023-05-25
+curl https://www.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[from_date]=2023-05-12&filter[to_date]=2023-05-25 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch the full history of a given simplified procedural code
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/simplified_procedural_code_measures?filter[simplified_procedural_code]=1.10
+curl https://www.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[simplified_procedural_code]=1.10 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3584,7 +3540,8 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/preference_codes
+curl https://www.trade-tariff.service.gov.uk/uk/api/preference_codes \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -3628,9 +3585,14 @@ filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists/2022?filter[type]=monthly
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists?filter[type]=spot
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/period_lists?filter[type]=average
+curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists/2022?filter[type]=monthly \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+
+curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=spot \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+
+curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=average \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Responses**
@@ -3661,11 +3623,14 @@ filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul
 **Example Request**
 
 ```shell
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2021-10?filter[type]=monthly
+curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/2021-10?filter[type]=monthly \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Spot and average rates only produce data for March and December each year
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2022-3?filter[type]=spot
-curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/exchange_rates/2022-3?filter[type]=average
+curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=spot \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=average \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Responses**
@@ -6090,7 +6055,7 @@ Commodity codes
         "description": "LIVE ANIMALS",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/chapters/01"
+        "href": "/uk/api/chapters/01"
       }
     },
     {
@@ -6102,7 +6067,7 @@ Commodity codes
         "description": "Live horses, asses, mules and hinnies",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/headings/0101"
+        "href": "/uk/api/headings/0101"
       }
     },
     {
@@ -6114,7 +6079,7 @@ Commodity codes
         "description": "Horses",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/commodities/0101210000"
+        "href": "/uk/api/commodities/0101210000"
       }
     }
   ]
@@ -6152,7 +6117,7 @@ Commodity codes
         "description": "LIVE ANIMALS",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/chapters/01",
+        "href": "/uk/api/chapters/01",
         "formatted_description": "Live animals",
         "validity_start_date": "1971-12-31T00:00:00.000Z",
         "validity_end_date": null,
@@ -6173,7 +6138,7 @@ Commodity codes
         "description": "Live horses, asses, mules and hinnies",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/headings/0101",
+        "href": "/uk/api/headings/0101",
         "formatted_description": "Live horses, asses, mules and hinnies",
         "validity_start_date": "1972-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -6197,7 +6162,7 @@ Commodity codes
         "description": "Horses",
         "number_indents": 0,
         "productline_suffix": "80",
-        "href": "/api/v2/subheadings/0101210000-80",
+        "href": "/uk/api/subheadings/0101210000-80",
         "formatted_description": "Horses",
         "validity_start_date": "2012-01-01T00:00:00.000Z",
         "validity_end_date": null,
@@ -6913,7 +6878,7 @@ A goods_nomenclature object referenced elsewhere.
   "description": "Meat of bovine animals, fresh or chilled",
   "number_indents": 0,
   "productline_suffix": "80",
-  "href": "/api/v2/headings/0201"
+  "href": "/uk/api/headings/0201"
 }
     </code>
   </pre>

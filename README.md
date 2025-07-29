@@ -84,7 +84,7 @@ An OpenAPI document that conforms to the OpenAPI Specification is itself a JSON 
 
 ```yaml
 paths:
-  /api/v2/sections:
+  /uk/api/sections:
     get:
       summary: Retrieves all sections
       description: |
@@ -100,7 +100,7 @@ paths:
         200:
           description: Sections were found
           content:
-            application/json:
+            application/vnd.hmrc.2.0+json:
               schema:
                 $ref: "#/components/schemas/Sections"
               example:
@@ -108,15 +108,15 @@ paths:
         5XX:
           description: Unexpected error.
       x-code-samples:
-        /api/api/v2/sections:
+        /uk/api/sections:
           lang: shell
           source: |-
-            curl -X GET https://www.trade-tariff.service.gov.uk/api/v2/sections
+            curl https://www.trade-tariff.service.gov.uk/uk/api/sections -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 The example above is rendered into HTML:
 
-![Example screen showing rendered HTML for /api/v2/sections](build/images/example-1.png "Example of Section object in the documentation")
+![Example screen showing rendered HTML for /uk/api/sections](build/images/example-1.png "Example of Section object in the documentation")
 
 ### Use of [`$ref`](https://swagger.io/specification/#documentStructure)
 

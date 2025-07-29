@@ -2,11 +2,6 @@ name: Reusable Build
 
 on:
   workflow_call:
-    inputs:
-      ruby-version:
-        required: false
-        type: string
-        default: '3.4.2'
     outputs:
        artifact-name:
          description: "The name of the uploaded artifact"
@@ -19,23 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: ruby-version
-        run: echo "RUBY_VERSION=$(cat .ruby-version)" >> "$GITHUB_OUTPUT"
-
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ steps.ruby-version.outputs.RUBY_VERSION }}
           bundler-cache: true
 
       - name: Install graphviz
         run: sudo apt-get update && sudo apt-get install -yy graphviz
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '23.11.0'
-
-      # - name: Validate OpenAPI specs
-      #   run: make validate
 
       - name: Build static site
         run: make html

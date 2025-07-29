@@ -1,20 +1,12 @@
 name: Deploy to production
 
 on:
-  push:
-    branches:
-    - main
-  # workflow_run:
-  #   workflows:
-  #     - 'Deploy to staging'
-  #   types:
-  #     - completed
   workflow_dispatch:
-    inputs:
-      ref:
-        description: 'The git ref to deploy'
-        required: true
-        default: 'main'
+  workflow_run:
+    workflows:
+      - 'Deploy to staging'
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -48,13 +40,3 @@ jobs:
       run: |
         cd build/
         aws s3 sync . s3://trade-tariff-api-docs-${{ env.ENVIRONMENT }} --delete
-
-    - name: Invalidate cache
-      run: |
-        DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-          --query "DistributionList.Items[*].{id:Id,origin:Origins.Items[0].Id}[?origin=='api'].id" \
-          --output text)
-
-        aws cloudfront create-invalidation \
-          --distribution-id "${DISTRIBUTION_ID}" \
-          --paths "/*"

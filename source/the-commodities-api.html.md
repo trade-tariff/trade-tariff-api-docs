@@ -30,18 +30,20 @@ Some content, such as rules of origin data, is stored in separate APIs.
 The API is available at the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/api/v2/commodities/{10-digit-commodity}
+https://www.trade-tariff.service.gov.uk/uk/api/commodities/{10-digit-commodity}
 ```
 
-So, for example, if you are looking at the API for **cherry tomatoes**, which has a commodity code of **0702000007**, you would access the URL:
+So, for example, if you are looking at the API for **cherry tomatoes**, which has a commodity code of **0702009907**, you would access the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/api/v2/commodities/0702000007
+https://www.trade-tariff.service.gov.uk/uk/api/commodities/0702009907
 ```
 
-It's easy to remember the URL for the commodities API: it's the same as the URL for the commodity on the Online Tariff, but with `api/v2/` inserted before `commodities`.
+It's easy to remember the URL for the commodities API: it's the same as the URL for the commodity on the Online Tariff, but with `/uk/api/` inserted before `commodities`.
 
-If you need to use the Northern Ireland tariff, then insert `xi/` before the `api/v2/`.
+If you need to use the Northern Ireland tariff, then insert `xi/` instead of `uk/` before the `api/` part of the path.
+
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 ## The structure of the commodities API
 
@@ -134,7 +136,7 @@ The measure object (and all subsequent objects listed here) is structured simila
 |Field|Description|
 |-|-|
 |duty_expression|Contains a reference to the single applicable `duty_expression` object in the `included` section. The duty expression object represents the duty for a tariff or tax measures, which is composed of one or more measure_components.<br><br>A duty_expression object is only included for measures that have duties (as well as supplementary units). Others, such as import controls, do not reference duty_expressions.|
-|measure_type|Contains a reference to the single applicable `measure_type` object in the `included` section. Measure types identify what sort of measure is being referenced.<br><br>The full list of measure types is available on the [measure_types API](https://www.trade-tariff.service.gov.uk/api/v2/measure_types) and documented here under [reference data (measure types)](/reference-data.html#measure-types). Some of the key measure types are:<br><br>`103` Third country duty<br>`109` Supplementary unit<br>`142` Tariff preference<br><br>Measure types themselves are grouped according to their `measure type series`, which broadly identifies their usage. Key measure type series are:<br><br>`A` Prohibitions<br>`B` Restrictions<br>`C` Applicable duties<br>`P` VAT<br>`Q` Excise<br><br>Measure type series are documented under [reference data (measure type series)](/reference-data.html#measure-types)|
+|measure_type|Contains a reference to the single applicable `measure_type` object in the `included` section. Measure types identify what sort of measure is being referenced.<br><br>The full list of measure types is available on the [measure_types API](https://www.trade-tariff.service.gov.uk/uk/api/measure_types) and documented here under [reference data (measure types)](/reference-data.html#measure-types). Some of the key measure types are:<br><br>`103` Third country duty<br>`109` Supplementary unit<br>`142` Tariff preference<br><br>Measure types themselves are grouped according to their `measure type series`, which broadly identifies their usage. Key measure type series are:<br><br>`A` Prohibitions<br>`B` Restrictions<br>`C` Applicable duties<br>`P` VAT<br>`Q` Excise<br><br>Measure type series are documented under [reference data (measure type series)](/reference-data.html#measure-types)|
 |legal_acts|Contains a reference to one or more applicable `legal_act` objects in the `included` section. These are the regulations that give the measures legal backing.<br><br>On the UK tariff, there will be just one legal act referenced. On the XI tariff, more than one may be referenced, if the original 'base' regulation has since been modified.|
 |measure_conditions|Contains references to zero or more applicable `measure_condition` objects in the `included` section.<br><br>Measure conditions are crucial for a number of reasons, primarily to identify what documentation a trader needs to prepare to successfully meet the requirements of a condition, or the exemptions / exclusions that are in place that may make a document superfluous.<br><br>In addition, there may be thresholds in place, e.g. if a trader is importing below  certain weight threshold of goods, then a document is not needed.<br><br>Duties may also be dependent on measure conditions, e.g. if documents are provided, or if the import price is below certain thresholds.<br><br>See also the section on `measure_condition_permutation_groups` below for more information on complex arrangements of measure conditions.|
 |measure_components|Contains a reference to zero or more applicable `measure_component` objects in the `included` section.<br><br>Measure components are the building blocks for duty expressions. A simple ad valorem or specific duty (like 3.60% or £10.00 / KGM) only features one measure component, but more complex compound duties (like 3.60% + £10.00 / KGM) feature multiple measure components.<br><br>In most cases, the `duty_expression` object should suffice, but if there is a need to break the duty expression down into its constituent parts, then use the measure components.|
@@ -190,7 +192,7 @@ The rules are, for a given geographical area ID (2-digit country):
 
 **So how is this represented in data?**
 
-Let's look at an example commodity code ([0103911000](https://www.trade-tariff.service.gov.uk/api/v2/commodities/0103911000) - domestic swine species). Imagine we are importing
+Let's look at an example commodity code ([0103911000](https://www.trade-tariff.service.gov.uk/uk/api/commodities/0103911000) - domestic swine species). Imagine we are importing
 domestic swine from a European Union member state, such as Belgium.
 
 The image below shows the import controls in place on this commodity:
@@ -210,7 +212,7 @@ You can work out that:
 The commodities API for this commodity is available at the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/api/v2/commodities/0103911000
+https://www.trade-tariff.service.gov.uk/uk/api/commodities/0103911000
 ```
 
 The country code for Belgium is `BE`.
@@ -308,7 +310,7 @@ The process and data elements are very similar to the previous 2 examples.
 Access the commodity code API at the following URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/api/v2/commodities/8415900099
+https://www.trade-tariff.service.gov.uk/uk/api/commodities/8415900099
 ```
 
 
@@ -418,7 +420,7 @@ By way of example, let's look at the commodity code for [Cava (2204101300)](http
 - supplementary unit (global) of litres (`LTR`)
 - excise duties which refer to both litres (`LTR`) and litres of pure alcohol (`LPA`)
 
-Let's look at a couple of these in the [commodities API for Cava](https://www.trade-tariff.service.gov.uk/api/v2/commodities/2204101300).
+Let's look at a couple of these in the [commodities API for Cava](https://www.trade-tariff.service.gov.uk/uk/api/commodities/2204101300).
 
 The third country duty measure, which has an ID of `20002430` (at the time of writing) features a single measure component. This is referenced in the `relationships` part of the measure node, and is available via the node of type `measure_component`.
 
@@ -630,7 +632,7 @@ Measure conditions are used to identify where:
 - document codes (such as licences, certificates, waivers or exceptions) are needed
 - weight or volume thresholds are applicable.
 
-For instance, the certificate identified by document code **N002** is needed to import [cherry tomatoes](https://www.trade-tariff.service.gov.uk/commodities/0702000007#uk_import_controls), as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
+For instance, the certificate identified by document code **N002** is needed to import [cherry tomatoes](https://www.trade-tariff.service.gov.uk/commodities/0702009907#uk_import_controls), as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
 
 And importing [champagne](https://www.trade-tariff.service.gov.uk/commodities/2204101100) from Switzerland has a threshold measure on the 'Restriction on entry into free circulation' measure (i.e. if the volume of goods imported does not exceed 100 litres, then the licence is not required).
 
@@ -665,7 +667,7 @@ The AND in the last bullet is the complex part of this set of conditions.
 
 #### Condition codes
 
-The JSON code below is derived from the [API response for commodity code 0306111010](https://www.trade-tariff.service.gov.uk/api/v2/commodities/0306910000).
+The JSON code below is derived from the [API response for commodity code 0306111010](https://www.trade-tariff.service.gov.uk/uk/api/commodities/0306910000).
 
 
 ```json

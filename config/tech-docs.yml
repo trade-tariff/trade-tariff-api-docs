@@ -11,11 +11,10 @@ service_link: /
 header_links:
   About: /
   Getting Started: /getting-started.html
+  API Reference: /reference.html
   Commodities API: /the-commodities-api.html
-  API Docs: /reference.html
   Categorisation API: /categorisation.html
-  FPO: /fpo.html
-  News: /news.html
+  FPO API: /fpo.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-97208357-3
