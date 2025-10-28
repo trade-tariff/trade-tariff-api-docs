@@ -53,9 +53,9 @@ X-Api-Key: a1b2c3defg4567
 ```
 
 
-# FPO endpoints
+## FPO endpoints
 
-## POST /fpo-code-search
+### POST /fpo-code-search
 
 Carries out a search for potential commodity codes for a single line item within a parcel
 
@@ -119,9 +119,9 @@ Status|Header|Type|Format|Description
 ---|---|---|---|---|
 200|X-Request-Id|string||Unique ID for this request. Use this if you need to raise an issue or a query for this specific response
 
-# Objects
+## Objects
 
-## ItemSearchRequest
+### ItemSearchRequest
 
 <a name="schemaitemsearchrequest"></a>
 
@@ -146,7 +146,7 @@ description|string|true|A brief plain English description of the item in the par
 digits|integer|false|The number of commodity code digits the response should return. '6' will return 6-digit HS codes, '8' will return 8-digit CN codes
 limit|integer|false|The maximum number of results to send back
 
-## ItemSearchResponse
+### ItemSearchResponse
 
 <a name="schemaitemsearchresponse"></a>
 
@@ -176,7 +176,7 @@ Name|Type|Required|Description
 ---|---|---|---|
 results|[[ItemSearchResponseResult](#schemaitemsearchresponseresult)]|false|The array of results, up to the specified limit, in order - best match first
 
-## ItemSearchResponseResult
+### ItemSearchResponseResult
 
 <a name="schemaitemsearchresponseresult"></a>
 
@@ -199,7 +199,7 @@ Name|Type|Required|Description
 code|string|true|The 6 digit HS code, or 8 digit CN code​ (depending on the 'digits' request parameter)
 score|number|true|A rating for how well the code matches. A higher number signifies a better match
 
-## ErrorResponse
+### ErrorResponse
 
 <a name="schemaerrorresponse"></a>
 
@@ -223,15 +223,15 @@ message|string|true|The error message summary
 detail|string|false|Extra information about the error
 
 
-### Support
+## Support
 
 If you experience any issues or have questions regarding this API please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
 
-### Feedback
+## Feedback
 
 We are continually updating the tool to improve the accuracy of the results produced. If you notice any incorrectly identified commodity codes, you can let us know through our [inaccurate code feedback form](https://forms.gle/F3NMxoLCkHNPc2MXA).
 
-### Terms and Conditions
+## Terms and Conditions
 
 By using this API you agree to the [Terms and Conditions for use of the FPO Commodity Code Identification Tool](/fpo/terms-and-conditions.html)
 

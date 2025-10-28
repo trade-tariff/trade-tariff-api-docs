@@ -207,9 +207,9 @@ Kind regards,
 | **Regulation** | Every measure entered into the tariff database must be associated with a regulation, i.e. a piece of legislation. <br><br> This is so there's a 'legal base' for all tariff and regulatory activity. Without this, measures cannot be traced back to why they were created. <br><br> You can read more about them in the data manual :  <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations</a> |
 
 
-# Categorisation
+## Categorisation
 
-## GET /green_lanes/category_assessments
+### GET /green_lanes/category_assessments
 
 Returns a list of the all category assessments
 
@@ -376,7 +376,7 @@ Status|Meaning|Description|Schema
 422|Unprocessable Entity|Likely incorrectly formatted `as_of` param|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-## GET /green_lanes/goods_nomenclatures/{id}
+### GET /green_lanes/goods_nomenclatures/{id}
 
 Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br> <br> Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br> <br> The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br> <br> If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
 
@@ -957,7 +957,7 @@ Status|Meaning|Description|Schema
 422|Unprocessable Entity|Likely to be missing or incorrect params|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-## GET /green_lanes/themes
+### GET /green_lanes/themes
 
 Returns a list of the all Categorisation themes within the Windsor Framework
 
@@ -980,9 +980,9 @@ Status|Meaning|Description|Schema
 401|Unauthorized|Authorization header is missing or contains an invalid token|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-# Objects
+## Objects
 
-## GoodsNomenclature
+### GoodsNomenclature
 
 <a name="schemagoodsnomenclature"></a>
 
@@ -1552,7 +1552,7 @@ ancestors|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|fa
 descendants|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|false|List of GoodsNomenclatures below the requested one in the Tariff, ordered by Goods Nomenclature Item Id
 licences|[[Certificate](#schemacertificate)]|false|List of licences applicable to this GoodsNomenclature
 
-## CategoryAssessment
+### CategoryAssessment
 
 <a name="schemacategoryassessment"></a>
 
@@ -1708,7 +1708,7 @@ excluded_geographical_areas|[[GeographicalArea](#schemageographicalarea)]|false|
 exemptions|[Unknown]|false|The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment <br><br> _NB: Polymorphic array of *Certificate*, *AdditionalCode* and *Exemption* objects_
 measures|[[Measure](#schemameasure)]|false|A list of Measures resulting in this CategoryAssessment <br><br> _NB: Not present on `/green_lanes/category_assessments` endpoint due to volume of data_
 
-## Theme
+### Theme
 
 <a name="schematheme"></a>
 
@@ -1740,7 +1740,7 @@ id|string|true|The relevant section number for this Categorisation theme
 theme|string|true|Categorisation Theme
 category|integer|true|The category for the theme in the absence of an exemption
 
-## GeographicalArea
+### GeographicalArea
 
 <a name="schemageographicalarea"></a>
 
@@ -1772,7 +1772,7 @@ id|string|true|The id of this geographical area
 description|string|true|The `description` of the geographical area
 geographical_area_id|string|true|The `geographical_area_id` of the geographical area
 
-## Certificate
+### Certificate
 
 <a name="schemacertificate"></a>
 
@@ -1810,7 +1810,7 @@ code|string|true|The code identifying the Certificate - combination of `certific
 description|string|true|The `description` for the certificate
 formatted_description|string|true|A version of the description including html formatting tags
 
-## AdditionalCode
+### AdditionalCode
 
 <a name="schemaadditionalcode"></a>
 
@@ -1848,7 +1848,7 @@ code|string|true|The `code` for the additional_code. Equal to `additional_code_t
 description|string|true|The `description` for the additional_code
 formatted_description|string|true|The `formatted_description` for the additional_code
 
-## Exemption
+### Exemption
 
 <a name="schemaexemption"></a>
 
@@ -1882,7 +1882,7 @@ code|string|true|The `code` identifying the Exemption
 description|string|true|The `description` for the Exemption
 formatted_description|string|true|A version of the description potentially including html formatting tags
 
-## Measure
+### Measure
 
 <a name="schemameasure"></a>
 
@@ -1935,7 +1935,7 @@ effective_start_date|string(date-time)|true|The effective start date of the meas
 effective_end_date|string(date-time)|true|The effective end date of the measure.
 footnotes|[[Footnote](#schemafootnote)]|false|The footnotes for this measure
 
-## MeasureType
+### MeasureType
 
 <a name="schemameasuretype"></a>
 
@@ -1975,7 +1975,7 @@ validity_end_date|string(date-time)|false|The validity end date of the measure t
 measure_type_series_id|string(byte)|false|A single char representing measure type series.
 trade_movement_code|integer|false|The code of trade movement.
 
-## LegalAct
+### LegalAct
 
 <a name="schemalegalact"></a>
 
@@ -2019,7 +2019,7 @@ regulation_code|string|false|Formatted code identifying this legal act
 regulation_url|string(uri)|false|URL descripting this legal act
 description|string|false|A description of this legal act
 
-## Footnote
+### Footnote
 
 <a name="schemafootnote"></a>
 
@@ -2051,7 +2051,7 @@ id|string|false|Unique identifier for the footnote
 code|string|false|The `code` for the footnote
 description|string|false|The `description` for the footnote
 
-## ReferencedGoodsNomenclature
+### ReferencedGoodsNomenclature
 
 <a name="schemareferencedgoodsnomenclature"></a>
 
@@ -2106,7 +2106,7 @@ validity_end_date|string(date-time)|true|The date this Goods Nomenclature is val
 supplementary_measure_unit|string|false|The supplementary measure unit applicable to this GoodsNomenclature, if one is applicable
 licences|[[Certificate](#schemacertificate)]|false|List of licences applicable to this GoodsNomenclature
 
-## CategoryAssessmentListing
+### CategoryAssessmentListing
 
 <a name="schemacategoryassessmentlisting"></a>
 
