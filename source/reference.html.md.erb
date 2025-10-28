@@ -10,14 +10,11 @@ highlight_theme: darkula
 
 # Trade Tariff Public API V2
 
-The Trade Tariff Public API provides a simple and consistent way to request
-[UK Trade Tariff](https://gov.uk/trade-tariff) content as structured data in a predictable format.
+The Trade Tariff Public API provides way to request up-to-date
+[UK Trade Tariff](https://gov.uk/trade-tariff) data.
 
-This API accepts HTTP requests and responds with
-[JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
+This API accepts HTTP requests and responds with JSON data containing the same
 published content as is presented on GOV.UK.
-
-You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 ## Base URL
 
@@ -25,13 +22,15 @@ All requests to this API should be prefixed with the following URL:
 
 **https://www.trade-tariff.service.gov.uk/uk/api**
 
-# Sections
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
+
+# Endpoints
+
+## Sections
+
+Sections are numbered I to XXI covering broad groups of products.
 
 ## GET /sections
-
-*Retrieves all sections of the Tariff.*
-
-This resource represents _all sections_ in the Tariff.
 
 Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
 
@@ -84,15 +83,7 @@ Status|Meaning|Description|Schema
 
 ## GET /sections/{position}
 
-*Retrieves a section by its position*
-
-This resource represents _a single section_ in the Tariff.
-
 For this resource, `position` is used to uniquely identify a section and request it from the API.
-
-There are 21 sections in the Tariff, and their positions range from 1 to 21.
-
-This request does not require authentication.
 
 **Parameters**
 
@@ -205,11 +196,10 @@ Status|Meaning|Description|Schema
 
 # Chapters
 
+Chapters are numbered 1 to 99 and cover more specific products than sections.
+
 ## GET /chapters
 
-*Retrieves all chapters*
-
-This resource represents all chapters in the Tariff.
 Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
 
 This request does not require authentication.
@@ -262,8 +252,6 @@ Status|Meaning|Description|Schema
 5XX|Unknown|Unexpected error.|None
 
 ## GET /chapters/{chapter_id}
-
-*Retrieves a chapter*
 
 Retrieves a chapter, given the first two (2) digits of its `goods_nomenclature_item_id` <p>This should be a zero-padded string of two digits.</p>
 
@@ -380,11 +368,11 @@ Status|Meaning|Description|Schema
 
 # Headings
 
+Headings are a level below chapters and cover more specific products and product areas.
+
 ## GET /headings/{heading_id}
 
-*Retrieves a heading*
-
-This resource represents a single heading. For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id` <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
+For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id` <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
 
 This request does not require authentication.
 
@@ -580,9 +568,9 @@ Status|Meaning|Description|Schema
 
 # Subheadings
 
-## GET /subheadings/{goods_nomenclature_item_id}-{productline_suffix}
+Subheadings are a level below headings and get specific about certain products. Not all headings have subheadings.
 
-*Retrieves a subheading*
+## GET /subheadings/{goods_nomenclature_item_id}-{productline_suffix}
 
 This resource is uniquely identified by a combination of goods_nomenclature_item_id and productline_suffix.
 
@@ -780,9 +768,9 @@ Status|Meaning|Description|Schema
 
 # Commodities
 
-## GET /commodities/{id}
+Commodities are products specified to the greatest extent by the tariff.
 
-*Retrieves a commodity*
+## GET /commodities/{id}
 
 This resource represents a single commodity. For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API. <p>`id` should be a string of ten (10) digits.</p>
 
@@ -1569,9 +1557,9 @@ Status|Meaning|Description|Schema
 
 # Quotas
 
-## GET /quotas/search
+Quotas allow a limited amount of goods to be imported at a lower duty rate. These vary by commodity, geographical area and date.
 
-*Retrieves a list of quota definitions*
+## GET /quotas/search
 
 Retrieves a paginated list of quota definitions, optionally filtered by a variety of parameters.
 
@@ -1741,9 +1729,9 @@ Status|Meaning|Description|Schema
 
 # Additional Codes
 
-## GET /additional_codes/search
+Retrieves a list of additional _codes, with associated commodities.
 
-*Retrieves a list of additional_codes, with associated commodities.*
+## GET /additional_codes/search
 
 Retrieves a paginated list of additional_codes, filtered by parameters.
 
@@ -1839,11 +1827,10 @@ Status|Meaning|Description|Schema
 200|OK|AdditionalCodes were found|[AdditionalCodeSearch](#schemaadditionalcodesearch)
 5XX|Unknown|Unexpected error.|None
 
-# Additional Code Types
 
 ## GET /additional_code_types
 
-*Retrieves a list of additional_code_types.*
+Retrieves a list of additional code types.
 
 Retrieves a list of all additional_code_types without pagination and filtering.
 
@@ -1890,9 +1877,9 @@ Status|Meaning|Description|Schema
 
 # Certificates
 
-## GET /certificates
+Retrieves the list of certificates, with the associated description and description type.
 
-*Retrieves the list of certificates, with associated description and type description.*
+## GET /certificates
 
 Retrieves a paginated list of certificates, filtered by `as_of param, if present.
 
@@ -1951,9 +1938,7 @@ Status|Meaning|Description|Schema
 
 ## GET /certificates/search
 
-*Retrieves a list of certificates, with associated goods nomenclatures.*
-
-Retrieves a list of certificates, filtered by parameters.
+Retrieves a list of certificates, with associated goods nomenclatures, filtered by parameters..
 
 This request does not require authentication.
 
@@ -2030,13 +2015,9 @@ Status|Meaning|Description|Schema
 200|OK|Certificates were found|[CertificateSearch](#schemacertificatesearch)
 5XX|Unknown|Unexpected error.|None
 
-# Certificate Types
-
 ## GET /certificate_types
 
-*Retrieves a list of certificate_types.*
-
-Retrieves a list of all certificate_types without pagination and filtering.
+Retrieves a list of all certificate types, without pagination and filtering.
 
 This request does not require authentication.
 
@@ -2080,8 +2061,6 @@ Status|Meaning|Description|Schema
 5XX|Unknown|Unexpected error.|None
 
 ## GET /measure_types
-
-*Retrieves a list of measure types.*
 
 Retrieves a list of all measure_types.
 
@@ -2132,9 +2111,9 @@ Status|Meaning|Description|Schema
 
 # Quota Order Numbers
 
-## GET /quota_order_numbers
+Retrieves a list of active quotas.
 
-*Retrieves a list of active quotas*
+## GET /quota_order_numbers
 
 Retrieves a list of active quotas and their definitions.
 
@@ -2180,9 +2159,9 @@ Status|Meaning|Description|Schema
 
 # Measures
 
-## GET /measures/{measure_sid}
+Measures refer to any restriction on importing or exporting products. Not all commodities have measures attached to them.
 
-*Retrieves a measure*
+## GET /measures/{measure_sid}
 
 This resource represents a single measure. For this resource, `measure_sid` is used to uniquely identify a measure and request it from the API.
 
@@ -2297,8 +2276,6 @@ Status|Meaning|Description|Schema
 404|Not Found|Measure was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Measure Actions
-
 ## GET /measure_actions
 
 *Retrieves a list of the measure actions.*
@@ -2342,8 +2319,6 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|OK|MeasureActions were found|[MeasureActions](#schemameasureactions)
 5XX|Unknown|Unexpected error.|None
-
-# Measure Condition Codes
 
 ## GET /measure_condition_codes
 
@@ -2391,9 +2366,9 @@ Status|Meaning|Description|Schema
 
 # Footnotes
 
-## GET /footnotes/search
+Retrieves a list of footnotes, with associated goods nomenclatures.
 
-*Retrieves a list of footnotes, with associated goods nomenclatures.*
+## GET /footnotes/search
 
 Retrieves a list of footnotes, filtered by parameters.
 
@@ -2463,11 +2438,7 @@ Status|Meaning|Description|Schema
 200|OK|Footnotes were found|[FootnoteSearch](#schemafootnotesearch)
 5XX|Unknown|Unexpected error.|None
 
-# Footnote Types
-
 ## GET /footnote_types
-
-*Retrieves a list of footnote_types.*
 
 Retrieves a list of all footnote_types without pagination and filtering.
 
@@ -2514,9 +2485,9 @@ Status|Meaning|Description|Schema
 
 # GoodsNomenclatures
 
-## GET /goods_nomenclatures/section/{position}
+Retrieves a list of all goods nomenclatures in a section.
 
-*Retrieves a list of goods nomenclatures in a section*
+## GET /goods_nomenclatures/section/{position}
 
 Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
 
@@ -2655,8 +2626,6 @@ Status|Meaning|Description|Schema
 
 ## GET /goods_nomenclatures/chapter/{chapter_id}
 
-*Retrieves a list of goods nomenclatures in a chapter*
-
 Retrieves a list of all the goods nomenclatures in a chapter allowing you to view the hierarchical tree for the chapter.
 
 The resource is returned as JSON by default.
@@ -2794,8 +2763,6 @@ Status|Meaning|Description|Schema
 
 ## GET /goods_nomenclatures/heading/{heading_id}
 
-*Retrieves a list of goods nomenclatures in a heading*
-
 Retrieves a list of all the goods nomenclatures in a heading allowing you to view the hierarchical tree for the heading.
 
 The resource is returned as JSON by default.
@@ -2932,9 +2899,9 @@ Status|Meaning|Description|Schema
 
 # SearchReferences
 
-## GET /search_references
+Retrieves a list of search references by letter
 
-*Retrieves a list of search references by letter*
+## GET /search_references
 
 Retrieves a list of search references by letter
 
@@ -3001,9 +2968,9 @@ Status|Meaning|Description|Schema
 
 # GeographicalAreas
 
-## GET /geographical_areas
+Retrieves a list of geographical areas or by specific country.
 
-*Retrieves a list of geographical areas*
+## GET /geographical_areas
 
 Retrieves a list of geographical areas
 
@@ -3087,9 +3054,7 @@ Status|Meaning|Description|Schema
 
 ## GET /geographical_areas/countries
 
-*Retrieves a list of contries*
-
-Retrieves a list of contries
+Retrieves a list of countries
 
 This request does not require authentication.
 
@@ -3171,13 +3136,11 @@ Status|Meaning|Description|Schema
 
 # Changes
 
+Retrieves a list of goods nomenclature objects that have changes since the previous day.
+
 ## GET /changes/{as_of}
 
-*Retrieves a list of goods nomenclature objects that have changed since the previous day*
-
-Retrieves a list of goods nomenclature objects that have changed since the previous day
-
-Note that changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
+Changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
 
 This request does not require authentication.
 
@@ -3236,9 +3199,9 @@ Status|Meaning|Description|Schema
 
 # Rules of Origin
 
-## GET /rules_of_origin_schemes/{subheading}/{country_code}
+Retrieves relevant Rules of Origin schemes and rules.
 
-*Retrieves relevant Rules of Origin schemes and rules*
+## GET /rules_of_origin_schemes/{subheading}/{country_code}
 
 Retrieves a list of Schemes and corresponding rules which apply to the
 supplied heading and country codes
@@ -3401,9 +3364,9 @@ Status|Meaning|Description|Schema
 
 # Chemical Substances
 
-## GET /chemical_substances
+Returns a list of chemical substances based on the filter parameters.
 
-*Get chemical substances*
+## GET /chemical_substances
 
 Returns chemical substances that match one or more of the following filter parameters. Not supplying a filter returns empty results.
 
@@ -3465,11 +3428,11 @@ Status|Meaning|Description|Schema
 
 # Simplified Procedural Code Measure
 
+Returns simplified procedural code measures indicating the current valuations.
+
 ## GET /simplified_procedural_code_measures
 
-*Get simplified procedural code measures*
-
-Returns simplified procedural code measures indicating the current valuations of imported fruit and vegetables. Valuations cover a 2 week window. Null valuations indicate no data for the given input filter period.
+Valuations cover a 2 week window. Null valuations indicate no data for the given input filter period.
 
 This request does not require authentication.
 
@@ -3529,9 +3492,9 @@ Status|Meaning|Description|Schema
 
 # PreferenceCodes
 
-## GET /preference_codes
+Retrieves a list of all the preference codes
 
-*Retrieves a list of all the preference codes.*
+## GET /preference_codes
 
 See [Preference code Guidance](https://www.gov.uk/government/publications/preference-codes-for-data-element-417-of-the-customs-declaration-service) for more details.
 
@@ -3565,9 +3528,9 @@ Status|Meaning|Description|Schema
 
 # Exchange Rates
 
-## GET /exchange_rates/period_list/{year}
+Retrieves the exchange rate for specified periods of time.
 
-*Retrieves the exchange rate periods of a given type*
+## GET /exchange_rates/period_list/{year}
 
 This resource represents the exchange rates period and exchange rates years.
 You can use the period to work out which months there are exchange rates for the given type.
@@ -3604,8 +3567,6 @@ Status|Meaning|Description|Schema
 5XX|Unknown|Unexpected error.|None
 
 ## GET /exchange_rates/{year}-{month}
-
-*Retrieves the exchange rates.*
 
 This resource represents the exchange rates and exchange rate files.
 This will given you exchange rates of a given type for a given month and year.
@@ -5334,6 +5295,8 @@ data:relationships|object|false|Zero, one or many [referenced section objects](/
 meta:pagination|object|false|Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
 included|[object]|false|Zero, one or many [referenced commodity objects](/reference.html#referencedcommodity "see referenced commodity object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), [referenced guide objects](/reference.html#referencedguide "see referenced guide object"), [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
 
+## Additional Codes
+
 ## AdditionalCodeSearch
 
 <a name="schemaadditionalcodesearch"></a>
@@ -5622,6 +5585,8 @@ Name|Type|Required|Description
 data:id|string|false|The `id` of the certificate_type. It may be used to uniquely identify an certificate_type.
 data:type|string|false|the type of object, i.e. `certificate_type`
 data:attributes|[ReferencedCertificateType](#schemareferencedcertificatetype)|false|The certificate_type's attributes, as a [referenced certificate_type object](/reference.html#referencedcertificate_type "see referenced certificate_type object")
+
+## Measures
 
 ## MeasureTypes
 
@@ -5931,6 +5896,8 @@ description|string|false|The description for the measure condition code.
 validity_start_date|string(date-time)|false|The validity start date of the measure condition code.
 validity_end_date|string(date-time)|false|The validity end date of the measure condition code.
 
+## Footnotes
+
 ## FootnoteSearch
 
 <a name="schemafootnotesearch"></a>
@@ -6100,8 +6067,6 @@ data:attributes|[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature
 
 <a name="schemagoodsnomenclaturesextended"></a>
 
-Commodity codes
-
 <details>
   <summary>Sample JSON</summary>
   <pre>
@@ -6250,8 +6215,6 @@ data:attributes|[ReferencedSearchReference](#schemareferencedsearchreference)|fa
 ## GeographicalAreas
 
 <a name="schemageographicalareas"></a>
-
-Geographical areas.
 
 A geographical area has a specific code (the `geographical_area_id`), which is unique.
 
@@ -6709,7 +6672,7 @@ description|string|false|The `description` for the certificate.
 
 <a name="schemareferencedcertificatetype"></a>
 
-An certificate_type object referenced elsewhere.
+An certificate type object referenced elsewhere.
 
 <details>
   <summary>Sample JSON</summary>

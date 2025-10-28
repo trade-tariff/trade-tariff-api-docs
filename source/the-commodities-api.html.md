@@ -4,9 +4,12 @@ title: Using the Commodities API
 
 # Using the Commodities API
 
-This guide gives an overview of how to use the most common and useful tariff API, the commodities API.
+The commodities API is the most important of all of the APIs. It grants you access to virtually all the content that is present on a commodity code page on the Online Tariff. Along with all the other APIs, it is structured using the [JSON:API convention](https://jsonapi.org/), so that:
 
-The JSON:API principles noted in this document also apply to other data objects, such as headings, chapters and  geographical areas, which will be documented in future blog pages.
+- the entire (primary) commodity content is self-contained within one API
+- each referenced entity is included only once, rather than multiple times
+
+Some content, such as rules of origin data, is stored in separate APIs.
 
 Please also see the new section on [reference data](/reference-data.html) which provides lookup values
 for regularly-used entities such as:
@@ -15,15 +18,6 @@ for regularly-used entities such as:
 - measure type series
 - action codes
 - condition codes
-
-## About the commodities API
-
-The commodities API is the most important of all of the APIs. It grants you access to virtually all the content that is present on a commodity code page on the Online Tariff. Along with all the other APIs, it is structured using the [JSON:API convention](https://jsonapi.org/), so that:
-
-- the entire (primary) commodity content is self-contained within one API
-- each referenced entity is included only once, rather than multiple times
-
-Some content, such as rules of origin data, is stored in separate APIs.
 
 ## Where to find the API
 
@@ -46,11 +40,6 @@ If you need to use the Northern Ireland tariff, then insert `xi/` instead of `uk
 You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 ## The structure of the commodities API
-
-There are two sections to the commodities API:
-
-- `data`
-- `included`
 
 ### The data section
 
@@ -104,7 +93,7 @@ The `data : meta` section is for internal use by the Online Trade Tariff, theref
 
 ### The included section
 
-As noted in the documentation on the data section, the `included` section includes all the secondary data objects that are referenced in the commodity API's `data : relationships` section.
+The `included` section includes all the secondary data objects that are referenced in the commodity API's `data : relationships` section.
 
 The key object within the included section is the `measure` object. This is documented in detail below. Other objects that are referenced on the measure are documented on the [API Docs reference pages](reference.html), so are not replicated in such detail here.
 
@@ -155,23 +144,18 @@ The measure object (and all subsequent objects listed here) is structured simila
 
 ## Accessing measures
 
-The content in this section applies to both import and export measures, however as there are so many more import measures, which themselves have more features than the export equivalents (such as duties), the focus here is on import measures.
+This content applies to both import and export measure. However, as there are more of them, this section focuses on import measures.
 
 Here is a brief sequence of activities that you should perform in your code to derive each of the measures and their properties:
 
-- Retrieve and store a list of all of the references to import measures (or export measures, if you are interested in export).
-- For each measure:
-  - find the equivalent entity of type `measure` in the `included` section.
-  - store the properties (attributes and relationships - i.e. referenced entities).
-  - for each of the entities referenced in the relationships part of the measure node:
-      - find the referenced entity in the `included` section.
-      - store the values of those referenced entities, and if necessary (in most cases it will not be), capture and store the referenced entities in entities.
-
+- 1. Retrieve and store a list of all of the references to import measures (or export measures, if you are interested in export).
+- 2. For each measure  you should find the equivalent entity of type `measure` in the `included` section.:
+  - 3. Store the properties (attributes and relationships - i.e. referenced entities).
+    - 4. Find the referenced entity in the `included` section and store the values of those referenced entities, and if necessary (in most cases it will not be), capture and store the referenced entities in entities.
+   
 <hr>
 
-There is an alternative way to capture all import / export measures. Each measure has both an `import` and `export` boolean field (`true` / `false`) to identify if the measure is for import, export or both. You can just search for all measures and use the ones that meet the requirement (import or export).
-
-Generically, there is no more to it, but let's take a couple of examples to bring this to life.
+Alternatively, Each measure has both an `import` and `export` boolean field (`true` / `false`) to identify if the measure is for import, export or both. You can just search for all measures and use the ones that meet the requirement (import or export).
 
 ### Working out if measures apply to a given country
 
@@ -179,23 +163,13 @@ The schematic below illustrates if a measure applies to a given country of impor
 
 ![Schematic showing if measures apply to a given country](/images/geo.png)
 
-The rules are, for a given geographical area ID (2-digit country):
 
-- is the measure applied direct to the a single country? If so, then the measure is relevant, if not then it is not relevant
-- is the measure applied to a geographical area group code with member countries? If so, then:
-  - is the import country included in that group?
-      - if it is not included, then the measure is not relevant
-      - if it is included, then:
-          - is the import country excluded from the measure?
-              - if so, then the measure is not relevant
-              - if not, then the measure is relevant
-
-**So how is this represented in data?**
+**How is this represented in data?**
 
 Let's look at an example commodity code ([0103911000](https://www.trade-tariff.service.gov.uk/uk/api/commodities/0103911000) - domestic swine species). Imagine we are importing
 domestic swine from a European Union member state, such as Belgium.
 
-The image below shows the import controls in place on this commodity:
+From the data below you can see the import controls for this commodity:
 
 - an **organic control** on imports from all countries except EU and certain other European countries
 - a **veterinary control** on imports from all countries except Ireland
@@ -239,7 +213,7 @@ The core process that your code needs to go through to find out applicability of
 
      - but if BE is not in the list of excluded countries, then the measure does apply, as with the veterinary control.
 
-### Find the third-country duty measure and the applicable duty
+### Third-country duty measure and the applicable duty
 
 Let's say we are importing domestic swine from the United States, a country with which the UK does not have a
 trade agreement. The import will need to fall back to the third-country duty
@@ -295,7 +269,7 @@ The `verbose_duty` node is the data that is used on the tariff UI.
 
 ### Find all import control measures
 
-We are importing commodity [8415900099](https://www.trade-tariff.service.gov.uk/commodities/8415900099) (air conditioning machine parts, not pre-charged with hydrofluorocarbons) from Belgium, and we want to find all the import controls in place. This includes both **prohibitions** and **restrictions**.
+We are importing commodity 415900099 (air conditioning machine parts, not pre-charged with hydrofluorocarbons) from Belgium, and we want to find all the import controls in place. This includes both **prohibitions** and **restrictions**.
 
 To isolate these two types of control, we need to look for measures that:
 
@@ -356,7 +330,7 @@ https://www.trade-tariff.service.gov.uk/uk/api/commodities/8415900099
 
 **Additional codes on measures**
 
-There is an additional feature on the prohibitive measures on this commodity code that is worth pointing out. In a lot of cases, even a 10-digit commodity code is not sufficiently granular to define a product that is being traded. Sometimes there is a need to further subdivide a commodity according to:
+There is an additional feature on the prohibitive measures on this commodity code. In a lot of cases, even a 10-digit commodity code is not sufficiently granular to define a product that is being traded. Sometimes there is a need to further subdivide a commodity according to:
 
    - purpose (e.g. transformation into something else)
    - specific properties (e.g. an individual chemical in a commodity that caters for multiple chemicals, or a specific fur type, or antiquity of artwork etc.)
@@ -414,7 +388,7 @@ On many occasions, there are multiple units which are actually requesting the sa
 
 Therefore, there is no value in asking the user both `KGM` and `DTN`, as one can be determined from the other. Similalry, with `LTR` and `HLT`
 
-By way of example, let's look at the commodity code for [Cava (2204101300)](https://www.trade-tariff.service.gov.uk/commodities/2204101300). If you look at the public-facing web page, you will see that there are multiple measures that feature units:
+By way of example, let's look at the commodity code for Cava (2204101300). If you look at the public-facing web page, you will see that there are multiple measures that feature units:
 
 - third country duty that mentions 100 litres (`HLT`)
 - supplementary unit (global) of litres (`LTR`)
@@ -488,7 +462,7 @@ Please note: all VAT and excise measures have a negative identifier: all other m
 }
 ```
 
-An example of where a qualifier unit is used in on the commodity code for [Corn cobs 0710400020](https://www.trade-tariff.service.gov.uk/commodities/0710400020).
+An example of where a qualifier unit is used in on the commodity code for Corn cobs 0710400020.
 
 At the point of writing, the third country duty for corn cobs is `4.00% + £7.80 / 100 kg, drained net weight (kg/net eda)`, which is a combination of a measurement unit code (`DTN`) and qualifier code (`E`).
 
@@ -550,7 +524,7 @@ The two components in the API are as follows:
 
 Measure conditions may also use unit codes, and potentially also unit qualifiers, in order to set out a threshold, based on weight, volume or value.
 
-For instance, at the point of writing, there is an allowance to export goods of a value of £10.00 or less of commodity code [Cigars, cheroots, cigarillos and cigarettes - 2402900000](https://www.trade-tariff.service.gov.uk/commodities/2402900000#export) to Belarus.
+For instance, at the point of writing, there is an allowance to export goods of a value of £10.00 or less of commodity code Cigars, cheroots, cigarillos and cigarettes - 2402900000 to Belarus.
 
 In this instance, we are looking at an export measure, with ID `20185322`. In a similar way to which we looked at the unit associated with measure components for duty purposes, we can also see that there are units on measure conditions which influence the trade.
 
@@ -592,7 +566,7 @@ The unit may be expressed either:
 }
 ```
 
-For an example of a weight-based threshold, see commodity code [Mixtures of fruit and nuts ... containing hazelnuts 0813509970](https://www.trade-tariff.service.gov.uk/commodities/0813509970), which features a weight-based threshold for imports from Turkey, as follows:
+For an example of a weight-based threshold, see commodity code Mixtures of fruit and nuts ... containing hazelnuts 0813509970, which features a weight-based threshold for imports from Turkey, as follows:
 
 ```json
 {
@@ -632,9 +606,9 @@ Measure conditions are used to identify where:
 - document codes (such as licences, certificates, waivers or exceptions) are needed
 - weight or volume thresholds are applicable.
 
-For instance, the certificate identified by document code **N002** is needed to import [cherry tomatoes](https://www.trade-tariff.service.gov.uk/commodities/0702009907#uk_import_controls), as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
+For instance, the certificate identified by document code **N002** is needed to import cherry tomatoes, as described in the measure of type 'HMI Conformity Certificate (fruit and veg) issued in UK'.
 
-And importing [champagne](https://www.trade-tariff.service.gov.uk/commodities/2204101100) from Switzerland has a threshold measure on the 'Restriction on entry into free circulation' measure (i.e. if the volume of goods imported does not exceed 100 litres, then the licence is not required).
+And importing champagne from Switzerland has a threshold measure on the 'Restriction on entry into free circulation' measure (i.e. if the volume of goods imported does not exceed 100 litres, then the licence is not required).
 
 In most cases, understanding measure conditions is simple. In most cases, if multiple conditions are presented, then the trader must fulfil one of the conditions (i.e. it is an OR boolean relationship between the conditions).
 
@@ -655,7 +629,7 @@ To start with, let's look at veterinary controls.
 
 #### Veterinary controls
 
-Let's look at [rock lobsters, for processing](https://www.trade-tariff.service.gov.uk/commodities/0306111010) as an example. If you were to put across the import requirement (for vet control) in plain language, then you would write something like:
+Let's look at rock lobsters, for processing as an example. If you were to put across the import requirement (for vet control) in plain language, then you would write something like:
 
 You need either:
 
@@ -667,7 +641,7 @@ The AND in the last bullet is the complex part of this set of conditions.
 
 #### Condition codes
 
-The JSON code below is derived from the [API response for commodity code 0306111010](https://www.trade-tariff.service.gov.uk/uk/api/commodities/0306910000).
+The JSON code below is derived from the API response for commodity code 0306111010.
 
 
 ```json
@@ -858,13 +832,12 @@ The second of the two permutation references two separate conditions to show tha
 
 Measures of this type **can only ever have conditions with 2 discrete condition codes**. Otherwise the logic described here would not work.
 
-### Complex measures where no conditions are repeated (Import control of fluorinated greenhouse gases)
+### Complex measures where no conditions are repeated
 
 The same rules regarding condition codes apply to other measure types, where conditions are not duplicated across condition code boundaries.
 
 Measures of type 'Import control of fluorinated greenhouse gases' are the best example of these types of measure.
 
-See the relevant control on [Refrigerated showcases, precharged with HFCs](https://www.trade-tariff.service.gov.uk/commodities/8418501910).
 
 This type is simpler to understand than the very complex measures such as veterinary controls, as described previously, however the dual rules of condition codes still apply and need to be observed:
 
@@ -890,7 +863,3 @@ As the JSON:API convention includes referenced entities only once, it may be a m
 - parse the whole API response
 - store entities in objects of bespoke classes
 - build relationships between the entities, according to the relationships expressed in the API response.
-
-## Feedback on this documentation
-
-We would love to hear what you think of this page. If you have any feedback, queries or issues, please contact the team on [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk).

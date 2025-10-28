@@ -14,26 +14,30 @@ highlight_theme: darkula
   <link href="/green_lanes.xml" type="application/atom+xml" rel="alternate" title="Windsor Framework Categorisation API changes feed" />
 <% end %>
 
-The Windsor Framework Categorisation API's provide access to Category Assessment data for the different Commodities and Subheadings within the Tariff.
+The Windsor Framework Categorisation API's provide access to the trade tariff data for trade with Northern Ireland.
 
-These APIs follow the [JSON-API](https://jsonapi.org/) format for both request and response, in common with the other OTT APIs documented on this site.
+These APIs follow the JSON-API format for both request and response, in common with the other OTT APIs documented on this site.
 
-We recommend using a suitable JSON-API client library for your application platform to consume these APIs - possible [JSON-API client libraries](https://jsonapi.org/implementations/#client-libraries)
+## Base URL
 
-You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
+All requests to this API should be prefixed with the following URL:
 
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-visually-hidden">Warning</span>
-    <br /><br />
-    The APIs are subject to change and this document will be updated as the API development evolves.
-    <br /><br />
-    An RSS feed is available for notification of changes - see below.
-  </strong>
-</div>
+**https://www.trade-tariff.service.gov.uk/xi/api/green_lanes**
 
-## Sample client
+## Authentication
+
+
+API Key: Parameter **X-Api-Key**, in header.
+
+Access to these APIs will be restricted. Approved partners requiring access should contact the Online Trade Tariff team.
+
+Those eligible traders will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+```
+X-Api-Key: a1b2c3defg4567
+```
+
+### Sample client
 
 There's a very simple html page client as an example of parsing these APIs in Javascript
 
@@ -42,41 +46,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
   Download
 </a>
 
-## Latest changes
-
-_These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
-
-<% changes = data.green_lanes_changes.sort_by(&:date).reverse %>
-<% latest = changes.shift %>
-
-### <%= latest.date.strftime('%-d %B %Y') %>
-
-<%= latest.content %>
-
-<% unless changes.length == 0 %>
-<details class="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      Previous changes
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    <% changes.each do |change| %>
-      <h3 id="change-<%= change.date.strftime('%Y-%m-%d') %>" class="anchored-heading">
-        <%= change.date.strftime '%d %b %Y' %>
-      </h3>
-
-      <%= convert_markdown change.content %>
-    <% end %>
-  </div>
-</details>
-<% end %>
-
-## Terms and Conditions
-
-  By using this API you agree to the [Terms and Conditions for use of the Windsor Framework Categorisation API](/categorisation-terms-and-conditions.html)
-
-## Introduction
+## About the categorisation API
 
 <p><b>Categorisation</b> refers to determining whether goods fall under <b>Category 1</b>, <b>Category 2</b>, or <b>Category 3</b> (often called “standard goods”) when moving them under the Windsor Framework.</p>
 
@@ -123,14 +93,14 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
     <b>Limitations on the /goods_nomenclatures API</b>: the API accepts only the following inputs (please note that the more specific the query is - i.e. the further down the hierarchy a goods nomenclature is - the fewer Category ssessments will be returned):
     <ol>
       <li>Goods Nomenclature IDs with 4 significant digits, only if the 4 digit codes have no descendants to be categorised (i.e. if the 4 significant digit code is the end commodity in the hierarchy; e.g.: 4906000000)</li>
-      <li>All Goods Nomenclature IDs with 6, 8 or 10 significant digits, provided the Goods Nomenclature IDs exist on the OTT : <a href="https://www.trade-tariff.service.gov.uk/xi/find_commodity" target="_blank">https://www.trade-tariff.service.gov.uk/xi/find_commodity</a></li>
+      <li>All Goods Nomenclature IDs with 6, 8 or 10 significant digits, provided the Goods Nomenclature IDs exist on the Northern Ireland online tariff</li>
     </ol>
   </li>
 </ul>
 
-<p>For more informations about categorisation, please consult our FAQ page available at: <a href="https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq" target="_blank">https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq</a></p>
+<p>For more information about categorisation visit Internal Market Movements form Great Britain to Northern Ireland: your questions answered</p>
 
-## Determining the actual Category for commodities with no descendants
+## Determining the Category for commodities with no descendants
 <p>To determine the final category for a trade:</p>
 <ol>
   <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
@@ -146,7 +116,7 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
   </ul>
 </ol>
 
-## Determining the actual Category for commodities with descendants
+## Determining the Category for commodities with descendants
 
 <p>To determine the final category for a trade:</p>
 <ol>
@@ -168,7 +138,7 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
 
 <div class="govuk-details__text">
     <h3>Prepare Your Details:</h3>
-    <p>Before sending the email, ensure you have the following information:</p>
+    <p>Before requesting an API key, ensure you have the following information:</p>
     <ul class="govuk-list--bullet">
         <li>Your company’s name</li>
         <li>Your EORI (Economic Operators Registration and Identification) number</li>
@@ -237,32 +207,9 @@ Kind regards,
 | **Regulation** | Every measure entered into the tariff database must be associated with a regulation, i.e. a piece of legislation. <br><br> This is so there's a 'legal base' for all tariff and regulatory activity. Without this, measures cannot be traced back to why they were created. <br><br> You can read more about them in the data manual :  <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations</a> |
 
 
-## Base URL
-
-All requests to this API should be prefixed with the following URL:
-
-**https://www.trade-tariff.service.gov.uk/xi/api/green_lanes**
-
-## Authentication
-
-
-API Key: Parameter **X-Api-Key**, in header.
-
-Access to these APIs will be restricted. Approved partners requiring access should contact the Online Trade Tariff team.
-
-Those eligible traders will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
-
-```
-X-Api-Key: a1b2c3defg4567
-```
-
-
-
 # Categorisation
 
 ## GET /green_lanes/category_assessments
-
-*Returns a list of all category assessments*
 
 Returns a list of the all category assessments
 
@@ -430,8 +377,6 @@ Status|Meaning|Description|Schema
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
 ## GET /green_lanes/goods_nomenclatures/{id}
-
-*Returns Category Assessments for the requested Goods Nomenclature*
 
 Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br> <br> Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br> <br> The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br> <br> If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
 
@@ -1014,8 +959,6 @@ Status|Meaning|Description|Schema
 
 ## GET /green_lanes/themes
 
-*Returns a list of all themes*
-
 Returns a list of the all Categorisation themes within the Windsor Framework
 
 To perform this operation, you must be authenticated by means of one of the following methods:
@@ -1030,8 +973,6 @@ curl -H "X-Api-Key: a1b2c3defg4567" \
 ```
 
 **Example Response**
-
-**Responses**
 
 Status|Meaning|Description|Schema
 ---|---|---|---|
