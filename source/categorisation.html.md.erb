@@ -37,7 +37,7 @@ Those eligible traders will be supplied with a secret API key which should be in
 X-Api-Key: a1b2c3defg4567
 ```
 
-### Sample client
+**Sample client**
 
 There's a very simple html page client as an example of parsing these APIs in Javascript
 
@@ -81,7 +81,8 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 </ul>
 </p>
 <p>A <b>Category Assessment</b> indicates when a commodity <i>may</i> fall under one of the rules outlined in Annex IV. However, exemptions can apply, meaning categorisation is not always definitive.</p>
-<h3>Key Considerations</h3>
+<b>Key Considerations</b>
+
 <ul>
   <li><b>Legal Scope</b>: The rules in Annex IV exclusively reference EU legislation, not UK legislation. This is because the EU is focused on controlling goods entering the single market via Northern Ireland. The UK, on the other hand, does not regulate “internal movements” between Great Britain and Northern Ireland in this context.</li>
   <li><b>Regulatory Updates</b>: Annex IV also encompasses subsequent or replacement EU policies, as legislation is frequently updated. Additionally, overarching laws may have subordinate regulations that provide the legal basis for specific trade measures. As a result, you may encounter legislative references not explicitly listed in Annex IV but still falling within its scope.</li>
@@ -137,7 +138,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 ## Instructions for requesting an API Key
 
 <div class="govuk-details__text">
-    <h3>Prepare Your Details:</h3>
+    <b>Prepare Your Details:</b>
     <p>Before requesting an API key, ensure you have the following information:</p>
     <ul class="govuk-list--bullet">
         <li>Your company’s name</li>
@@ -148,7 +149,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 </div>
 
 <div class="govuk-details__text">
-    <h3>Fill in the Template:</h3>
+    <b>Fill in the Template:</b>
     <p>Replace the placeholder text in the template with your actual information:</p>
     <ul class="govuk-list--bullet">
         <li>Insert your company name where it says <strong>[Your Company Name]</strong></li>
@@ -159,12 +160,12 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 </div>
 
 <div class="govuk-details__text">
-    <h3>Send the Email:</h3>
+    <b>Send the Email:</b>
     <p>Send the completed email to <a href="mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk">hmrc-trade-tariff-support-g@digital.hmrc.gov.uk</a>.</p>
 </div>
 
 <div class="govuk-details__text">
-  <h3>E-mail template:</h3>
+  <b>E-mail template:</b>
 </div>
 
 <div class="govuk-details__text">
@@ -209,7 +210,7 @@ Kind regards,
 
 ## Categorisation
 
-### GET /green_lanes/category_assessments
+***GET /green_lanes/category_assessments***
 
 Returns a list of the all category assessments
 
@@ -376,7 +377,7 @@ Status|Meaning|Description|Schema
 422|Unprocessable Entity|Likely incorrectly formatted `as_of` param|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-### GET /green_lanes/goods_nomenclatures/{id}
+***GET /green_lanes/goods_nomenclatures/{id}***
 
 Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br> <br> Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br> <br> The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br> <br> If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
 
@@ -957,7 +958,7 @@ Status|Meaning|Description|Schema
 422|Unprocessable Entity|Likely to be missing or incorrect params|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-### GET /green_lanes/themes
+***GET /green_lanes/themes***
 
 Returns a list of the all Categorisation themes within the Windsor Framework
 

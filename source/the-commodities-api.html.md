@@ -50,7 +50,7 @@ The `data` section includes all the primary attributes about the commodity and l
 |id|The unique identifier for the commodity code in the system which produces the data. The `id` field is totally unique, whereas the 10-digit commodity codes may be reused over time, therefore a single id may refer to multiple past, present of future commodity codes, though never present at the same time.|
 |type|`commodity` (always)|
 
-#### data : attributes
+**data : attributes**
 
 The attributes section lists the core, intrinsic properties of the commodity code.
 
@@ -72,7 +72,7 @@ The attributes section lists the core, intrinsic properties of the commodity cod
 |declarable|This field is always set to `true` for commodities, which are by their very nature declarable, having a producline_suffix of `80` and no descendant codes.|
 
 
-#### data : relationships
+**data : relationships**
 
 The relationships section lists any entities that are referenced by this commodity. Each of these entities is listed in the `included` section of the commodities API, as documented below.
 
@@ -87,7 +87,7 @@ The relationships section lists any entities that are referenced by this commodi
 |export_measures|As per the import_measures node above, this refers to measure-type objects listed in the `included` section of the API. Measures are most likely either import or export, but there are some, such as supplementary units and some fishing catch certification measures that are both import and export. In this case, the measures are referenced under both `import_measures` and `export_measures`, but included only once in the `included` section.|
 |import_trade_summary|This references the single entity of type `import_trade_summary` in the `included` section below.|
 
-#### data : meta
+**data : meta**
 
 The `data : meta` section is for internal use by the Online Trade Tariff, therefore is not documented here.
 
@@ -627,7 +627,7 @@ Also look out for 'Import control of fluorinated greenhouse gases', as these mea
 
 To start with, let's look at veterinary controls.
 
-#### Veterinary controls
+**Veterinary controls**
 
 Let's look at rock lobsters, for processing as an example. If you were to put across the import requirement (for vet control) in plain language, then you would write something like:
 
@@ -639,7 +639,7 @@ You need either:
 
 The AND in the last bullet is the complex part of this set of conditions.
 
-#### Condition codes
+**Condition codes**
 
 The JSON code below is derived from the API response for commodity code 0306111010.
 
@@ -734,7 +734,7 @@ The three discrete entries in the table are:
 - **Not relevant** - while these are valid permutations, they are superseded by the supply of N853, C084 or 999L on their own.
 - **Boolean AND applies** - this is a unique and discrete condition, and means that a trade can proceed if the goods are for personal consumption (Y058) and do not exceed a weight of 2 kilogrammes.
 
-#### How we reflect this in 'permutations'
+**How we reflect this in 'permutations'**
 
 All measure conditions are listed in the 'included' section of the commodity API. However, this does not always tell the full tale of how they associate with each other, especially when it comes to complex measures such as the vet controls (or waster controls which behave similarly).
 
@@ -743,7 +743,7 @@ There are two primary entities (on top of the already mentioned measures and mea
 - measure_condition_permutation_group
 - measure_condition_permutation
 
-#### Measure condition permutation groups
+**Measure condition permutation groups**
 
 The JSON block below shows the permutation group associated with rock lobster's vet control. You can see that there are four permutations that are related to the group. These four correspond to:
 
@@ -786,7 +786,7 @@ As these are pseudo-entities which do not exist in source data, we have created 
 }
 ```
 
-#### Measure condition permutations
+**Measure condition permutations**
 
 The block below just shows two of the permutations in the vet control above:
 
