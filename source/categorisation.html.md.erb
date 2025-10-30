@@ -14,26 +14,30 @@ highlight_theme: darkula
   <link href="/green_lanes.xml" type="application/atom+xml" rel="alternate" title="Windsor Framework Categorisation API changes feed" />
 <% end %>
 
-The Windsor Framework Categorisation API's provide access to Category Assessment data for the different Commodities and Subheadings within the Tariff.
+The Windsor Framework Categorisation API's provide access to the trade tariff data for trade with Northern Ireland.
 
-These APIs follow the [JSON-API](https://jsonapi.org/) format for both request and response, in common with the other OTT APIs documented on this site.
+These APIs follow the JSON-API format for both request and response, in common with the other OTT APIs documented on this site.
 
-We recommend using a suitable JSON-API client library for your application platform to consume these APIs - possible [JSON-API client libraries](https://jsonapi.org/implementations/#client-libraries)
+## Base URL
 
-You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
+All requests to this API should be prefixed with the following URL:
 
-<div class="govuk-warning-text">
-  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-  <strong class="govuk-warning-text__text">
-    <span class="govuk-visually-hidden">Warning</span>
-    <br /><br />
-    The APIs are subject to change and this document will be updated as the API development evolves.
-    <br /><br />
-    An RSS feed is available for notification of changes - see below.
-  </strong>
-</div>
+**https://www.trade-tariff.service.gov.uk/xi/api/green_lanes**
 
-## Sample client
+## Authentication
+
+
+API Key: Parameter **X-Api-Key**, in header.
+
+Access to these APIs will be restricted. Approved partners requiring access should contact the Online Trade Tariff team.
+
+Those eligible traders will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+
+```
+X-Api-Key: a1b2c3defg4567
+```
+
+**Sample client**
 
 There's a very simple html page client as an example of parsing these APIs in Javascript
 
@@ -42,41 +46,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
   Download
 </a>
 
-## Latest changes
-
-_These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
-
-<% changes = data.green_lanes_changes.sort_by(&:date).reverse %>
-<% latest = changes.shift %>
-
-### <%= latest.date.strftime('%-d %B %Y') %>
-
-<%= latest.content %>
-
-<% unless changes.length == 0 %>
-<details class="govuk-details">
-  <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      Previous changes
-    </span>
-  </summary>
-  <div class="govuk-details__text">
-    <% changes.each do |change| %>
-      <h3 id="change-<%= change.date.strftime('%Y-%m-%d') %>" class="anchored-heading">
-        <%= change.date.strftime '%d %b %Y' %>
-      </h3>
-
-      <%= convert_markdown change.content %>
-    <% end %>
-  </div>
-</details>
-<% end %>
-
-## Terms and Conditions
-
-  By using this API you agree to the [Terms and Conditions for use of the Windsor Framework Categorisation API](/categorisation-terms-and-conditions.html)
-
-## Introduction
+## About the categorisation API
 
 <p><b>Categorisation</b> refers to determining whether goods fall under <b>Category 1</b>, <b>Category 2</b>, or <b>Category 3</b> (often called “standard goods”) when moving them under the Windsor Framework.</p>
 
@@ -111,7 +81,8 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
 </ul>
 </p>
 <p>A <b>Category Assessment</b> indicates when a commodity <i>may</i> fall under one of the rules outlined in Annex IV. However, exemptions can apply, meaning categorisation is not always definitive.</p>
-<h3>Key Considerations</h3>
+<b>Key Considerations</b>
+
 <ul>
   <li><b>Legal Scope</b>: The rules in Annex IV exclusively reference EU legislation, not UK legislation. This is because the EU is focused on controlling goods entering the single market via Northern Ireland. The UK, on the other hand, does not regulate “internal movements” between Great Britain and Northern Ireland in this context.</li>
   <li><b>Regulatory Updates</b>: Annex IV also encompasses subsequent or replacement EU policies, as legislation is frequently updated. Additionally, overarching laws may have subordinate regulations that provide the legal basis for specific trade measures. As a result, you may encounter legislative references not explicitly listed in Annex IV but still falling within its scope.</li>
@@ -123,14 +94,14 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
     <b>Limitations on the /goods_nomenclatures API</b>: the API accepts only the following inputs (please note that the more specific the query is - i.e. the further down the hierarchy a goods nomenclature is - the fewer Category ssessments will be returned):
     <ol>
       <li>Goods Nomenclature IDs with 4 significant digits, only if the 4 digit codes have no descendants to be categorised (i.e. if the 4 significant digit code is the end commodity in the hierarchy; e.g.: 4906000000)</li>
-      <li>All Goods Nomenclature IDs with 6, 8 or 10 significant digits, provided the Goods Nomenclature IDs exist on the OTT : <a href="https://www.trade-tariff.service.gov.uk/xi/find_commodity" target="_blank">https://www.trade-tariff.service.gov.uk/xi/find_commodity</a></li>
+      <li>All Goods Nomenclature IDs with 6, 8 or 10 significant digits, provided the Goods Nomenclature IDs exist on the Northern Ireland online tariff</li>
     </ol>
   </li>
 </ul>
 
-<p>For more informations about categorisation, please consult our FAQ page available at: <a href="https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq" target="_blank">https://trade-tariff.service.gov.uk/check_simplified_processes_eligibility/faq</a></p>
+<p>For more information about categorisation visit Internal Market Movements form Great Britain to Northern Ireland: your questions answered</p>
 
-## Determining the actual Category for commodities with no descendants
+## Determining the Category for commodities with no descendants
 <p>To determine the final category for a trade:</p>
 <ol>
   <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
@@ -146,7 +117,7 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
   </ul>
 </ol>
 
-## Determining the actual Category for commodities with descendants
+## Determining the Category for commodities with descendants
 
 <p>To determine the final category for a trade:</p>
 <ol>
@@ -167,8 +138,8 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
 ## Instructions for requesting an API Key
 
 <div class="govuk-details__text">
-    <h3>Prepare Your Details:</h3>
-    <p>Before sending the email, ensure you have the following information:</p>
+    <b>Prepare Your Details:</b>
+    <p>Before requesting an API key, ensure you have the following information:</p>
     <ul class="govuk-list--bullet">
         <li>Your company’s name</li>
         <li>Your EORI (Economic Operators Registration and Identification) number</li>
@@ -178,7 +149,7 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
 </div>
 
 <div class="govuk-details__text">
-    <h3>Fill in the Template:</h3>
+    <b>Fill in the Template:</b>
     <p>Replace the placeholder text in the template with your actual information:</p>
     <ul class="govuk-list--bullet">
         <li>Insert your company name where it says <strong>[Your Company Name]</strong></li>
@@ -189,12 +160,12 @@ _These changes can be subscribed to at the [Atom (RSS) feed](/green_lanes.xml)_
 </div>
 
 <div class="govuk-details__text">
-    <h3>Send the Email:</h3>
+    <b>Send the Email:</b>
     <p>Send the completed email to <a href="mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk">hmrc-trade-tariff-support-g@digital.hmrc.gov.uk</a>.</p>
 </div>
 
 <div class="govuk-details__text">
-  <h3>E-mail template:</h3>
+  <b>E-mail template:</b>
 </div>
 
 <div class="govuk-details__text">
@@ -237,32 +208,9 @@ Kind regards,
 | **Regulation** | Every measure entered into the tariff database must be associated with a regulation, i.e. a piece of legislation. <br><br> This is so there's a 'legal base' for all tariff and regulatory activity. Without this, measures cannot be traced back to why they were created. <br><br> You can read more about them in the data manual :  <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations</a> |
 
 
-## Base URL
+## Categorisation
 
-All requests to this API should be prefixed with the following URL:
-
-**https://www.trade-tariff.service.gov.uk/xi/api/green_lanes**
-
-## Authentication
-
-
-API Key: Parameter **X-Api-Key**, in header.
-
-Access to these APIs will be restricted. Approved partners requiring access should contact the Online Trade Tariff team.
-
-Those eligible traders will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
-
-```
-X-Api-Key: a1b2c3defg4567
-```
-
-
-
-# Categorisation
-
-## GET /green_lanes/category_assessments
-
-*Returns a list of all category assessments*
+***GET /green_lanes/category_assessments***
 
 Returns a list of the all category assessments
 
@@ -429,9 +377,7 @@ Status|Meaning|Description|Schema
 422|Unprocessable Entity|Likely incorrectly formatted `as_of` param|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-## GET /green_lanes/goods_nomenclatures/{id}
-
-*Returns Category Assessments for the requested Goods Nomenclature*
+***GET /green_lanes/goods_nomenclatures/{id}***
 
 Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br> <br> Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br> <br> The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br> <br> If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
 
@@ -1012,9 +958,7 @@ Status|Meaning|Description|Schema
 422|Unprocessable Entity|Likely to be missing or incorrect params|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-## GET /green_lanes/themes
-
-*Returns a list of all themes*
+***GET /green_lanes/themes***
 
 Returns a list of the all Categorisation themes within the Windsor Framework
 
@@ -1031,17 +975,15 @@ curl -H "X-Api-Key: a1b2c3defg4567" \
 
 **Example Response**
 
-**Responses**
-
 Status|Meaning|Description|Schema
 ---|---|---|---|
 200|OK|An array of Themes|[Themes](#schemathemes)
 401|Unauthorized|Authorization header is missing or contains an invalid token|None
 5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
-# Objects
+## Objects
 
-## GoodsNomenclature
+### GoodsNomenclature
 
 <a name="schemagoodsnomenclature"></a>
 
@@ -1611,7 +1553,7 @@ ancestors|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|fa
 descendants|[[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)]|false|List of GoodsNomenclatures below the requested one in the Tariff, ordered by Goods Nomenclature Item Id
 licences|[[Certificate](#schemacertificate)]|false|List of licences applicable to this GoodsNomenclature
 
-## CategoryAssessment
+### CategoryAssessment
 
 <a name="schemacategoryassessment"></a>
 
@@ -1767,7 +1709,7 @@ excluded_geographical_areas|[[GeographicalArea](#schemageographicalarea)]|false|
 exemptions|[Unknown]|false|The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment <br><br> _NB: Polymorphic array of *Certificate*, *AdditionalCode* and *Exemption* objects_
 measures|[[Measure](#schemameasure)]|false|A list of Measures resulting in this CategoryAssessment <br><br> _NB: Not present on `/green_lanes/category_assessments` endpoint due to volume of data_
 
-## Theme
+### Theme
 
 <a name="schematheme"></a>
 
@@ -1799,7 +1741,7 @@ id|string|true|The relevant section number for this Categorisation theme
 theme|string|true|Categorisation Theme
 category|integer|true|The category for the theme in the absence of an exemption
 
-## GeographicalArea
+### GeographicalArea
 
 <a name="schemageographicalarea"></a>
 
@@ -1831,7 +1773,7 @@ id|string|true|The id of this geographical area
 description|string|true|The `description` of the geographical area
 geographical_area_id|string|true|The `geographical_area_id` of the geographical area
 
-## Certificate
+### Certificate
 
 <a name="schemacertificate"></a>
 
@@ -1869,7 +1811,7 @@ code|string|true|The code identifying the Certificate - combination of `certific
 description|string|true|The `description` for the certificate
 formatted_description|string|true|A version of the description including html formatting tags
 
-## AdditionalCode
+### AdditionalCode
 
 <a name="schemaadditionalcode"></a>
 
@@ -1907,7 +1849,7 @@ code|string|true|The `code` for the additional_code. Equal to `additional_code_t
 description|string|true|The `description` for the additional_code
 formatted_description|string|true|The `formatted_description` for the additional_code
 
-## Exemption
+### Exemption
 
 <a name="schemaexemption"></a>
 
@@ -1941,7 +1883,7 @@ code|string|true|The `code` identifying the Exemption
 description|string|true|The `description` for the Exemption
 formatted_description|string|true|A version of the description potentially including html formatting tags
 
-## Measure
+### Measure
 
 <a name="schemameasure"></a>
 
@@ -1994,7 +1936,7 @@ effective_start_date|string(date-time)|true|The effective start date of the meas
 effective_end_date|string(date-time)|true|The effective end date of the measure.
 footnotes|[[Footnote](#schemafootnote)]|false|The footnotes for this measure
 
-## MeasureType
+### MeasureType
 
 <a name="schemameasuretype"></a>
 
@@ -2034,7 +1976,7 @@ validity_end_date|string(date-time)|false|The validity end date of the measure t
 measure_type_series_id|string(byte)|false|A single char representing measure type series.
 trade_movement_code|integer|false|The code of trade movement.
 
-## LegalAct
+### LegalAct
 
 <a name="schemalegalact"></a>
 
@@ -2078,7 +2020,7 @@ regulation_code|string|false|Formatted code identifying this legal act
 regulation_url|string(uri)|false|URL descripting this legal act
 description|string|false|A description of this legal act
 
-## Footnote
+### Footnote
 
 <a name="schemafootnote"></a>
 
@@ -2110,7 +2052,7 @@ id|string|false|Unique identifier for the footnote
 code|string|false|The `code` for the footnote
 description|string|false|The `description` for the footnote
 
-## ReferencedGoodsNomenclature
+### ReferencedGoodsNomenclature
 
 <a name="schemareferencedgoodsnomenclature"></a>
 
@@ -2165,7 +2107,7 @@ validity_end_date|string(date-time)|true|The date this Goods Nomenclature is val
 supplementary_measure_unit|string|false|The supplementary measure unit applicable to this GoodsNomenclature, if one is applicable
 licences|[[Certificate](#schemacertificate)]|false|List of licences applicable to this GoodsNomenclature
 
-## CategoryAssessmentListing
+### CategoryAssessmentListing
 
 <a name="schemacategoryassessmentlisting"></a>
 

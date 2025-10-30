@@ -10,14 +10,11 @@ highlight_theme: darkula
 
 # Trade Tariff Public API V2
 
-The Trade Tariff Public API provides a simple and consistent way to request
-[UK Trade Tariff](https://gov.uk/trade-tariff) content as structured data in a predictable format.
+The Trade Tariff Public API provides way to request up-to-date
+[UK Trade Tariff](https://gov.uk/trade-tariff) data.
 
-This API accepts HTTP requests and responds with
-[JSON](https://en.wikipedia.org/wiki/JSON) data containing the same
+This API accepts HTTP requests and responds with JSON data containing the same
 published content as is presented on GOV.UK.
-
-You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
 ## Base URL
 
@@ -25,13 +22,15 @@ All requests to this API should be prefixed with the following URL:
 
 **https://www.trade-tariff.service.gov.uk/uk/api**
 
-# Sections
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
-## GET /sections
+## Endpoints
 
-*Retrieves all sections of the Tariff.*
+### Sections
 
-This resource represents _all sections_ in the Tariff.
+Sections are numbered I to XXI covering broad groups of products.
+
+***GET /sections***
 
 Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
 
@@ -82,17 +81,9 @@ Status|Meaning|Description|Schema
 200|OK|Sections were found|[Sections](#schemasections)
 5XX|Unknown|Unexpected error.|None
 
-## GET /sections/{position}
-
-*Retrieves a section by its position*
-
-This resource represents _a single section_ in the Tariff.
+***GET /sections/{position}***
 
 For this resource, `position` is used to uniquely identify a section and request it from the API.
-
-There are 21 sections in the Tariff, and their positions range from 1 to 21.
-
-This request does not require authentication.
 
 **Parameters**
 
@@ -203,13 +194,12 @@ Status|Meaning|Description|Schema
 404|Not Found|Section was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Chapters
+### Chapters
 
-## GET /chapters
+Chapters are numbered 1 to 99 and cover more specific products than sections.
 
-*Retrieves all chapters*
+***GET /chapters***
 
-This resource represents all chapters in the Tariff.
 Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
 
 This request does not require authentication.
@@ -261,9 +251,7 @@ Status|Meaning|Description|Schema
 200|OK|Chapters were found|[Chapters](#schemachapters)
 5XX|Unknown|Unexpected error.|None
 
-## GET /chapters/{chapter_id}
-
-*Retrieves a chapter*
+***GET /chapters/{chapter_id}***
 
 Retrieves a chapter, given the first two (2) digits of its `goods_nomenclature_item_id` <p>This should be a zero-padded string of two digits.</p>
 
@@ -378,13 +366,13 @@ Status|Meaning|Description|Schema
 404|Not Found|Chapter was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Headings
+### Headings
 
-## GET /headings/{heading_id}
+Headings are a level below chapters and cover more specific products and product areas.
 
-*Retrieves a heading*
+***GET /headings/{heading_id}***
 
-This resource represents a single heading. For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id` <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
+For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id` <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
 
 This request does not require authentication.
 
@@ -578,11 +566,11 @@ Status|Meaning|Description|Schema
 404|Not Found|Heading was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Subheadings
+### Subheadings
 
-## GET /subheadings/{goods_nomenclature_item_id}-{productline_suffix}
+Subheadings are a level below headings and get specific about certain products. Not all headings have subheadings.
 
-*Retrieves a subheading*
+***GET /subheadings/{goods_nomenclature_item_id}-{productline_suffix}***
 
 This resource is uniquely identified by a combination of goods_nomenclature_item_id and productline_suffix.
 
@@ -778,11 +766,11 @@ Status|Meaning|Description|Schema
 404|Not Found|The requested subheading was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Commodities
+### Commodities
 
-## GET /commodities/{id}
+Commodities are products specified to the greatest extent by the tariff.
 
-*Retrieves a commodity*
+***GET /commodities/{id}***
 
 This resource represents a single commodity. For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API. <p>`id` should be a string of ten (10) digits.</p>
 
@@ -1567,11 +1555,11 @@ Status|Meaning|Description|Schema
 404|Not Found|Commodity was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Quotas
+### Quotas
 
-## GET /quotas/search
+Quotas allow a limited amount of goods to be imported at a lower duty rate. These vary by commodity, geographical area and date.
 
-*Retrieves a list of quota definitions*
+***GET /quotas/search***
 
 Retrieves a paginated list of quota definitions, optionally filtered by a variety of parameters.
 
@@ -1739,11 +1727,11 @@ Status|Meaning|Description|Schema
 200|OK|Quota definitions were found|[QuotaSearch](#schemaquotasearch)
 5XX|Unknown|Unexpected error.|None
 
-# Additional Codes
+### Additional Codes
 
-## GET /additional_codes/search
+Retrieves a list of additional _codes, with associated commodities.
 
-*Retrieves a list of additional_codes, with associated commodities.*
+***GET /additional_codes/search***
 
 Retrieves a paginated list of additional_codes, filtered by parameters.
 
@@ -1839,11 +1827,10 @@ Status|Meaning|Description|Schema
 200|OK|AdditionalCodes were found|[AdditionalCodeSearch](#schemaadditionalcodesearch)
 5XX|Unknown|Unexpected error.|None
 
-# Additional Code Types
 
-## GET /additional_code_types
+***GET /additional_code_types***
 
-*Retrieves a list of additional_code_types.*
+Retrieves a list of additional code types.
 
 Retrieves a list of all additional_code_types without pagination and filtering.
 
@@ -1888,11 +1875,11 @@ Status|Meaning|Description|Schema
 200|OK|AdditionalCodeTypes were found|[AdditionalCodeTypes](#schemaadditionalcodetypes)
 5XX|Unknown|Unexpected error.|None
 
-# Certificates
+### Certificates
 
-## GET /certificates
+Retrieves the list of certificates, with the associated description and description type.
 
-*Retrieves the list of certificates, with associated description and type description.*
+***GET /certificates***
 
 Retrieves a paginated list of certificates, filtered by `as_of param, if present.
 
@@ -1949,11 +1936,9 @@ Status|Meaning|Description|Schema
 200|OK|Certificates were found|[Certificates](#schemacertificates)
 5XX|Unknown|Unexpected error.|None
 
-## GET /certificates/search
+***GET /certificates/search***
 
-*Retrieves a list of certificates, with associated goods nomenclatures.*
-
-Retrieves a list of certificates, filtered by parameters.
+Retrieves a list of certificates, with associated goods nomenclatures, filtered by parameters..
 
 This request does not require authentication.
 
@@ -2030,13 +2015,9 @@ Status|Meaning|Description|Schema
 200|OK|Certificates were found|[CertificateSearch](#schemacertificatesearch)
 5XX|Unknown|Unexpected error.|None
 
-# Certificate Types
+***GET /certificate_types***
 
-## GET /certificate_types
-
-*Retrieves a list of certificate_types.*
-
-Retrieves a list of all certificate_types without pagination and filtering.
+Retrieves a list of all certificate types, without pagination and filtering.
 
 This request does not require authentication.
 
@@ -2079,9 +2060,7 @@ Status|Meaning|Description|Schema
 200|OK|CertificateTypes were found|[CertificateTypes](#schemacertificatetypes)
 5XX|Unknown|Unexpected error.|None
 
-## GET /measure_types
-
-*Retrieves a list of measure types.*
+***GET /measure_types***
 
 Retrieves a list of all measure_types.
 
@@ -2130,11 +2109,11 @@ Status|Meaning|Description|Schema
 200|OK|MeasureTypes were found|[MeasureTypes](#schemameasuretypes)
 5XX|Unknown|Unexpected error.|None
 
-# Quota Order Numbers
+### Quota Order Numbers
 
-## GET /quota_order_numbers
+Retrieves a list of active quotas.
 
-*Retrieves a list of active quotas*
+***GET /quota_order_numbers***
 
 Retrieves a list of active quotas and their definitions.
 
@@ -2178,11 +2157,11 @@ Status|Meaning|Description|Schema
 200|OK|QuotaOrderNumbers were found|[QuotaOrderNumbers](#schemaquotaordernumbers)
 5XX|Unknown|Unexpected error.|None
 
-# Measures
+### Measures
 
-## GET /measures/{measure_sid}
+Measures refer to any restriction on importing or exporting products. Not all commodities have measures attached to them.
 
-*Retrieves a measure*
+***GET /measures/{measure_sid}***
 
 This resource represents a single measure. For this resource, `measure_sid` is used to uniquely identify a measure and request it from the API.
 
@@ -2297,9 +2276,7 @@ Status|Meaning|Description|Schema
 404|Not Found|Measure was not found.|None
 5XX|Unknown|Unexpected error.|None
 
-# Measure Actions
-
-## GET /measure_actions
+***GET /measure_actions***
 
 *Retrieves a list of the measure actions.*
 
@@ -2343,9 +2320,7 @@ Status|Meaning|Description|Schema
 200|OK|MeasureActions were found|[MeasureActions](#schemameasureactions)
 5XX|Unknown|Unexpected error.|None
 
-# Measure Condition Codes
-
-## GET /measure_condition_codes
+***GET /measure_condition_codes***
 
 *Retrieves a list of the measure condition codes.*
 
@@ -2389,11 +2364,11 @@ Status|Meaning|Description|Schema
 200|OK|measure_condition_codes were found|[MeasureConditionCodes](#schemameasureconditioncodes)
 5XX|Unknown|Unexpected error.|None
 
-# Footnotes
+### Footnotes
 
-## GET /footnotes/search
+Retrieves a list of footnotes, with associated goods nomenclatures.
 
-*Retrieves a list of footnotes, with associated goods nomenclatures.*
+***GET /footnotes/search***
 
 Retrieves a list of footnotes, filtered by parameters.
 
@@ -2463,11 +2438,7 @@ Status|Meaning|Description|Schema
 200|OK|Footnotes were found|[FootnoteSearch](#schemafootnotesearch)
 5XX|Unknown|Unexpected error.|None
 
-# Footnote Types
-
-## GET /footnote_types
-
-*Retrieves a list of footnote_types.*
+***GET /footnote_types***
 
 Retrieves a list of all footnote_types without pagination and filtering.
 
@@ -2512,11 +2483,11 @@ Status|Meaning|Description|Schema
 200|OK|FootnoteTypes were found|[FootnoteTypes](#schemafootnotetypes)
 5XX|Unknown|Unexpected error.|None
 
-# GoodsNomenclatures
+### GoodsNomenclatures
 
-## GET /goods_nomenclatures/section/{position}
+Retrieves a list of all goods nomenclatures in a section.
 
-*Retrieves a list of goods nomenclatures in a section*
+***GET /goods_nomenclatures/section/{position}***
 
 Retrieves a list of all the goods nomenclatures in a section allowing you to view the hierarchical tree for the section.
 
@@ -2653,9 +2624,7 @@ Status|Meaning|Description|Schema
 200|OK|Goods nomenclatures were found|[GoodsNomenclaturesExtended](#schemagoodsnomenclaturesextended)
 5XX|Unknown|Unexpected error.|None
 
-## GET /goods_nomenclatures/chapter/{chapter_id}
-
-*Retrieves a list of goods nomenclatures in a chapter*
+***GET /goods_nomenclatures/chapter/{chapter_id}***
 
 Retrieves a list of all the goods nomenclatures in a chapter allowing you to view the hierarchical tree for the chapter.
 
@@ -2792,9 +2761,7 @@ Status|Meaning|Description|Schema
 200|OK|Goods nomenclatures were found|[GoodsNomenclaturesExtended](#schemagoodsnomenclaturesextended)
 5XX|Unknown|Unexpected error.|None
 
-## GET /goods_nomenclatures/heading/{heading_id}
-
-*Retrieves a list of goods nomenclatures in a heading*
+***GET /goods_nomenclatures/heading/{heading_id}***
 
 Retrieves a list of all the goods nomenclatures in a heading allowing you to view the hierarchical tree for the heading.
 
@@ -2930,11 +2897,11 @@ Status|Meaning|Description|Schema
 200|OK|Goods nomenclatures were found|[GoodsNomenclaturesExtended](#schemagoodsnomenclaturesextended)
 5XX|Unknown|Unexpected error.|None
 
-# SearchReferences
+### SearchReferences
 
-## GET /search_references
+Retrieves a list of search references by letter
 
-*Retrieves a list of search references by letter*
+***GET /search_references***
 
 Retrieves a list of search references by letter
 
@@ -2999,11 +2966,11 @@ Status|Meaning|Description|Schema
 200|OK|Search references were found|[SearchReferences](#schemasearchreferences)
 5XX|Unknown|Unexpected error.|None
 
-# GeographicalAreas
+### GeographicalAreas
 
-## GET /geographical_areas
+Retrieves a list of geographical areas or by specific country.
 
-*Retrieves a list of geographical areas*
+***GET /geographical_areas***
 
 Retrieves a list of geographical areas
 
@@ -3085,11 +3052,9 @@ Status|Meaning|Description|Schema
 200|OK|Geographical areas were found|[GeographicalAreas](#schemageographicalareas)
 5XX|Unknown|Unexpected error.|None
 
-## GET /geographical_areas/countries
+***GET /geographical_areas/countries***
 
-*Retrieves a list of contries*
-
-Retrieves a list of contries
+Retrieves a list of countries
 
 This request does not require authentication.
 
@@ -3169,15 +3134,13 @@ Status|Meaning|Description|Schema
 200|OK|Contries were found|[GeographicalAreas](#schemageographicalareas)
 5XX|Unknown|Unexpected error.|None
 
-# Changes
+### Changes
 
-## GET /changes/{as_of}
+Retrieves a list of goods nomenclature objects that have changes since the previous day.
 
-*Retrieves a list of goods nomenclature objects that have changed since the previous day*
+***GET /changes/{as_of}***
 
-Retrieves a list of goods nomenclature objects that have changed since the previous day
-
-Note that changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
+Changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
 
 This request does not require authentication.
 
@@ -3234,11 +3197,11 @@ Status|Meaning|Description|Schema
 200|OK|The date is correct and a (potentially empty) list of changes will be returned|[ChangesResponse](#schemachangesresponse)
 5XX|Unknown|Unexpected error.|None
 
-# Rules of Origin
+### Rules of Origin
 
-## GET /rules_of_origin_schemes/{subheading}/{country_code}
+Retrieves relevant Rules of Origin schemes and rules.
 
-*Retrieves relevant Rules of Origin schemes and rules*
+***GET /rules_of_origin_schemes/{subheading}/{country_code}***
 
 Retrieves a list of Schemes and corresponding rules which apply to the
 supplied heading and country codes
@@ -3399,11 +3362,11 @@ Status|Meaning|Description|Schema
 200|OK|An array of Schemes, with the relevant rules and other data nested under the scheme|[RulesOfOriginScheme](#schemarulesoforiginscheme)
 5XX|Unknown|Unexpected error - likely missing or incorrect params|None
 
-# Chemical Substances
+### Chemical Substances
 
-## GET /chemical_substances
+Returns a list of chemical substances based on the filter parameters.
 
-*Get chemical substances*
+***GET /chemical_substances***
 
 Returns chemical substances that match one or more of the following filter parameters. Not supplying a filter returns empty results.
 
@@ -3463,13 +3426,13 @@ Status|Meaning|Description|Schema
 200|OK|An array of chemical substances|[ChemicalSubstance](#schemachemicalsubstance)
 5XX|Unknown|Unexpected error - likely missing or incorrect params|None
 
-# Simplified Procedural Code Measure
+### Simplified Procedural Code Measure
 
-## GET /simplified_procedural_code_measures
+Returns simplified procedural code measures indicating the current valuations.
 
-*Get simplified procedural code measures*
+***GET /simplified_procedural_code_measures***
 
-Returns simplified procedural code measures indicating the current valuations of imported fruit and vegetables. Valuations cover a 2 week window. Null valuations indicate no data for the given input filter period.
+Valuations cover a 2 week window. Null valuations indicate no data for the given input filter period.
 
 This request does not require authentication.
 
@@ -3527,11 +3490,11 @@ Status|Meaning|Description|Schema
 200|OK|Successful operation|[SimplifiedProceduralCodeMeasure](#schemasimplifiedproceduralcodemeasure)
 5XX|Unknown|Unexpected error - likely missing or incorrect params|None
 
-# PreferenceCodes
+### PreferenceCodes
 
-## GET /preference_codes
+Retrieves a list of all the preference codes
 
-*Retrieves a list of all the preference codes.*
+***GET /preference_codes***
 
 See [Preference code Guidance](https://www.gov.uk/government/publications/preference-codes-for-data-element-417-of-the-customs-declaration-service) for more details.
 
@@ -3563,11 +3526,11 @@ Status|Meaning|Description|Schema
 200|OK|An array of preference_code objects.|[PreferenceCodes](#schemapreferencecodes)
 5XX|Unknown|Unexpected error.|None
 
-# Exchange Rates
+### Exchange Rates
 
-## GET /exchange_rates/period_list/{year}
+Retrieves the exchange rate for specified periods of time.
 
-*Retrieves the exchange rate periods of a given type*
+***GET /exchange_rates/period_list/{year}***
 
 This resource represents the exchange rates period and exchange rates years.
 You can use the period to work out which months there are exchange rates for the given type.
@@ -3603,9 +3566,7 @@ Status|Meaning|Description|Schema
 400|Bad Request|Bad request. For example type is not spot, monthly or average.|None
 5XX|Unknown|Unexpected error.|None
 
-## GET /exchange_rates/{year}-{month}
-
-*Retrieves the exchange rates.*
+***GET /exchange_rates/{year}-{month}***
 
 This resource represents the exchange rates and exchange rate files.
 This will given you exchange rates of a given type for a given month and year.
@@ -3641,9 +3602,9 @@ Status|Meaning|Description|Schema
 400|Bad Request|Bad request. For example type is not spot, monthly or average.|None
 5XX|Unknown|Unexpected error.|None
 
-# Objects
+## Objects
 
-## Sections
+### Sections
 
 <a name="schemasections"></a>
 
@@ -3693,7 +3654,7 @@ data:id|string|false|The `id` of the section. It may be used to uniquely identif
 data:type|string|false|the type of object, i.e. `section`
 data:attributes|[[ReferencedSection](#schemareferencedsection)]|false|A collection of [referenced section objects](/reference.html#referencedsection "see referenced section object")
 
-## Section
+### Section
 
 <a name="schemasection"></a>
 
@@ -3802,7 +3763,7 @@ data:attributes|[ReferencedSection](#schemareferencedsection)|false|The section'
 data:relationships|object|false|Objects and collections that are related to this section, e.g., a [referenced chapter](/reference.html#referencedchapter "see referenced chapter object")
 included|[[ReferencedChapter](#schemareferencedchapter)]|false|A collection of chapters that are included in the section [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
 
-## SectionNote
+### SectionNote
 
 <a name="schemasectionnote"></a>
 
@@ -3831,7 +3792,7 @@ id|integer|true|The `id` of the section_note.
 section_id|integer|false|The `section_id` of the sction_note. It may be used to uniquely identify a section_note and request it from the API.
 content|string|false|The `content` of the section_note. Not all sections have a note.
 
-## Chapters
+### Chapters
 
 <a name="schemachapters"></a>
 
@@ -3883,7 +3844,7 @@ data:id|string|false|The `id` of the chapter. This is a unique identifier.
 data:type|string|false|the type of object, i.e. `chapter`.
 data:attributes|[[ReferencedChapter](#schemareferencedchapter)]|false|A collection of [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object")
 
-## Chapter
+### Chapter
 
 <a name="schemachapter"></a>
 
@@ -3992,7 +3953,7 @@ data:attributes|[ReferencedChapter](#schemareferencedchapter)|false|The chapter'
 data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [referenced heading objects](/reference.html#referencedheading "see referenced heading object") and [referenced guide objects](/reference.html#referencedguide "see referenced guide object") that are related to this chapter. May include parent objects.
 included|[object]|false|Zero, one or many [referenced headings](/reference.html#referencedheading "see referenced heading object") and [referenced guides](/reference.html#referencedguide "see referenced guide object") child objects that are included in the chapter.
 
-## ChapterNote
+### ChapterNote
 
 <a name="schemachapternote"></a>
 
@@ -4023,7 +3984,7 @@ chapter_id|string|false|The `chapter_id` of the chapter_note.
 section_id|integer|false|The `section_id` of this chapter that has this note.
 content|string|false|The `content` of the chapter_note.
 
-## Heading
+### Heading
 
 <a name="schemaheading"></a>
 
@@ -4213,7 +4174,7 @@ data:attributes|[ReferencedHeading](#schemareferencedheading)|false|The heading'
 data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this heading. May include parent objects.
 included|[object]|false|Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects.
 
-## Subheading
+### Subheading
 
 <a name="schemasubheading"></a>
 
@@ -4402,7 +4363,7 @@ data:attributes|[ReferencedSubheading](#schemareferencedsubheading)|false|The su
 data:relationships|object|false|Zero, one or many [referenced section objects](/reference.html#referencedsection "see referenced section object"), [chapter](/reference.html#referencedchapter "see referenced chapter object") or [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object") that are related to this subheading. May include parent objects.
 included|[object]|false|Zero, one or many [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced guide](/reference.html#referencedguide "see referenced guide object") objects, or [referenced commodity](/reference.html#referencedheadingcommodity "see referenced heading commodity object") objects.
 
-## Commodity
+### Commodity
 
 <a name="schemacommodity"></a>
 
@@ -5181,7 +5142,7 @@ data:attributes|[ReferencedCommodity](#schemareferencedcommodity)|false|The comm
 data:relationships|object|false|Zero, one or many [referenced section](/reference.html#referencedsection "see referenced section object") objects, [referenced chapter](/reference.html#referencedchapter "see referenced chapter object") objects, [referenced heading](/reference.html#referencedheading "see referenced heading object") objects, [referenced measure](/reference.html#referencedmeasure "see referenced measure object") objects, and [referenced footnote](/reference.html#referencedfootnote "see referenced footnote object") objects that are related to this heading. May include parent objects.
 included|[object]|false|Zero, one or many [referenced commodity objects](/reference.html#referencedcommodity "see referenced commodity object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), [referenced guide objects](/reference.html#referencedguide "see referenced guide object"), [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
 
-## QuotaSearch
+### QuotaSearch
 
 <a name="schemaquotasearch"></a>
 
@@ -5334,7 +5295,9 @@ data:relationships|object|false|Zero, one or many [referenced section objects](/
 meta:pagination|object|false|Pagination info about current request. `page` - current page, `per_page` - maximum records for single page, `total_count` - count of records for current search request.
 included|[object]|false|Zero, one or many [referenced commodity objects](/reference.html#referencedcommodity "see referenced commodity object"), [referenced chapter objects](/reference.html#referencedchapter "see referenced chapter object"), [referenced guide objects](/reference.html#referencedguide "see referenced guide object"), [referenced measure objects](/reference.html#referencedmeasure "see referenced measure object"), [referenced geographical area objects objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
 
-## AdditionalCodeSearch
+### Additional Codes
+
+### AdditionalCodeSearch
 
 <a name="schemaadditionalcodesearch"></a>
 
@@ -5421,7 +5384,7 @@ data:attributes|[ReferencedAdditionalCode](#schemareferencedadditionalcode)|fals
 data:relationships|object|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object").
 included|[object]|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object").
 
-## AdditionalCodeTypes
+### AdditionalCodeTypes
 
 <a name="schemaadditionalcodetypes"></a>
 
@@ -5463,7 +5426,7 @@ data:id|string|false|The `id` of the additional_code_type. It may be used to uni
 data:type|string|false|the type of object, i.e. `additional_code_type`
 data:attributes|[ReferencedAdditionalCodeType](#schemareferencedadditionalcodetype)|false|The additional_code_type's attributes, as a [referenced additional_code_type object](/reference.html#referencedadditional_code_type "see referenced additional_code_type object")
 
-## Certificates
+### Certificates
 
 <a name="schemacertificates"></a>
 
@@ -5511,7 +5474,7 @@ data:id|string|false|The unique `id` of the certificate. This value is equal to 
 data:type|string|false|the type of object, i.e. `certificate`
 data:attributes|[ReferencedCertificate](#schemareferencedcertificate)|false|The certificate's attributes, as a [referenced certificate object](/reference.html#referencedcertificate "see referenced certificate object")
 
-## CertificateSearch
+### CertificateSearch
 
 <a name="schemacertificatesearch"></a>
 
@@ -5581,7 +5544,7 @@ data:attributes|[ReferencedCertificate](#schemareferencedcertificate)|false|The 
 data:relationships|object|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object").
 included|[object]|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"). May include parent objects.
 
-## CertificateTypes
+### CertificateTypes
 
 <a name="schemacertificatetypes"></a>
 
@@ -5623,7 +5586,9 @@ data:id|string|false|The `id` of the certificate_type. It may be used to uniquel
 data:type|string|false|the type of object, i.e. `certificate_type`
 data:attributes|[ReferencedCertificateType](#schemareferencedcertificatetype)|false|The certificate_type's attributes, as a [referenced certificate_type object](/reference.html#referencedcertificate_type "see referenced certificate_type object")
 
-## MeasureTypes
+### Measures
+
+### MeasureTypes
 
 <a name="schemameasuretypes"></a>
 
@@ -5663,7 +5628,7 @@ data:id|string|false|The unique `id` of the measure_type.
 data:type|string|false|the type of object, i.e. `measure_type`
 data:attributes|[ReferencedMeasureType](#schemareferencedmeasuretype)|false|The measure_type's attributes, as a [referenced measure_type object](/reference.html#referencedmeasuretype "see referenced measure_type object")
 
-## ReferencedMeasureType
+### ReferencedMeasureType
 
 <a name="schemareferencedmeasuretype"></a>
 
@@ -5701,7 +5666,7 @@ measure_component_applicable_code|integer|false|The applicable code of the measu
 order_number_capture_code|integer|false|The order number of capture code.
 trade_movement_code|integer|false|The code of trade movement.
 
-## Measure
+### Measure
 
 <a name="schemameasure"></a>
 
@@ -5807,7 +5772,7 @@ data:type|string|false|the type of object, i.e. `measure`
 data:attributes|Unknown|false|No description
 data:relationships|object|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object"),<br> [referenced geographical_area objects](/reference.html#referencedgeographicalarea "see referenced geographical_area object"),<br> [referenced measure_type objects](/reference.html#referencedmeasuretype "see referenced measure_type object"),<br> [referenced measure_condition objects](/reference.html#referencedmeasurecondition "see referenced measure_condition object"),<br> [referenced footnote objects](/reference.html#referencedfootnote "see referenced footnote object"),<br> [referenced additional_code objects](/reference.html#referencedadditionalcode "see referenced additional_code object"),<br> measure_excluded_geographical_area duty_expression<br> legal_act objects<br> order_number objects<br> measure_generating_legal_act<br> justification_legal_act
 
-## MeasureActions
+### MeasureActions
 
 <a name="schemameasureactions"></a>
 
@@ -5842,7 +5807,7 @@ data:id|string|false|The unique `id` of the measure_action.
 data:type|string|false|the type of object (`measure_action`)
 data:attributes|[ReferencedMeasureAction](#schemareferencedmeasureaction)|false|The measure_action's attributes, as a [referenced measure_action object](/reference.html#referencedmeasureaction "see referenced measure_action object")
 
-## ReferencedMeasureAction
+### ReferencedMeasureAction
 
 <a name="schemareferencedmeasureaction"></a>
 
@@ -5869,7 +5834,7 @@ description|string|false|The description for the measure action.
 validity_start_date|string(date-time)|false|The validity start date of the measure action.
 validity_end_date|string(date-time)|false|The validity end date of the measure action.
 
-## MeasureConditionCodes
+### MeasureConditionCodes
 
 <a name="schemameasureconditioncodes"></a>
 
@@ -5904,7 +5869,7 @@ data:id|string|false|The unique `id` of the measure_condition_code.
 data:type|string|false|the type of object (`measure_condition_code`)
 data:attributes|[ReferencedMeasureConditionCode](#schemareferencedmeasureconditioncode)|false|The measure_condition_code's attributes, as a [referenced measure_action object](/reference.html#referencedmeasureconditioncode "see referenced_condition_code object")
 
-## ReferencedMeasureConditionCode
+### ReferencedMeasureConditionCode
 
 <a name="schemareferencedmeasureconditioncode"></a>
 
@@ -5931,7 +5896,9 @@ description|string|false|The description for the measure condition code.
 validity_start_date|string(date-time)|false|The validity start date of the measure condition code.
 validity_end_date|string(date-time)|false|The validity end date of the measure condition code.
 
-## FootnoteSearch
+### Footnotes
+
+### FootnoteSearch
 
 <a name="schemafootnotesearch"></a>
 
@@ -5992,7 +5959,7 @@ data:attributes|[ReferencedFootnote](#schemareferencedfootnote)|false|The footno
 data:relationships|object|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object") that are related to this footnote. May include parent objects.
 included|[object]|false|Zero, one or many [referenced goods_nomenclature objects](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object") that are related to this footnote. May include parent objects.
 
-## FootnoteTypes
+### FootnoteTypes
 
 <a name="schemafootnotetypes"></a>
 
@@ -6034,7 +6001,7 @@ data:id|string|false|The `id` of the footnote_type. It may be used to uniquely i
 data:type|string|false|the type of object, i.e. `footnote_type`
 data:attributes|[ReferencedFootnoteType](#schemareferencedfootnotetype)|false|The footnote_type's attributes, as a [referenced footnote_type object](/reference.html#referencedfootnote_type "see referenced footnote_type object")
 
-## GoodsNomenclatures
+### GoodsNomenclatures
 
 <a name="schemagoodsnomenclatures"></a>
 
@@ -6096,11 +6063,9 @@ data:id|string|false|the unique `id` of the goods_nomenclature
 data:type|string|false|the type of object, i.e. `goods_nomenclature`
 data:attributes|[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)|false|The goods_nomeclature's attributes, as a [referenced goods_nomenclature object](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object")
 
-## GoodsNomenclaturesExtended
+### GoodsNomenclaturesExtended
 
 <a name="schemagoodsnomenclaturesextended"></a>
-
-Commodity codes
 
 <details>
   <summary>Sample JSON</summary>
@@ -6191,7 +6156,7 @@ data:id|string|false|the unique `id` of the goods_nomenclature
 data:type|string|false|the type of object, i.e. `goods_nomenclature`
 data:attributes|[ReferencedGoodsNomenclature](#schemareferencedgoodsnomenclature)|false|The goods_nomeclature's attributes, as a [referenced goods_nomenclature object](/reference.html#referencedgoodsnomenclature "see referenced goods_nomenclature object")
 
-## SearchReferences
+### SearchReferences
 
 <a name="schemasearchreferences"></a>
 
@@ -6247,11 +6212,9 @@ data:id|string|false|the unique `id` of the search_reference
 data:type|string|false|the type of object, i.e. `search_reference`
 data:attributes|[ReferencedSearchReference](#schemareferencedsearchreference)|false|The search_reference's attributes, as a [referenced search_reference object](/reference.html#referencedsearchreference "see referenced search_reference object")
 
-## GeographicalAreas
+### GeographicalAreas
 
 <a name="schemageographicalareas"></a>
-
-Geographical areas.
 
 A geographical area has a specific code (the `geographical_area_id`), which is unique.
 
@@ -6330,7 +6293,7 @@ data:attributes|[ReferencedGeographicalArea](#schemareferencedgeographicalarea)|
 data:relationships|object|false|Zero, one or many [referenced geographical area](/reference.html#referencedgeographicalarea "see referenced geographical area object") objects.
 included|[object]|false|Zero, one or many [referenced geographical area objects](/reference.html#referencedgeographicalarea "see referenced geographical area object").
 
-## ReferencedSection
+### ReferencedSection
 
 <a name="schemareferencedsection"></a>
 
@@ -6367,7 +6330,7 @@ chapter_to|string|false|The `chapter_to` of the section, the first chapter of th
 section_note_id|integer|false|The `section_note_id` of the section. Not all sections have a note.
 section_note|string|false|The `section_note_id` of the section. Not all sections have a note.
 
-## ReferencedChapter
+### ReferencedChapter
 
 <a name="schemareferencedchapter"></a>
 
@@ -6405,7 +6368,7 @@ chapter_note|string|false|The `chapter_note` of the chapter. Not all chapters ha
 chapter_note_id|integer|false|The `chapter_note_id` of the chapter. This is a unique identifier for a chapter_note.
 section_id|integer|false|The `section_id` of the section containing this chapter.
 
-## ReferencedHeading
+### ReferencedHeading
 
 <a name="schemareferencedheading"></a>
 
@@ -6439,7 +6402,7 @@ description_plain|string|false|The `description_plain` of the heading.
 formatted_description|string|false|The `formatted_description` of the heading, which may be suitable for presentation to the end user.
 bti_url|string|false|a URL for more information about this heading
 
-## ReferencedHeadingCommodity
+### ReferencedHeadingCommodity
 
 <a name="schemareferencedheadingcommodity"></a>
 
@@ -6478,7 +6441,7 @@ leaf|boolean|false|Whether this commodity is a `leaf`.
 goods_nomenclature_sid|integer|false|The `goods_nomenclature_sid` of the commodity. This is a unique identifier.
 parent_sid|string|false|The `parent_sid` of the commodity.
 
-## ReferencedCommodity
+### ReferencedCommodity
 
 <a name="schemareferencedcommodity"></a>
 
@@ -6523,7 +6486,7 @@ meursing_code|boolean|false|Whether this commodity is `meursing_code`.
 number_indents|integer|false|The `number_indents` of the commodity.
 producline_suffix|string|false|The `producline_suffix` of the commodity.
 
-## ReferencedMeasure
+### ReferencedMeasure
 
 <a name="schemareferencedmeasure"></a>
 
@@ -6560,7 +6523,7 @@ excise|boolean|false|The `excise` flag of the measure.
 vat|boolean|false|The `vat` flag of the measure.
 reduction_indicator|integer|false|The reduction indicator is used to match a preferential duty with a Meursing additional code duty. Can be an integer or null.
 
-## ReferencedMeasureCondition
+### ReferencedMeasureCondition
 
 <a name="schemareferencedmeasurecondition"></a>
 
@@ -6622,7 +6585,7 @@ measure_condition_class|string|false|Class of condition: document or exemption o
 monetary_unit_abbreviation|string|false|Abbreviation of monetary unit
 requirement|string|false|Either the document code or the threshold requirement
 
-## ReferencedAdditionalCode
+### ReferencedAdditionalCode
 
 <a name="schemareferencedadditionalcode"></a>
 
@@ -6653,7 +6616,7 @@ code|string|false|The `code` for the additional_code. Equal to `additional_code_
 description|string|false|The `description` for the additional_code.
 formatted_description|string|false|The `formatted_description` for the additional_code.
 
-## ReferencedAdditionalCodeType
+### ReferencedAdditionalCodeType
 
 <a name="schemareferencedadditionalcodetype"></a>
 
@@ -6678,7 +6641,7 @@ Name|Type|Required|Description
 additional_code_type_id|string|false|The `additional_code_type_id` for the additional_code_type.
 description|string|false|The `description` for the additional_code_type.
 
-## ReferencedCertificate
+### ReferencedCertificate
 
 <a name="schemareferencedcertificate"></a>
 
@@ -6705,11 +6668,11 @@ certificate_type_code|string|false|The `certificate_type_code` for the certifica
 certificate_code|string|false|The `certificate_code` for the certificate.
 description|string|false|The `description` for the certificate.
 
-## ReferencedCertificateType
+### ReferencedCertificateType
 
 <a name="schemareferencedcertificatetype"></a>
 
-An certificate_type object referenced elsewhere.
+An certificate type object referenced elsewhere.
 
 <details>
   <summary>Sample JSON</summary>
@@ -6730,7 +6693,7 @@ Name|Type|Required|Description
 additional_code_type_id|string|false|The `certificate_type_code` for the certificate_type.
 description|string|false|The `description` for the certificate_type.
 
-## ReferencedFootnote
+### ReferencedFootnote
 
 <a name="schemareferencedfootnote"></a>
 
@@ -6757,7 +6720,7 @@ code|string|false|The `code` for the footnote.
 description|string|false|The `description` for the footnote.
 formatted_description|string|false|The `formatted_description` for the footnote.
 
-## ReferencedFootnoteType
+### ReferencedFootnoteType
 
 <a name="schemareferencedfootnotetype"></a>
 
@@ -6782,7 +6745,7 @@ Name|Type|Required|Description
 additional_code_type_id|string|false|The `footnote_type_id` for the footnote_type.
 description|string|false|The `description` for the footnote_type.
 
-## ReferencedGeographicalArea
+### ReferencedGeographicalArea
 
 <a name="schemareferencedgeographicalarea"></a>
 
@@ -6809,7 +6772,7 @@ id|string|false|The `id` of the geographical area.
 description|string|false|The `type` of the geographical area.
 geographical_area_id|string|false|The `geographical_area_id` of the geographical area.
 
-## ReferencedDefinition
+### ReferencedDefinition
 
 <a name="schemareferenceddefinition"></a>
 
@@ -6862,7 +6825,7 @@ suspension_period_end_date|string|false|The `suspension_period_end_date` of the 
 blocking_period_start_date|string|false|The `blocking_period_start_date` of the definition.
 blocking_period_end_date|string|false|The `blocking_period_end_date` of the definition.
 
-## ReferencedGoodsNomenclature
+### ReferencedGoodsNomenclature
 
 <a name="schemareferencedgoodsnomenclature"></a>
 
@@ -6895,7 +6858,7 @@ number_indents|integer|false|The `number_indents` of the goods nomenclature.
 productline_suffix|string|false|The `productline_suffix` of the goods nomenclature.
 href|string|false|The `href` of the goods nomenclature.
 
-## ReferencedSearchReference
+### ReferencedSearchReference
 
 <a name="schemareferencedsearchreference"></a>
 
@@ -6924,7 +6887,7 @@ referenced_id|string|false|The `id` of the referenced object.
 referenced_class|string|false|The `type` of the referenced object.
 productline_suffix|string|false|The `producline_suffix` of the commodity.
 
-## ChangesResponse
+### ChangesResponse
 
 <a name="schemachangesresponse"></a>
 
@@ -6972,7 +6935,7 @@ Name|Type|Required|Description
 ---|---|---|---|
 data|[[Change](#schemachange)]|false|No description
 
-## Change
+### Change
 
 <a name="schemachange"></a>
 
@@ -7006,7 +6969,7 @@ id|string|true|The id of the change within this response. This is always the `go
 type|string|true|Always 'change'.
 attributes|[ChangeAttributes](#schemachangeattributes)|true|The changed goods nomenclature attributes.
 
-## ChangeAttributes
+### ChangeAttributes
 
 <a name="schemachangeattributes"></a>
 
@@ -7039,7 +7002,7 @@ end_line|boolean|true|If the goods nomenclature is an end line commodity
 change_type|string|true|Type of change. It can be one of [commodity, measure]
 change_date|string(date)|true|Date of the change.
 
-## QuotaOrderNumbers
+### QuotaOrderNumbers
 
 <a name="schemaquotaordernumbers"></a>
 
@@ -7075,7 +7038,7 @@ data:type|string|false|the type of object, i.e. `quota_order_number`
 data:attributes|[ReferencedQuotaOrderNumber](#schemareferencedquotaordernumber)|false|The quota_order_number's attributes, as a [referenced quota_order_number object](/reference.html#referencedquotaordernumber "see referenced quota_order_number object")
 data:relationships|object|false|Has One [ReferencedQuotaDefinition](/reference.html#referencedquotadefinition)
 
-## ReferencedQuotaOrderNumber
+### ReferencedQuotaOrderNumber
 
 <a name="schemareferencedquotaordernumber"></a>
 
@@ -7102,7 +7065,7 @@ quota_order_number_sid|string|false|Unique identifier for quota_order_number.
 validity_start_date|string(date-time)|false|The validity start date of the quota_order_number.
 validity_end_date|string(date-time)|false|The validity end date of the quota_order_number.
 
-## ReferencedQuotaDefinition
+### ReferencedQuotaDefinition
 
 <a name="schemareferencedquotadefinition"></a>
 
@@ -7125,7 +7088,7 @@ Name|Type|Required|Description
 id|string|false|The unique `id` of the quota definition.
 type|string|false|the type of object ('quota_definition')
 
-## RulesOfOriginScheme
+### RulesOfOriginScheme
 
 <a name="schemarulesoforiginscheme"></a>
 
@@ -7282,7 +7245,7 @@ rules|[[RulesOfOriginRule](#schemarulesoforiginrule)]|false|A collection of [pro
 links|[[RulesOfOriginLink](#schemarulesoforiginlink)]|false|A collection of [links](#rulesoforiginlink) with further information relating to the scheme
 proofs|[[RulesOfOriginProof](#schemarulesoforiginproof)]|false|A collection of [proofs of origin](#rulesoforiginproof) necessary to claim preferential tariff treatment
 
-## RulesOfOriginLink
+### RulesOfOriginLink
 
 <a name="schemarulesoforiginlink"></a>
 
@@ -7307,7 +7270,7 @@ Name|Type|Required|Description
 text|string|false|A description of the link
 url|string|false|The url for the link
 
-## RulesOfOriginProof
+### RulesOfOriginProof
 
 <a name="schemarulesoforiginproof"></a>
 
@@ -7334,7 +7297,7 @@ summary|string|false|A summary description of the necessary proof of origin
 subtext|string|false|Additional information relating to the necessary proof of origin
 url|string|false|A URL linking to further information for the necessary proof of origin
 
-## RulesOfOriginRule
+### RulesOfOriginRule
 
 <a name="schemarulesoforiginrule"></a>
 
@@ -7361,7 +7324,7 @@ heading|string|false|The heading this rule applies to
 description|string|false|The description of the heading this rule applies to
 rule|string|false|The product-specific rule to be fulfilled, in markdown format
 
-## MeasureConditionPermutationGroup
+### MeasureConditionPermutationGroup
 
 <a name="schemameasureconditionpermutationgroup"></a>
 
@@ -7409,7 +7372,7 @@ data:type|string|false|the type of object, i.e. `measure_condition_permutation_g
 data:attributes:condition_code|string|false|the condition code referenced in the permutation, or 'n/a' if multiple condition codes are referenced.
 data:relationships:permutations|[[MeasureConditionPermutation](#schemameasureconditionpermutation)]|false|A collection of [measure condition permutation objects](/reference.html#measureconditionpermutation "see measure condition permutation object")
 
-## MeasureConditionPermutation
+### MeasureConditionPermutation
 
 <a name="schemameasureconditionpermutation"></a>
 
@@ -7449,7 +7412,7 @@ data:id|string|false|A unique 'guid' for the measure condition permutation
 data:type|string|false|the type of object, i.e. `measure_condition_permutation`
 data:relationships:measure_conditions|[[ReferencedMeasureCondition](#schemareferencedmeasurecondition)]|false|A collection of referenced measure condition objects
 
-## PreferenceCodes
+### PreferenceCodes
 
 <a name="schemapreferencecodes"></a>
 
@@ -7476,7 +7439,7 @@ data:id|string|false|The unique `id` of the preference_code.
 data:type|string|false|the type of object, i.e. `preference_code`
 data:attributes|object|false|A preference_code object
 
-## ChemicalSubstance
+### ChemicalSubstance
 
 <a name="schemachemicalsubstance"></a>
 
@@ -7521,7 +7484,7 @@ attributes:name|string|false|The name of the chemical substance
 attributes:cas_rn|string|false|The international CAS number
 attributes:nomen|string|false|The nomen field. This indicates which taxonomy the chemical substance originates
 
-## SimplifiedProceduralCodeMeasure
+### SimplifiedProceduralCodeMeasure
 
 <a name="schemasimplifiedproceduralcodemeasure"></a>
 
