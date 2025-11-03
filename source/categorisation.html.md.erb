@@ -76,7 +76,6 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 
 <ul>
   <li><b>GET /green_lanes/goods_nomenclatures/{id}</b> → This is the main categorisation API which returns applicable category assessments for a given goods nomenclature, including assessments for all its descendants if queried at a higher hierarchical level. Additionally, can specify the date that the categorisation applies to and the origin of the goods.</li>
-  <li><b>GET /green_lanes/category_assessments</b> → Returns a global list of all possible category assessments.</li>
   <li><b>GET /green_lanes/themes</b> → Returns a list of all the Categorisation themes corresponding to the line items of Annex IV within the Windsor Framework.</li>
 </ul>
 </p>
@@ -207,175 +206,6 @@ Kind regards,
 | **Measure** | Measures are the building blocks of any trade tariff. They link everything together. Any law that has an effect on the trade of goods becomes one or more measures. You can read more about them in the data manual: <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/measures.html#measures" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/measures.html#measures</a> |
 | **Regulation** | Every measure entered into the tariff database must be associated with a regulation, i.e. a piece of legislation. <br><br> This is so there's a 'legal base' for all tariff and regulatory activity. Without this, measures cannot be traced back to why they were created. <br><br> You can read more about them in the data manual :  <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/regulations.html#regulations</a> |
 
-
-## Categorisation
-
-***GET /green_lanes/category_assessments***
-
-Returns a list of the all category assessments
-
-To perform this operation, you must be authenticated by means of one of the following methods:
-apiKey
-
-**Parameters**
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-as_of|query|string(date)|false|Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`  While `as_of` is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct.
-
-**Example Request**
-
-```shell
-curl -H "X-Api-Key: a1b2c3defg4567" \
-  -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/category_assessments
-
-curl -H "X-Api-Key: a1b2c3defg4567" \
-  -H "Accept: application/vnd.hmrc.2.0+json" \
-  https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/category_assessments?as_of=2024-01-01
-```
-
-**Example Response**
-
-```json
-{
-  "data": [
-    {
-      "id": "abcd1234",
-      "type": "category_assessment",
-      "relationships": {
-        "geographical_area": {
-          "data": {
-            "id": "1011",
-            "type": "geographical_area"
-          }
-        },
-        "excluded_geographical_areas": {
-          "data": []
-        },
-        "theme": {
-          "data": {
-            "id": "2.1",
-            "type": "theme"
-          }
-        },
-        "exemptions": {
-          "data": [
-            {
-              "id": "L135",
-              "type": "certificate"
-            },
-            {
-              "id": "3200",
-              "type": "additional_code"
-            },
-            {
-              "id": "WFE001",
-              "type": "exemption"
-            }
-          ]
-        },
-        "measure_type": {
-          "data": {
-            "id": "475",
-            "type": "measure_type"
-          }
-        },
-        "regulation": {
-          "data": {
-            "id": "D1908540",
-            "type": "legal_act"
-          }
-        }
-      }
-    }
-  ],
-  "included": [
-    {
-      "id": "1011",
-      "type": "geographical_area",
-      "attributes": {
-        "description": "ERGA OMNES",
-        "geographical_area_id": "1011"
-      }
-    },
-    {
-      "id": "2.1",
-      "type": "theme",
-      "attributes": {
-        "theme": "Drug precursors",
-        "category": 2
-      }
-    },
-    {
-      "id": "L135",
-      "type": "certificate",
-      "attributes": {
-        "certificate_type_code": "L",
-        "certificate_code": "135",
-        "code": "L135",
-        "description": "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established",
-        "formatted_description": "Import authorisation (precursors) issued by the competent authorities of the Member State where the importer is established"
-      }
-    },
-    {
-      "id": "3200",
-      "type": "additional_code",
-      "attributes": {
-        "additional_code_type_id": "3",
-        "additional_code": "200",
-        "code": "3200",
-        "description": "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances",
-        "formatted_description": "Mixtures of scheduled substances listed in the Annex to Regulation (EC) No 111/2005 that can be used for the illicit manufacture of narcotic drugs or psychotropic substances"
-      }
-    },
-    {
-      "id": "WFE001",
-      "type": "exemption",
-      "attributes": {
-        "code": "WFE001",
-        "description": "Seed potatoes of a particular variety",
-        "formatted_description": "Seed potatoes of a particular variety"
-      }
-    },
-    {
-      "id": "475",
-      "type": "measure_type",
-      "attributes": {
-        "description": "Restriction on entry into free circulation",
-        "measure_type_series_description": "Entry into free circulation or exportation subject to conditions",
-        "validity_start_date": "1972-01-01T00:00:00.000Z",
-        "validity_end_date": null,
-        "measure_type_series_id": "B",
-        "trade_movement_code": 0
-      }
-    },
-    {
-      "id": "D1908540",
-      "type": "legal_act",
-      "attributes": {
-        "validity_start_date": "2019-09-20T00:00:00.000Z",
-        "validity_end_date": null,
-        "officialjournal_number": "L 147",
-        "officialjournal_page": 1,
-        "published_date": "2019-06-05",
-        "regulation_code": "D0854/19",
-        "regulation_url": "http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D147,YEAR_OJ%3D2019,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en",
-        "description": null
-      }
-    }
-  ]
-}
-```
-
-**Responses**
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|OK|An array of CategoryAssessments|[CategoryAssessmentListing](#schemacategoryassessmentlisting)
-401|Unauthorized|Authorization header is missing or contains an invalid token|None
-422|Unprocessable Entity|Likely incorrectly formatted `as_of` param|None
-5xx|**Server Error**|Unexpected error, something went wrong internally|None
 
 ***GET /green_lanes/goods_nomenclatures/{id}***
 
@@ -1707,7 +1537,7 @@ regulation|[LegalAct](#schemalegalact)|true|The Regulation resulting in this Cat
 geographical_area|[GeographicalArea](#schemageographicalarea)|true|The geographical area this Category Assessment applies to
 excluded_geographical_areas|[[GeographicalArea](#schemageographicalarea)]|false|The geographical areas excluded from this Category Assessment
 exemptions|[Unknown]|false|The Certificates or Additional Codes which when supplied exempt a Goods Nomenclature from this Category Assessment <br><br> _NB: Polymorphic array of *Certificate*, *AdditionalCode* and *Exemption* objects_
-measures|[[Measure](#schemameasure)]|false|A list of Measures resulting in this CategoryAssessment <br><br> _NB: Not present on `/green_lanes/category_assessments` endpoint due to volume of data_
+measures|[[Measure](#schemameasure)]|false|A list of Measures resulting in this CategoryAssessment <br><br>
 
 ### Theme
 
