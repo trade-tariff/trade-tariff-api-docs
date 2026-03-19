@@ -1,4 +1,9 @@
 @import 'govuk_tech_docs';
+@import 'govuk/components/notification-banner/index';
+
+.technical-documentation > .govuk-notification-banner:first-child {
+  margin-top: govuk-spacing(6);
+}
 
 h1.anchored-heading {
     margin-top   : 1em;
