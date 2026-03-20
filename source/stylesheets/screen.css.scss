@@ -1,5 +1,6 @@
 @import 'govuk_tech_docs';
 @import 'govuk/components/notification-banner/index';
+@import 'govuk/components/button/index';
 
 .technical-documentation > .govuk-notification-banner:first-child {
   margin-top: govuk-spacing(6);
@@ -51,4 +52,14 @@ img {
 
 .email-template strong {
   font-weight: bold;
+}
+
+.technical-documentation a.govuk-button,
+.technical-documentation a.govuk-button:link,
+.technical-documentation a.govuk-button:visited,
+.technical-documentation a.govuk-button:hover,
+.technical-documentation a.govuk-button:focus,
+.technical-documentation a.govuk-button:active {
+  color: govuk-colour("white");
+  text-decoration: none;
 }

@@ -3,9 +3,10 @@ require "minitest/autorun"
 class RateLimitingBannerTest < Minitest::Test
   BUILD_DIR = File.expand_path("../build", __dir__)
   BANNER_HEADING = "From September 2026, rate limiting will apply to the Commodities API to protect service reliability."
-  BANNER_BODY = "No action needed today. More guidance to follow"
+  BANNER_BODY = "Access a higher rate limit through the Trade Tariff Developer Portal."
+  BANNER_LINK_TEXT = "Find out more about the Developer Portal"
   EXCLUDED_PAGES = %w[404.html].freeze
-  PAGES = %w[index.html reference.html the-commodities-api.html].freeze
+  PAGES = %w[index.html reference.html the-trade-tariff-api.html].freeze
 
   def setup
     self.class.build_site_once
@@ -17,6 +18,7 @@ class RateLimitingBannerTest < Minitest::Test
 
       assert_includes html, BANNER_HEADING, "#{page} should include the banner heading"
       assert_includes html, BANNER_BODY, "#{page} should include the banner body"
+      assert_includes html, BANNER_LINK_TEXT, "#{page} should include the Developer Portal link text"
     end
   end
 
@@ -26,6 +28,7 @@ class RateLimitingBannerTest < Minitest::Test
 
       refute_includes html, BANNER_HEADING, "#{page} should not include the banner heading"
       refute_includes html, BANNER_BODY, "#{page} should not include the banner body"
+      refute_includes html, BANNER_LINK_TEXT, "#{page} should not include the Developer Portal link text"
     end
   end
 

@@ -22,7 +22,7 @@ published content as is presented on GOV.UK.
 
 All requests to this API should be prefixed with the following URL:
 
-**https://www.trade-tariff.service.gov.uk/uk/api**
+**https://api.trade-tariff.service.gov.uk/uk/api**
 
 You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
 
@@ -41,7 +41,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/sections \
+curl https://api.trade-tariff.service.gov.uk/uk/api/sections \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -96,7 +96,7 @@ position|path|integer|true|The `position` of the section to be retrieved
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/sections/1 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/sections/1 \
   -H "Accept: application/vnd.hmrc.2.0+json"
 ```
 
@@ -209,7 +209,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/chapters \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chapters \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -268,7 +268,7 @@ chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/chapters/34 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chapters/34 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -387,7 +387,7 @@ heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/headings/0101 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/headings/0101 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -588,7 +588,7 @@ productline_suffix|path|string|true|The two-digit product line suffix of the sub
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/subheadings/0102291000-80 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/subheadings/0102291000-80 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -787,7 +787,7 @@ id|path|string|true|The `id` of the commodity to be retrieved. This should be a 
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/commodities/0101210000 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1585,7 +1585,7 @@ include|query|string|false|Retrieve quota balance events which show the history 
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1750,7 +1750,7 @@ description|query|string|conditional|Retrieve additional_codes with description 
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/additional_codes/search?code=200&type=B \
+curl https://api.trade-tariff.service.gov.uk/uk/api/additional_codes/search?code=200&type=B \
      -H "Content-Type: application/vnd.hmrc.2.0+json"
 ```
 
@@ -1841,7 +1841,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/additional_code_types \
+curl https://api.trade-tariff.service.gov.uk/uk/api/additional_code_types \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1896,7 +1896,7 @@ as_of|query|string(date)|false|Retrieve the measure_types as they existed on the
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/certificates \
+curl https://api.trade-tariff.service.gov.uk/uk/api/certificates \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1955,7 +1955,7 @@ description|query|string|false|Retrieve certificates with `description` that con
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/certificates/search?code=D005&type=D \
+curl https://api.trade-tariff.service.gov.uk/uk/api/certificates/search?code=D005&type=D \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2026,7 +2026,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/certificate_types \
+curl https://api.trade-tariff.service.gov.uk/uk/api/certificate_types \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2077,7 +2077,7 @@ as_of|query|string(date)|false|Retrieve the measure_types as they existed on the
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/measure_types \
+curl https://api.trade-tariff.service.gov.uk/uk/api/measure_types \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2130,7 +2130,7 @@ as_of|query|string(date)|false|Retrieve the quota_order_numbers as they existed 
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/quota_order_numbers \
+curl https://api.trade-tariff.service.gov.uk/uk/api/quota_order_numbers \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2178,7 +2178,7 @@ measure_sid|path|integer|true|The `measure_sid` of the measure to be retrieved.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/measures/{measure_sid} \
+curl https://api.trade-tariff.service.gov.uk/uk/api/measures/{measure_sid} \
   -H 'Accept: application/json'
 ```
 
@@ -2293,7 +2293,7 @@ as_of|query|string(date)|false|Retrieve the measure_actions as they existed on t
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/measure_actions \
+curl https://api.trade-tariff.service.gov.uk/uk/api/measure_actions \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2337,7 +2337,7 @@ as_of|query|string(date)|false|Retrieve the measure_condition_codes as they exis
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/measure_condition_codes \
+curl https://api.trade-tariff.service.gov.uk/uk/api/measure_condition_codes \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2387,7 +2387,7 @@ description|query|string|false|Retrieve footnotes with `description` that contai
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/footnotes/search?code=134&type=CD \
+curl https://api.trade-tariff.service.gov.uk/uk/api/footnotes/search?code=134&type=CD \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2449,7 +2449,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/footnote_types \
+curl https://api.trade-tariff.service.gov.uk/uk/api/footnote_types \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2537,7 +2537,7 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/section/1 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/section/1 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2674,7 +2674,7 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/chapter/01 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/chapter/01 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2810,7 +2810,7 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/heading/0101 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/heading/0101 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2918,7 +2918,7 @@ query[letter]|query|string|false|Retrieve search references started with  `query
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/search_references.json?query[letter]=c \
+curl https://api.trade-tariff.service.gov.uk/uk/api/search_references.json?query[letter]=c \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2981,7 +2981,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/geographical_areas \
+curl https://api.trade-tariff.service.gov.uk/uk/api/geographical_areas \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3063,7 +3063,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/geographical_areas/countries \
+curl https://api.trade-tariff.service.gov.uk/uk/api/geographical_areas/countries \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3155,7 +3155,7 @@ as_of|path|string(date)|true|Retrieve changes as they existed between the `as_of
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/changes/2021-04-13 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/changes/2021-04-13 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3220,7 +3220,7 @@ country_code|path|string|true|Two letter country code for the country you are tr
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/rules_of_origin_schemes/392113/FR \
+curl https://api.trade-tariff.service.gov.uk/uk/api/rules_of_origin_schemes/392113/FR \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3386,16 +3386,16 @@ filter[goods_nomenclature_sid]|query|integer|false|Filter by a specific goods no
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=0153778-6 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=0153778-6 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=90131-25-2 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=90131-25-2 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_item_id]=0712909090 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_item_id]=0712909090 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://www.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_sid]=30725 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_sid]=30725 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3450,15 +3450,15 @@ filter[simplified_procedural_code]|query|string|false|Filter by the simplified p
 
 ```shell
 # Fetch all measures
-curl https://www.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures \
+curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch a given 2 week window of measures
-curl https://www.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[from_date]=2023-05-12&filter[to_date]=2023-05-25 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[from_date]=2023-05-12&filter[to_date]=2023-05-25 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch the full history of a given simplified procedural code
-curl https://www.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[simplified_procedural_code]=1.10 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[simplified_procedural_code]=1.10 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3505,7 +3505,7 @@ This request does not require authentication.
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/preference_codes \
+curl https://api.trade-tariff.service.gov.uk/uk/api/preference_codes \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3550,13 +3550,13 @@ filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists/2022?filter[type]=monthly \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists/2022?filter[type]=monthly \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=spot \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=spot \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=average \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=average \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3586,13 +3586,13 @@ filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul
 **Example Request**
 
 ```shell
-curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/2021-10?filter[type]=monthly \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2021-10?filter[type]=monthly \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Spot and average rates only produce data for March and December each year
-curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=spot \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=spot \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
-curl https://www.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=average \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=average \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 

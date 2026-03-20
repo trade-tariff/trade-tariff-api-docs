@@ -10,9 +10,9 @@ service_link: /
 # Links to show on right-hand-side of header
 header_links:
   About: /
-  Getting Started: /getting-started.html
+  Developer Portal: /developer-portal.html
   API Reference: /reference.html
-  Commodities API: /the-commodities-api.html
+  Trade Tariff API: /the-trade-tariff-api.html
   Categorisation API: /categorisation.html
   FPO API: /fpo.html
 
