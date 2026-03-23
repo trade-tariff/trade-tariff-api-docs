@@ -53,7 +53,412 @@ Additional APIs are available to support specific trade tariff and classificatio
 
 ## Authentication
 
-Usage of GOV.UK Trade Tariff APIs does not require authentication.
+The GOV.UK Trade Tariff APIs can be used without authentication for basic access.
+
+When you use managed developer credentials (Trade Tariff API keys), you should authenticate with an OAuth2 `client_credentials` access token. This provides controlled access suitable for production integration.
+
+### OAuth2 client_credentials (plain language)
+
+`client_credentials` is a machine-to-machine authentication flow:
+
+1. You send your `client_id` and `client_secret` to the token endpoint.
+2. The service returns an `access_token`.
+3. You include the token in the `Authorization` header as `Bearer <access_token>` when calling the Trade Tariff API.
+4. Access tokens expire after a fixed time-to-live (TTL). If your token expires (for example, the API returns `401 Unauthorized`), request a new access token and retry.
+
+### Token endpoint URLs (per environment)
+
+Use the token endpoint that matches the environment where your credentials are valid:
+
+| Environment | Token endpoint |
+| --- | --- |
+| Development | `https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token` |
+| Staging | `https://auth.id.staging.trade-tariff.service.gov.uk/oauth2/token` |
+| Production | `https://auth.id.trade-tariff.service.gov.uk/oauth2/token` |
+
+### Example API request
+
+API request (example commodity):
+
+`GET https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000`
+
+Header:
+
+`Authorization: Bearer <access_token>`
+
+Access token TTL: access tokens are configured for 1 day. Refresh by requesting a new access token before expiry, or when you receive `401` and retry the request.
+
+### Bash (curl)
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+TOKEN_ENDPOINT="https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token"  # dev|staging|production
+CLIENT_ID="your_client_id"
+CLIENT_SECRET="your_client_secret"
+API_URL="https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000"
+
+get_access_token() {
+  local response
+  response="$(curl -sS -X POST "${TOKEN_ENDPOINT}" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}")"
+  # Requires jq. If you do not have jq, use any JSON parser to extract .access_token.
+  echo "$response" | jq -r '.access_token'
+}
+
+call_api() {
+  local token="$1"
+  curl -sS -w "\n%{http_code}" \
+    -H "Authorization: Bearer ${token}" \
+    "${API_URL}"
+}
+
+ACCESS_TOKEN="$(get_access_token)"
+API_OUTPUT="$(call_api "$ACCESS_TOKEN")"
+HTTP_CODE="$(echo "$API_OUTPUT" | tail -n 1)"
+
+if [ "$HTTP_CODE" = "401" ]; then
+  # Token expired or invalid; refresh and retry once.
+  ACCESS_TOKEN="$(get_access_token)"
+  call_api "$ACCESS_TOKEN"
+else
+  echo "$API_OUTPUT" | head -n -1
+fi
+```
+
+### Python (requests)
+
+```python
+import requests
+
+TOKEN_ENDPOINT = "https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token"  # dev|staging|production
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000"
+
+def get_access_token():
+    resp = requests.post(
+        TOKEN_ENDPOINT,
+        data={
+            "grant_type": "client_credentials",
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+        },
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    return resp.json()["access_token"]
+
+def call_api(access_token):
+    headers = {"Authorization": f"Bearer {access_token}"}
+    return requests.get(API_URL, headers=headers, timeout=30)
+
+token = get_access_token()
+response = call_api(token)
+
+if response.status_code == 401:
+    # Token expired or invalid; refresh and retry once.
+    token = get_access_token()
+    response = call_api(token)
+
+response.raise_for_status()
+print(response.json())
+```
+
+### Node.js (fetch)
+
+```javascript
+const TOKEN_ENDPOINT = "https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token"; // dev|staging|production
+const CLIENT_ID = "your_client_id";
+const CLIENT_SECRET = "your_client_secret";
+const API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000";
+
+async function getAccessToken() {
+  const form = new URLSearchParams();
+  form.set("grant_type", "client_credentials");
+  form.set("client_id", CLIENT_ID);
+  form.set("client_secret", CLIENT_SECRET);
+
+  const res = await fetch(TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: form,
+  });
+
+  if (!res.ok) throw new Error(`Token request failed: ${res.status}`);
+  const data = await res.json();
+  return data.access_token;
+}
+
+async function callApi(accessToken) {
+  return fetch(API_URL, {
+    method: "GET",
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+}
+
+let token = await getAccessToken();
+let response = await callApi(token);
+
+if (response.status === 401) {
+  // Token expired or invalid; refresh and retry once.
+  token = await getAccessToken();
+  response = await callApi(token);
+}
+
+if (!response.ok) throw new Error(`API request failed: ${response.status}`);
+const json = await response.json();
+console.log(json);
+```
+
+### Java (java.net.http)
+
+```java
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+
+public class TradeTariffAuthExample {
+  private static final String TOKEN_ENDPOINT = "https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token"; // dev|staging|production
+  private static final String CLIENT_ID = "your_client_id";
+  private static final String CLIENT_SECRET = "your_client_secret";
+  private static final String API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000";
+
+  private static final HttpClient http = HttpClient.newBuilder()
+      .connectTimeout(Duration.ofSeconds(30))
+      .build();
+
+  private static String extractAccessToken(String json) {
+    // Minimal extraction without external JSON libs.
+    String marker = "\"access_token\":\"";
+    int idx = json.indexOf(marker);
+    if (idx < 0) throw new RuntimeException("access_token not found in response");
+    int start = idx + marker.length();
+    int end = json.indexOf("\"", start);
+    return json.substring(start, end);
+  }
+
+  private static String urlEncode(String s) {
+    return URLEncoder.encode(s, StandardCharsets.UTF_8);
+  }
+
+  private static String getAccessToken() throws Exception {
+    String body = "grant_type=client_credentials"
+        + "&client_id=" + urlEncode(CLIENT_ID)
+        + "&client_secret=" + urlEncode(CLIENT_SECRET);
+
+    HttpRequest req = HttpRequest.newBuilder()
+        .uri(URI.create(TOKEN_ENDPOINT))
+        .timeout(Duration.ofSeconds(30))
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .POST(HttpRequest.BodyPublishers.ofString(body))
+        .build();
+
+    HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
+    if (res.statusCode() / 100 != 2) {
+      throw new RuntimeException("Token request failed: " + res.statusCode());
+    }
+    return extractAccessToken(res.body());
+  }
+
+  private static HttpResponse<String> callApi(String accessToken) throws Exception {
+    HttpRequest req = HttpRequest.newBuilder()
+        .uri(URI.create(API_URL))
+        .timeout(Duration.ofSeconds(30))
+        .header("Authorization", "Bearer " + accessToken)
+        .GET()
+        .build();
+    return http.send(req, HttpResponse.BodyHandlers.ofString());
+  }
+
+  public static void main(String[] args) throws Exception {
+    String token = getAccessToken();
+    HttpResponse<String> response = callApi(token);
+
+    if (response.statusCode() == 401) {
+      // Token expired or invalid; refresh and retry once.
+      token = getAccessToken();
+      response = callApi(token);
+    }
+
+    if (response.statusCode() / 100 != 2) {
+      throw new RuntimeException("API request failed: " + response.statusCode());
+    }
+    System.out.println(response.body());
+  }
+}
+```
+
+### Ruby (net/http)
+
+```ruby
+require "net/http"
+require "uri"
+require "json"
+
+TOKEN_ENDPOINT = "https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token" # dev|staging|production
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000"
+
+def get_access_token(token_endpoint)
+  uri = URI(token_endpoint)
+  req = Net::HTTP::Post.new(uri)
+  req["Content-Type"] = "application/x-www-form-urlencoded"
+  req.set_form_data(
+    "grant_type" => "client_credentials",
+    "client_id" => CLIENT_ID,
+    "client_secret" => CLIENT_SECRET
+  )
+
+  res = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+    http.request(req)
+  end
+
+  raise "Token request failed: #{res.code}" unless res.is_a?(Net::HTTPSuccess)
+  JSON.parse(res.body).fetch("access_token")
+end
+
+def call_api(api_url, access_token)
+  uri = URI(api_url)
+  req = Net::HTTP::Get.new(uri)
+  req["Authorization"] = "Bearer #{access_token}"
+
+  Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+    http.request(req)
+  end
+end
+
+token = get_access_token(TOKEN_ENDPOINT)
+response = call_api(API_URL, token)
+
+if response.code.to_i == 401
+  # Token expired or invalid; refresh and retry once.
+  token = get_access_token(TOKEN_ENDPOINT)
+  response = call_api(API_URL, token)
+end
+
+raise "API request failed: #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+puts JSON.pretty_generate(JSON.parse(response.body))
+```
+
+### Go (net/http)
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"net/url"
+	"strings"
+	"time"
+)
+
+const (
+	TOKEN_ENDPOINT = "https://auth.id.dev.trade-tariff.service.gov.uk/oauth2/token" // dev|staging|production
+	CLIENT_ID      = "your_client_id"
+	CLIENT_SECRET  = "your_client_secret"
+	API_URL        = "https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000"
+)
+
+type tokenResponse struct {
+	AccessToken string `json:"access_token"`
+}
+
+func getAccessToken(client *http.Client) (string, error) {
+	data := url.Values{}
+	data.Set("grant_type", "client_credentials")
+	data.Set("client_id", CLIENT_ID)
+	data.Set("client_secret", CLIENT_SECRET)
+
+	req, err := http.NewRequest("POST", TOKEN_ENDPOINT, strings.NewReader(data.Encode()))
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		b, _ := io.ReadAll(resp.Body)
+		return "", fmt.Errorf("token request failed: %d: %s", resp.StatusCode, string(b))
+	}
+
+	var tr tokenResponse
+	if err := json.NewDecoder(resp.Body).Decode(&tr); err != nil {
+		return "", err
+	}
+	if tr.AccessToken == "" {
+		return "", fmt.Errorf("access_token missing in response")
+	}
+	return tr.AccessToken, nil
+}
+
+func callAPI(client *http.Client, accessToken string) (*http.Response, []byte, error) {
+	req, err := http.NewRequest("GET", API_URL, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, nil, err
+	}
+	return resp, body, nil
+}
+
+func main() {
+	httpClient := &http.Client{Timeout: 30 * time.Second}
+
+	token, err := getAccessToken(httpClient)
+	if err != nil {
+		panic(err)
+	}
+
+	resp, body, err := callAPI(httpClient, token)
+	if err != nil {
+		panic(err)
+	}
+
+	if resp.StatusCode == http.StatusUnauthorized {
+		// Token expired or invalid; refresh and retry once.
+		token, err = getAccessToken(httpClient)
+		if err != nil {
+			panic(err)
+		}
+		resp, body, err = callAPI(httpClient, token)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		panic(fmt.Sprintf("API request failed: %d: %s", resp.StatusCode, string(body)))
+	}
+	fmt.Println(string(body))
+}
+```
 
 ## Caching
 
