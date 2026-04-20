@@ -74,7 +74,7 @@ This example uses the Ruby on Rails cache, which minimises the number of API cal
 
 ### Node.js example
 
-You can also use the UK Trade Tariff API in a [Node.js](https://nodejs.org) application. Below is an example using the built-in `https` module to access the Commodities API.
+You can also use the UK Trade Tariff API in a [Node.js](https://nodejs.org) application. Below is an example using the built-in `https` module to access the Trade Tariff API.
 
 ```javascript
 const https = require('https');
@@ -644,7 +644,7 @@ The attributes section lists the core, intrinsic properties of the commodity cod
 
 |Field|Description|
 |-|-|
-|producline_suffix|The `producline_suffix` is a structural element that is used to add hierarchical tiers into the tariff, to aid comprehension. Where the `producline_suffix` is set to '80', the commodity code is potentially declarable, where declarable means that the commodity has no descendant commodity codes.<br><br>Where the value of this field is anything other than '80', such as '10', '20', '30', '40' or '50', this means that the item is a structural heading only.<br><br>However, as the commodities API only deals with commodities which are 'declarable', the value of the `producline_suffix` field in this API will always be '80'.<br><br>Measures may only be assigned to goods nomenclature items that have a `producline_suffix` of '80', albeit they may be assigned to items at any point in the hierarchy and then inherited down to descendant codes.<br><br>Headings and subheadings may feature `producline_suffix` values other than '80'.|
+|producline_suffix|The `producline_suffix` is a structural element that is used to add hierarchical tiers into the tariff, to aid comprehension. Where the `producline_suffix` is set to '80', the commodity code is potentially declarable, where declarable means that the commodity has no descendant commodity codes.<br><br>Where the value of this field is anything other than '80', such as '10', '20', '30', '40' or '50', this means that the item is a structural heading only.<br><br>However, as the trade tariff API only deals with commodities which are 'declarable', the value of the `producline_suffix` field in this API will always be '80'.<br><br>Measures may only be assigned to goods nomenclature items that have a `producline_suffix` of '80', albeit they may be assigned to items at any point in the hierarchy and then inherited down to descendant codes.<br><br>Headings and subheadings may feature `producline_suffix` values other than '80'.|
 |description|The `description` field contains the raw description, as entered into the master tariff management application. There are, on occasion, formatting instructions in this field that have not been rendered into HTML, such as instructions to include superscripts, subscripts or non-breaking spaces.<br><br>Use this field if you want to use the raw data and apply your own formatting to the description.|
 |number_indents|The number of indents show how deeply nested in the overall hierarchy the commodity code is.<br><br>The hierarchy starts with an indent of '0' for chapters. '0' is also used for the next tier, headings, and from that point onwards, the number of indents increments by 1 as the hierarchy deepens.|
 |goods_nomenclature_item_id|The `goods_nomenclature_item_id` is the commodity code. It always features 10 numeric digits. In this guide, the terms `goods_nomenclature_item_id` and commodity code are synonymous.|
