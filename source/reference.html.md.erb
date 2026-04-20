@@ -2913,12 +2913,12 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-query[letter]|query|string|false|Retrieve search references started with  `query[letter]` letter. Without a query parameter all search references are returned in the response.
+query.letter|query|string|false|Retrieve search references started with  `query.letter` letter. Without a query parameter all search references are returned in the response.
 
 **Example Request**
 
 ```shell
-curl https://api.trade-tariff.service.gov.uk/uk/api/search_references.json?query[letter]=c \
+curl https://api.trade-tariff.service.gov.uk/uk/api/search_references.json?query.letter=c \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3378,24 +3378,24 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-filter[cus]|query|string|false|Filter by the EU CUS number
-filter[cas_rn]|query|string|false|Filter by the international CAS number
-filter[goods_nomenclature_item_id]|query|string|false|Filter by a specific goods nomenclature item id field
-filter[goods_nomenclature_sid]|query|integer|false|Filter by a specific goods nomenclature sid field
+filter.cus|query|string|false|Filter by the EU CUS number
+filter.cas_rn|query|string|false|Filter by the international CAS number
+filter.goods_nomenclature_item_id|query|string|false|Filter by a specific goods nomenclature item id field
+filter.goods_nomenclature_sid|query|integer|false|Filter by a specific goods nomenclature sid field
 
 **Example Request**
 
 ```shell
-curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=0153778-6 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.cus=0153778-6 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[cus]=90131-25-2 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.cus=90131-25-2 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_item_id]=0712909090 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.goods_nomenclature_item_id=0712909090 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter[goods_nomenclature_sid]=30725 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.goods_nomenclature_sid=30725 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3442,9 +3442,9 @@ This request does not require authentication.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-filter[from_date]|query|string(date)|false|Filter measures that start from this date
-filter[to_date]|query|string(date)|false|Filter measures that end up to and inluding this date
-filter[simplified_procedural_code]|query|string|false|Filter by the simplified procedural code
+filter.from_date|query|string(date)|false|Filter measures that start from this date
+filter.to_date|query|string(date)|false|Filter measures that end up to and inluding this date
+filter.simplified_procedural_code|query|string|false|Filter by the simplified procedural code
 
 **Example Request**
 
@@ -3454,11 +3454,11 @@ curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_m
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch a given 2 week window of measures
-curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[from_date]=2023-05-12&filter[to_date]=2023-05-25 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter.from_date=2023-05-12&filter.to_date=2023-05-25 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch the full history of a given simplified procedural code
-curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter[simplified_procedural_code]=1.10 \
+curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter.simplified_procedural_code=1.10 \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3545,18 +3545,18 @@ This request does not require authentication.
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 year|path|integer|false|The `year` to find available periods for
-filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul>
+filter.type|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul>
 
 **Example Request**
 
 ```shell
-curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists/2022?filter[type]=monthly \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists/2022?filter.type=monthly \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=spot \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter.type=spot \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
-curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter[type]=average \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter.type=average \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3581,18 +3581,18 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 year|path|integer|true|The `year` for the exchange rates and files
 month|path|integer|true|The `month` for the exchange rates and files
-filter[type]|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul>
+filter.type|query|string|false|Possible values: spot, monthly, average.<br> <ul>   <li>Monthly: Published the Wednesday before the penultimate Thursday of every month. They are valid for the following calendar month.</li>   <li>Average: Published 31st December and 31st of March every year. Describes the mean average from the preceding 12 monthly rate files.</li>   <li>Spot: Published 31st December and 31st March every year. Describes the rate at midday of that day.</li> </ul>
 
 **Example Request**
 
 ```shell
-curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2021-10?filter[type]=monthly \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2021-10?filter.type=monthly \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Spot and average rates only produce data for March and December each year
-curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=spot \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter.type=spot \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
-curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter[type]=average \
+curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter.type=average \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
