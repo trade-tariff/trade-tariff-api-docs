@@ -152,6 +152,10 @@ print(f"Declarable: {attributes['declarable']}")
 
 ## Authenticating with managed credentials
 
+<div class="govuk-inset-text">
+  <strong>Host change:</strong> the managed Trade Tariff API is now served from <code>api.trade-tariff.service.gov.uk</code>. If your integration previously called <code>www.trade-tariff.service.gov.uk</code>, update the base URL in your client and token-authenticated requests.
+</div>
+
 When you use managed developer credentials (Trade Tariff API keys), you should authenticate using an OAuth 2.0 `client_credentials` access token. This provides controlled access suitable for production integration.
 
 As with unauthenticated requests, send the `Accept` header with the value `application/vnd.hmrc.2.0+json` for a correctly formatted response. Authenticated calls also need `Authorization: Bearer <access_token>`.

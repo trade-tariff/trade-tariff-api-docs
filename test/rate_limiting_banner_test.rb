@@ -5,6 +5,8 @@ class RateLimitingBannerTest < Minitest::Test
   BANNER_HEADING = 'From September 2026, rate limiting will apply to the Trade Tariff API to protect service reliability.'
   BANNER_BODY = 'Access a higher rate limit through the Trade Tariff Developer Portal.'
   BANNER_LINK_TEXT = 'Find out more about the Developer Portal'
+  HOST_CHANGE_HEADING = 'The host for the Trade Tariff API managed service has changed from'
+  HOST_CHANGE_LINK_TEXT = 'Find out more about authenticating with managed credentials'
   EXCLUDED_PAGES = %w[404.html].freeze
   PAGES = %w[index.html reference.html the-trade-tariff-api.html].freeze
 
@@ -19,6 +21,8 @@ class RateLimitingBannerTest < Minitest::Test
       assert_includes html, BANNER_HEADING, "#{page} should include the banner heading"
       assert_includes html, BANNER_BODY, "#{page} should include the banner body"
       assert_includes html, BANNER_LINK_TEXT, "#{page} should include the Developer Portal link text"
+      assert_includes html, HOST_CHANGE_HEADING, "#{page} should include the managed service host change heading"
+      assert_includes html, HOST_CHANGE_LINK_TEXT, "#{page} should include the managed credentials link text"
     end
   end
 
@@ -29,6 +33,8 @@ class RateLimitingBannerTest < Minitest::Test
       refute_includes html, BANNER_HEADING, "#{page} should not include the banner heading"
       refute_includes html, BANNER_BODY, "#{page} should not include the banner body"
       refute_includes html, BANNER_LINK_TEXT, "#{page} should not include the Developer Portal link text"
+      refute_includes html, HOST_CHANGE_HEADING, "#{page} should not include the managed service host change heading"
+      refute_includes html, HOST_CHANGE_LINK_TEXT, "#{page} should not include the managed credentials link text"
     end
   end
 
