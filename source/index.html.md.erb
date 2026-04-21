@@ -35,7 +35,7 @@ You will also be able to:
 
 There are multiple APIs available through the UK Trade Tariff Service covering different user needs and search criteria. Some of the core APIs are:
 
-- The Commodities API provides detailed UK Trade Tariff data for imports and exports. It is ideal if you want to access structured trade tariff data across jurisdictions and time.
+- The Trade Tariff API provides detailed UK Trade Tariff data for imports and exports. It is ideal if you want to access structured trade tariff data across jurisdictions and time.
 - The Categorisation API relates to bringing goods in and out of Northern Ireland and determines whether goods qualify for the simplified procedures under the Windsor Framework.
 - The Fast Parcel Operator (FPO) Commodity Code Identification Tool API is for express operators handling time-dependent deliveries.
 
@@ -53,7 +53,25 @@ Additional APIs are available to support specific trade tariff and classificatio
 
 ## Authentication
 
-Usage of GOV.UK Trade Tariff APIs does not require authentication.
+The GOV.UK Trade Tariff APIs can be used without authentication for basic access.
+
+When you use managed developer credentials (Trade Tariff API keys), authenticate with an OAuth 2.0 `client_credentials` access token. Send the same `Accept` header as for other requests in this documentation (`application/vnd.hmrc.2.0+json`) so responses are correctly formatted, together with `Authorization: Bearer <access_token>`.
+
+For token endpoints per environment, example requests, token expiry and retry behaviour, and sample code in several languages, see [Authenticating with managed credentials](/the-trade-tariff-api.html#authenticating-with-managed-credentials) in Using the Trade Tariff API.
+
+## Developer Portal
+
+The HMRC Trade Tariff Developer Portal allows you to:
+
+- access official trade tariff information
+- create and manage your API keys
+- explore, test and integrate tariff data directly from HMRC
+- manage organisational details
+- invite new members and remove existing members
+
+[Sign up to the Trade Tariff API Developer Portal](https://hub.trade-tariff.service.gov.uk/).
+
+More detail is on the [Developer Portal](/developer-portal.html) page.
 
 ## Caching
 
@@ -81,7 +99,7 @@ If you experience any issues or have questions regarding GOV.UK Trade Tariff API
 
 ## Terms and Conditions
 
-By using the FPO APIs, you agree to the [terms and conditions](https://api.trade-tariff.service.gov.uk/categorisation-terms-and-conditions.html).
+By using the FPO APIs, you agree to the [terms and conditions](/fpo/terms-and-conditions.html).
 
 When using the rest of our APIs, you agree to the following [terms](https://www.trade-tariff.service.gov.uk/terms).
 

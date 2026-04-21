@@ -57,7 +57,7 @@
       apiUrl() {
         let originFilter = '';
         if (this.originTarget.value.trim() != '')
-          originFilter = `?filter[geographical_area_id]=${this.originTarget.value.trim()}`
+          originFilter = `?filter.geographical_area_id=${this.originTarget.value.trim()}`
 
         return `${this.domainAndProtocol()}/green_lanes/goods_nomenclatures/${this.commodityTarget.value}.json${originFilter}`
       }

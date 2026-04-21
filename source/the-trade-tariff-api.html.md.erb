@@ -1,17 +1,607 @@
 ---
-title: Using the Commodities API
+title: Using the Trade Tariff API
 ---
 
 <%= partial "layouts/rate_limiting_banner" %>
 
-# Using the Commodities API
+# Using the Trade Tariff API
 
-The commodities API is the most important of all of the APIs. It grants you access to virtually all the content that is present on a commodity code page on the Online Tariff. Along with all the other APIs, it is structured using the [JSON:API convention](https://jsonapi.org/), so that:
+## Getting started
+
+## How to use the GOV.UK Trade Tariff APIs
+
+You can use curl for interfacing with the API, however you can also use HTTPie or Postman. To structure fetched responses, you can use jq.
+
+## Accessing content
+
+The GOV.UK Trade Tariff APIs are used to access content from the [UK Trade Tariff Service](https://www.gov.uk/trade-tariff).
+
+Using the Commodities API for example, if you want to access the commodity object for pure-bred breeding animals with the commodity code 0101210000. This can be viewed through this API by making a request to:
+
+```shell
+curl https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | \
+  jq
+```
+
+You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
+
+The commodity object includes all the relevant information about the commodity including:
+
+- Import and export measures
+- Information on preferential and non-preferential rules of origin
+- Relevant notes
+
+This API can be used in a similar way to access a wide range of information from the UK Trade Tariff Service including:
+
+- Sections
+- Chapters
+- Quotas
+- Geographical areas
+- Preferential rules of origin
+
+Find out more about what information can be returned through the [Trade Tariff API](https://api.trade-tariff.service.gov.uk/reference.html).
+
+## Using the API without authentication
+
+You can use the Trade Tariff API without managed credentials for basic access. In this mode, include the `Accept` header and cache responses to reduce repeat calls.
+
+The examples below show simple commodity requests in different languages.
+
+### Ruby with Rails example
+
+It is simple to make use of the UK Trade Tariff API in your application. This example uses [Ruby](https://www.ruby-lang.org/en/) with the built in `net/http` library to access the Commodities API. It also uses the [Rails cache](https://guides.rubyonrails.org/caching_with_rails.html) to minimise the number of API calls.
+
+```ruby
+require 'net/http'
+require 'json'
+require 'uri'
+
+commodity = Rails.cache.fetch('commodity_0101210000', expires_in: 24.hours) do
+  uri = URI.parse('https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000')
+  response = Net::HTTP.get(uri, { 'Accept' => 'application/vnd.hmrc.2.0+json' })
+  JSON.parse(response)
+end
+attributes = commodity['data']['attributes']
+
+puts "Commodity Code: #{attributes['goods_nomenclature_item_id']}"
+puts "Description: #{attributes['formatted_description']}"
+puts "Basic Duty Rate: #{attributes['basic_duty_rate']}"
+puts "Declarable: #{attributes['declarable']}"
+```
+
+This example uses the Ruby on Rails cache, which minimises the number of API calls. It is recommended you cache requests for 24 hours.
+
+### Node.js example
+
+You can also use the UK Trade Tariff API in a [Node.js](https://nodejs.org) application. Below is an example using the built-in `https` module to access the Trade Tariff API.
+
+```javascript
+const https = require('https');
+const cache = new Map();
+const commodityCode = '0101210000';
+const cacheKey = `commodity_${commodityCode}`;
+const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+const cached = cache.get(cacheKey);
+if (cached && Date.now() - cached.timestamp < cacheDuration) {
+  const attributes = cached.data.data.attributes;
+  console.log(`Commodity Code: ${attributes.goods_nomenclature_item_id}`);
+  console.log(`Description: ${attributes.formatted_description}`);
+  console.log(`Basic Duty Rate: ${attributes.basic_duty_rate}`);
+  console.log(`Declarable: ${attributes.declarable}`);
+} else {
+  https.get(`https://api.trade-tariff.service.gov.uk/uk/api/commodities/${commodityCode}`, {
+    headers: {
+      'Accept': 'application/vnd.hmrc.2.0+json'
+    }
+  }, (res) => {
+    let data = '';
+
+    res.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    res.on('end', () => {
+      const commodity = JSON.parse(data);
+      cache.set(cacheKey, { data: commodity, timestamp: Date.now() });
+
+      const attributes = commodity.data.attributes;
+      console.log(`Commodity Code: ${attributes.goods_nomenclature_item_id}`);
+      console.log(`Description: ${attributes.formatted_description}`);
+      console.log(`Basic Duty Rate: ${attributes.basic_duty_rate}`);
+      console.log(`Declarable: ${attributes.declarable}`);
+    });
+  }).on('error', (err) => {
+    console.error(err);
+  });
+}
+```
+
+### Python example
+
+Finally, you can use the UK Trade Tariff API in a [Python](https://www.python.org/) application. Below is an example using the built-in `urllib` library to access the Commodities API.
+
+```python
+import urllib.request
+import json
+import time
+
+cache = {}
+commodity_code = '0101210000'
+cache_key = f'commodity_{commodity_code}'
+cache_duration = 24 * 60 * 60  # 24 hours in seconds
+
+cached = cache.get(cache_key)
+if cached and time.time() - cached['timestamp'] < cache_duration:
+    commodity = cached['data']
+else:
+    url = f'https://api.trade-tariff.service.gov.uk/uk/api/commodities/{commodity_code}'
+    req = urllib.request.Request(url, headers={'Accept': 'application/vnd.hmrc.2.0+json'})
+    with urllib.request.urlopen(req) as response:
+        data = response.read().decode('utf-8')
+        commodity = json.loads(data)
+    cache[cache_key] = {'data': commodity, 'timestamp': time.time()}
+
+attributes = commodity['data']['attributes']
+print(f"Commodity Code: {attributes['goods_nomenclature_item_id']}")
+print(f"Description: {attributes['formatted_description']}")
+print(f"Basic Duty Rate: {attributes['basic_duty_rate']}")
+print(f"Declarable: {attributes['declarable']}")
+```
+
+## Authenticating with managed credentials
+
+<div class="govuk-inset-text">
+  <strong>Host change:</strong> the managed Trade Tariff API is now served from <code>api.trade-tariff.service.gov.uk</code>. If your integration previously called <code>www.trade-tariff.service.gov.uk</code>, update the base URL in your client and token-authenticated requests.
+</div>
+
+When you use managed developer credentials (Trade Tariff API keys), you should authenticate using an OAuth 2.0 `client_credentials` access token. This provides controlled access suitable for production integration.
+
+As with unauthenticated requests, send the `Accept` header with the value `application/vnd.hmrc.2.0+json` for a correctly formatted response. Authenticated calls also need `Authorization: Bearer <access_token>`.
+
+### OAuth 2.0 client_credentials (plain language)
+
+`client_credentials` is a machine-to-machine authentication flow:
+
+1. You send your `client_id` and `client_secret` to the token endpoint.
+2. The service returns an `access_token`.
+3. You include the token in the `Authorization` header as `Bearer <access_token>` when calling the Trade Tariff API, and the `Accept` header as above.
+4. Access tokens expire after a fixed time-to-live (TTL). If your token expires (for example, the API returns `401 Unauthorized`), request a new access token and retry.
+
+### Token endpoint URLs (per environment)
+
+Use the token endpoint:
+
+`https://auth.id.trade-tariff.service.gov.uk/oauth2/token`
+
+### Example API request
+
+API request (example commodity):
+
+`GET https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000`
+
+Headers:
+
+- `Authorization: Bearer <access_token>`
+- `Accept: application/vnd.hmrc.2.0+json`
+
+Access token TTL: access tokens are configured for 1 day. Refresh by requesting a new access token before expiry, or when you receive `401` and retry the request.
+
+The examples below request a token, call the API with both headers, and retry once on `401`.
+
+### Bash (curl)
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+TOKEN_ENDPOINT="https://auth.id.trade-tariff.service.gov.uk/oauth2/token"
+CLIENT_ID="your_client_id"
+CLIENT_SECRET="your_client_secret"
+API_URL="https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000"
+
+get_access_token() {
+  local response
+  response="$(curl -sS -X POST "${TOKEN_ENDPOINT}" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}")"
+  # Requires jq. If you do not have jq, use any JSON parser to extract .access_token.
+  echo "$response" | jq -r '.access_token'
+}
+
+call_api() {
+  local token="$1"
+  curl -sS -w "\n%{http_code}" \
+    -H "Authorization: Bearer ${token}" \
+    -H "Accept: application/vnd.hmrc.2.0+json" \
+    "${API_URL}"
+}
+
+ACCESS_TOKEN="$(get_access_token)"
+API_OUTPUT="$(call_api "$ACCESS_TOKEN")"
+HTTP_CODE="$(echo "$API_OUTPUT" | tail -n 1)"
+
+if [ "$HTTP_CODE" = "401" ]; then
+  # Token expired or invalid; refresh and retry once.
+  ACCESS_TOKEN="$(get_access_token)"
+  call_api "$ACCESS_TOKEN"
+else
+  echo "$API_OUTPUT" | head -n -1
+fi
+```
+
+### Python (requests)
+
+```python
+import requests
+
+TOKEN_ENDPOINT = "https://auth.id.trade-tariff.service.gov.uk/oauth2/token"
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000"
+
+def get_access_token():
+    resp = requests.post(
+        TOKEN_ENDPOINT,
+        data={
+            "grant_type": "client_credentials",
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+        },
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        timeout=30,
+    )
+    resp.raise_for_status()
+    return resp.json()["access_token"]
+
+def call_api(access_token):
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Accept": "application/vnd.hmrc.2.0+json",
+    }
+    return requests.get(API_URL, headers=headers, timeout=30)
+
+token = get_access_token()
+response = call_api(token)
+
+if response.status_code == 401:
+    # Token expired or invalid; refresh and retry once.
+    token = get_access_token()
+    response = call_api(token)
+
+response.raise_for_status()
+print(response.json())
+```
+
+### Node.js (fetch)
+
+```javascript
+const TOKEN_ENDPOINT = "https://auth.id.trade-tariff.service.gov.uk/oauth2/token";
+const CLIENT_ID = "your_client_id";
+const CLIENT_SECRET = "your_client_secret";
+const API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000";
+
+async function getAccessToken() {
+  const form = new URLSearchParams();
+  form.set("grant_type", "client_credentials");
+  form.set("client_id", CLIENT_ID);
+  form.set("client_secret", CLIENT_SECRET);
+
+  const res = await fetch(TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: form,
+  });
+
+  if (!res.ok) throw new Error(`Token request failed: ${res.status}`);
+  const data = await res.json();
+  return data.access_token;
+}
+
+async function callApi(accessToken) {
+  return fetch(API_URL, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/vnd.hmrc.2.0+json",
+    },
+  });
+}
+
+let token = await getAccessToken();
+let response = await callApi(token);
+
+if (response.status === 401) {
+  // Token expired or invalid; refresh and retry once.
+  token = await getAccessToken();
+  response = await callApi(token);
+}
+
+if (!response.ok) throw new Error(`API request failed: ${response.status}`);
+const json = await response.json();
+console.log(json);
+```
+
+### Java (java.net.http)
+
+```java
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+
+public class TradeTariffAuthExample {
+  private static final String TOKEN_ENDPOINT = "https://auth.id.trade-tariff.service.gov.uk/oauth2/token";
+  private static final String CLIENT_ID = "your_client_id";
+  private static final String CLIENT_SECRET = "your_client_secret";
+  private static final String API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000";
+
+  private static final HttpClient http = HttpClient.newBuilder()
+      .connectTimeout(Duration.ofSeconds(30))
+      .build();
+
+  private static String extractAccessToken(String json) {
+    // Minimal extraction without external JSON libs.
+    String marker = "\"access_token\":\"";
+    int idx = json.indexOf(marker);
+    if (idx < 0) throw new RuntimeException("access_token not found in response");
+    int start = idx + marker.length();
+    int end = json.indexOf("\"", start);
+    return json.substring(start, end);
+  }
+
+  private static String urlEncode(String s) {
+    return URLEncoder.encode(s, StandardCharsets.UTF_8);
+  }
+
+  private static String getAccessToken() throws Exception {
+    String body = "grant_type=client_credentials"
+        + "&client_id=" + urlEncode(CLIENT_ID)
+        + "&client_secret=" + urlEncode(CLIENT_SECRET);
+
+    HttpRequest req = HttpRequest.newBuilder()
+        .uri(URI.create(TOKEN_ENDPOINT))
+        .timeout(Duration.ofSeconds(30))
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .POST(HttpRequest.BodyPublishers.ofString(body))
+        .build();
+
+    HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
+    if (res.statusCode() / 100 != 2) {
+      throw new RuntimeException("Token request failed: " + res.statusCode());
+    }
+    return extractAccessToken(res.body());
+  }
+
+  private static HttpResponse<String> callApi(String accessToken) throws Exception {
+    HttpRequest req = HttpRequest.newBuilder()
+        .uri(URI.create(API_URL))
+        .timeout(Duration.ofSeconds(30))
+        .header("Authorization", "Bearer " + accessToken)
+        .header("Accept", "application/vnd.hmrc.2.0+json")
+        .GET()
+        .build();
+    return http.send(req, HttpResponse.BodyHandlers.ofString());
+  }
+
+  public static void main(String[] args) throws Exception {
+    String token = getAccessToken();
+    HttpResponse<String> response = callApi(token);
+
+    if (response.statusCode() == 401) {
+      // Token expired or invalid; refresh and retry once.
+      token = getAccessToken();
+      response = callApi(token);
+    }
+
+    if (response.statusCode() / 100 != 2) {
+      throw new RuntimeException("API request failed: " + response.statusCode());
+    }
+    System.out.println(response.body());
+  }
+}
+```
+
+### Ruby (net/http)
+
+```ruby
+require "net/http"
+require "uri"
+require "json"
+
+TOKEN_ENDPOINT = "https://auth.id.trade-tariff.service.gov.uk/oauth2/token"
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+API_URL = "https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000"
+
+def get_access_token(token_endpoint)
+  uri = URI(token_endpoint)
+  req = Net::HTTP::Post.new(uri)
+  req["Content-Type"] = "application/x-www-form-urlencoded"
+  req.set_form_data(
+    "grant_type" => "client_credentials",
+    "client_id" => CLIENT_ID,
+    "client_secret" => CLIENT_SECRET
+  )
+
+  res = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+    http.request(req)
+  end
+
+  raise "Token request failed: #{res.code}" unless res.is_a?(Net::HTTPSuccess)
+  JSON.parse(res.body).fetch("access_token")
+end
+
+def call_api(api_url, access_token)
+  uri = URI(api_url)
+  req = Net::HTTP::Get.new(uri)
+  req["Authorization"] = "Bearer #{access_token}"
+  req["Accept"] = "application/vnd.hmrc.2.0+json"
+
+  Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+    http.request(req)
+  end
+end
+
+token = get_access_token(TOKEN_ENDPOINT)
+response = call_api(API_URL, token)
+
+if response.code.to_i == 401
+  # Token expired or invalid; refresh and retry once.
+  token = get_access_token(TOKEN_ENDPOINT)
+  response = call_api(API_URL, token)
+end
+
+raise "API request failed: #{response.code}" unless response.is_a?(Net::HTTPSuccess)
+puts JSON.pretty_generate(JSON.parse(response.body))
+```
+
+### Go (net/http)
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"net/url"
+	"strings"
+	"time"
+)
+
+const (
+	TOKEN_ENDPOINT = "https://auth.id.trade-tariff.service.gov.uk/oauth2/token"
+	CLIENT_ID      = "your_client_id"
+	CLIENT_SECRET  = "your_client_secret"
+	API_URL        = "https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000"
+)
+
+type tokenResponse struct {
+	AccessToken string `json:"access_token"`
+}
+
+func getAccessToken(client *http.Client) (string, error) {
+	data := url.Values{}
+	data.Set("grant_type", "client_credentials")
+	data.Set("client_id", CLIENT_ID)
+	data.Set("client_secret", CLIENT_SECRET)
+
+	req, err := http.NewRequest("POST", TOKEN_ENDPOINT, strings.NewReader(data.Encode()))
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		b, _ := io.ReadAll(resp.Body)
+		return "", fmt.Errorf("token request failed: %d: %s", resp.StatusCode, string(b))
+	}
+
+	var tr tokenResponse
+	if err := json.NewDecoder(resp.Body).Decode(&tr); err != nil {
+		return "", err
+	}
+	if tr.AccessToken == "" {
+		return "", fmt.Errorf("access_token missing in response")
+	}
+	return tr.AccessToken, nil
+}
+
+func callAPI(client *http.Client, accessToken string) (*http.Response, []byte, error) {
+	req, err := http.NewRequest("GET", API_URL, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	req.Header.Set("Authorization", "Bearer "+accessToken)
+	req.Header.Set("Accept", "application/vnd.hmrc.2.0+json")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, nil, err
+	}
+	return resp, body, nil
+}
+
+func main() {
+	httpClient := &http.Client{Timeout: 30 * time.Second}
+
+	token, err := getAccessToken(httpClient)
+	if err != nil {
+		panic(err)
+	}
+
+	resp, body, err := callAPI(httpClient, token)
+	if err != nil {
+		panic(err)
+	}
+
+	if resp.StatusCode == http.StatusUnauthorized {
+		// Token expired or invalid; refresh and retry once.
+		token, err = getAccessToken(httpClient)
+		if err != nil {
+			panic(err)
+		}
+		resp, body, err = callAPI(httpClient, token)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		panic(fmt.Sprintf("API request failed: %d: %s", resp.StatusCode, string(body)))
+	}
+	fmt.Println(string(body))
+}
+```
+
+## Northern Ireland
+
+For trade with Northern Ireland, you might need to apply measures from the EU Tariff and combine these with measures from the UK Tariff.
+
+To do this you will need to access the XI tariff. For example, for pure-bred breeding animals, commodity code 0101210000 is accessed by:
+
+```shell
+curl https://api.trade-tariff.service.gov.uk/xi/api/commodities/0101210000 \
+  -H "Accept: application/vnd.hmrc.2.0+json" | \
+  jq
+```
+
+Be aware, the XI tariff API does not contain information about EU quotas. If VAT and/or excise measures are required, these are listed in the UK Tariff.
+
+Find out more about trading and moving goods in and out of [Northern Ireland](https://www.gov.uk/guidance/trading-and-moving-goods-in-and-out-of-northern-ireland).
+
+## API reference
+
+Use the [API Reference](/reference.html) for endpoint and object definitions used throughout this section.
+
+## Commodities guidance
+
+The Commodities API is a core part of the Trade Tariff API. It provides access to virtually all content shown on a commodity code page in the Online Tariff. Like the other APIs, it uses the [JSON:API convention](https://jsonapi.org/), so that:
 
 - the entire (primary) commodity content is self-contained within one API
 - each referenced entity is included only once, rather than multiple times
 
 Some content, such as rules of origin data, is stored in separate APIs.
+
+The examples below focus on commodities, which are exposed through the broader Trade Tariff API.
 
 Please also see the new section on [reference data](/reference-data.html) which provides lookup values
 for regularly-used entities such as:
@@ -26,13 +616,13 @@ for regularly-used entities such as:
 The API is available at the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/uk/api/commodities/{10-digit-commodity}
+https://api.trade-tariff.service.gov.uk/uk/api/commodities/{10-digit-commodity}
 ```
 
 So, for example, if you are looking at the API for **cherry tomatoes**, which has a commodity code of **0702009907**, you would access the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/uk/api/commodities/0702009907
+https://api.trade-tariff.service.gov.uk/uk/api/commodities/0702009907
 ```
 
 It's easy to remember the URL for the commodities API: it's the same as the URL for the commodity on the Online Tariff, but with `/uk/api/` inserted before `commodities`.
@@ -58,7 +648,7 @@ The attributes section lists the core, intrinsic properties of the commodity cod
 
 |Field|Description|
 |-|-|
-|producline_suffix|The `producline_suffix` is a structural element that is used to add hierarchical tiers into the tariff, to aid comprehension. Where the `producline_suffix` is set to '80', the commodity code is potentially declarable, where declarable means that the commodity has no descendant commodity codes.<br><br>Where the value of this field is anything other than '80', such as '10', '20', '30', '40' or '50', this means that the item is a structural heading only.<br><br>However, as the commodities API only deals with commodities which are 'declarable', the value of the `producline_suffix` field in this API will always be '80'.<br><br>Measures may only be assigned to goods nomenclature items that have a `producline_suffix` of '80', albeit they may be assigned to items at any point in the hierarchy and then inherited down to descendant codes.<br><br>Headings and subheadings may feature `producline_suffix` values other than '80'.|
+|producline_suffix|The `producline_suffix` is a structural element that is used to add hierarchical tiers into the tariff, to aid comprehension. Where the `producline_suffix` is set to '80', the commodity code is potentially declarable, where declarable means that the commodity has no descendant commodity codes.<br><br>Where the value of this field is anything other than '80', such as '10', '20', '30', '40' or '50', this means that the item is a structural heading only.<br><br>However, as the trade tariff API only deals with commodities which are 'declarable', the value of the `producline_suffix` field in this API will always be '80'.<br><br>Measures may only be assigned to goods nomenclature items that have a `producline_suffix` of '80', albeit they may be assigned to items at any point in the hierarchy and then inherited down to descendant codes.<br><br>Headings and subheadings may feature `producline_suffix` values other than '80'.|
 |description|The `description` field contains the raw description, as entered into the master tariff management application. There are, on occasion, formatting instructions in this field that have not been rendered into HTML, such as instructions to include superscripts, subscripts or non-breaking spaces.<br><br>Use this field if you want to use the raw data and apply your own formatting to the description.|
 |number_indents|The number of indents show how deeply nested in the overall hierarchy the commodity code is.<br><br>The hierarchy starts with an indent of '0' for chapters. '0' is also used for the next tier, headings, and from that point onwards, the number of indents increments by 1 as the hierarchy deepens.|
 |goods_nomenclature_item_id|The `goods_nomenclature_item_id` is the commodity code. It always features 10 numeric digits. In this guide, the terms `goods_nomenclature_item_id` and commodity code are synonymous.|
@@ -127,7 +717,7 @@ The measure object (and all subsequent objects listed here) is structured simila
 |Field|Description|
 |-|-|
 |duty_expression|Contains a reference to the single applicable `duty_expression` object in the `included` section. The duty expression object represents the duty for a tariff or tax measures, which is composed of one or more measure_components.<br><br>A duty_expression object is only included for measures that have duties (as well as supplementary units). Others, such as import controls, do not reference duty_expressions.|
-|measure_type|Contains a reference to the single applicable `measure_type` object in the `included` section. Measure types identify what sort of measure is being referenced.<br><br>The full list of measure types is available on the [measure_types API](https://www.trade-tariff.service.gov.uk/uk/api/measure_types) and documented here under [reference data (measure types)](/reference-data.html#measure-types). Some of the key measure types are:<br><br>`103` Third country duty<br>`109` Supplementary unit<br>`142` Tariff preference<br><br>Measure types themselves are grouped according to their `measure type series`, which broadly identifies their usage. Key measure type series are:<br><br>`A` Prohibitions<br>`B` Restrictions<br>`C` Applicable duties<br>`P` VAT<br>`Q` Excise<br><br>Measure type series are documented under [reference data (measure type series)](/reference-data.html#measure-types)|
+|measure_type|Contains a reference to the single applicable `measure_type` object in the `included` section. Measure types identify what sort of measure is being referenced.<br><br>The full list of measure types is available on the [measure_types API](https://api.trade-tariff.service.gov.uk/uk/api/measure_types) and documented here under [reference data (measure types)](/reference-data.html#measure-types). Some of the key measure types are:<br><br>`103` Third country duty<br>`109` Supplementary unit<br>`142` Tariff preference<br><br>Measure types themselves are grouped according to their `measure type series`, which broadly identifies their usage. Key measure type series are:<br><br>`A` Prohibitions<br>`B` Restrictions<br>`C` Applicable duties<br>`P` VAT<br>`Q` Excise<br><br>Measure type series are documented under [reference data (measure type series)](/reference-data.html#measure-types)|
 |legal_acts|Contains a reference to one or more applicable `legal_act` objects in the `included` section. These are the regulations that give the measures legal backing.<br><br>On the UK tariff, there will be just one legal act referenced. On the XI tariff, more than one may be referenced, if the original 'base' regulation has since been modified.|
 |measure_conditions|Contains references to zero or more applicable `measure_condition` objects in the `included` section.<br><br>Measure conditions are crucial for a number of reasons, primarily to identify what documentation a trader needs to prepare to successfully meet the requirements of a condition, or the exemptions / exclusions that are in place that may make a document superfluous.<br><br>In addition, there may be thresholds in place, e.g. if a trader is importing below  certain weight threshold of goods, then a document is not needed.<br><br>Duties may also be dependent on measure conditions, e.g. if documents are provided, or if the import price is below certain thresholds.<br><br>See also the section on `measure_condition_permutation_groups` below for more information on complex arrangements of measure conditions.|
 |measure_components|Contains a reference to zero or more applicable `measure_component` objects in the `included` section.<br><br>Measure components are the building blocks for duty expressions. A simple ad valorem or specific duty (like 3.60% or £10.00 / KGM) only features one measure component, but more complex compound duties (like 3.60% + £10.00 / KGM) feature multiple measure components.<br><br>In most cases, the `duty_expression` object should suffice, but if there is a need to break the duty expression down into its constituent parts, then use the measure components.|
@@ -154,7 +744,7 @@ Here is a brief sequence of activities that you should perform in your code to d
 - 2. For each measure  you should find the equivalent entity of type `measure` in the `included` section.:
   - 3. Store the properties (attributes and relationships - i.e. referenced entities).
     - 4. Find the referenced entity in the `included` section and store the values of those referenced entities, and if necessary (in most cases it will not be), capture and store the referenced entities in entities.
-   
+
 <hr>
 
 Alternatively, Each measure has both an `import` and `export` boolean field (`true` / `false`) to identify if the measure is for import, export or both. You can just search for all measures and use the ones that meet the requirement (import or export).
@@ -168,7 +758,7 @@ The schematic below illustrates if a measure applies to a given country of impor
 
 **How is this represented in data?**
 
-Let's look at an example commodity code ([0103911000](https://www.trade-tariff.service.gov.uk/uk/api/commodities/0103911000) - domestic swine species). Imagine we are importing
+Let's look at an example commodity code ([0103911000](https://api.trade-tariff.service.gov.uk/uk/api/commodities/0103911000) - domestic swine species). Imagine we are importing
 domestic swine from a European Union member state, such as Belgium.
 
 From the data below you can see the import controls for this commodity:
@@ -188,7 +778,7 @@ You can work out that:
 The commodities API for this commodity is available at the URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/uk/api/commodities/0103911000
+https://api.trade-tariff.service.gov.uk/uk/api/commodities/0103911000
 ```
 
 The country code for Belgium is `BE`.
@@ -221,7 +811,7 @@ Let's say we are importing domestic swine from the United States, a country with
 trade agreement. The import will need to fall back to the third-country duty
 (or <abbr title="Most Favoured Nation">MFN</abbr> duty).
 
-The image below shows the third-country duty for the same commodity ([0103911000](https://www.trade-tariff.service.gov.uk/commodities/0103911000)) as in the example above. You will see that there are three measures
+The image below shows the third-country duty for the same commodity ([0103911000](https://api.trade-tariff.service.gov.uk/commodities/0103911000)) as in the example above. You will see that there are three measures
 pictured:
 
 - **Third-country duty** (for all countries)
@@ -286,7 +876,7 @@ The process and data elements are very similar to the previous 2 examples.
 Access the commodity code API at the following URL:
 
 ```
-https://www.trade-tariff.service.gov.uk/uk/api/commodities/8415900099
+https://api.trade-tariff.service.gov.uk/uk/api/commodities/8415900099
 ```
 
 
@@ -396,7 +986,7 @@ By way of example, let's look at the commodity code for Cava (2204101300). If yo
 - supplementary unit (global) of litres (`LTR`)
 - excise duties which refer to both litres (`LTR`) and litres of pure alcohol (`LPA`)
 
-Let's look at a couple of these in the [commodities API for Cava](https://www.trade-tariff.service.gov.uk/uk/api/commodities/2204101300).
+Let's look at a couple of these in the [commodities API for Cava](https://api.trade-tariff.service.gov.uk/uk/api/commodities/2204101300).
 
 The third country duty measure, which has an ID of `20002430` (at the time of writing) features a single measure component. This is referenced in the `relationships` part of the measure node, and is available via the node of type `measure_component`.
 

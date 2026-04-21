@@ -14,8 +14,6 @@ highlight_theme: darkula
   <link href="/green_lanes.xml" type="application/atom+xml" rel="alternate" title="Windsor Framework Categorisation API changes feed" />
 <% end %>
 
-<%= partial "layouts/rate_limiting_banner" %>
-
 The Windsor Framework Categorisation API's provide access to the trade tariff data for trade with Northern Ireland.
 
 These APIs follow the JSON-API format for both request and response, in common with the other OTT APIs documented on this site.
@@ -105,7 +103,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 ## Determining the Category for commodities with no descendants
 <p>To determine the final category for a trade:</p>
 <ol>
-  <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
+  <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter.geographical_area_id</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
   <li><b>Extract</b> <code>applicable_category_assessments</code> from the response.</li>
   <li>For each assessment:</li>
   <ul>
@@ -122,7 +120,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
 
 <p>To determine the final category for a trade:</p>
 <ol>
-  <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter[geographical_area_id]</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
+  <li><b>Call the</b> <code>/goods_nomenclatures/{id}</code> <b>endpoint</b> with the <code>as_of</code> date and <code>filter.geographical_area_id</code> (use a 2-letter country code like <code>GB</code>, <code>US</code>, etc.).</li>
   <li><b>Extract</b> <code>applicable_category_assessments</code> & <code>descendant_category_assessments</code> from the response.</li>
   <li>For each assessment:</li>
   <ul>
@@ -222,7 +220,7 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 id|path|string|true|Item Id of the Goods Nomenclature you are requesting Category Assessments information for.  This is the full 10 digit item ID of either a Subheading or Commodity. Valid input IDs can be provided in 4, 6, 8, or 10 significant digits, depending on the level of detail available in the XI Tariff. If your input ID is shorter than 10 digits (e.g., 4, 6, or 8 digits), it will be automatically padded with trailing zeros to reach the full 10-digit format. For example, an ID of 1234 would be processed as 1234000000.
 as_of|query|string(date)|false|Returns the category assessments across all commodities as they existed on the `as_of` date. Use the format `YYYY-MM-DD`  While `as_of` is not a required field it is advised to include it with all requests even if requesting data for today to ensure the data returned is correct.
-filter[geographical_area_id]|query|string|false|This parameter can be used to filter down for the origin of your goods. Without passing a value for this parameter, the API will return the potentially applicable CAs for all the origins. To better understand this data point, please consult the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html</a>.
+filter.geographical_area_id|query|string|false|This parameter can be used to filter down for the origin of your goods. Without passing a value for this parameter, the API will return the potentially applicable CAs for all the origins. To better understand this data point, please consult the data manual : <a href="https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html" target="_blank">https://uktrade.github.io/tariff-data-manual/documentation/data-structures/geographical-areas.html</a>.
 
 **Example Request**
 
@@ -237,11 +235,11 @@ curl -H "X-Api-Key: a1b2c3defg4567" \
 
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  "https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?filter[geographical_area_id]=US"
+  "https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?filter.geographical_area_id=US"
 
 curl -H "X-Api-Key: a1b2c3defg4567" \
   -H "Accept: application/vnd.hmrc.2.0+json" \
-  "https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter[geographical_area_id]=US"
+  "https://www.trade-tariff.service.gov.uk/xi/api/green_lanes/goods_nomenclatures/0712909000?as_of=2024-01-01&filter.geographical_area_id=US"
 ```
 
 **Example Response**
