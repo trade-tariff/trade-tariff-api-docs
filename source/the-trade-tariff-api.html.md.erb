@@ -14,7 +14,7 @@ You can use curl for interfacing with the API, however you can also use HTTPie o
 
 ## Accessing content
 
-The GOV.UK Trade Tariff APIs are used to access content from the [UK Trade Tariff Service](https://www.gov.uk/trade-tariff).
+The GOV.UK Trade Tariff APIs are used to access content from the <a href="https://www.gov.uk/trade-tariff" target="_blank" rel="noreferrer noopener">UK Trade Tariff Service (Opens in new tab)</a>.
 
 Using the Commodities API for example, if you want to access the commodity object for pure-bred breeding animals with the commodity code 0101210000. This can be viewed through this API by making a request to:
 
@@ -40,7 +40,7 @@ This API can be used in a similar way to access a wide range of information from
 - Geographical areas
 - Preferential rules of origin
 
-Find out more about what information can be returned through the [Trade Tariff API](https://api.trade-tariff.service.gov.uk/reference.html).
+Find out more about what information can be returned through the [Trade Tariff API](/reference.html).
 
 ## Using the API without authentication
 
@@ -50,7 +50,7 @@ The examples below show simple commodity requests in different languages.
 
 ### Ruby with Rails example
 
-It is simple to make use of the UK Trade Tariff API in your application. This example uses [Ruby](https://www.ruby-lang.org/en/) with the built in `net/http` library to access the Commodities API. It also uses the [Rails cache](https://guides.rubyonrails.org/caching_with_rails.html) to minimise the number of API calls.
+It is simple to make use of the UK Trade Tariff API in your application. This example uses <a href="https://www.ruby-lang.org/en/" target="_blank" rel="noreferrer noopener">Ruby (Opens in new tab)</a> with the built in `net/http` library to access the Commodities API. It also uses the <a href="https://guides.rubyonrails.org/caching_with_rails.html" target="_blank" rel="noreferrer noopener">Rails cache (Opens in new tab)</a> to minimise the number of API calls.
 
 ```ruby
 require 'net/http'
@@ -74,7 +74,7 @@ This example uses the Ruby on Rails cache, which minimises the number of API cal
 
 ### Node.js example
 
-You can also use the UK Trade Tariff API in a [Node.js](https://nodejs.org) application. Below is an example using the built-in `https` module to access the Trade Tariff API.
+You can also use the UK Trade Tariff API in a <a href="https://nodejs.org" target="_blank" rel="noreferrer noopener">Node.js (Opens in new tab)</a> application. Below is an example using the built-in `https` module to access the Trade Tariff API.
 
 ```javascript
 const https = require('https');
@@ -120,7 +120,7 @@ if (cached && Date.now() - cached.timestamp < cacheDuration) {
 
 ### Python example
 
-Finally, you can use the UK Trade Tariff API in a [Python](https://www.python.org/) application. Below is an example using the built-in `urllib` library to access the Commodities API.
+Finally, you can use the UK Trade Tariff API in a <a href="https://www.python.org/" target="_blank" rel="noreferrer noopener">Python (Opens in new tab)</a> application. Below is an example using the built-in `urllib` library to access the Commodities API.
 
 ```python
 import urllib.request
@@ -586,7 +586,7 @@ curl https://api.trade-tariff.service.gov.uk/xi/api/commodities/0101210000 \
 
 Be aware, the XI tariff API does not contain information about EU quotas. If VAT and/or excise measures are required, these are listed in the UK Tariff.
 
-Find out more about trading and moving goods in and out of [Northern Ireland](https://www.gov.uk/guidance/trading-and-moving-goods-in-and-out-of-northern-ireland).
+Find out more about trading and moving goods in and out of <a href="https://www.gov.uk/guidance/trading-and-moving-goods-in-and-out-of-northern-ireland" target="_blank" rel="noreferrer noopener">Northern Ireland (Opens in new tab)</a>.
 
 ## API reference
 
@@ -594,7 +594,7 @@ Use the [API Reference](/reference.html) for endpoint and object definitions use
 
 ## Commodities guidance
 
-The Commodities API is a core part of the Trade Tariff API. It provides access to virtually all content shown on a commodity code page in the Online Tariff. Like the other APIs, it uses the [JSON:API convention](https://jsonapi.org/), so that:
+The Commodities API is a core part of the Trade Tariff API. It provides access to virtually all content shown on a commodity code page in the Online Tariff. Like the other APIs, it uses the <a href="https://jsonapi.org/" target="_blank" rel="noreferrer noopener">JSON:API convention (Opens in new tab)</a>, so that:
 
 - the entire (primary) commodity content is self-contained within one API
 - each referenced entity is included only once, rather than multiple times
