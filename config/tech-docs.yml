@@ -3,18 +3,30 @@ host: https://api.trade-tariff.service.gov.uk
 
 # Header-related options
 show_govuk_logo: true
-service_name: Trade Tariff API
 service_link: /
 # phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
   About: /
-  Developer Portal: /developer-portal.html
+  Developer portal: /developer-portal.html
   API Reference: /reference.html
   Trade Tariff API: /the-trade-tariff-api.html
   Categorisation API: /categorisation.html
   FPO API: /fpo.html
+
+# Developer Portal hostname (no scheme). Used by source/layouts/_footer.erb to treat
+# /privacy and /cookies on this host as same-tab links; keep consistent with hub URLs below.
+hub_host: hub.trade-tariff.service.gov.uk
+
+# Footer meta links (same pattern as UK Trade Tariff Developer Portal)
+footer_links:
+  Developer portal: https://hub.trade-tariff.service.gov.uk/
+  Enquiry form: https://www.trade-tariff.service.gov.uk/enquiry_form
+  Feedback: https://www.trade-tariff.service.gov.uk/feedback
+  Privacy policy: https://hub.trade-tariff.service.gov.uk/privacy
+  Cookies: https://hub.trade-tariff.service.gov.uk/cookies
+  Terms and conditions: https://www.trade-tariff.service.gov.uk/terms
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id: UA-97208357-3

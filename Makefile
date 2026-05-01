@@ -13,5 +13,8 @@ clean:
 
 all: html
 
+test:
+	bundle exec ruby -I test test/rate_limiting_banner_test.rb test/footer_links_test.rb
+
 update-tech-docs:
 	bundle update govuk_tech_docs && FIRST_TIME=false bundle exec middleman init . -T alphagov/tech-docs-template
