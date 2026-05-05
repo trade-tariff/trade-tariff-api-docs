@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Prints govuk_tech_docs version from Gemfile.lock and GitHub paths for reconciling
+# Middleman layout overrides in source/layouts/ after a gem upgrade.
+
+repo_root = File.expand_path("..", __dir__)
+lock_path = File.join(repo_root, "Gemfile.lock")
+abort("Gemfile.lock not found at #{lock_path}") unless File.file?(lock_path)
+
+lock = File.read(lock_path)
+version = lock[/^\s{4}govuk_tech_docs \(([^)]+)\)/, 1] || abort("Could not find govuk_tech_docs version in Gemfile.lock")
+
+tag = version.match?(/\A\d/) ? "v#{version}" : version
+base = "https://github.com/alphagov/tech-docs-gem/blob/#{tag}/lib/source/layouts"
+
+puts <<~OUT
+  Installed govuk_tech_docs: #{version}
+
+  This project overrides:
+    #{File.join(repo_root, "source/layouts/_header.erb")}
+    #{File.join(repo_root, "source/layouts/_footer.erb")}
+
+  Upstream sources to diff (same filenames):
+    #{base}/_header.erb
+    #{base}/_footer.erb
+OUT

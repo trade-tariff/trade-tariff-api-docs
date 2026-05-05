@@ -9,6 +9,8 @@ gem 'bigdecimal', '>= 1.4.0'
 gem 'brakeman'
 gem 'builder'
 gem 'cgi'
+# source/layouts/_header.erb and _footer.erb override templates from this gem; after upgrading,
+# run bin/tech-docs-layout-upstream-hint and reconcile those files with upstream.
 gem 'govuk_tech_docs'
 gem 'logger'
 gem 'middleman-gh-pages'

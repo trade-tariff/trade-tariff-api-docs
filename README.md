@@ -183,6 +183,12 @@ The container will be started and then the application will be built and started
 
 You should now be able to view a live preview at <http://localhost:4567>.
 
+## Layout overrides (`govuk_tech_docs`)
+
+This site replaces the Tech Docs gem’s `_header.erb` and `_footer.erb` under `source/layouts/` (header/footer behaviour for Trade Tariff). Header links and footer URLs are configured in `config/tech-docs.yml`.
+
+After **`bundle update govuk_tech_docs`**, run **`bin/tech-docs-layout-upstream-hint`** — it prints the upstream GitHub paths for your gem version so you can merge any gem changes into those two files.
+
 ## Publishing documentation
 
 ### Development
