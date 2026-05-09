@@ -21,6 +21,9 @@ jobs:
       - name: Install graphviz
         run: sudo apt-get update && sudo apt-get install -yy graphviz
 
+      - name: Guard reference workflow docs
+        run: ./script/check-stale-reference-workflow.sh
+
       - name: Build static site
         run: make html
 
