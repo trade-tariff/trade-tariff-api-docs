@@ -2,6 +2,7 @@
 
 require 'govuk_tech_docs'
 require 'kramdown'
+require_relative 'lib/openapi_reference_renderer'
 
 GovukTechDocs.configure(self)
 
@@ -26,5 +27,9 @@ helpers do
 
   def convert_markdown(markdown_content)
     ::Kramdown::Document.new(markdown_content).to_html
+  end
+
+  def openapi_reference
+    OpenapiReferenceRenderer.render(ENV.fetch('BACKEND_OPENAPI_PATH', 'tmp/backend-openapi/swagger.json'))
   end
 end

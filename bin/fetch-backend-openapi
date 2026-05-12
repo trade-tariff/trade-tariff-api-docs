@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'fileutils'
+require 'json'
+require 'net/http'
+require 'uri'
+
+DEFAULT_OPENAPI_URL = 'https://raw.githubusercontent.com/trade-tariff/trade-tariff-backend/main/swagger/v2/swagger.json'
+DEFAULT_OPENAPI_PATH = 'tmp/backend-openapi/swagger.json'
+
+def read_source(source)
+  uri = URI.parse(source)
+
+  return File.read(uri.path) if uri.scheme == 'file'
+  return fetch_http(uri) if uri.is_a?(URI::HTTP)
+
+  File.read(source)
+rescue URI::InvalidURIError
+  File.read(source)
+end
+
+# rubocop:disable Metrics/MethodLength
+def fetch_http(uri, limit = 3)
+  raise "Too many redirects while fetching #{uri}" if limit.zero?
+
+  response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+    http.request(Net::HTTP::Get.new(uri))
+  end
+
+  case response
+  when Net::HTTPSuccess
+    response.body
+  when Net::HTTPRedirection
+    fetch_http(URI.parse(response['location']), limit - 1)
+  else
+    raise "Failed to fetch #{uri}: #{response.code} #{response.message}"
+  end
+end
+# rubocop:enable Metrics/MethodLength
+
+source = ENV.fetch('BACKEND_OPENAPI_URL', DEFAULT_OPENAPI_URL)
+target = ENV.fetch('BACKEND_OPENAPI_PATH', DEFAULT_OPENAPI_PATH)
+contents = read_source(source)
+openapi = JSON.parse(contents)
+
+unless openapi['openapi'] && openapi['paths'].is_a?(Hash)
+  raise "Fetched document is not an OpenAPI JSON document: #{source}"
+end
+
+FileUtils.mkdir_p(File.dirname(target))
+File.write(target, JSON.pretty_generate(openapi))
+
+puts "Fetched backend OpenAPI document from #{source} to #{target}"
