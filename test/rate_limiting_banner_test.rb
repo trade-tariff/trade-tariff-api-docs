@@ -35,7 +35,7 @@ class RateLimitingBannerTest < Minitest::Test
   def self.build_site_once
     return if @build_complete
 
-    system('bundle exec rake build', exception: true)
+    system('make html', exception: true)
     @build_complete = true
   end
 end
