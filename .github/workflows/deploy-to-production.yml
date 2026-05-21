@@ -42,3 +42,26 @@ jobs:
       run: |
         cd build/
         aws s3 sync . s3://trade-tariff-api-docs-${{ env.ENVIRONMENT }} --delete
+
+  notify:
+    runs-on: ubuntu-latest
+    needs:
+      - build-prod
+      - deploy
+    if: always()
+    steps:
+      - id: result
+        run: |
+          if [[ "${{ needs.build-prod.result }}" == "success" && "${{ needs.deploy.result }}" == "success" ]]; then
+            echo "result=success" >> "$GITHUB_OUTPUT"
+          else
+            echo "result=failure" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: trade-tariff/trade-tariff-tools/.github/actions/slack-notify@main
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK }}
+          channel: production-deployments
+          color: ${{ steps.result.outputs.result }}
+          title: "${{ github.workflow }}"
+          message: "Deploy API docs to production ${{ steps.result.outputs.result }}"
+      - run: if [[ "${{ steps.result.outputs.result }}" != "success" ]]; then exit 1; fi
