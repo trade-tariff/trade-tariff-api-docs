@@ -3,6 +3,7 @@ host: https://api.trade-tariff.service.gov.uk
 
 # Header-related options
 show_govuk_logo: true
+service_name: Trade Tariff API documentation
 service_link: /
 # phase: Beta
 
@@ -28,8 +29,8 @@ footer_links:
   Cookies: https://hub.trade-tariff.service.gov.uk/cookies
   Terms and conditions: https://www.trade-tariff.service.gov.uk/terms
 
-# Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
-ga_tracking_id: UA-97208357-3
+# Google Analytics 4 via Google Tag Manager (same container as Developer Portal)
+ga4_gtm_tracking_id: GTM-KPM7NRDG
 
 # Table of contents depth – how many levels to include in the table of contents.
 # If your ToC is too long, reduce this number and we'll only show higher-level

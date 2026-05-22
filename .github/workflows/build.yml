@@ -25,7 +25,7 @@ jobs:
         run: make html
 
       - name: Run layout and content tests
-        run: bundle exec ruby -I test test/rate_limiting_banner_test.rb test/footer_links_test.rb
+        run: bundle exec ruby -I test test/rate_limiting_banner_test.rb test/footer_links_test.rb test/analytics_test.rb
 
       - name: Upload build artifact
         if: success()
