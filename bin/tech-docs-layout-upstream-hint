@@ -18,10 +18,14 @@ puts <<~OUT
   Installed govuk_tech_docs: #{version}
 
   This project overrides:
+    #{File.join(repo_root, "source/layouts/core.erb")}
     #{File.join(repo_root, "source/layouts/_header.erb")}
+    #{File.join(repo_root, "source/layouts/_service_navigation.erb")}
     #{File.join(repo_root, "source/layouts/_footer.erb")}
 
   Upstream sources to diff (same filenames):
+    #{base}/core.erb
     #{base}/_header.erb
+    #{base}/_service_navigation.erb
     #{base}/_footer.erb
 OUT

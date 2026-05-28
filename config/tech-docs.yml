@@ -3,8 +3,8 @@ host: https://api.trade-tariff.service.gov.uk
 
 # Header-related options
 show_govuk_logo: true
-service_name: Trade Tariff API documentation
 service_link: /
+govuk_homepage_url: https://www.gov.uk
 # phase: Beta
 
 # Links to show on right-hand-side of header
@@ -22,7 +22,7 @@ hub_host: hub.trade-tariff.service.gov.uk
 
 # Footer meta links (same pattern as UK Trade Tariff Developer Portal)
 footer_links:
-  Developer portal: https://hub.trade-tariff.service.gov.uk/
+  Developer portal: https://hub.trade-tariff.service.gov.uk
   Enquiry form: https://www.trade-tariff.service.gov.uk/enquiry_form
   Feedback: https://www.trade-tariff.service.gov.uk/feedback
   Privacy policy: https://hub.trade-tariff.service.gov.uk/privacy
