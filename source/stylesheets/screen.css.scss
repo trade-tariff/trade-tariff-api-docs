@@ -2,6 +2,35 @@
 @import 'govuk/components/notification-banner/index';
 @import 'govuk/components/button/index';
 
+// Service title in the pale blue bar (below GOV.UK header): black bold text.
+.govuk-service-navigation__service-name {
+  color: govuk-colour("black");
+  font-weight: 700;
+  margin-bottom: 0;
+  padding-bottom: 0;
+
+  @include govuk-media-query($from: tablet) {
+    padding: govuk-spacing(3) 0 0;
+    margin-right: 0;
+  }
+}
+
+// Keep menu links on a new line below the service title (not beside it on desktop).
+.govuk-service-navigation__container {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.govuk-service-navigation__wrapper {
+  width: 100%;
+}
+
+.govuk-service-navigation__service-name + .govuk-service-navigation__wrapper .govuk-service-navigation__list .govuk-service-navigation__item {
+  @include govuk-media-query($from: tablet) {
+    padding-top: govuk-spacing(2);
+  }
+}
+
 .technical-documentation > .govuk-notification-banner:first-child {
   margin-top: govuk-spacing(6);
 }

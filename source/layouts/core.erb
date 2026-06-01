@@ -1,0 +1,113 @@
+<%#
+  Override of govuk_tech_docs lib/source/layouts/core.erb.
+  On gem upgrade: run `bin/tech-docs-layout-upstream-hint`, then merge changes from the upstream
+  file at the tag matching Gemfile.lock (same path under the tech-docs-gem repo).
+%>
+<!doctype html>
+<html lang="en" class="govuk-template govuk-template--rebranded no-js">
+  <head>
+    <%= partial 'layouts/analytics_ga4_gtag' %>
+    <%= partial 'layouts/analytics_ga4_gtm' %>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title><%= meta_tags.browser_title %></title>
+
+    <%= stylesheet_link_tag :manifest %>
+
+    <link rel="canonical" href="<%= meta_tags.canonical_url %>">
+    <% if config[:tech_docs][:show_govuk_logo] %>
+      <%
+        path_prefix =
+          if !development? && config[:tech_docs][:use_service_link_for_favicon]
+            service_link = config[:tech_docs][:service_link] || '/'
+            # ensure service_link ends with a trailing '/'
+            if service_link[-1, 1] != '/'
+              service_link += '/'
+            end
+            service_link
+          else
+            '/'
+          end
+      %>
+      <link rel="icon" sizes="48x48" href="<%= path_prefix %>assets/govuk/assets/images/favicon.ico">
+      <link rel="icon" sizes="any" href="<%= path_prefix %>assets/govuk/assets/images/favicon.svg" type="image/svg+xml">
+      <link rel="mask-icon" href="<%= path_prefix %>assets/govuk/assets/images/govuk-icon-mask.svg" color="#0b0c0c">
+      <link rel="apple-touch-icon" href="<%= path_prefix %>assets/govuk/assets/images/govuk-icon-180.png">
+      <link rel="manifest" href="<%= path_prefix %>assets/govuk/assets/manifest.json">
+    <% else %>
+      <link rel="icon" sizes="48x48" href="/images/favicon.ico">
+      <link rel="icon" sizes="any" href="/images/favicon.svg" type="image/svg+xml">
+    <% end %>
+
+    <% meta_tags.tags.each do |name, content| %>
+      <%= tag :meta, name: name, content: content %>
+    <% end %>
+
+    <% meta_tags.opengraph_tags.each do |property, content| %>
+      <%= tag :meta, property: property, content: content %>
+    <% end %>
+
+    <%= yield_content :head %>
+  </head>
+
+  <body class="govuk-template__body">
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <div class="app-pane">
+      <%= partial 'layouts/cookie_banner' %>
+      <div class="app-pane__header toc-open-disabled">
+        <a href="#content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+        <%= partial 'layouts/header' %>
+        <%= partial 'layouts/service_navigation' %>
+      </div>
+
+      <% if content_for? :sidebar %>
+        <div id="toc-heading" class="toc-show fixedsticky">
+          <button type="button" class="toc-show__label js-toc-show" aria-controls="toc">
+            Table of contents <span class="toc-show__icon"></span>
+          </button>
+        </div>
+      <% end %>
+
+      <div class="app-pane__body"<%= " data-module=\"#{yield_content(:toc_module)}\"" if content_for? :toc_module %>>
+        <% if content_for? :sidebar %>
+          <div class="app-pane__toc">
+            <div class="toc" data-module="table-of-contents" tabindex="-1">
+              <%= partial "layouts/search" %>
+              <button type="button" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></button>
+              <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading"<%= " data-module=\"collapsible-navigation\"" if config[:tech_docs][:collapsible_nav] %>>
+                <%= yield_content :sidebar %>
+              </nav>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="app-pane__content toc-open-disabled" aria-label="Content">
+          <main id="content" class="technical-documentation"<% if config[:tech_docs][:enable_anchored_headings] != false %> data-module="anchored-headings"<% end %>>
+            <%= yield %>
+            <%= partial "layouts/page_review" %>
+          </main>
+
+          <aside>
+            <% if config[:tech_docs][:show_contribution_banner] %>
+              <ul class="contribution-banner">
+                <li><%= link_to "View source", source_urls.view_source_url %></li>
+                <li><%= link_to "Report problem", source_urls.report_issue_url %></li>
+                <li><%= link_to "GitHub Repo", source_urls.repo_url %></li>
+              </ul>
+            <% end %>
+          </aside>
+
+          <%= partial "layouts/footer" %>
+        </div>
+      </div>
+    </div>
+
+    <%= partial 'layouts/analytics' %>
+    <%= javascript_include_tag :govuk_frontend, :type => "module" %>
+    <%= javascript_include_tag :application %>
+  </body>
+</html>

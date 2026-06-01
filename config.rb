@@ -5,6 +5,10 @@ require 'kramdown'
 
 GovukTechDocs.configure(self)
 
+# Project layout partials in source/layouts/ must override the gem's lib/source/layouts/
+# (the gem registers its source directory after ours with the same default priority).
+files.watch :source, path: File.join(root, 'source'), priority: 100
+
 activate :relative_assets
 set :relative_links, true
 
