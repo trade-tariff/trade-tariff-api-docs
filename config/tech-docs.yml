@@ -20,7 +20,7 @@ header_links:
 # /privacy and /cookies on this host as same-tab links; keep consistent with hub URLs below.
 hub_host: hub.trade-tariff.service.gov.uk
 
-# Footer meta links (same pattern as UK Trade Tariff Developer Portal)
+# Footer meta links (same pattern as UK Trade Tariff developer portal)
 footer_links:
   Developer portal: https://hub.trade-tariff.service.gov.uk
   Enquiry form: https://www.trade-tariff.service.gov.uk/enquiry_form

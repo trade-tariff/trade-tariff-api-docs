@@ -3,7 +3,7 @@ require 'minitest/autorun'
 class RateLimitingBannerTest < Minitest::Test
   BUILD_DIR = File.expand_path('../build', __dir__)
   BANNER_HEADING = 'From September 2026, rate limiting will apply to the Trade Tariff API to protect service reliability.'
-  BANNER_BODY = 'Access a higher rate limit through the Trade Tariff Developer Portal.'
+  BANNER_BODY = 'Access a higher rate limit through the Trade Tariff developer portal.'
   BANNER_LINK_TEXT = 'Find out more about the Developer Portal'
   EXCLUDED_PAGES = %w[404.html].freeze
   PAGES = %w[index.html reference.html the-trade-tariff-api.html].freeze
