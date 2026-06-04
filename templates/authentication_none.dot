@@ -1,1 +1,1 @@
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
