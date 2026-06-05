@@ -1,0 +1,18 @@
+# GOV.UK Trade Tariff API
+
+> The GOV.UK Trade Tariff API provides structured access to UK Trade Tariff data including commodity codes, duty rates, VAT rates, and trade measures. It is used to power [GOV.UK Trade Tariff](https://www.gov.uk/trade-tariff).
+
+## Notes
+
+- Base URL: `https://www.trade-tariff.service.gov.uk/api/v2`
+- All responses are JSON
+- No authentication is required for public read endpoints
+- Date-scoped endpoints accept an `as_of` query parameter (format: YYYY-MM-DD)
+- An XI (Northern Ireland) variant is available at `https://www.trade-tariff.service.gov.uk/xi/api/v2`
+
+## Docs
+
+- [Getting started](https://api.trade-tariff.service.gov.uk/getting-started.html): Quick start guide and key concepts
+- [API reference](https://api.trade-tariff.service.gov.uk/reference.html): Full interactive API reference
+- [OpenAPI spec](https://api.trade-tariff.service.gov.uk/v2/openapi.yaml): Machine-readable OAS 3.1 specification
+- [Full LLM context](https://api.trade-tariff.service.gov.uk/llms-full.txt): Prose rendering of all v2 endpoints
