@@ -1,0 +1,63 @@
+name: Update OpenAPI spec from backend
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 06:00 UTC
+  workflow_dispatch:       # Allow manual runs
+
+jobs:
+  update-spec:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download swagger.json from backend repo
+        run: |
+          curl -fsSL \
+            "https://raw.githubusercontent.com/trade-tariff/trade-tariff-backend/main/swagger/v2/swagger.json" \
+            -o /tmp/swagger.json
+
+      - name: Convert JSON to YAML
+        run: |
+          python3 -c "
+          import sys, json, yaml
+
+          with open('/tmp/swagger.json') as f:
+              data = json.load(f)
+
+          with open('source/openapi.yaml', 'w') as f:
+              yaml.dump(data, f, allow_unicode=True, default_flow_style=False, sort_keys=False)
+          "
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet source/openapi.yaml; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="update-openapi-spec-$(date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add source/openapi.yaml
+          git commit -m "Update source/openapi.yaml from trade-tariff-backend"
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --title "Update OpenAPI spec from backend ($(date +%Y-%m-%d))" \
+            --body "Automated update of \`source/openapi.yaml\` from [\`trade-tariff-backend/swagger/v2/swagger.json\`](https://github.com/trade-tariff/trade-tariff-backend/blob/main/swagger/v2/swagger.json).
+
+          Review the diff to confirm the changes are expected before merging." \
+            --base main
