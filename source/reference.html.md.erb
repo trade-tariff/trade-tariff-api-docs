@@ -25,10 +25,20 @@ All requests to this API should be prefixed with the following URL:
 **https://api.trade-tariff.service.gov.uk/uk/api**
 
 <div class="govuk-inset-text">
-  This API was previously hosted at <code>www.trade-tariff.service.gov.uk</code>. Existing integrations should be updated to use <code>api.trade-tariff.service.gov.uk</code>.
+  This API was previously hosted at <code>www.trade-tariff.service.gov.uk</code>. Existing integrations should use <code>api.trade-tariff.service.gov.uk</code> with OAuth 2.0 credentials from the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a>.
 </div>
 
 You will need to specify the `Accept` header with the value `application/vnd.hmrc.2.0+json` to get a correctly formatted response.
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    All requests to <code>api.trade-tariff.service.gov.uk</code> require <code>Authorization: Bearer &lt;access_token&gt;</code> from the Trade Tariff developer portal, together with the <code>Accept</code> header above. See <a href="/the-trade-tariff-api.html#authenticating-with-managed-credentials">Authenticating with managed credentials</a>.
+  </strong>
+</div>
+
+Substitute your access token for <code>${ACCESS_TOKEN}</code> in the example requests below.
 
 ## Endpoints
 
@@ -40,12 +50,13 @@ Sections are numbered I to XXI covering broad groups of products.
 
 Each section has a `position`, which is its numerical order within the Tariff, and a `section_id`, which is a unique record identifier.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/sections \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -101,6 +112,7 @@ position|path|integer|true|The `position` of the section to be retrieved
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/sections/1 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json"
 ```
 
@@ -208,12 +220,13 @@ Chapters are numbered 1 to 99 and cover more specific products than sections.
 
 Each chapter has a `goods_nomenclature_item_id`, which is a string of ten (10) digits.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/chapters \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -261,7 +274,7 @@ Status|Meaning|Description|Schema
 
 Retrieves a chapter, given the first two (2) digits of its `goods_nomenclature_item_id` <p>This should be a zero-padded string of two digits.</p>
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -273,6 +286,7 @@ chapter_id|path|string|true|The `chapter_id` of the chapter to be retrieved, e.g
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/chapters/34 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -380,7 +394,7 @@ Headings are a level below chapters and cover more specific products and product
 
 For this resource, `heading_id` is used to uniquely identify a heading and request it from the API. `heading_id` is the first four (4) digits of the heading's `goods_nomenclature_item_id` <p>`heading_id` should be a zero-padded string of four (4) digits.</p>
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -392,6 +406,7 @@ heading_id|path|string|true|The `heading_id` of the heading to be retrieved, e.g
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/headings/0101 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -580,7 +595,7 @@ Subheadings are a level below headings and get specific about certain products. 
 
 This resource is uniquely identified by a combination of goods_nomenclature_item_id and productline_suffix.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -593,6 +608,7 @@ productline_suffix|path|string|true|The two-digit product line suffix of the sub
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/subheadings/0102291000-80 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -780,7 +796,7 @@ Commodities are products specified to the greatest extent by the tariff.
 
 This resource represents a single commodity. For this resource, `id` is a `goods_nomenclature_item_id` and it is used to uniquely identify a commodity and request it from the API. <p>`id` should be a string of ten (10) digits.</p>
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -792,6 +808,7 @@ id|path|string|true|The `id` of the commodity to be retrieved. This should be a 
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/commodities/0101210000 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1569,7 +1586,7 @@ Quotas allow a limited amount of goods to be imported at a lower duty rate. Thes
 
 Retrieves a paginated list of quota definitions, optionally filtered by a variety of parameters.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -1590,6 +1607,7 @@ include|query|string|false|Retrieve quota balance events which show the history 
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/quotas/search?goods_nomenclature_item_id=0805102200&geographical_area_id=EG&order_number=091784&status=not_blocked&page=1 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1741,7 +1759,7 @@ Retrieves a list of additional _codes, with associated commodities.
 
 Retrieves a paginated list of additional_codes, filtered by parameters.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -1755,7 +1773,8 @@ description|query|string|conditional|Retrieve additional_codes with description 
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/additional_codes/search?code=200&type=B \
-     -H "Content-Type: application/vnd.hmrc.2.0+json"
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -1840,12 +1859,13 @@ Retrieves a list of additional code types.
 
 Retrieves a list of all additional_code_types without pagination and filtering.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/additional_code_types \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1889,7 +1909,7 @@ Retrieves the list of certificates, with the associated description and descript
 
 Retrieves a paginated list of certificates, filtered by `as_of param, if present.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -1901,6 +1921,7 @@ as_of|query|string(date)|false|Retrieve the measure_types as they existed on the
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/certificates \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -1946,7 +1967,7 @@ Status|Meaning|Description|Schema
 
 Retrieves a list of certificates, with associated goods nomenclatures, filtered by parameters..
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -1960,6 +1981,7 @@ description|query|string|false|Retrieve certificates with `description` that con
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/certificates/search?code=D005&type=D \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2025,12 +2047,13 @@ Status|Meaning|Description|Schema
 
 Retrieves a list of all certificate types, without pagination and filtering.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/certificate_types \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2070,7 +2093,7 @@ Status|Meaning|Description|Schema
 
 Retrieves a list of all measure_types.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2082,6 +2105,7 @@ as_of|query|string(date)|false|Retrieve the measure_types as they existed on the
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/measure_types \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2123,7 +2147,7 @@ Retrieves a list of active quotas.
 
 Retrieves a list of active quotas and their definitions.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2135,6 +2159,7 @@ as_of|query|string(date)|false|Retrieve the quota_order_numbers as they existed 
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/quota_order_numbers \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2171,7 +2196,7 @@ Measures refer to any restriction on importing or exporting products. Not all co
 
 This resource represents a single measure. For this resource, `measure_sid` is used to uniquely identify a measure and request it from the API.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2183,7 +2208,8 @@ measure_sid|path|integer|true|The `measure_sid` of the measure to be retrieved.
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/measures/{measure_sid} \
-  -H 'Accept: application/json'
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 **Example Response**
@@ -2286,7 +2312,7 @@ Status|Meaning|Description|Schema
 
 *Retrieves a list of the measure actions.*
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2298,6 +2324,7 @@ as_of|query|string(date)|false|Retrieve the measure_actions as they existed on t
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/measure_actions \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2330,7 +2357,7 @@ Status|Meaning|Description|Schema
 
 *Retrieves a list of the measure condition codes.*
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2342,6 +2369,7 @@ as_of|query|string(date)|false|Retrieve the measure_condition_codes as they exis
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/measure_condition_codes \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2378,7 +2406,7 @@ Retrieves a list of footnotes, with associated goods nomenclatures.
 
 Retrieves a list of footnotes, filtered by parameters.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2392,6 +2420,7 @@ description|query|string|false|Retrieve footnotes with `description` that contai
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/footnotes/search?code=134&type=CD \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2448,12 +2477,13 @@ Status|Meaning|Description|Schema
 
 Retrieves a list of all footnote_types without pagination and filtering.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/footnote_types \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2529,7 +2559,7 @@ SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Form
 72763,0101900000,1,Other,80/uk/api/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
 ```
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2542,6 +2572,7 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/section/1 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2666,7 +2697,7 @@ SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Form
 72763,0101900000,1,Other,80/uk/api/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
 ```
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2679,6 +2710,7 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/chapter/01 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2802,7 +2834,7 @@ SID,Goods Nomenclature Item ID,Indents,Description,Product Line Suffix,Href,Form
 72763,0101900000,1,Other,80/uk/api/commodities/0101900000,Other,2002-01-01 00:00:00 UTC,,true,27624
 ```
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2815,6 +2847,7 @@ as_of|query|string(date)|false|Retrieve goods nomenclatures as they existed on t
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/goods_nomenclatures/heading/0101 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2911,7 +2944,7 @@ Retrieves a list of search references by letter
 
 Retrieves a list of search references by letter
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -2923,6 +2956,7 @@ query.letter|query|string|false|Retrieve search references started with  `query.
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/search_references.json?query.letter=c \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -2980,12 +3014,13 @@ Retrieves a list of geographical areas or by specific country.
 
 Retrieves a list of geographical areas
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/geographical_areas \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3062,12 +3097,13 @@ Status|Meaning|Description|Schema
 
 Retrieves a list of countries
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/geographical_areas/countries \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3148,7 +3184,7 @@ Retrieves a list of goods nomenclature objects that have changes since the previ
 
 Changes are only available for the previous 30 days up to the current day. Requests for changes outside of these dates will results in an empty set of changes.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -3160,6 +3196,7 @@ as_of|path|string(date)|true|Retrieve changes as they existed between the `as_of
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/changes/2021-04-13 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3212,7 +3249,7 @@ Retrieves relevant Rules of Origin schemes and rules.
 Retrieves a list of Schemes and corresponding rules which apply to the
 supplied heading and country codes
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -3225,6 +3262,7 @@ country_code|path|string|true|Two letter country code for the country you are tr
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/rules_of_origin_schemes/392113/FR \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3376,7 +3414,7 @@ Returns a list of chemical substances based on the filter parameters.
 
 Returns chemical substances that match one or more of the following filter parameters. Not supplying a filter returns empty results.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -3391,15 +3429,19 @@ filter.goods_nomenclature_sid|query|integer|false|Filter by a specific goods nom
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.cus=0153778-6 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.cus=90131-25-2 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.goods_nomenclature_item_id=0712909090 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 curl https://api.trade-tariff.service.gov.uk/uk/api/chemical_substances?filter.goods_nomenclature_sid=30725 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3440,7 +3482,7 @@ Returns simplified procedural code measures indicating the current valuations.
 
 Valuations cover a 2 week window. Null valuations indicate no data for the given input filter period.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -3455,14 +3497,17 @@ filter.simplified_procedural_code|query|string|false|Filter by the simplified pr
 ```shell
 # Fetch all measures
 curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch a given 2 week window of measures
 curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter.from_date=2023-05-12&filter.to_date=2023-05-25 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Fetch the full history of a given simplified procedural code
 curl https://api.trade-tariff.service.gov.uk/uk/api/simplified_procedural_code_measures?filter.simplified_procedural_code=1.10 \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3504,12 +3549,13 @@ Retrieves a list of all the preference codes
 
 See <a href="https://www.gov.uk/government/publications/preference-codes-for-data-element-417-of-the-customs-declaration-service" target="_blank" rel="noreferrer noopener">Preference code Guidance (opens in new tab)</a> for more details.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Example Request**
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/preference_codes \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3542,7 +3588,7 @@ This resource represents the exchange rates period and exchange rates years.
 You can use the period to work out which months there are exchange rates for the given type.
 For example, the spot and average types only produce rates in March and December.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -3555,12 +3601,15 @@ filter.type|query|string|false|Possible values: spot, monthly, average.<br> <ul>
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists/2022?filter.type=monthly \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter.type=spot \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/period_lists?filter.type=average \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
@@ -3577,7 +3626,7 @@ Status|Meaning|Description|Schema
 This resource represents the exchange rates and exchange rate files.
 This will given you exchange rates of a given type for a given month and year.
 
-This request does not require authentication.
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal.
 
 **Parameters**
 
@@ -3591,12 +3640,15 @@ filter.type|query|string|false|Possible values: spot, monthly, average.<br> <ul>
 
 ```shell
 curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2021-10?filter.type=monthly \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 
 # Spot and average rates only produce data for March and December each year
 curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter.type=spot \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 curl https://api.trade-tariff.service.gov.uk/uk/api/exchange_rates/2022-3?filter.type=average \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 

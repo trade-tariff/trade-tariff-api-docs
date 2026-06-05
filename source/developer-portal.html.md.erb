@@ -22,14 +22,10 @@ At present, API key management is available for the Trade Tariff API and FPO API
 
 From September 2026, rate limiting will apply to the Trade Tariff API. Rate limiting sets a cap on the number of requests you can make per minute.
 
-Registering on the Developer Portal gives you access to a higher request rate than unauthenticated access.
-
-By registering on the Developer Portal, you can access a higher rate limit of 750 requests per minute.
-
-Unauthenticated access has a lower rate limit than authenticated access.
+You need developer portal credentials to call the Trade Tariff API on <code>api.trade-tariff.service.gov.uk</code>. By registering on the Developer Portal, you can create API keys and access a rate limit of 750 requests per minute.
 
 <div class="govuk-inset-text">
-  <strong>Managed service host change:</strong> Trade Tariff keys issued through the Developer Portal are used against <code>api.trade-tariff.service.gov.uk</code>. If you are migrating from <code>www.trade-tariff.service.gov.uk</code>, update the base URL in your integration. See <a class="govuk-link" href="/the-trade-tariff-api.html#authenticating-with-managed-credentials">Authenticating with managed credentials</a> for details.
+  <strong>Managed service host change:</strong> Trade Tariff keys issued through the Developer Portal are used against <code>api.trade-tariff.service.gov.uk</code>, which requires OAuth 2.0 authentication. If you are migrating from <code>www.trade-tariff.service.gov.uk</code>, update the base URL in your integration and authenticate as described in <a class="govuk-link" href="/the-trade-tariff-api.html#authenticating-with-managed-credentials">Authenticating with managed credentials</a>.
 </div>
 
 ## Who can use the Developer Portal?

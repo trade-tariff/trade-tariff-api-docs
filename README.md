@@ -111,7 +111,7 @@ paths:
         /uk/api/sections:
           lang: shell
           source: |-
-            curl https://api.trade-tariff.service.gov.uk/uk/api/sections -H "Accept: application/vnd.hmrc.2.0+json" | jq
+            curl https://api.trade-tariff.service.gov.uk/uk/api/sections -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "Accept: application/vnd.hmrc.2.0+json" | jq
 ```
 
 The example above is rendered into HTML:
