@@ -1,5 +1,5 @@
 <%
-  spec = YAML.load_file(File.join(root, 'source/v2/openapi.yaml'), permitted_classes: [Time, Date, DateTime])
+  spec = YAML.load_file(File.join(root, 'source/openapi.yaml'), permitted_classes: [Time, Date, DateTime])
   info = spec['info']
   base_url = spec['servers']&.first&.dig('url') || 'https://www.trade-tariff.service.gov.uk/api/v2'
 %>
