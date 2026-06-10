@@ -22,6 +22,9 @@ jobs:
             "https://raw.githubusercontent.com/trade-tariff/trade-tariff-backend/main/swagger/v2/swagger.json" \
             -o /tmp/swagger.json
 
+      - name: Install PyYAML
+        run: pip install pyyaml
+
       - name: Convert JSON to YAML
         run: |
           python3 -c "
@@ -48,7 +51,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          BRANCH="update-openapi-spec-$(date +%Y-%m-%d)"
+          BRANCH="update-openapi-spec-$(date +%Y-%m-%d)-${{ github.run_id }}"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"

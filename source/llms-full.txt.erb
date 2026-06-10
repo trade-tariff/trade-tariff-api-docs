@@ -1,4 +1,6 @@
 <%
+  require 'yaml'
+  require 'date'
   spec = YAML.load_file(File.join(root, 'source/openapi.yaml'), permitted_classes: [Time, Date, DateTime])
   info = spec['info']
   base_url = spec['servers']&.first&.dig('url') || 'https://www.trade-tariff.service.gov.uk/api/v2'
@@ -34,7 +36,8 @@ Base URL: <%= base_url %>
 ### Responses
 
 <% operation['responses']&.each do |code, response| %>
-- **<%= code %>**: <%= response['description'] %>
+<% schema_ref = response.dig('content', 'application/json', 'schema', '$ref') %>
+- **<%= code %>**: <%= response['description'] %><% if schema_ref %> (schema: `<%= schema_ref %>`)<%end%>
 <% end %>
 
 <%# x-code-samples is a Hash keyed by URL path, each value has lang and source keys %>
