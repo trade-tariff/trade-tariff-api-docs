@@ -1,0 +1,56 @@
+<%
+  require 'yaml'
+  require 'date'
+  spec = YAML.load_file(File.join(root, 'source/openapi.yaml'), permitted_classes: [Time, Date, DateTime])
+  info = spec['info']
+  base_url = spec['servers']&.first&.dig('url') || 'https://www.trade-tariff.service.gov.uk/api/v2'
+%>
+# <%= info['title'] %>
+
+Version: <%= info['version'] %>
+Base URL: <%= base_url %>
+
+<%= info['description']&.strip || '' %>
+
+---
+
+<% spec['paths'].each do |path, methods| %>
+<% methods.each do |http_method, operation| %>
+<% next unless operation.is_a?(Hash) %>
+## <%= http_method.upcase %> <%= path %>
+
+<%= operation['summary'] %>
+
+<% if operation['description'] %>
+<%= operation['description'].strip %>
+
+<% end %>
+<% if operation['parameters']&.any? %>
+### Parameters
+
+<% operation['parameters'].each do |param| %>
+- **<%= param['name'] %>** (<%= param['in'] %><%= param['required'] ? ', required' : ', optional' %>): <%= param['description']&.strip&.gsub(/\n+/, ' ') %><% if param.dig('schema', 'type') %> [<%= param.dig('schema', 'type') %>]<% end %>
+
+<% end %>
+<% end %>
+### Responses
+
+<% operation['responses']&.each do |code, response| %>
+<% schema_ref = response.dig('content', 'application/json', 'schema', '$ref') %>
+- **<%= code %>**: <%= response['description'] %><% if schema_ref %> (schema: `<%= schema_ref %>`)<%end%>
+<% end %>
+
+<%# x-code-samples is a Hash keyed by URL path, each value has lang and source keys %>
+<% if operation['x-code-samples']&.any? %>
+### Example
+
+<% operation['x-code-samples'].each_value do |sample| %>
+```<%= sample['lang']&.downcase || 'shell' %>
+<%= sample['source'] %>
+```
+<% end %>
+<% end %>
+---
+
+<% end %>
+<% end %>
