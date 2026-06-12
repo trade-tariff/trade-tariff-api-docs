@@ -99,6 +99,12 @@
                 <li><%= link_to "GitHub Repo", source_urls.repo_url %></li>
               </ul>
             <% end %>
+            <% md_path = current_page.path.sub(/\.html$/, '.md') %>
+            <% if sitemap.find_resource_by_path(md_path) %>
+              <ul class="contribution-banner">
+                <li><%= link_to "View as Markdown", md_path %></li>
+              </ul>
+            <% end %>
           </aside>
 
           <%= partial "layouts/footer" %>
