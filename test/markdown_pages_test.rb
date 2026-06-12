@@ -5,7 +5,6 @@ class MarkdownPagesTest < Minitest::Test
   BUILD_DIR = File.expand_path('../build', __dir__)
 
   EXPECTED_PAGES = %w[
-    llm-guide.md
     the-trade-tariff-api.md
     reference-data.md
     categorisation.md
