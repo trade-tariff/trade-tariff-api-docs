@@ -30,6 +30,21 @@ To update page content (index, getting started, reference, etc.), edit the corre
 
 To update the spec, make changes in the backend repo. They will be picked up on the next weekly run (or you can trigger the workflow manually).
 
+## Markdown rendering
+
+Every documentation page is available as clean Markdown at a parallel URL — replace `.html` with `.md`:
+
+```
+https://api.trade-tariff.service.gov.uk/the-trade-tariff-api.md
+https://api.trade-tariff.service.gov.uk/reference-data.md
+```
+
+These files contain only the page body: no navigation chrome, no frontmatter, and no HTML artefacts. Anchors become Markdown links and `<code>` spans become backticks. They are intended for direct consumption by LLM clients and coding assistants, and are listed in [`llms.txt`](source/llms.txt).
+
+Each page also has a "View as Markdown" link in its aside.
+
+The `.md` files are generated at build time by `config.rb`. To add a new page, create the source file under `source/` with a `.html.md` or `.html.md.erb` extension — the Markdown URL is produced automatically.
+
 ## Running documentation locally
 
 ### Prerequisites
