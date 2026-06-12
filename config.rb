@@ -34,15 +34,19 @@ ready do
 end
 
 def strip_html(content)
-  # <a href="...">text</a> → [text](href)
+  require 'nokogiri'
+  # <a href="...">text</a> → [text](href) — done before Nokogiri strips attributes
   content = content.gsub(/<a\s[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/m) do
-    href, text = $1, $2.gsub(/<[^>]+>/, '').strip
+    href, inner = $1, $2
+    text = Nokogiri::HTML.fragment(inner).text.strip
     "[#{text}](#{href})"
   end
-  # <code>text</code> → `text`
-  content = content.gsub(/<code>(.*?)<\/code>/m) { "`#{$1.strip}`" }
-  # Strip all remaining HTML tags and any lines that become blank
-  content.gsub(/<[^>]*>/m, '')
+  # <code>text</code> → `text` — done before Nokogiri strips tags
+  content = content.gsub(/<code>(.*?)<\/code>/m) do
+    "`#{Nokogiri::HTML.fragment($1).text.strip}`"
+  end
+  # Use Nokogiri to safely strip remaining HTML — handles malformed/nested tags
+  Nokogiri::HTML.fragment(content).text
 end
 
 helpers do
