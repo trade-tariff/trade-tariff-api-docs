@@ -39,7 +39,7 @@ X-Api-Key: a1b2c3defg4567
 
 **Sample client**
 
-There's a very simple html page client as an example of parsing these APIs in Javascript
+There's a very simple HTML page client as an example of parsing these APIs in JavaScript.
 
 [View sample client](/categorisation-sample-client.html) &nbsp; | &nbsp;
 <a download="categorisation-sample-client.html" href="/categorisation-sample-client.html">
@@ -90,7 +90,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
   <li><b>Frequent Data Changes</b>: The dataset is updated regularly, often daily. Users should consider this when categorizing future trades.</li>
   <li><b>Glossary of terms</b>: a glossary of terms is available at the bottom of this document</li>
   <li>
-    <b>Limitations on the /goods_nomenclatures API</b>: the API accepts only the following inputs (please note that the more specific the query is - i.e. the further down the hierarchy a goods nomenclature is - the fewer Category ssessments will be returned):
+    <b>Limitations on the /goods_nomenclatures API</b>: the API accepts only the following inputs (please note that the more specific the query is - i.e. the further down the hierarchy a goods nomenclature is - the fewer Category Assessments will be returned):
     <ol>
       <li>Goods Nomenclature IDs with 4 significant digits, only if the 4 digit codes have no descendants to be categorised (i.e. if the 4 significant digit code is the end commodity in the hierarchy; e.g.: 4906000000)</li>
       <li>All Goods Nomenclature IDs with 6, 8 or 10 significant digits, provided the Goods Nomenclature IDs exist on the Northern Ireland online tariff</li>
@@ -98,7 +98,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
   </li>
 </ul>
 
-<p>For more information about categorisation visit Internal Market Movements form Great Britain to Northern Ireland: your questions answered</p>
+<p>For more information about categorisation visit Internal Market Movements from Great Britain to Northern Ireland: your questions answered</p>
 
 ## Determining the Category for commodities with no descendants
 <p>To determine the final category for a trade:</p>
@@ -108,7 +108,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
   <li>For each assessment:</li>
   <ul>
     <li>If the trader <b>holds any exemption</b> listed under exemptions, ignore it and treat as Category 3.</li>
-    <li>Otherwise, use the category field (typically 1 or 2.</li>
+    <li>Otherwise, use the category field (typically 1 or 2).</li>
   </ul>
   <li><b>Select the lowest remaining category</b> (most restrictive).</li>
   <ul>
@@ -125,7 +125,7 @@ There's a very simple html page client as an example of parsing these APIs in Ja
   <li>For each assessment:</li>
   <ul>
     <li>If the trader <b>holds any exemption</b> listed under exemptions, ignore it and treat as Category 3.</li>
-    <li>Otherwise, use the category field (typically 1 or 2.</li>
+    <li>Otherwise, use the category field (typically 1 or 2).</li>
   </ul>
   <li><b>Select the lowest remaining category</b> (most restrictive).</li>
   <ul>
@@ -209,7 +209,7 @@ Kind regards,
 
 ***GET /green_lanes/goods_nomenclatures/{id}***
 
-Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br> <br> Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br> <br> The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br> <br> If no Category Assessments are applicable, or all if applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
+Returns the requested Goods Nomenclature together with relevant data including a list of the different Category Assessments applicable to this Goods Nomenclature<br> <br> Each applicable Category Assessment will provide a primary category together with any potential exemptions. If at least one of the exemptions for that Category Assessment are met then that Category Assessment does not apply.<br> <br> The effective category for the GoodsNomenclature is the most restrictive category from those Category Assessments determined by the API consumers filtering to be applicable (ie not exempted).<br> <br> If no Category Assessments are applicable, or all applicable Category Assessments are exempted, then the trade falls under a default category assessment of Category 3.
 
 To perform this operation, you must be authenticated by means of one of the following methods:
 apiKey
@@ -790,7 +790,7 @@ Status|Meaning|Description|Schema
 
 ***GET /green_lanes/themes***
 
-Returns a list of the all Categorisation themes within the Windsor Framework
+Returns a list of all Categorisation themes within the Windsor Framework
 
 To perform this operation, you must be authenticated by means of one of the following methods:
 apiKey
