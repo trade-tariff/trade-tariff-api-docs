@@ -17,3 +17,13 @@
 - [API reference](https://api.trade-tariff.service.gov.uk/reference.html): Full interactive API reference
 - [OpenAPI spec](https://api.trade-tariff.service.gov.uk/openapi.yaml): Machine-readable OAS 3.1 specification
 - [Full LLM context](https://api.trade-tariff.service.gov.uk/llms-full.txt): Prose rendering of all v2 endpoints
+
+## Markdown pages
+
+Every documentation page is available as clean Markdown at a parallel URL — replace the `.html` extension with `.md`. For example:
+
+- `https://api.trade-tariff.service.gov.uk/the-trade-tariff-api.md`
+- `https://api.trade-tariff.service.gov.uk/reference-data.md`
+- `https://api.trade-tariff.service.gov.uk/llm-guide.md`
+
+These files contain only the page body (no navigation chrome, no frontmatter, no ERB artefacts) and are intended for direct consumption by LLM clients and coding assistants.
