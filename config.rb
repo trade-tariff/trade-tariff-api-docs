@@ -12,6 +12,33 @@ files.watch :source, path: File.join(root, 'source'), priority: 100
 activate :relative_assets
 set :relative_links, true
 
+after_build do |_builder|
+  source_root = File.join(root, 'source')
+  build_root = File.join(root, config[:build_dir])
+
+  Dir.glob(File.join(source_root, '**', '*.html.md{,.erb}'))
+    .reject { |f| f.start_with?(File.join(source_root, 'layouts')) }
+    .each do |source_file|
+      content = File.read(source_file)
+
+      # Strip YAML frontmatter
+      content = content.sub(/\A---\n.*?\n---\n/m, '')
+
+      # Strip ERB tags (and any trailing newline left behind)
+      content = content.gsub(/<%.*?%>\n?/m, '')
+
+      # Collapse runs of blank lines to a single blank line
+      content = content.gsub(/\n{3,}/, "\n\n").strip + "\n"
+
+      relative = source_file.delete_prefix("#{source_root}/")
+      md_path = relative.sub(/\.html\.md(\.erb)?$/, '.md')
+      output_path = File.join(build_root, md_path)
+
+      FileUtils.mkdir_p(File.dirname(output_path))
+      File.write(output_path, content)
+    end
+end
+
 helpers do
   def graphviz(graph_file = nil, &block)
     if block_given?
