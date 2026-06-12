@@ -23,6 +23,7 @@ ready do
       content = File.read(source_file, encoding: 'utf-8')
       content = content.sub(/\A---\n.*?\n---\n/m, '')
       content = content.gsub(/<%.*?%>\n?/m, '')
+      content = strip_html(content)
       content = content.gsub(/\n{3,}/, "\n\n").strip + "\n"
 
       relative = source_file.delete_prefix("#{source_root}/")
@@ -30,6 +31,18 @@ ready do
 
       proxy md_path, '/templates/raw_markdown_page.txt', locals: { markdown_content: content }, layout: false
     end
+end
+
+def strip_html(content)
+  # <a href="...">text</a> → [text](href)
+  content = content.gsub(/<a\s[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/m) do
+    href, text = $1, $2.gsub(/<[^>]+>/, '').strip
+    "[#{text}](#{href})"
+  end
+  # <code>text</code> → `text`
+  content = content.gsub(/<code>(.*?)<\/code>/m) { "`#{$1.strip}`" }
+  # Strip all remaining HTML tags and any lines that become blank
+  content.gsub(/<[^>]*>/m, '')
 end
 
 helpers do
