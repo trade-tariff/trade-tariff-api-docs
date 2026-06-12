@@ -12,6 +12,7 @@
 
 ## Docs
 
+- [LLM integration guide](https://api.trade-tariff.service.gov.uk/llm-guide.html): Single-page prose guide covering auth, common patterns, errors, rate limiting, and gotchas — optimised for LLM consumption
 - [Getting started](https://api.trade-tariff.service.gov.uk/getting-started.html): Quick start guide and key concepts
 - [API reference](https://api.trade-tariff.service.gov.uk/reference.html): Full interactive API reference
 - [OpenAPI spec](https://api.trade-tariff.service.gov.uk/openapi.yaml): Machine-readable OAS 3.1 specification
