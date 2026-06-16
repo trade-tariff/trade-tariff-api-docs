@@ -16,7 +16,7 @@ You can use curl for interfacing with the API, however you can also use HTTPie o
 
 The GOV.UK Trade Tariff APIs are used to access content from the <a href="https://www.gov.uk/trade-tariff" target="_blank" rel="noreferrer noopener">UK Trade Tariff Service (opens in new tab)</a>.
 
-Using the Commodities API for example, if you want to access the commodity object for pure-bred breeding animals with the commodity code 0101210000. You need a valid access token from the [Trade Tariff developer portal](https://hub.trade-tariff.service.gov.uk/) before calling the API. See [Authenticating with managed credentials](#authenticating-with-managed-credentials) for how to obtain one.
+Using the Commodities API for example, if you want to access the commodity object for pure-bred breeding animals with the commodity code 0101210000. Requests to `api.trade-tariff.service.gov.uk` need a valid access token from the [Trade Tariff developer portal](https://hub.trade-tariff.service.gov.uk/). See [Using the API without authentication](#using-the-api-without-authentication) to try the API first, or [Authenticating with managed credentials](#authenticating-with-managed-credentials) for production access.
 
 Example request (substitute your access token):
 
@@ -44,6 +44,114 @@ This API can be used in a similar way to access a wide range of information from
 - Preferential rules of origin
 
 Find out more about what information can be returned through the [Trade Tariff API](/reference.html).
+
+## Using the API without authentication
+
+You can try the Trade Tariff API without developer portal credentials by calling `www.trade-tariff.service.gov.uk` instead of `api.trade-tariff.service.gov.uk`. Include the `Accept` header and cache responses to reduce repeat calls. This is useful for exploring the API before you register for managed credentials, which provides a higher rate limit on the `api` host. See [Authenticating with managed credentials](#authenticating-with-managed-credentials).
+
+The examples below show simple commodity requests in different languages.
+
+### Ruby with Rails example
+
+It is simple to make use of the UK Trade Tariff API in your application. This example uses <a href="https://www.ruby-lang.org/en/" target="_blank" rel="noreferrer noopener">Ruby (opens in new tab)</a> with the built in `net/http` library to access the Commodities API. It also uses the <a href="https://guides.rubyonrails.org/caching_with_rails.html" target="_blank" rel="noreferrer noopener">Rails cache (opens in new tab)</a> to minimise the number of API calls.
+
+```ruby
+require 'net/http'
+require 'json'
+require 'uri'
+
+commodity = Rails.cache.fetch('commodity_0101210000', expires_in: 24.hours) do
+  uri = URI.parse('https://www.trade-tariff.service.gov.uk/uk/api/commodities/0101210000')
+  response = Net::HTTP.get(uri, { 'Accept' => 'application/vnd.hmrc.2.0+json' })
+  JSON.parse(response)
+end
+attributes = commodity['data']['attributes']
+
+puts "Commodity Code: #{attributes['goods_nomenclature_item_id']}"
+puts "Description: #{attributes['formatted_description']}"
+puts "Basic Duty Rate: #{attributes['basic_duty_rate']}"
+puts "Declarable: #{attributes['declarable']}"
+```
+
+This example uses the Ruby on Rails cache, which minimises the number of API calls. It is recommended you cache requests for 24 hours.
+
+### Node.js example
+
+You can also use the UK Trade Tariff API in a <a href="https://nodejs.org" target="_blank" rel="noreferrer noopener">Node.js (opens in new tab)</a> application. Below is an example using the built-in `https` module to access the Trade Tariff API.
+
+```javascript
+const https = require('https');
+const cache = new Map();
+const commodityCode = '0101210000';
+const cacheKey = `commodity_${commodityCode}`;
+const cacheDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+const cached = cache.get(cacheKey);
+if (cached && Date.now() - cached.timestamp < cacheDuration) {
+  const attributes = cached.data.data.attributes;
+  console.log(`Commodity Code: ${attributes.goods_nomenclature_item_id}`);
+  console.log(`Description: ${attributes.formatted_description}`);
+  console.log(`Basic Duty Rate: ${attributes.basic_duty_rate}`);
+  console.log(`Declarable: ${attributes.declarable}`);
+} else {
+  https.get(`https://www.trade-tariff.service.gov.uk/uk/api/commodities/${commodityCode}`, {
+    headers: {
+      'Accept': 'application/vnd.hmrc.2.0+json'
+    }
+  }, (res) => {
+    let data = '';
+
+    res.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    res.on('end', () => {
+      const commodity = JSON.parse(data);
+      cache.set(cacheKey, { data: commodity, timestamp: Date.now() });
+
+      const attributes = commodity.data.attributes;
+      console.log(`Commodity Code: ${attributes.goods_nomenclature_item_id}`);
+      console.log(`Description: ${attributes.formatted_description}`);
+      console.log(`Basic Duty Rate: ${attributes.basic_duty_rate}`);
+      console.log(`Declarable: ${attributes.declarable}`);
+    });
+  }).on('error', (err) => {
+    console.error(err);
+  });
+}
+```
+
+### Python example
+
+Finally, you can use the UK Trade Tariff API in a <a href="https://www.python.org/" target="_blank" rel="noreferrer noopener">Python (opens in new tab)</a> application. Below is an example using the built-in `urllib` library to access the Commodities API.
+
+```python
+import urllib.request
+import json
+import time
+
+cache = {}
+commodity_code = '0101210000'
+cache_key = f'commodity_{commodity_code}'
+cache_duration = 24 * 60 * 60  # 24 hours in seconds
+
+cached = cache.get(cache_key)
+if cached and time.time() - cached['timestamp'] < cache_duration:
+    commodity = cached['data']
+else:
+    url = f'https://www.trade-tariff.service.gov.uk/uk/api/commodities/{commodity_code}'
+    req = urllib.request.Request(url, headers={'Accept': 'application/vnd.hmrc.2.0+json'})
+    with urllib.request.urlopen(req) as response:
+        data = response.read().decode('utf-8')
+        commodity = json.loads(data)
+    cache[cache_key] = {'data': commodity, 'timestamp': time.time()}
+
+attributes = commodity['data']['attributes']
+print(f"Commodity Code: {attributes['goods_nomenclature_item_id']}")
+print(f"Description: {attributes['formatted_description']}")
+print(f"Basic Duty Rate: {attributes['basic_duty_rate']}")
+print(f"Declarable: {attributes['declarable']}")
+```
 
 ## Authenticating with managed credentials
 
