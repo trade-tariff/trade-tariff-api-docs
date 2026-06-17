@@ -16,7 +16,7 @@ You need a tariff API token from the <a href="https://hub.trade-tariff.service.g
 
 The MCP server accepts this token in two ways depending on your client:
 
-- **Static header** — pass the token directly as `Authorization: Bearer <token>`. Most clients use this approach with a `headers` config field (see client instructions below).
+- **Static header** — pass the token as the `Authorization` header. Both `Authorization: Bearer <token>` and `Authorization: <token>` (without the `Bearer` prefix) are accepted. Most clients use this approach with a `headers` config field (see client instructions below).
 - **OAuth 2.0 client_credentials** — the MCP server advertises an OAuth discovery endpoint (`/.well-known/oauth-authorization-server`) for clients that perform the OAuth handshake automatically. When prompted, use anything as the client ID and your tariff API token as the client secret. The server returns the token as-is as the access token — it does not issue separate OAuth credentials.
 
 Requests without a valid token receive `401 Unauthorized`.
