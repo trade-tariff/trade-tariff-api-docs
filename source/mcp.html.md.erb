@@ -26,12 +26,18 @@ https://mcp.trade-tariff.service.gov.uk/mcp
 
 | Tool | Description |
 |------|-------------|
-| `list_sections` | List all top-level sections of the tariff |
-| `show_chapter` | Show a chapter by 2-digit ID (e.g. `01`) |
-| `show_heading` | Show a heading by 4-digit code (e.g. `0101`) |
-| `lookup_commodity` | Look up a commodity by 10-digit code (e.g. `0101210000`) |
-| `search_commodities` | Search by keyword (e.g. `"live horses"`) |
-| `navigate_hierarchy` | Look up any goods nomenclature entry by 4–10 digit code |
+| `list_sections` | List all sections of the tariff — the top-level groupings of goods |
+| `show_chapter` | Show a chapter by its 2-digit ID (e.g. `01` for Live Animals) |
+| `show_heading` | Show a heading by its 4-digit code (e.g. `0101` for live horses) |
+| `lookup_commodity` | Look up a commodity by its 10-digit code — returns description, measures, and duties |
+| `search_commodities` | Search the tariff by keyword — returns matching commodities, headings, and chapters |
+| `navigate_hierarchy` | Look up any goods nomenclature entry by a 4–10 digit code |
+| `rules_of_origin` | Return rules of origin schemes for a heading and country, including proof of origin required to claim a preferential rate |
+| `search_quotas` | Search quota definitions — check whether a commodity qualifies for quota relief and what the current balance is |
+| `list_geographical_areas` | List all countries and country groups recognised by the tariff — useful for finding country codes for duty or rules of origin lookups |
+| `list_exchange_rates` | List GBP exchange rates used in duty calculations (last 5 years) |
+| `list_certificate_types` | List all certificate types with descriptions — use this to understand what licences a measure may require |
+| `search_additional_codes` | Search additional codes such as Meursing codes for agricultural goods with variable duties |
 
 ### Optional parameters
 
