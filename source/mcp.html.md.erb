@@ -49,9 +49,13 @@ Every tool accepts these optional parameters:
 | `uk`, `gb`, `great britain`, `united kingdom` | Great Britain (default) |
 | `xi`, `ni`, `northern ireland` | Northern Ireland |
 
-## Connecting to Claude Desktop
+## Connecting AI clients
 
-Add the following to your `claude_desktop_config.json`, substituting your access token:
+The MCP server uses streamable HTTP transport. Any client that supports this transport can connect by pointing it at the endpoint URL and passing your access token as an `Authorization: Bearer` header.
+
+### Claude Desktop
+
+Add the following to your `claude_desktop_config.json`:
 
 ```json
 {
@@ -66,15 +70,75 @@ Add the following to your `claude_desktop_config.json`, substituting your access
 }
 ```
 
-On macOS, `claude_desktop_config.json` is at `~/Library/Application Support/Claude/claude_desktop_config.json`.
+On macOS the file is at `~/Library/Application Support/Claude/claude_desktop_config.json`. Restart Claude Desktop after saving.
 
-After saving the file, restart Claude Desktop. The tariff tools will appear in the tools panel.
+### Cursor
 
-## Connecting other MCP clients
+Add to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` in your project root (project-scoped):
 
-Any client that supports streamable HTTP transport can connect. Pass the endpoint URL and an `Authorization: Bearer <access_token>` header.
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+      }
+    }
+  }
+}
+```
 
-To test with MCP Inspector:
+Cursor picks up changes without a restart.
+
+### Windsurf
+
+Add to `~/.codeium/windsurf/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+      }
+    }
+  }
+}
+```
+
+Restart Windsurf after saving.
+
+### VS Code (GitHub Copilot)
+
+Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`. The `${input:tradeTariffToken}` placeholder means VS Code will prompt you for the token rather than storing it in plain text:
+
+```json
+{
+  "servers": {
+    "trade-tariff": {
+      "type": "http",
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
+      "headers": {
+        "Authorization": "Bearer ${input:tradeTariffToken}"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "id": "tradeTariffToken",
+      "type": "promptString",
+      "description": "Trade Tariff API access token",
+      "password": true
+    }
+  ]
+}
+```
+
+The MCP server will appear in Copilot's agent mode tool list after VS Code reloads the config.
+
+### MCP Inspector (testing)
 
 ```bash
 npx @modelcontextprotocol/inspector \
