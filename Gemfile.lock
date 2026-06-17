@@ -173,7 +173,7 @@ GEM
       racc (~> 1.4)
     openapi3_parser (0.10.1)
       commonmarker (>= 1.0)
-    ostruct (0.6.1)
+    ostruct (0.6.3)
     padrino-helpers (0.16.1)
       i18n (>= 0.6.7, < 2)
       padrino-support (= 0.16.1)
