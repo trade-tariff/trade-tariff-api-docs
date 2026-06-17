@@ -22,7 +22,7 @@ GEM
     base64 (0.3.0)
     benchmark (0.4.0)
     bigdecimal (4.1.2)
-    brakeman (7.0.0)
+    brakeman (8.0.4)
       racc
     builder (3.3.0)
     cgi (0.5.1)
