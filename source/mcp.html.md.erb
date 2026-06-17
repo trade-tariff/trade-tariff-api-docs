@@ -1,0 +1,93 @@
+---
+title: Trade Tariff MCP Server
+---
+
+<%= partial "layouts/rate_limiting_banner" %>
+
+# Trade Tariff MCP Server
+
+The Trade Tariff MCP (Model Context Protocol) server exposes UK trade tariff data as tools for AI assistants and LLM clients. It lets AI applications look up commodity codes, search the tariff hierarchy, and retrieve duty information directly — without needing to build API integration themselves.
+
+The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using streamable HTTP transport.
+
+## Endpoint
+
+```
+https://mcp.trade-tariff.service.gov.uk/mcp
+```
+
+The endpoint requires no authentication.
+
+## Available tools
+
+| Tool | Description |
+|------|-------------|
+| `list_sections` | List all top-level sections of the tariff |
+| `show_chapter` | Show a chapter by 2-digit ID (e.g. `01`) |
+| `show_heading` | Show a heading by 4-digit code (e.g. `0101`) |
+| `lookup_commodity` | Look up a commodity by 10-digit code (e.g. `0101210000`) |
+| `search_commodities` | Search by keyword (e.g. `"live horses"`) |
+| `navigate_hierarchy` | Look up any goods nomenclature entry by 4–10 digit code |
+
+### Optional parameters
+
+Every tool accepts these optional parameters:
+
+| Parameter | Description |
+|-----------|-------------|
+| `service` | Which tariff to query — `uk` (default) for Great Britain or `xi` for Northern Ireland |
+| `validity_date` | Return data as it appeared on a given date (`YYYY-MM-DD`). Defaults to today |
+
+**Service values accepted for `service`:**
+
+| Value | Tariff |
+|-------|--------|
+| `uk`, `gb`, `great britain`, `united kingdom` | Great Britain (default) |
+| `xi`, `ni`, `northern ireland` | Northern Ireland |
+
+## Connecting to Claude Desktop
+
+Add the following to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
+    }
+  }
+}
+```
+
+On macOS, `claude_desktop_config.json` is at `~/Library/Application Support/Claude/claude_desktop_config.json`.
+
+After saving the file, restart Claude Desktop. The tariff tools will appear in the tools panel.
+
+## Connecting other MCP clients
+
+Any client that supports streamable HTTP transport can connect. Pass the endpoint URL:
+
+```
+https://mcp.trade-tariff.service.gov.uk/mcp
+```
+
+For clients that support the MCP Inspector for testing:
+
+```bash
+npx @modelcontextprotocol/inspector https://mcp.trade-tariff.service.gov.uk/mcp
+```
+
+## Example usage
+
+Once connected, you can ask your AI assistant questions such as:
+
+- *"What commodity code covers fresh cut roses?"*
+- *"Look up commodity 0101210000 and tell me what duties apply."*
+- *"Show me chapter 84 of the Northern Ireland tariff."*
+- *"Search the tariff for 'electric vehicles'."*
+
+The assistant will call the relevant tool and return structured tariff data in its response.
+
+## Source code
+
+The MCP server is open source: [trade-tariff/trade-tariff-mcp](https://github.com/trade-tariff/trade-tariff-mcp).
