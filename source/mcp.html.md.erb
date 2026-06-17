@@ -10,13 +10,17 @@ The Trade Tariff MCP (Model Context Protocol) server exposes UK trade tariff dat
 
 The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using streamable HTTP transport.
 
+## Before you start
+
+You need an access token from the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a>. Register there to obtain OAuth 2.0 `client_credentials` — a client ID and secret you exchange for a bearer token. See [Authenticating with managed credentials](/the-trade-tariff-api.html#authenticating-with-managed-credentials) for the full token flow.
+
+Pass the token as an `Authorization: Bearer <access_token>` header on every request to the MCP endpoint.
+
 ## Endpoint
 
 ```
 https://mcp.trade-tariff.service.gov.uk/mcp
 ```
-
-The endpoint requires no authentication.
 
 ## Available tools
 
@@ -47,13 +51,16 @@ Every tool accepts these optional parameters:
 
 ## Connecting to Claude Desktop
 
-Add the following to your `claude_desktop_config.json`:
+Add the following to your `claude_desktop_config.json`, substituting your access token:
 
 ```json
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
+      }
     }
   }
 }
@@ -65,16 +72,14 @@ After saving the file, restart Claude Desktop. The tariff tools will appear in t
 
 ## Connecting other MCP clients
 
-Any client that supports streamable HTTP transport can connect. Pass the endpoint URL:
+Any client that supports streamable HTTP transport can connect. Pass the endpoint URL and an `Authorization: Bearer <access_token>` header.
 
-```
-https://mcp.trade-tariff.service.gov.uk/mcp
-```
-
-For clients that support the MCP Inspector for testing:
+To test with MCP Inspector:
 
 ```bash
-npx @modelcontextprotocol/inspector https://mcp.trade-tariff.service.gov.uk/mcp
+npx @modelcontextprotocol/inspector \
+  --header "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+  https://mcp.trade-tariff.service.gov.uk/mcp
 ```
 
 ## Example usage
