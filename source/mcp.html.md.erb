@@ -12,9 +12,14 @@ The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using st
 
 ## Before you start
 
-You need an access token from the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a>. Register there to obtain OAuth 2.0 `client_credentials` — a client ID and secret you exchange for a bearer token. See [Authenticating with managed credentials](/the-trade-tariff-api.html#authenticating-with-managed-credentials) for the full token flow.
+You need a tariff API token from the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a>. Register there and create an API key — the secret value is your token.
 
-Pass the token as an `Authorization: Bearer <access_token>` header on every request to the MCP endpoint.
+The MCP server accepts this token in two ways depending on your client:
+
+- **Static header** — pass the token directly as `Authorization: Bearer <token>`. Most clients use this approach with a `headers` config field (see client instructions below).
+- **OAuth 2.0 client_credentials** — the MCP server advertises an OAuth discovery endpoint (`/.well-known/oauth-authorization-server`) for clients that perform the OAuth handshake automatically. When prompted, use anything as the client ID and your tariff API token as the client secret. The server returns the token as-is as the access token — it does not issue separate OAuth credentials.
+
+Requests without a valid token receive `401 Unauthorized`.
 
 ## Endpoint
 
@@ -57,11 +62,13 @@ Every tool accepts these optional parameters:
 
 ## Connecting AI clients
 
-The MCP server uses streamable HTTP transport. Any client that supports this transport can connect by pointing it at the endpoint URL and passing your access token as an `Authorization: Bearer` header.
+The MCP server uses streamable HTTP transport. Configuration varies slightly between clients, but in each case you are providing your tariff API token — either as a static `Authorization: Bearer` header or via an OAuth `client_credentials` prompt.
 
 ### Claude Desktop
 
-Add the following to your `claude_desktop_config.json`:
+Claude Desktop supports OAuth discovery. When you add the server it will open a prompt asking for credentials — enter anything as the client ID and your tariff API token as the client secret.
+
+Alternatively, you can supply the token as a static header in `claude_desktop_config.json`:
 
 ```json
 {
@@ -76,7 +83,7 @@ Add the following to your `claude_desktop_config.json`:
 }
 ```
 
-The file location depends on your operating system:
+File locations:
 
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
