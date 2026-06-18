@@ -12,12 +12,19 @@ The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using st
 
 ## Before you start
 
-You need a tariff API token from the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a>. Register there and create an API key — the secret value is your token.
+Register at the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create an application. You will receive a **client_id** and **client_secret** — you need both.
 
-The MCP server accepts this token in two ways depending on your client:
+The MCP server accepts authentication in two ways depending on your client:
 
-- **Static header** — pass the token as the `Authorization` header. Both `Authorization: Bearer <token>` and `Authorization: <token>` (without the `Bearer` prefix) are accepted. Most clients use this approach with a `headers` config field (see client instructions below).
-- **OAuth 2.0 client_credentials** — the MCP server advertises an OAuth discovery endpoint (`/.well-known/oauth-authorization-server`) for clients that perform the OAuth handshake automatically. When prompted, use anything as the client ID and your tariff API token as the client secret. The server returns the token as-is as the access token — it does not issue separate OAuth credentials.
+- **OAuth 2.0** — for clients that perform the OAuth handshake automatically (such as Claude.ai connectors). The server implements Authorization Code + PKCE: when prompted, enter your Hub **client_id** and **client_secret**. The server exchanges these with Hub internally and returns a signed access token.
+- **Static bearer token** — for clients configured with a static `Authorization` header. Exchange your Hub credentials for a token first:
+
+  ```bash
+  curl -X POST https://auth.id.trade-tariff.service.gov.uk/oauth2/token \
+    -d "grant_type=client_credentials&client_id=<client_id>&client_secret=<client_secret>&scope=tariff/read"
+  ```
+
+  Use the returned `access_token` as your bearer token. Tokens expire — refresh them as needed.
 
 Requests without a valid token receive `401 Unauthorized`.
 
@@ -62,13 +69,13 @@ Every tool accepts these optional parameters:
 
 ## Connecting AI clients
 
-The MCP server uses streamable HTTP transport. Configuration varies slightly between clients, but in each case you are providing your tariff API token — either as a static `Authorization: Bearer` header or via an OAuth `client_credentials` prompt.
+The MCP server uses streamable HTTP transport. Configuration varies slightly between clients.
 
 ### Claude Desktop
 
-Claude Desktop supports OAuth discovery. When you add the server it will open a prompt asking for credentials — enter anything as the client ID and your tariff API token as the client secret.
+Claude Desktop supports OAuth discovery. When you add the server it will open a prompt asking for credentials — enter your Hub **client_id** and **client_secret**.
 
-Alternatively, you can supply the token as a static header in `claude_desktop_config.json`:
+Alternatively, exchange your credentials for a bearer token (see [Before you start](#before-you-start)) and supply it as a static header in `claude_desktop_config.json`:
 
 ```json
 {
