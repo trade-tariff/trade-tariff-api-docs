@@ -14,7 +14,7 @@ The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using st
 
 Register at the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create an application. You will receive a **client_id** and **client_secret**.
 
-The server implements OAuth 2.0 Authorization Code + PKCE. When you connect a client, enter your Hub **client_id** and **client_secret** when prompted. The MCP server exchanges these with Hub internally and returns a signed access token to the client.
+The server implements OAuth 2.0 Authorization Code + PKCE. When you connect a client, enter your Hub **client_id** and **client_secret** when prompted.
 
 Requests without a valid token receive `401 Unauthorized`.
 
@@ -159,7 +159,3 @@ Once connected, you can ask your AI assistant questions such as:
 - *"Search the tariff for 'electric vehicles'."*
 
 The assistant will call the relevant tool and return structured tariff data in its response.
-
-## Source code
-
-The MCP server is open source: [trade-tariff/mcp](https://github.com/trade-tariff/mcp).
