@@ -12,19 +12,9 @@ The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using st
 
 ## Before you start
 
-Register at the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create an application. You will receive a **client_id** and **client_secret** — you need both.
+Register at the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create an application. You will receive a **client_id** and **client_secret**.
 
-The MCP server accepts authentication in two ways depending on your client:
-
-- **OAuth 2.0** — for clients that perform the OAuth handshake automatically (such as Claude.ai connectors). The server implements Authorization Code + PKCE: when prompted, enter your Hub **client_id** and **client_secret**. The server exchanges these with Hub internally and returns a signed access token.
-- **Static bearer token** — for clients configured with a static `Authorization` header. Exchange your Hub credentials for a token first:
-
-  ```bash
-  curl -X POST https://auth.id.trade-tariff.service.gov.uk/oauth2/token \
-    -d "grant_type=client_credentials&client_id=<client_id>&client_secret=<client_secret>&scope=tariff/read"
-  ```
-
-  Use the returned `access_token` as your bearer token. Tokens expire — refresh them as needed.
+The server implements OAuth 2.0 Authorization Code + PKCE. When you connect a client, enter your Hub **client_id** and **client_secret** when prompted. The MCP server exchanges these with Hub internally and returns a signed access token to the client.
 
 Requests without a valid token receive `401 Unauthorized`.
 
@@ -69,22 +59,17 @@ Every tool accepts these optional parameters:
 
 ## Connecting AI clients
 
-The MCP server uses streamable HTTP transport. Configuration varies slightly between clients.
+The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code + PKCE for authentication. Add the server URL and enter your Hub **client_id** and **client_secret** when your client prompts for credentials.
 
 ### Claude Desktop
 
-Claude Desktop supports OAuth discovery. When you add the server it will open a prompt asking for credentials — enter your Hub **client_id** and **client_secret**.
-
-Alternatively, exchange your credentials for a bearer token (see [Before you start](#before-you-start)) and supply it as a static header in `claude_desktop_config.json`:
+Add to `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
-      }
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
     }
   }
 }
@@ -95,11 +80,11 @@ File locations:
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-Restart Claude Desktop after saving.
+Restart Claude Desktop after saving. It will prompt for credentials on first use.
 
 ### Cursor
 
-Add to your global config or a project-scoped `.cursor/mcp.json` in your project root. Global config locations:
+Add to your global config or a project-scoped `.cursor/mcp.json`:
 
 - **macOS / Linux**: `~/.cursor/mcp.json`
 - **Windows**: `%USERPROFILE%\.cursor\mcp.json`
@@ -108,20 +93,17 @@ Add to your global config or a project-scoped `.cursor/mcp.json` in your project
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
-      }
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
     }
   }
 }
 ```
 
-Cursor picks up changes without a restart.
+Cursor picks up changes without a restart and will prompt for credentials on first use.
 
 ### Windsurf
 
-Add to your Windsurf MCP config. File locations:
+Add to your Windsurf MCP config:
 
 - **macOS / Linux**: `~/.codeium/windsurf/mcp_config.json`
 - **Windows**: `%USERPROFILE%\.codeium\windsurf\mcp_config.json`
@@ -130,10 +112,7 @@ Add to your Windsurf MCP config. File locations:
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_ACCESS_TOKEN"
-      }
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
     }
   }
 }
@@ -143,33 +122,20 @@ Restart Windsurf after saving.
 
 ### VS Code (GitHub Copilot)
 
-Add to `.vscode/mcp.json` in your workspace (works on all platforms), or to your user-level `mcp.json`:
+Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`:
 
 - **macOS**: `~/Library/Application Support/Code/User/mcp.json`
 - **Windows**: `%APPDATA%\Code\User\mcp.json`
 - **Linux**: `~/.config/Code/User/mcp.json`
-
-The `${input:tradeTariffToken}` placeholder means VS Code will prompt you for the token rather than storing it in plain text:
 
 ```json
 {
   "servers": {
     "trade-tariff": {
       "type": "http",
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp",
-      "headers": {
-        "Authorization": "Bearer ${input:tradeTariffToken}"
-      }
+      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
     }
-  },
-  "inputs": [
-    {
-      "id": "tradeTariffToken",
-      "type": "promptString",
-      "description": "Trade Tariff API access token",
-      "password": true
-    }
-  ]
+  }
 }
 ```
 
