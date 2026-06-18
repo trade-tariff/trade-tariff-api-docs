@@ -30,3 +30,4 @@ Staticfile.auth
 .direnv
 .nix
 .envrc
+.pre-commit-config-nix.yaml
