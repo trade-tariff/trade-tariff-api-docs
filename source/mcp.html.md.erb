@@ -21,7 +21,7 @@ Requests without a valid token receive `401 Unauthorized`.
 ## Endpoint
 
 ```
-https://mcp.trade-tariff.service.gov.uk/mcp
+https://mcp.trade-tariff.service.gov.uk/
 ```
 
 ## Available tools
@@ -69,7 +69,7 @@ Add to `claude_desktop_config.json`:
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
     }
   }
 }
@@ -93,7 +93,7 @@ Add to your global config or a project-scoped `.cursor/mcp.json`:
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
     }
   }
 }
@@ -112,7 +112,7 @@ Add to your Windsurf MCP config:
 {
   "mcpServers": {
     "trade-tariff": {
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
     }
   }
 }
@@ -133,7 +133,7 @@ Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`:
   "servers": {
     "trade-tariff": {
       "type": "http",
-      "url": "https://mcp.trade-tariff.service.gov.uk/mcp"
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
     }
   }
 }
@@ -146,7 +146,7 @@ The MCP server will appear in Copilot's agent mode tool list after VS Code reloa
 ```bash
 npx @modelcontextprotocol/inspector \
   --header "Authorization: Bearer YOUR_ACCESS_TOKEN" \
-  https://mcp.trade-tariff.service.gov.uk/mcp
+  https://mcp.trade-tariff.service.gov.uk/
 ```
 
 ## Example usage
