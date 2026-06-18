@@ -130,7 +130,6 @@
       "original": {
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "3bbec39bc90eadfa031e6f3b77272f3f60803e39",
         "type": "github"
       }
     },
