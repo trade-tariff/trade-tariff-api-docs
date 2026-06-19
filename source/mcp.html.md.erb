@@ -12,7 +12,7 @@ The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using st
 
 ## Before you start
 
-The MCP server requires credentials from the Trade Tariff developer hub. Here is how to get them:
+The MCP server requires credentials from the Trade Tariff Dev Portal. Here is how to get them:
 
 1. Go to the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create a free account
 2. Once signed in, create a new **Trade Tariff key** — give it any name that identifies your project
@@ -63,7 +63,7 @@ Every tool accepts these optional parameters:
 
 ## Connecting AI clients
 
-The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code + PKCE for authentication. Add the server URL and enter your Hub **client_id** and **client_secret** when your client prompts for credentials.
+The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code + PKCE for authentication. Add the server URL and enter your Dev Portal **client_id** and **client_secret** when your client prompts for credentials.
 
 ### Claude Desktop
 
@@ -71,7 +71,7 @@ The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code +
 
 1. Open Claude Desktop and go to **Settings** → **Connectors** → **Customize**
 2. Click **Add custom connector**
-3. Enter the server URL `https://mcp.trade-tariff.service.gov.uk/` along with your Hub **client_id** and **client_secret**
+3. Enter the server URL `https://mcp.trade-tariff.service.gov.uk/` along with your Dev Portal **client_id** and **client_secret**
 4. Click **Add**
 
 **Via config file:**
