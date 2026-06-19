@@ -18,7 +18,7 @@ The MCP server requires credentials from the Trade Tariff developer hub. Here is
 2. Once signed in, create a new **Trade Tariff key** — give it any name that identifies your project
 3. Copy the **client_id** and **client_secret** shown after creation — you will need these when connecting your AI client
 
-When you add the MCP server to your AI client, it will open a browser window asking you to sign in and authorise access. Enter your **client_id** and **client_secret** when prompted. This happens once; the client then stores a token and reconnects automatically.
+You will need your **client_id** and **client_secret** when adding the server to your AI client. The exact flow varies by client — see the instructions below for your specific tool.
 
 Requests without a valid token receive `401 Unauthorized`.
 
@@ -71,8 +71,8 @@ The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code +
 
 1. Open Claude Desktop and go to **Settings** → **Connectors** → **Customize**
 2. Click **Add custom connector**
-3. Enter the server URL: `https://mcp.trade-tariff.service.gov.uk/`
-4. Click **Add** — Claude Desktop will prompt for your Hub **client_id** and **client_secret**
+3. Enter the server URL `https://mcp.trade-tariff.service.gov.uk/` along with your Hub **client_id** and **client_secret**
+4. Click **Add**
 
 **Via config file:**
 
