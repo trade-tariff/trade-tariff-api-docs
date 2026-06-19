@@ -63,6 +63,15 @@ The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code +
 
 ### Claude Desktop
 
+**Via settings UI:**
+
+1. Open Claude Desktop and go to **Settings** → **Extensions**
+2. Click **Add MCP Server**
+3. Enter the server URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Add** — Claude Desktop will prompt for your Hub **client_id** and **client_secret**
+
+**Via config file:**
+
 Add to `claude_desktop_config.json`:
 
 ```json
@@ -84,6 +93,15 @@ Restart Claude Desktop after saving. It will prompt for credentials on first use
 
 ### Cursor
 
+**Via settings UI:**
+
+1. Open **Cursor Settings** (`Cmd+,` / `Ctrl+,`) and go to **Tools & Integrations** → **MCP Servers**
+2. Click **Add new MCP server**
+3. Set the type to **HTTP** and enter the URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Save** — Cursor will prompt for credentials on first connection
+
+**Via config file:**
+
 Add to your global config or a project-scoped `.cursor/mcp.json`:
 
 - **macOS / Linux**: `~/.cursor/mcp.json`
@@ -103,6 +121,15 @@ Cursor picks up changes without a restart and will prompt for credentials on fir
 
 ### Windsurf
 
+**Via settings UI:**
+
+1. Open **Windsurf Settings** and navigate to the **MCP** section
+2. Click **Add Server**
+3. Enter the server URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Save** and restart Windsurf when prompted
+
+**Via config file:**
+
 Add to your Windsurf MCP config:
 
 - **macOS / Linux**: `~/.codeium/windsurf/mcp_config.json`
@@ -121,6 +148,15 @@ Add to your Windsurf MCP config:
 Restart Windsurf after saving.
 
 ### VS Code (GitHub Copilot)
+
+**Via settings UI:**
+
+1. Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`) and run **MCP: Add Server**
+2. Select **HTTP** as the server type
+3. Enter the URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Choose whether to add it to your user settings or workspace — VS Code will reload the config automatically
+
+**Via config file:**
 
 Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`:
 
