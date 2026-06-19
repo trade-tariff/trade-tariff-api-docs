@@ -12,9 +12,13 @@ The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using st
 
 ## Before you start
 
-Register at the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create an application. You will receive a **client_id** and **client_secret**.
+The MCP server requires credentials from the Trade Tariff developer hub. Here is how to get them:
 
-The server implements OAuth 2.0 Authorization Code + PKCE. When you connect a client, enter your Hub **client_id** and **client_secret** when prompted.
+1. Go to the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create a free account
+2. Once signed in, create a new **application** — give it any name that identifies your project
+3. Copy the **client_id** and **client_secret** shown after creation — you will need these when connecting your AI client
+
+When you add the MCP server to your AI client, it will open a browser window asking you to sign in and authorise access. Enter your **client_id** and **client_secret** when prompted. This happens once; the client then stores a token and reconnects automatically.
 
 Requests without a valid token receive `401 Unauthorized`.
 
