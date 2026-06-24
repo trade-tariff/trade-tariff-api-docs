@@ -51,6 +51,10 @@ GEM
     contracts (0.17.3)
     csv (3.3.5)
     date (3.5.1)
+    debride (1.15.2)
+      path_expander (~> 2.0)
+      prism (~> 1.7)
+      sexp_processor (~> 4.17)
     dotenv (3.2.0)
     drb (2.2.3)
     em-websocket (0.5.3)
@@ -185,6 +189,7 @@ GEM
       ast (~> 2.4.1)
       racc
     parslet (2.0.0)
+    path_expander (2.0.1)
     prism (1.9.0)
     psych (5.4.0)
       date
@@ -260,6 +265,7 @@ GEM
     schmooze (0.2.0)
     securerandom (0.4.1)
     servolux (0.13.0)
+    sexp_processor (4.17.5)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -292,6 +298,7 @@ DEPENDENCIES
   brakeman
   builder
   cgi
+  debride (~> 1.15)
   govuk_tech_docs
   logger
   middleman-gh-pages
@@ -303,7 +310,7 @@ DEPENDENCIES
   sprockets (~> 4.0)
 
 RUBY VERSION
-   ruby 4.0.5p0
+  ruby 4.0.5p0
 
 BUNDLED WITH
-   2.6.7
+  4.0.10

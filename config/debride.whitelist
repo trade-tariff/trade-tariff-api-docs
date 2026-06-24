@@ -1,0 +1,4 @@
+# Debride cannot see framework convention calls reliably.
+# This normalized baseline is compared by trade-tariff-tools/debride.
+
+main#graphviz

@@ -65,7 +65,4 @@ helpers do
     concat_content(svg.html_safe)
   end
 
-  def convert_markdown(markdown_content)
-    ::Kramdown::Document.new(markdown_content).to_html
-  end
 end
