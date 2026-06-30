@@ -151,7 +151,9 @@ Add to your Windsurf MCP config:
 
 Restart Windsurf after saving.
 
-### VS Code (GitHub Copilot)
+### GitHub Copilot
+
+#### VS Code
 
 **Via settings UI:**
 
@@ -180,6 +182,35 @@ Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`:
 ```
 
 The MCP server will appear in Copilot's agent mode tool list after VS Code reloads the config.
+
+#### Visual Studio
+
+1. Go to **Tools** → **Options** → **GitHub** → **Copilot** → **MCP Servers**, or edit the solution-level `.mcp.json` directly
+2. Add an entry for the server with type `http` and the URL `https://mcp.trade-tariff.service.gov.uk/` (same JSON shape as the VS Code config above)
+3. Reload the MCP configuration from the Copilot Chat panel — it will prompt for credentials on first use
+
+#### JetBrains IDEs (IntelliJ, Rider, PyCharm, etc.)
+
+1. Open **Settings/Preferences** → **Languages & Frameworks** → **GitHub Copilot** → **MCP**
+2. Click the button to edit the MCP configuration file (it uses the same `servers` JSON shape as VS Code above) and add the `trade-tariff` entry with the server URL
+3. Apply and reload — the tool will appear in Copilot Chat's agent mode, and you'll be prompted for your Dev Portal credentials on first use
+
+#### Copilot CLI
+
+Add to `~/.copilot/mcp-config.json`:
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "type": "http",
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
+    }
+  }
+}
+```
+
+Restart the CLI session after saving — it will prompt for your Dev Portal **client_id** and **client_secret** on first use.
 
 ### ChatGPT
 
