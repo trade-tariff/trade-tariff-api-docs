@@ -181,6 +181,15 @@ Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`:
 
 The MCP server will appear in Copilot's agent mode tool list after VS Code reloads the config.
 
+### ChatGPT
+
+ChatGPT connects to MCP servers as **Apps/Connectors**, which requires a paid plan.
+
+1. Go to **Settings** → **Connectors** → **Advanced settings** and enable **Developer mode**
+2. Go to **Settings** → **Connectors** → **Add custom connector**
+3. Enter a name (e.g. `Trade Tariff`) and the server URL `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Save**, then enable the connector in a chat — you will be prompted for your Dev Portal **client_id** and **client_secret** on first use
+
 ### MCP Inspector (testing)
 
 ```bash
