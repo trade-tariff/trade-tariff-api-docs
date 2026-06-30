@@ -221,6 +221,17 @@ Add to `~/.copilot/mcp-config.json`:
 
 Restart the CLI session after saving — it will prompt for your Dev Portal **client_id** and **client_secret** on first use.
 
+### Microsoft Copilot
+
+The consumer Microsoft Copilot app (Windows/macOS) does not have a direct "add connector" option for custom MCP servers. MCP support is provided through **Microsoft Copilot Studio**, where you build or edit an agent and add the server as a tool:
+
+1. Open your agent in [Microsoft Copilot Studio](https://copilotstudio.microsoft.com/)
+2. Go to the **Tools** tab and select **Add tool** → **New tool** → **MCP**
+3. Enter the server URL `https://mcp.trade-tariff.service.gov.uk/` and complete the OAuth setup with your Dev Portal **client_id** and **client_secret**
+4. Save — the tool becomes available to anyone using that agent, including through the Microsoft Copilot app if the agent is published there
+
+This requires access to a Copilot Studio environment — it isn't something an end user can do from within the consumer Copilot app itself. See Microsoft's [MCP server setup guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/mcp-add-existing-server-to-agent) for details.
+
 ### ChatGPT
 
 ChatGPT connects to MCP servers as **Apps/Connectors**, which requires a paid plan.
