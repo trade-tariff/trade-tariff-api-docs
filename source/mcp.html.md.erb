@@ -1,0 +1,273 @@
+---
+title: Trade Tariff MCP Server
+---
+
+<%= partial "layouts/rate_limiting_banner" %>
+
+# Trade Tariff MCP Server
+
+The Trade Tariff MCP (Model Context Protocol) server exposes UK trade tariff data as tools for AI assistants and LLM clients. It lets AI applications look up commodity codes, search the tariff hierarchy, and retrieve duty information directly — without needing to build API integration themselves.
+
+The server implements [MCP 2025-11-25](https://modelcontextprotocol.io) using streamable HTTP transport.
+
+## Before you start
+
+The MCP server requires credentials from the Trade Tariff Dev Portal. Here is how to get them:
+
+1. Go to the <a href="https://hub.trade-tariff.service.gov.uk/" target="_blank" rel="noreferrer noopener">Trade Tariff developer portal (opens in new tab)</a> and create a free account
+2. Once signed in, create a new **Trade Tariff key** — give it any name that identifies your project
+3. Copy the **client_id** and **client_secret** shown after creation — you will need these when connecting your AI client
+
+You will need your **client_id** and **client_secret** when adding the server to your AI client. The exact flow varies by client — see the instructions below for your specific tool.
+
+Requests without a valid token receive `401 Unauthorized`.
+
+## Endpoint
+
+```
+https://mcp.trade-tariff.service.gov.uk/
+```
+
+## Available tools
+
+| Tool | Description |
+|------|-------------|
+| `list_sections` | List all sections of the tariff — the top-level groupings of goods |
+| `show_chapter` | Show a chapter by its 2-digit ID (e.g. `01` for Live Animals) |
+| `show_heading` | Show a heading by its 4-digit code (e.g. `0101` for live horses) |
+| `lookup_commodity` | Look up a commodity by its 10-digit code — returns description, measures, and duties |
+| `search_commodities` | Search the tariff by keyword — returns matching commodities, headings, and chapters |
+| `navigate_hierarchy` | Look up any goods nomenclature entry by a 4–10 digit code |
+| `rules_of_origin` | Return rules of origin schemes for a heading and country, including proof of origin required to claim a preferential rate |
+| `search_quotas` | Search quota definitions — check whether a commodity qualifies for quota relief and what the current balance is |
+| `list_geographical_areas` | List all countries and country groups recognised by the tariff — useful for finding country codes for duty or rules of origin lookups |
+| `list_exchange_rates` | List GBP exchange rates used in duty calculations (last 5 years) |
+| `list_certificate_types` | List all certificate types with descriptions — use this to understand what licences a measure may require |
+| `search_additional_codes` | Search additional codes such as Meursing codes for agricultural goods with variable duties |
+
+### Optional parameters
+
+Every tool accepts these optional parameters:
+
+| Parameter | Description |
+|-----------|-------------|
+| `service` | Which tariff to query — `uk` (default) for Great Britain or `xi` for Northern Ireland |
+| `validity_date` | Return data as it appeared on a given date (`YYYY-MM-DD`). Defaults to today |
+
+**Service values accepted for `service`:**
+
+| Value | Tariff |
+|-------|--------|
+| `uk`, `gb`, `great britain`, `united kingdom` | Great Britain (default) |
+| `xi`, `ni`, `northern ireland` | Northern Ireland |
+
+## Connecting AI clients
+
+The MCP server uses streamable HTTP transport and OAuth 2.0 Authorization Code + PKCE for authentication. Add the server URL and enter your Dev Portal **client_id** and **client_secret** when your client prompts for credentials.
+
+Jump to your client:
+
+- [Claude Desktop](#claude-desktop)
+- [Cursor](#cursor)
+- [Windsurf](#windsurf)
+- [GitHub Copilot](#github-copilot)
+  - [Copilot Chat on github.com (no IDE required)](#copilot-chat-on-github-com-no-ide-required)
+  - [VS Code](#vs-code)
+  - [Visual Studio](#visual-studio)
+  - [JetBrains IDEs](#jetbrains-ides-intellij-rider-pycharm-etc)
+  - [Copilot CLI](#copilot-cli)
+- [Microsoft Copilot](#microsoft-copilot)
+- [ChatGPT](#chatgpt)
+
+### Claude Desktop
+
+**Via settings UI:**
+
+1. Open Claude Desktop and go to **Settings** → **Connectors** → **Customize**
+2. Click **Add custom connector**
+3. Enter the server URL `https://mcp.trade-tariff.service.gov.uk/` along with your Dev Portal **client_id** and **client_secret**
+4. Click **Add**
+
+**Via config file:**
+
+Add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
+    }
+  }
+}
+```
+
+File locations:
+
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+Restart Claude Desktop after saving. It will prompt for credentials on first use.
+
+### Cursor
+
+**Via settings UI:**
+
+1. Open **Cursor Settings** (`Cmd+,` / `Ctrl+,`) and go to **Tools & Integrations** → **MCP Servers**
+2. Click **Add new MCP server**
+3. Set the type to **HTTP** and enter the URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Save** — Cursor will prompt for credentials on first connection
+
+**Via config file:**
+
+Add to your global config or a project-scoped `.cursor/mcp.json`:
+
+- **macOS / Linux**: `~/.cursor/mcp.json`
+- **Windows**: `%USERPROFILE%\.cursor\mcp.json`
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
+    }
+  }
+}
+```
+
+Cursor picks up changes without a restart and will prompt for credentials on first use.
+
+### Windsurf
+
+**Via settings UI:**
+
+1. Open **Windsurf Settings** and navigate to the **MCP** section
+2. Click **Add Server**
+3. Enter the server URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Save** and restart Windsurf when prompted
+
+**Via config file:**
+
+Add to your Windsurf MCP config:
+
+- **macOS / Linux**: `~/.codeium/windsurf/mcp_config.json`
+- **Windows**: `%USERPROFILE%\.codeium\windsurf\mcp_config.json`
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
+    }
+  }
+}
+```
+
+Restart Windsurf after saving.
+
+### GitHub Copilot
+
+#### Copilot Chat on github.com (no IDE required)
+
+This is the simplest way to connect for non-technical users — no config file, no IDE.
+
+1. Go to [github.com/settings/copilot/features](https://github.com/settings/copilot/features) and find the **MCP servers** section
+2. Click **Add MCP server**
+3. Enter a name (e.g. `Trade Tariff`), the server URL `https://mcp.trade-tariff.service.gov.uk/`, and select **HTTP** as the connection type
+4. Save, then open **Copilot Chat** at [github.com/copilot](https://github.com/copilot) — you'll be prompted for your Dev Portal **client_id** and **client_secret** the first time the server is used
+
+#### VS Code
+
+**Via settings UI:**
+
+1. Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`) and run **MCP: Add Server**
+2. Select **HTTP** as the server type
+3. Enter the URL: `https://mcp.trade-tariff.service.gov.uk/`
+4. Choose whether to add it to your user settings or workspace — VS Code will reload the config automatically
+
+**Via config file:**
+
+Add to `.vscode/mcp.json` in your workspace, or to your user-level `mcp.json`:
+
+- **macOS**: `~/Library/Application Support/Code/User/mcp.json`
+- **Windows**: `%APPDATA%\Code\User\mcp.json`
+- **Linux**: `~/.config/Code/User/mcp.json`
+
+```json
+{
+  "servers": {
+    "trade-tariff": {
+      "type": "http",
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
+    }
+  }
+}
+```
+
+The MCP server will appear in Copilot's agent mode tool list after VS Code reloads the config.
+
+#### Visual Studio
+
+1. Go to **Tools** → **Options** → **GitHub** → **Copilot** → **MCP Servers**, or edit the solution-level `.mcp.json` directly
+2. Add an entry for the server with type `http` and the URL `https://mcp.trade-tariff.service.gov.uk/` (same JSON shape as the VS Code config above)
+3. Reload the MCP configuration from the Copilot Chat panel — it will prompt for credentials on first use
+
+#### JetBrains IDEs (IntelliJ, Rider, PyCharm, etc.)
+
+1. Open **Settings/Preferences** → **Languages & Frameworks** → **GitHub Copilot** → **MCP**
+2. Click the button to edit the MCP configuration file (it uses the same `servers` JSON shape as VS Code above) and add the `trade-tariff` entry with the server URL
+3. Apply and reload — the tool will appear in Copilot Chat's agent mode, and you'll be prompted for your Dev Portal credentials on first use
+
+#### Copilot CLI
+
+Add to `~/.copilot/mcp-config.json`:
+
+```json
+{
+  "mcpServers": {
+    "trade-tariff": {
+      "type": "http",
+      "url": "https://mcp.trade-tariff.service.gov.uk/"
+    }
+  }
+}
+```
+
+Restart the CLI session after saving — it will prompt for your Dev Portal **client_id** and **client_secret** on first use.
+
+### Microsoft Copilot
+
+The consumer Microsoft Copilot app (Windows/macOS) does not have a direct "add connector" option for custom MCP servers. MCP support is provided through **Microsoft Copilot Studio**, where you build or edit an agent and add the server as a tool:
+
+1. Open your agent in [Microsoft Copilot Studio](https://copilotstudio.microsoft.com/)
+2. Go to the **Tools** tab and select **Add tool** → **New tool** → **MCP**
+3. Enter the server URL `https://mcp.trade-tariff.service.gov.uk/` and complete the OAuth setup with your Dev Portal **client_id** and **client_secret**
+4. Save — the tool becomes available to anyone using that agent, including through the Microsoft Copilot app if the agent is published there
+
+This requires access to a Copilot Studio environment — it isn't something an end user can do from within the consumer Copilot app itself. See Microsoft's [MCP server setup guide](https://learn.microsoft.com/en-us/microsoft-copilot-studio/mcp-add-existing-server-to-agent) for details.
+
+### ChatGPT
+
+ChatGPT connects to MCP servers as **Apps/Connectors**, which requires a paid plan.
+
+1. Go to **Settings** → **Connectors** → **Advanced settings** and enable **Developer mode**
+2. Go to **Settings** → **Connectors** → **Add custom connector**
+3. Enter a name (e.g. `Trade Tariff`) and the server URL `https://mcp.trade-tariff.service.gov.uk/`
+4. Click **Save**, then enable the connector in a chat — you will be prompted for your Dev Portal **client_id** and **client_secret** on first use
+
+### MCP Inspector (testing)
+
+```bash
+npx @modelcontextprotocol/inspector https://mcp.trade-tariff.service.gov.uk/
+```
+
+## Example usage
+
+Once connected, you can ask your AI assistant questions such as:
+
+- *"What commodity code covers fresh cut roses?"*
+- *"Look up commodity 0101210000 and tell me what duties apply."*
+- *"Show me chapter 84 of the Northern Ireland tariff."*
+- *"Search the tariff for 'electric vehicles'."*
+
+The assistant will call the relevant tool and return structured tariff data in its response.
