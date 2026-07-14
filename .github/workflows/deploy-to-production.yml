@@ -33,7 +33,7 @@ jobs:
         name: build-artifact
         path: build/
 
-    - uses: aws-actions/configure-aws-credentials@v6.2.1
+    - uses: aws-actions/configure-aws-credentials@6.2.2
       with:
         role-to-assume: ${{ env.IAM_ROLE_ARN }}
         aws-region: ${{ env.AWS_REGION }}
