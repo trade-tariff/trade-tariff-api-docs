@@ -15,6 +15,7 @@ header_links:
   Trade Tariff API: /the-trade-tariff-api.html
   Categorisation API: /categorisation.html
   FPO API: /fpo.html
+  MCP Server: /mcp.html
 
 # Developer Portal hostname (no scheme). Used by source/layouts/_footer.erb to treat
 # /privacy and /cookies on this host as same-tab links; keep consistent with hub URLs below.
