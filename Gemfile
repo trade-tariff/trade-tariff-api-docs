@@ -21,7 +21,3 @@ gem 'rdoc'
 gem 'sprockets', '~> 4.0'
 
 gem 'rubocop-govuk'
-
-group :test do
-  gem 'debride', '~> 1.15', require: false
-end
