@@ -1,3 +1,5 @@
 # frozen_string_literal: true
 
-require 'middleman-gh-pages'
+require 'minitest/test_task'
+
+Minitest::TestTask.create

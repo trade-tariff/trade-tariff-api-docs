@@ -1,23 +1,8 @@
-### Jira link
+## What:
+<!-- A brief description of what this PR does -->
 
-HOTT-<TODO>
+## Why:
+<!-- The reasoning or context behind this change -->
 
-### What?
-
-I have added/removed/altered:
-
-- [ ] Added foo in bar
-- [ ] Removed baz
-
-### Why?
-
-I am doing this because:
-
--
--
--
-
-### Have you? (optional)
-
-- [ ] Reviewed the documentation with the relevant stakeholders
-- [ ] Followed the documentation through yourself to check it is correct
+## Ticket:
+<!-- Link to the relevant Jira/ticket, or 'N/A' if not applicable -->

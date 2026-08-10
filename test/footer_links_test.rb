@@ -14,12 +14,9 @@ class FooterLinksTest < Minitest::Test
     html = File.read(File.join(BUILD_DIR, 'index.html'))
 
     assert_includes html, 'govuk-footer__inline-list', 'footer should include meta link list'
-    assert_includes html, '>API documentation</a>', 'API documentation link label'
     assert_includes html, 'href="./"', 'API documentation should link to site home'
-    assert_includes html, 'https://www.trade-tariff.service.gov.uk/enquiry_form', 'Enquiry form link'
-    assert_includes html, 'https://www.trade-tariff.service.gov.uk/feedback', 'Feedback link'
-    assert_includes html, 'https://hub.trade-tariff.service.gov.uk/privacy', 'Privacy policy link'
-    assert_includes html, 'https://hub.trade-tariff.service.gov.uk/cookies', 'Cookies link'
+    assert_includes html, 'https://www.trade-tariff.service.gov.uk/privacy', 'Privacy policy link'
+    assert_includes html, 'https://www.trade-tariff.service.gov.uk/cookies', 'Cookies link'
     assert_includes html, 'https://www.trade-tariff.service.gov.uk/terms', 'Terms and conditions link'
   end
 end

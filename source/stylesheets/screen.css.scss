@@ -1,6 +1,7 @@
 @import 'govuk_tech_docs';
 @import 'govuk/components/notification-banner/index';
 @import 'govuk/components/button/index';
+@import 'govuk/components/phase-banner/index';
 
 // Service title in the pale blue bar (below GOV.UK header): black bold text.
 .govuk-service-navigation__service-name {
@@ -36,12 +37,12 @@
 }
 
 h1.anchored-heading {
-    margin-top   : 1em;
-    margin-bottom: 0px;
+  margin-top: 1em;
+  margin-bottom: 0px;
 }
 
-.technical-documentation>h1:first-of-type {
-    margin-top   : 0px;
+.technical-documentation > h1:first-of-type {
+    margin-top: 0px;
     margin-bottom: 0.5em;
 }
 
@@ -54,21 +55,21 @@ code.sample {
 }
 
 table {
-    code {
-        font-size: 10pt !important;
-    }
+  code {
+    font-size: 10pt !important;
+  }
 }
 
 img {
-    max-width: 90% !important;
+  max-width: 90% !important;
 }
 
 .technical-documentation {
-    line-height: 0.8em;
+  line-height: 0.8em;
 
-    code {
-        font-size: 0.65em;
-    }
+  code {
+    font-size: 0.65em;
+  }
 }
 
 .email-template {
@@ -91,4 +92,9 @@ img {
 .technical-documentation a.govuk-button:active {
   color: govuk-colour("white");
   text-decoration: none;
+}
+
+.govuk-phase-banner {
+  padding-top: 20px;
+  margin: 0 1em 1em 1em;
 }
