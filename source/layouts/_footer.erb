@@ -28,10 +28,8 @@
             <% resolved_href = get_path_to_resource(config, path, current_page) %>
             <% href = resolved_href.to_s %>
             <% hub_host = config[:tech_docs][:hub_host].to_s.strip %>
-            <% same_tab_hub_privacy_or_cookies = !hub_host.empty? && href.match?(Regexp.new("\\Ahttps://#{Regexp.escape(hub_host)}/(privacy|cookies)\\z", Regexp::IGNORECASE)) %>
-            <% new_tab = href.match?(/\Ahttps?:\/\//) && !same_tab_hub_privacy_or_cookies %>
             <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="<%= resolved_href %>"<% if new_tab %> target="_blank" rel="noreferrer noopener"<% end %>><%= title %></a>
+              <a class="govuk-footer__link" href="<%= href %>"><%= title %></a>
             </li>
           <% end %>
         </ul>

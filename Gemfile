@@ -13,7 +13,6 @@ gem 'cgi'
 # run bin/tech-docs-layout-upstream-hint and reconcile those files with upstream.
 gem 'govuk_tech_docs'
 gem 'logger'
-gem 'middleman-gh-pages'
 gem 'mutex_m'
 gem 'openapi3_parser'
 gem 'ostruct'
