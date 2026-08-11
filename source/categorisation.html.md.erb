@@ -14,9 +14,11 @@ highlight_theme: darkula
   <link href="/green_lanes.xml" type="application/atom+xml" rel="alternate" title="Windsor Framework Categorisation API changes feed" />
 <% end %>
 
-The Windsor Framework Categorisation API's provide access to the trade tariff data for trade with Northern Ireland.
+The Windsor Framework Categorisation API's provide access to the trade tariff
+data for trade with Northern Ireland.
 
-These APIs follow the JSON-API format for both request and response, in common with the other OTT APIs documented on this site.
+These APIs follow the JSON-API format for both request and response, in common
+with the other OTT APIs documented on this site.
 
 ## Base URL
 
@@ -26,12 +28,12 @@ All requests to this API should be prefixed with the following URL:
 
 ## Authentication
 
-
 API Key: Parameter **X-Api-Key**, in header.
+Access to these APIs will be restricted. Approved partners requiring access
+should contact the Online Trade Tariff team.
 
-Access to these APIs will be restricted. Approved partners requiring access should contact the Online Trade Tariff team.
-
-Those eligible traders will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+Those eligible traders will be supplied with a secret API key which should be
+included in the `X-Api-Key` header of every request, e.g.:
 
 ```
 X-Api-Key: a1b2c3defg4567
@@ -39,7 +41,8 @@ X-Api-Key: a1b2c3defg4567
 
 **Sample client**
 
-There's a very simple HTML page client as an example of parsing these APIs in JavaScript.
+There's a very simple HTML page client as an example of parsing these APIs in
+JavaScript.
 
 [View sample client](/categorisation-sample-client.html) &nbsp; | &nbsp;
 <a download="categorisation-sample-client.html" href="/categorisation-sample-client.html">
@@ -2084,3 +2087,8 @@ Listing of all category assessments
 Name|Type|Required|Description
 ---|---|---|---|
 data|[[CategoryAssessment](#schemacategoryassessment)]|false|An individual CategoryAssessment
+
+## Terms and conditions
+
+By using this API you agree to the [Terms and Conditions for Use of the Trade
+Categorisation Tool](/categorisation-terms-and-conditions.html).
