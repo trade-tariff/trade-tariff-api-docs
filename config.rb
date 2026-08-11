@@ -2,6 +2,10 @@
 
 require 'govuk_tech_docs'
 require 'kramdown'
+require 'rack/middleman/optional_html'
+require 'nokogiri'
+
+use ::Rack::OptionalHtml, {}
 
 GovukTechDocs.configure(self)
 
@@ -24,17 +28,16 @@ ready do
        content = content.sub(/\A---\n.*?\n---\n/m, '')
        content = content.gsub(/<%.*?%>\n?/m, '')
        content = strip_html(content)
-       content = content.gsub(/\n{3,}/, "\n\n").strip + "\n"
+       content = "#{content.gsub(/\n{3,}/, "\n\n").strip}\n"
 
        relative = source_file.delete_prefix("#{source_root}/")
-       md_path = '/' + relative.sub(/\.html\.md(\.erb)?$/, '.md')
+       md_path = "/#{relative.sub(/\.html\.md(\.erb)?$/, '.md')}"
 
        proxy md_path, '/templates/raw_markdown_page.txt', locals: { markdown_content: content }, layout: false
      end
 end
 
 def strip_html(content)
-  require 'nokogiri'
   # <a href="...">text</a> → [text](href) — done before Nokogiri strips attributes
   content = content.gsub(%r{<a\s[^>]*href="([^"]*)"[^>]*>(.*?)</a>}m) do
     href = Regexp.last_match(1)

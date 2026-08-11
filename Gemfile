@@ -19,4 +19,5 @@ gem 'ostruct'
 gem 'rdoc'
 gem 'sprockets', '~> 4.0'
 
+gem 'optional_html', git: 'https://github.com/tommysundstrom/middleman-rack-optional-html.git'
 gem 'rubocop-govuk'
