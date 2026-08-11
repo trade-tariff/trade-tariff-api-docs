@@ -10,25 +10,44 @@ highlight_theme: darkula
 
 # FPO APIs
 
-The FPO (Fast Parcel Operator) Commodity Code Identification Tool API is a free-to-use API available to UK Carrier scheme (UKC) registered organisations.
+The FPO (Fast Parcel Operator) Commodity Code Identification Tool API is a
+free-to-use API available to UK Carrier scheme (UKC) registered organisations.
 
-For goods being moved from Great Britain to Northern Ireland it can help you identify:
+For goods being moved from Great Britain to Northern Ireland it can help you
+identify:
 
 - 6 digit HS (Harmonized system) codes
 
 - 8 digit CN (Combined nomenclature) codes
 
-The API accepts English language goods item descriptions and responds with a list of potential commodity codes for the item.
+The API accepts English language goods item descriptions and responds with a
+list of potential commodity codes for the item.
 
-For more information see the <a href="https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024" target="_blank" rel="noreferrer noopener">guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024 (opens in new tab)</a>
+For more information see the
+<%= link_to "guidance for moving parcels from Great Britain to Northern Ireland under the Windsor Framework from 30 September 2024 (opens in new tab)",
+  "https://www.gov.uk/government/publications/moving-parcels-from-great-britain-to-northern-ireland-under-the-windsor-framework-from-30-september-2024",
+  class: "govuk-link",
+  target: "_blank",
+  rel: "noreferrer noopener"
+%>
 
-This API accepts HTTP requests and responds with <a href="https://en.wikipedia.org/wiki/JSON" target="_blank" rel="noreferrer noopener">JSON (opens in new tab)</a> data.
+This API accepts HTTP requests and responds with
+<%= link_to "JSON (opens in new tab)",
+  "https://en.wikipedia.org/wiki/JSON",
+  class: "govuk-link",
+  target: "_blank",
+  rel: "noreferrer noopener"
+%> data.
 
 ## Bulk processing
 
-Due to the synchronous operation of the API, if you're dealing with large volumes of data or are batch processing it's recommended to use a multi-threading, multi-processing or asynchronous approach to process several connections simultaneously.
+Due to the synchronous operation of the API, if you're dealing with
+large volumes of data or are batch processing it's recommended to use a
+multi-threading, multi-processing or asynchronous approach to process several
+connections simultaneously.
 
-This will be subject to rate limiting (to be implemented before 30 September 2024) which will allow up to 100 requests per second for each FPO.
+This will be subject to rate limiting (to be implemented before 30 September
+2024) which will allow up to 100 requests per second for each FPO.
 
 ## Base URL
 
@@ -36,30 +55,29 @@ All requests to this API should be prefixed with the following URL:
 
 **https://search.trade-tariff.service.gov.uk**
 
-
-
-
 ## Authentication
-
 
 API Key: Parameter **X-Api-Key**, in header.
 
-Access to these APIs is restricted to only those Fast Parcel Operators (FPOs) who have been invited to test the service.
+Access to these APIs is restricted to only those Fast Parcel Operators (FPOs)
+who have been invited to test the service.
 
-Those eligible organisations will be supplied with a secret API key which should be included in the `X-Api-Key` header of every request, e.g.:
+Those eligible organisations will be supplied with a secret API key which should
+be included in the `X-Api-Key` header of every request, e.g.:
 
 ```
 X-Api-Key: a1b2c3defg4567
 ```
 
-
 ## FPO endpoints
 
 ***POST /fpo-code-search***
 
-Carries out a search for potential commodity codes for a single line item within a parcel
+Carries out a search for potential commodity codes for a single line item within
+a parcel.
 
-To perform this operation, you must be authenticated by means of one of the following methods:
+To perform this operation, you must be authenticated by means of one of the
+following methods:
 
 apiKey
 
@@ -222,15 +240,30 @@ Name|Type|Required|Description
 message|string|true|The error message summary
 detail|string|false|Extra information about the error
 
-
 ## Support
 
-If you experience any issues or have questions regarding this API please contact [hmrc-trade-tariff-support-g@digital.hmrc.gov.uk](mailto:hmrc-trade-tariff-support-g@digital.hmrc.gov.uk)
+If you experience any issues or have questions regarding this API please contact
+the HMRC Trade Tariff Technical Support Team by using our
+<%= link_to "enquiry form",
+  "https://www.trade-tariff.service.gov.uk/enquiry_form",
+  class: "govuk-link",
+  target: "_blank",
+  rel: "noreferrer noopener"
+%>.
 
 ## Feedback
 
-We are continually updating the tool to improve the accuracy of the results produced. If you notice any incorrectly identified commodity codes, you can let us know through our <a href="https://forms.gle/F3NMxoLCkHNPc2MXA" target="_blank" rel="noreferrer noopener">inaccurate code feedback form (opens in new tab)</a>.
+We are continually updating the tool to improve the accuracy of the results
+produced. If you notice any incorrectly identified commodity codes, you can let
+us know through our
+<%= link_to "enquiry form",
+  "https://www.trade-tariff.service.gov.uk/enquiry_form",
+  class: "govuk-link",
+  target: "_blank",
+  rel: "noreferrer noopener"
+%>.
 
 ## Terms and Conditions
 
-By using this API you agree to the [Terms and Conditions for use of the FPO Commodity Code Identification Tool](/fpo/terms-and-conditions.html)
+By using this API you agree to the [Terms and Conditions for use of the FPO
+Commodity Code Identification Tool](/fpo/terms-and-conditions.html)
