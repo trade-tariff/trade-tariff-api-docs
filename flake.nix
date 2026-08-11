@@ -11,10 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-    trade-tariff-tools = {
-      url = "github:trade-tariff/trade-tariff-tools/main";
-      flake = false;
-    };
   };
 
   outputs =
@@ -23,7 +19,6 @@
       flake-utils,
       pre-commit-hooks,
       nixpkgs-ruby,
-      trade-tariff-tools,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -102,15 +97,6 @@
               enable = true;
               stages = [ "pre-commit" ];
             };
-            debride = {
-              enable = true;
-              name = "debride";
-              description = "Run Debride before pushing";
-              entry = "${trade-tariff-tools}/.github/actions/debride/debride-check --no-rails -- config.rb bin source templates";
-              pass_filenames = false;
-              stages = [ "pre-push" ];
-            };
-
             rubocop = {
               enable = true;
               name = "rubocop";

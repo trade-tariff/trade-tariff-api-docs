@@ -28,9 +28,4 @@ repos:
     rev: v1.7.12
     hooks:
       - id: actionlint-docker
-
-  - repo: https://github.com/trade-tariff/trade-tariff-tools
-    rev: main
-    hooks:
-      - id: debride
         args: [--no-rails, --, config.rb, bin, source, templates]
