@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/tommysundstrom/middleman-rack-optional-html.git
+  revision: df1e50beca7599f3e47c5b83887573434f3253e3
+  specs:
+    optional_html (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -294,6 +300,7 @@ DEPENDENCIES
   logger
   mutex_m
   openapi3_parser
+  optional_html!
   ostruct
   rdoc
   rubocop-govuk
