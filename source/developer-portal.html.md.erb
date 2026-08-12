@@ -12,20 +12,39 @@ The Developer Portal allows you to:
 - manage organisational details
 - invite new members and remove existing members
 
-At present, API key management is available for the Trade Tariff API and FPO API. Categorisation API keys will be added in a future phase.
+At present, API key management is available for the Trade Tariff API. Other APIs
+may become available in the future.
 
-<a href="https://hub.trade-tariff.service.gov.uk/" role="button" draggable="false" class="govuk-button" data-module="govuk-button" target="_blank" rel="noreferrer noopener">
+<a
+  href="https://hub.trade-tariff.service.gov.uk/"
+  role="button"
+  draggable="false"
+  class="govuk-button"
+  data-module="govuk-button" target="_blank" rel="noreferrer noopener">
   Sign up to the Trade Tariff API developer portal (opens in new tab)
 </a>
 
 ## Why sign up to the Developer Portal?
 
-From September 2026, rate limiting will apply to the Trade Tariff API. Rate limiting sets a cap on the number of requests you can make per minute.
+From September 2026, rate limiting will apply to the Trade Tariff API. Rate
+limiting sets a cap on the number of requests you can make per minute.
 
-You need developer portal credentials to call the Trade Tariff API on <code>api.trade-tariff.service.gov.uk</code>. By registering on the Developer Portal, you can create API keys and access a rate limit of 750 requests per minute.
+You need developer portal credentials to call the Trade Tariff API on
+<code>api.trade-tariff.service.gov.uk</code>. By registering on the Developer
+Portal, you can create API keys and access a rate limit of 750 requests per
+minute.
 
 <div class="govuk-inset-text">
-  <strong>Managed service host change:</strong> Trade Tariff keys issued through the Developer Portal are used against <code>api.trade-tariff.service.gov.uk</code>, which requires OAuth 2.0 authentication. If you are migrating from <code>www.trade-tariff.service.gov.uk</code>, update the base URL in your integration and authenticate as described in <a class="govuk-link" href="/the-trade-tariff-api.html#authenticating-with-managed-credentials">Authenticating with managed credentials</a>.
+  <strong>Managed service host change:</strong>
+  Trade Tariff keys issued through the Developer Portal are used
+  against <code>api.trade-tariff.service.gov.uk</code>, which
+  requires OAuth 2.0 authentication. If you are migrating from
+  <code>www.trade-tariff.service.gov.uk</code>, update the base URL in your
+  integration and authenticate as described in
+  <%= link_to "Authenticating with managed credentials",
+    "/the-trade-tariff-api.html#authenticating-with-managed-credentials",
+     class: "govuk-link"
+  %>.
 </div>
 
 ## Who can use the Developer Portal?
@@ -36,17 +55,28 @@ Anyone who needs access to UK Trade Tariff data, including:
 - product managers overseeing compliance systems
 - trade and customs specialists seeking accurate, up-to-date information
 
-Whether you are a large enterprise or an independent trader, the APIs provide consistent and authoritative data from HMRC's Online Trade Tariff.
+Whether you are a large enterprise or an independent trader, the APIs provide
+consistent and authoritative data from HMRC's Online Trade Tariff.
 
 ## How can I register on the Developer Portal?
 
-Signing up to the Trade Tariff developer portal and accessing a higher rate limit could not be easier.
+Signing up to the Trade Tariff developer portal and accessing a higher rate
+limit could not be easier.
 
-You will need to verify your email address using a secure one-time link, as the Developer Portal uses passwordless sign-in.
+You will need to verify your email address using a secure time-based
+one-time password in the form of a 6-digit code, as the Developer Portal uses
+passwordless sign-in.
 
-Once verified, you will be able to create and manage API keys, update organisational details and invite others from your organisation.
+Once verified, you will be able to create and manage API keys, update
+organisational details and invite others from your organisation.
 
 
 ## Get help from HMRC
 
-If you have any questions or require help, please use the <a href="https://www.trade-tariff.service.gov.uk/enquiry_form" target="_blank" rel="noreferrer noopener">Trade Tariff enquiry form (opens in new tab)</a>.
+If you have any questions or require help, please use the
+<%= link_to "Trade Tariff enquiry form (opens in new tab)",
+  "https://www.trade-tariff.service.gov.uk/enquiry_form",
+  class: "govuk-link",
+  target: "_blank",
+  rel: "noreferrer noopener"
+%>.
