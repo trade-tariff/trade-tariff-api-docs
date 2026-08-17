@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-ruby File.read('.ruby-version')
+ruby File.read(".ruby-version")
 
-gem 'benchmark'
-gem 'bigdecimal', '>= 1.4.0'
-gem 'brakeman'
-gem 'builder'
-gem 'cgi'
+gem "benchmark"
+gem "bigdecimal", ">= 1.4.0"
+gem "brakeman"
+gem "builder"
+gem "cgi"
 # source/layouts/_header.erb and _footer.erb override templates from this gem; after upgrading,
 # run bin/tech-docs-layout-upstream-hint and reconcile those files with upstream.
-gem 'govuk_tech_docs'
-gem 'logger'
-gem 'mutex_m'
-gem 'openapi3_parser'
-gem 'ostruct'
-gem 'rdoc'
-gem 'sprockets', '~> 4.0'
+gem "govuk_tech_docs"
+gem "logger"
+gem "mutex_m"
+gem "openapi3_parser"
+gem "ostruct"
+gem "rdoc"
+gem "sprockets", "~> 4.0"
 
-gem 'optional_html', git: 'https://github.com/tommysundstrom/middleman-rack-optional-html.git'
-gem 'rubocop-govuk'
+gem "optional_html", git: "https://github.com/tommysundstrom/middleman-rack-optional-html.git"
+gem "rubocop-govuk"

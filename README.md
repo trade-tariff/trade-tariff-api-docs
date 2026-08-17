@@ -40,8 +40,8 @@ the next weekly run (or you can trigger the workflow manually).
 
 ## Markdown rendering
 
-Every documentation page is available as clean Markdown at a parallel URL —
-replace `.html` with `.md`:
+Every documentation page is available as clean Markdown, by adding `.md` to the
+URL. For example:
 
 ```
 https://api.trade-tariff.service.gov.uk/the-trade-tariff-api.md

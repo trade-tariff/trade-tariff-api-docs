@@ -1,39 +1,42 @@
 # frozen_string_literal: true
 
-require 'govuk_tech_docs'
-require 'kramdown'
-require 'rack/middleman/optional_html'
-require 'nokogiri'
+require "govuk_tech_docs"
+require "kramdown"
+require "rack/middleman/optional_html"
+require "nokogiri"
 
 use ::Rack::OptionalHtml, {}
+
+require "helpers/govuk_middleman_helpers"
+helpers GovukMiddlemanHelpers
 
 GovukTechDocs.configure(self)
 
 # Project layout partials in source/layouts/ must override the gem's lib/source/layouts/
 # (the gem registers its source directory after ours with the same default priority).
-files.watch :source, path: File.join(root, 'source'), priority: 100
+files.watch :source, path: File.join(root, "source"), priority: 100
 
 activate :relative_assets
 set :relative_links, true
 
-ignore '/templates/raw_markdown_page.txt'
+ignore "/templates/raw_markdown_page.txt"
 
 ready do
-  source_root = File.join(root, 'source')
+  source_root = File.join(root, "source")
 
-  Dir.glob(File.join(source_root, '**', '*.html.md{,.erb}'))
-     .reject { |f| f.start_with?(File.join(source_root, 'layouts')) }
+  Dir.glob(File.join(source_root, "**", "*.html.md{,.erb}"))
+     .reject { |f| f.start_with?(File.join(source_root, "layouts")) }
      .each do |source_file|
-       content = File.read(source_file, encoding: 'utf-8')
-       content = content.sub(/\A---\n.*?\n---\n/m, '')
-       content = content.gsub(/<%.*?%>\n?/m, '')
+       content = File.read(source_file, encoding: "utf-8")
+       content = content.sub(/\A---\n.*?\n---\n/m, "")
+       content = content.gsub(/<%.*?%>\n?/m, "")
        content = strip_html(content)
        content = "#{content.gsub(/\n{3,}/, "\n\n").strip}\n"
 
        relative = source_file.delete_prefix("#{source_root}/")
        md_path = "/#{relative.sub(/\.html\.md(\.erb)?$/, '.md')}"
 
-       proxy md_path, '/templates/raw_markdown_page.txt', locals: { markdown_content: content }, layout: false
+       proxy md_path, "/templates/raw_markdown_page.txt", locals: { markdown_content: content }, layout: false
      end
 end
 
@@ -63,8 +66,8 @@ helpers do
       return
     end
 
-    out, _, _status = Open3.capture3('dot -Tsvg', stdin_data: data)
-    svg = out.gsub(/.*<svg/m, '<svg').gsub(/\n/m, '').html_safe
+    out, _, _status = Open3.capture3("dot -Tsvg", stdin_data: data)
+    svg = out.gsub(/.*<svg/m, "<svg").gsub(/\n/m, "").html_safe
 
     concat_content(svg.html_safe)
   end

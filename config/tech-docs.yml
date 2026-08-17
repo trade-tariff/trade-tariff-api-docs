@@ -9,11 +9,11 @@ govuk_homepage_url: https://www.gov.uk
 # Links to show on right-hand-side of header
 header_links:
   About: /
-  Developer portal: /developer-portal.html
-  API Reference: /reference.html
-  Trade Tariff API: /the-trade-tariff-api.html
-  Categorisation API: /categorisation.html
-  FPO API: /fpo.html
+  Developer portal: /developer-portal
+  API Reference: /reference
+  Trade Tariff API: /the-trade-tariff-api
+  Categorisation API: /categorisation
+  FPO API: /fpo
 
 # Footer meta links
 footer_links:

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
-require_relative 'rate_limiting_banner_test'
+require "minitest/autorun"
+require_relative "rate_limiting_banner_test"
 
 class MarkdownPagesTest < Minitest::Test
-  BUILD_DIR = File.expand_path('../build', __dir__)
+  BUILD_DIR = File.expand_path("../build", __dir__)
 
   EXPECTED_PAGES = %w[
     the-trade-tariff-api.md
@@ -26,21 +26,21 @@ class MarkdownPagesTest < Minitest::Test
 
   def test_markdown_files_contain_no_frontmatter
     EXPECTED_PAGES.each do |page|
-      content = File.read(File.join(BUILD_DIR, page), encoding: 'utf-8')
+      content = File.read(File.join(BUILD_DIR, page), encoding: "utf-8")
       refute_match(/\A---\n/, content, "#{page} should not start with YAML frontmatter")
     end
   end
 
   def test_markdown_files_contain_no_erb_tags
     EXPECTED_PAGES.each do |page|
-      content = File.read(File.join(BUILD_DIR, page), encoding: 'utf-8')
+      content = File.read(File.join(BUILD_DIR, page), encoding: "utf-8")
       refute_match(/<%/, content, "#{page} should not contain ERB tags")
     end
   end
 
   def test_markdown_files_contain_content
     EXPECTED_PAGES.each do |page|
-      content = File.read(File.join(BUILD_DIR, page), encoding: 'utf-8')
+      content = File.read(File.join(BUILD_DIR, page), encoding: "utf-8")
       assert content.length > 100, "#{page} should contain substantial content"
     end
   end
