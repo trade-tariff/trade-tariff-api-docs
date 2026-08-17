@@ -38,6 +38,13 @@ a pull request if the spec has changed. You can also trigger it manually via
 To update the spec, make changes in the backend repo. They will be picked up on
 the next weekly run (or you can trigger the workflow manually).
 
+**This sync only ever touches `source/openapi.yaml`.** It does not regenerate
+`source/reference.html.md.erb` or any other page — that file is hand-written.
+When the sync PR adds new paths or tags to the spec, add a matching section to
+`source/reference.html.md.erb` (or a new page) as part of reviewing that PR,
+otherwise the new endpoints will be present in `/openapi.yaml` and
+`llms-full.txt` but invisible on the docs site itself.
+
 ## Markdown rendering
 
 Every documentation page is available as clean Markdown at a parallel URL —
