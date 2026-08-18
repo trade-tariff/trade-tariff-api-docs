@@ -3660,6 +3660,249 @@ Status|Meaning|Description|Schema
 400|Bad Request|Bad request. For example type is not spot, monthly or average.|None
 5XX|Unknown|Unexpected error.|None
 
+### Categorisation
+
+The Categorisation API supports the Windsor Framework Categorisation (Green Lanes) service: looking up the category assessments and licences that apply to a goods nomenclature, listing the categorisation themes, and recording feedback on the Categorisation FAQ.
+
+These endpoints are available on the Northern Ireland (XI) service only, so requests should use the `xi/api` base path, e.g. `https://api.trade-tariff.service.gov.uk/xi/api/categorisation/...`.
+
+This request requires a valid OAuth 2.0 Bearer token from the Trade Tariff developer portal, issued with the `tariff/categorisation` scope. This scope is issued separately from `tariff/read` and `tariff/write`.
+
+***GET /categorisation/goods_nomenclatures/{id}***
+
+Retrieves a single goods nomenclature together with its applicable and descendant category assessments, licences, ancestors, and descendants.
+
+**Parameters**
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+id|path|string|true|Goods nomenclature SID (4-10 digits)
+filter[geographical_area_id]|query|string|false|Optional geographical area code used to scope applicable category assessments to that area
+
+**Example Request**
+
+```shell
+curl https://api.trade-tariff.service.gov.uk/xi/api/categorisation/goods_nomenclatures/93797?filter[geographical_area_id]=FR \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+```
+
+**Example Response**
+
+```json
+{
+  "data": {
+    "id": "93797",
+    "type": "goods_nomenclature",
+    "attributes": {
+      "goods_nomenclature_sid": 93797,
+      "goods_nomenclature_item_id": "0101210000",
+      "description": "Horses",
+      "formatted_description": "Horses",
+      "validity_start_date": "2012-01-01T00:00:00.000Z",
+      "validity_end_date": null,
+      "description_plain": "Horses",
+      "producline_suffix": "80",
+      "parent_sid": 27624,
+      "supplementary_measure_unit": null
+    },
+    "relationships": {
+      "applicable_category_assessments": {
+        "data": [
+          { "id": "1001", "type": "category_assessment" }
+        ]
+      },
+      "descendant_category_assessments": {
+        "data": []
+      },
+      "ancestors": {
+        "data": [
+          { "id": "27624", "type": "goods_nomenclature" }
+        ]
+      },
+      "descendants": {
+        "data": []
+      },
+      "licences": {
+        "data": [
+          { "id": "AGRIM", "type": "licence" }
+        ]
+      }
+    }
+  },
+  "included": [
+    {
+      "id": "1001",
+      "type": "category_assessment",
+      "attributes": {
+        "theme": "II.1",
+        "category": 2
+      }
+    }
+  ]
+}
+```
+
+**Responses**
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|OK|goods nomenclature found|None
+404|Not Found|goods nomenclature not found|None
+
+***GET /categorisation/themes***
+
+Returns all Categorisation (Green Lanes) themes, ordered by section and subsection. Each theme's `id` is formatted as `"{section}.{subsection}"`.
+
+**Example Request**
+
+```shell
+curl https://api.trade-tariff.service.gov.uk/xi/api/categorisation/themes \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+```
+
+**Example Response**
+
+```json
+{
+  "data": [
+    {
+      "id": "II.1",
+      "type": "theme",
+      "attributes": {
+        "section": "II.1",
+        "theme": "Live animal products",
+        "category": 2
+      }
+    },
+    {
+      "id": "II.2",
+      "type": "theme",
+      "attributes": {
+        "section": "II.2",
+        "theme": "Plant health",
+        "category": 1
+      }
+    }
+  ]
+}
+```
+
+**Responses**
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|OK|themes listed|None
+
+***GET /categorisation/faq_feedback***
+
+Returns all submitted Categorisation (Green Lanes) FAQ feedback records.
+
+**Example Request**
+
+```shell
+curl https://api.trade-tariff.service.gov.uk/xi/api/categorisation/faq_feedback \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -H "Accept: application/vnd.hmrc.2.0+json" | jq
+```
+
+**Example Response**
+
+```json
+{
+  "data": [
+    {
+      "id": "42",
+      "type": "green_lanes_faq_feedback",
+      "attributes": {
+        "session_id": "b3c1f6e2-9a4d-4e2a-9c3a-1f6e2b3c1f6e",
+        "category_id": 2,
+        "question_id": 5,
+        "useful": true
+      }
+    }
+  ]
+}
+```
+
+**Responses**
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|OK|FAQ feedback listed|None
+
+***POST /categorisation/faq_feedback***
+
+Records whether a Categorisation (Green Lanes) FAQ answer was useful.
+
+**Parameters**
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+session_id|body|string|true|Opaque session identifier supplied by the client
+category_id|body|integer|true|FAQ category being rated
+question_id|body|integer|true|FAQ question being rated
+useful|body|boolean|true|Whether the FAQ answer was useful
+
+**Example Request**
+
+```shell
+curl https://api.trade-tariff.service.gov.uk/xi/api/categorisation/faq_feedback \
+  -X POST \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -H "Accept: application/vnd.hmrc.2.0+json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": {
+      "type": "green_lanes_faq_feedback",
+      "attributes": {
+        "session_id": "b3c1f6e2-9a4d-4e2a-9c3a-1f6e2b3c1f6e",
+        "category_id": 2,
+        "question_id": 5,
+        "useful": true
+      }
+    }
+  }' | jq
+```
+
+**Example Response**
+
+```json
+{
+  "data": {
+    "id": "42",
+    "type": "green_lanes_faq_feedback",
+    "attributes": {
+      "session_id": "b3c1f6e2-9a4d-4e2a-9c3a-1f6e2b3c1f6e",
+      "category_id": 2,
+      "question_id": 5,
+      "useful": true
+    }
+  }
+}
+```
+
+If the submitted attributes are invalid, the API responds with a `422` and a list of validation errors:
+
+```json
+{
+  "errors": [
+    {
+      "title": "category_id",
+      "detail": ["can't be blank"]
+    }
+  ]
+}
+```
+
+**Responses**
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+201|Created|FAQ feedback recorded|None
+422|Unprocessable Entity|FAQ feedback invalid|None
+
 ## Objects
 
 ### Sections
