@@ -4284,7 +4284,8 @@ paths:
       required: true
       schema:
         type: string
-      description: Heading code (e.g. "0101")
+        pattern: ^\d{6}$
+      description: The 6 digit subheading of the goods being traded (e.g. "010121")
     - name: country_code
       in: path
       required: true
@@ -4333,6 +4334,12 @@ paths:
                               nullable: true
                               items:
                                 type: string
+        '400':
+          description: invalid heading_code — must be exactly 6 digits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardErrorResponse'
   /api/search:
     parameters:
     - $ref: '#/components/parameters/accept_header'
