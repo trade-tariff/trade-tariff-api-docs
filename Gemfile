@@ -17,7 +17,7 @@ gem 'mutex_m'
 gem 'openapi3_parser'
 gem 'ostruct'
 gem 'rdoc'
-gem 'sprockets', '~> 4.0'
+gem 'sprockets', '~> 4.3'
 
 gem 'optional_html', git: 'https://github.com/tommysundstrom/middleman-rack-optional-html.git'
 gem 'rubocop-govuk'
