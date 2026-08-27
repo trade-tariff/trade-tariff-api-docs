@@ -2,6 +2,12 @@ name: Reusable Build
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: "The name of the environment the build is for"
+        required: true
+        type: string
+
     outputs:
        artifact-name:
          description: "The name of the uploaded artifact"
@@ -9,6 +15,9 @@ on:
 
 jobs:
   build:
+    env:
+      ENVIRONMENT: ${{ inputs.environment }}
+
     runs-on: ubuntu-latest
 
     steps:

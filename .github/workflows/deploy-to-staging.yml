@@ -19,6 +19,8 @@ env:
 jobs:
   build-staging:
     uses: ./.github/workflows/build.yml
+    with:
+      environment: staging
 
   deploy:
     runs-on: ubuntu-latest

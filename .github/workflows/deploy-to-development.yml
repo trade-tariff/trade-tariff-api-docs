@@ -16,6 +16,8 @@ env:
 jobs:
   build-dev:
     uses: ./.github/workflows/build.yml
+    with:
+      environment: development
 
   deploy:
     runs-on: ubuntu-latest
