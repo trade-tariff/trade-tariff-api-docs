@@ -7,7 +7,11 @@
     <p class="govuk-phase-banner__content">
       <strong class="govuk-tag govuk-phase-banner__content__tag">FEEDBACK</strong>
       <span class="govuk-phase-banner__text">
-        Tell us what you think - your <%= link_to "feedback", "https://www.trade-tariff.service.gov.uk/feedback" %> will help us improve.
+        Tell us what you think - your
+        <%= link_to "feedback",
+                    "https://www.trade-tariff.service.gov.uk/feedback",
+                    :query => { :feedback_url => URI.join(base_url, current_page.url) }
+        %> will help us improve.
       </span>
     </p>
   </div>

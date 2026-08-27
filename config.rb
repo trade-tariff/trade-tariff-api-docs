@@ -5,6 +5,8 @@ require 'kramdown'
 require 'rack/middleman/optional_html'
 require 'nokogiri'
 
+ENVIRONMENT = ENV.fetch('ENVIRONMENT', 'production')
+
 use ::Rack::OptionalHtml, {}
 
 GovukTechDocs.configure(self)
@@ -67,5 +69,16 @@ helpers do
     svg = out.gsub(/.*<svg/m, '<svg').gsub(/\n/m, '').html_safe
 
     concat_content(svg.html_safe)
+  end
+
+  def base_url
+    subdomain = ''
+
+    case ENVIRONMENT
+    when 'staging' then subdomain = 'staging.'
+    when 'development' then subdomain = 'dev.'
+    end
+
+    "https://docs.#{subdomain}trade-tariff.service.gov.uk"
   end
 end
