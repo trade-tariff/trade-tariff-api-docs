@@ -3529,6 +3529,23 @@ paths:
                             measure_type_series_description:
                               type: string
                               nullable: true
+                            semantic_roles:
+                              type: array
+                              description: Behavioural roles of this measure type.
+                                Empty when none apply.
+                              items:
+                                type: string
+                                enum:
+                                - supplementary
+                                - supplementary_unit_import_only
+                                - safeguard
+                                - mfn_no_authorized_use
+                                - provides_unit_context
+                                - cds_proofs_of_origin
+                                - prohibitive
+                              example:
+                              - supplementary
+                              - supplementary_unit_import_only
   /api/measure_types/{id}:
     parameters:
     - name: Accept
@@ -3602,6 +3619,23 @@ paths:
                           measure_type_series_description:
                             type: string
                             nullable: true
+                          semantic_roles:
+                            type: array
+                            description: Behavioural roles of this measure type. Empty
+                              when none apply.
+                            items:
+                              type: string
+                              enum:
+                              - supplementary
+                              - supplementary_unit_import_only
+                              - safeguard
+                              - mfn_no_authorized_use
+                              - provides_unit_context
+                              - cds_proofs_of_origin
+                              - prohibitive
+                            example:
+                            - supplementary
+                            - supplementary_unit_import_only
         '404':
           description: measure type not found
   /api/measures/{id}:
@@ -4072,6 +4106,21 @@ paths:
       schema:
         type: integer
       description: Filter by validity day (1–31)
+    - name: status
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - blocked
+        - exhausted
+        - not_blocked
+        - not_exhausted
+        - suspended
+        - not_suspended
+        - open
+      description: Filter by quota status (e.g. "open", "exhausted", "blocked", "suspended",
+        etc.)
     - name: page
       in: query
       required: false
@@ -4157,7 +4206,8 @@ paths:
                           total_count:
                             type: integer
         '400':
-          description: invalid order_number — must be exactly 6 digits
+          description: invalid request — order_number must be exactly 6 digits, and
+            status must be one of the allowed values
   /api/rules_of_origin_schemes:
     parameters:
     - name: Accept
