@@ -166,21 +166,45 @@ The response lists the subheadings under the heading, each with a `declarable` f
 
 ## Rate limiting
 
-**From September 2026**, rate limiting will apply to protect service reliability. Requests that exceed the limit receive a `429 Too Many Requests` response.
+**From September 2026**, rate limiting will apply to protect service reliability. Requests that exceed a limit receive a `429 Too Many Requests` response.
 
-The `Retry-After` header in the 429 response tells you how many seconds to wait before retrying:
+Which limits apply depends on the host you call:
 
-```
-HTTP/1.1 429 Too Many Requests
-Retry-After: 10
-```
+| Host | Limit | Counted per |
+|---|---|---|
+| `www.trade-tariff.service.gov.uk` | 500 requests per minute | IP address |
+| `api.trade-tariff.service.gov.uk` | 750 requests per minute | IP address |
+| `api.trade-tariff.service.gov.uk` | 13 requests per second, bursting to 25 | Credential |
+
+On `api.trade-tariff.service.gov.uk` both limits apply at once. The per-second
+limit is the one most integrations meet first: it is the sustained rate, and
+the burst allowance of 25 is consumed by a short spike and then refills at 13
+per second. Sending requests in a tight loop will trip it long before you
+approach 750 in a minute.
+
+Note what each limit is counted against. The per-minute limits are counted per
+IP address, so everyone behind a shared corporate connection draws on one
+allowance no matter how many credentials they hold. The per-second limit is
+counted per credential, and is shared by everyone using that credential.
 
 **Handling 429s:**
 
-1. Read the `Retry-After` value.
+1. Read the `Retry-After` value. Every 429 carries one, in seconds.
 2. Wait that many seconds.
 3. Retry the request.
 4. If you receive repeated 429s, apply exponential backoff with jitter.
+
+`Retry-After` reflects the limit you actually hit, so honour the value rather
+than assuming a fixed pause:
+
+```
+HTTP/1.1 429 Too Many Requests
+Retry-After: 1
+```
+
+A value of `1` means you exceeded the per-second limit and capacity returns
+almost immediately. A value of `60` means you exceeded a per-minute limit and
+the allowance does not reset until the current minute has elapsed.
 
 To access a higher rate limit, register through the [Trade Tariff developer portal](https://hub.trade-tariff.service.gov.uk/).
 
