@@ -10,6 +10,16 @@
 - Date-scoped endpoints accept an `as_of` query parameter (format: YYYY-MM-DD)
 - An XI (Northern Ireland) variant is available at `https://www.trade-tariff.service.gov.uk/xi/api/v2`
 
+## MCP Server
+
+An MCP (Model Context Protocol) server is available for AI assistants that support tool calling:
+
+- Endpoint: `https://mcp.trade-tariff.service.gov.uk/mcp`
+- Transport: streamable HTTP (MCP 2025-11-25)
+- Authentication: `Authorization: Bearer <access_token>` — register at https://hub.trade-tariff.service.gov.uk to obtain credentials
+- Tools: `list_sections`, `show_chapter`, `show_heading`, `lookup_commodity`, `search_commodities`, `navigate_hierarchy`, `rules_of_origin`, `search_quotas`, `list_geographical_areas`, `list_exchange_rates`, `list_certificate_types`, `search_additional_codes`
+- [MCP Server docs](https://api.trade-tariff.service.gov.uk/mcp.html)
+
 ## Docs
 
 - [LLM integration guide](https://api.trade-tariff.service.gov.uk/llm-guide.html): Single-page prose guide covering auth, common patterns, errors, rate limiting, and gotchas — optimised for LLM consumption
