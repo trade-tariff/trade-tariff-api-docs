@@ -6,9 +6,12 @@ The framework is provided by the [GOV.UK Tech Docs Template][tech-docs-template]
 
 These docs are deployed to the following URLs:
 
-- *Development* - https://api.dev.trade-tariff.service.gov.uk
-- *Staging* - https://api.staging.trade-tariff.service.gov.uk
-- *Production* - https://api.trade-tariff.service.gov.uk
+- [Development](https://docs.dev.trade-tariff.service.gov.uk)
+- [Staging](https://docs.staging.trade-tariff.service.gov.uk)
+- [Production](https://docs.trade-tariff.service.gov.uk)
+
+This repository builds the documentation website, not the tariff API itself.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for the fork and review workflow.
 
 ## Updating content
 
@@ -51,8 +54,8 @@ Every documentation page is available as clean Markdown at a parallel URL —
 replace `.html` with `.md`:
 
 ```
-https://api.trade-tariff.service.gov.uk/the-trade-tariff-api.md
-https://api.trade-tariff.service.gov.uk/reference-data.md
+https://docs.trade-tariff.service.gov.uk/the-trade-tariff-api.md
+https://docs.trade-tariff.service.gov.uk/reference-data.md
 ```
 
 These files contain only the page body: no navigation chrome, no frontmatter,
@@ -105,22 +108,31 @@ After `bundle update govuk_tech_docs`, run `bin/tech-docs-layout-upstream-hint`;
 it prints the upstream GitHub paths for your gem version so you can merge any
 gem changes into those two files.
 
+## Check changes
+
+Run `make test` for the Minitest suite and `make html` for a clean site build.
+Preview changed pages with `make serve`. Check navigation, code examples and
+links in the rendered site. Do not edit generated OpenAPI data by hand.
+
 ## Publishing documentation
 
 ### Development
 
-Any changes pushed to GitHub on a branch (e.g. a pull
-request) are deployed automatically to the [development
-URL](https://docs.dev.trade-tariff.service.gov.uk).
+Pull requests trigger deployment to the shared [development
+site](https://docs.dev.trade-tariff.service.gov.uk). This is not an isolated
+preview for each branch. Check the [workflow](.github/workflows/deploy-to-development.yml)
+before publishing changes.
 
 ### Production
 
 Any changes merged to `main` are deployed automatically to
 [docs.trade-tariff.service.gov.uk](https://docs.trade-tariff.service.gov.uk).
 
-## License
+## Licence
 
-[MIT License](LICENSE)
+The code and associated documentation use the [MIT licence](LICENSE), with the
+existing Government Digital Service notice. Preserve that notice. Third-party
+assets and quoted material retain their own terms.
 
 [backend-swagger]: https://github.com/trade-tariff/trade-tariff-backend/blob/main/swagger/v2/swagger.json
 [update-workflow]: .github/workflows/update-openapi-spec.yml
