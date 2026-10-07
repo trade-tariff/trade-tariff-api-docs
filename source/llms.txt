@@ -12,18 +12,18 @@
 
 ## Docs
 
-- [LLM integration guide](https://api.trade-tariff.service.gov.uk/llm-guide.html): Single-page prose guide covering auth, common patterns, errors, rate limiting, and gotchas — optimised for LLM consumption
-- [Getting started](https://api.trade-tariff.service.gov.uk/getting-started.html): Quick start guide and key concepts
-- [API reference](https://api.trade-tariff.service.gov.uk/reference.html): Full interactive API reference
-- [OpenAPI spec](https://api.trade-tariff.service.gov.uk/openapi.yaml): Machine-readable OAS 3.1 specification
-- [Full LLM context](https://api.trade-tariff.service.gov.uk/llms-full.txt): Prose rendering of all v2 endpoints
+- [LLM integration guide](https://docs.trade-tariff.service.gov.uk/llm-guide.html): Single-page prose guide covering auth, common patterns, errors, rate limiting, and gotchas — optimised for LLM consumption
+- [Getting started](https://docs.trade-tariff.service.gov.uk/the-trade-tariff-api.html): Quick start guide and key concepts
+- [API reference](https://docs.trade-tariff.service.gov.uk/reference.html): Full interactive API reference
+- [OpenAPI spec](https://docs.trade-tariff.service.gov.uk/openapi.yaml): Machine-readable OAS 3.1 specification
+- [Full LLM context](https://docs.trade-tariff.service.gov.uk/llms-full.txt): Prose rendering of all v2 endpoints
 
 ## Markdown pages
 
 Every documentation page is available as clean Markdown at a parallel URL — replace the `.html` extension with `.md`. For example:
 
-- `https://api.trade-tariff.service.gov.uk/the-trade-tariff-api.md`
-- `https://api.trade-tariff.service.gov.uk/reference-data.md`
-- `https://api.trade-tariff.service.gov.uk/llm-guide.md`
+- `https://docs.trade-tariff.service.gov.uk/the-trade-tariff-api.md`
+- `https://docs.trade-tariff.service.gov.uk/reference-data.md`
+- `https://docs.trade-tariff.service.gov.uk/llm-guide.md`
 
 These files contain only the page body (no navigation chrome, no frontmatter, no ERB artefacts) and are intended for direct consumption by LLM clients and coding assistants.
