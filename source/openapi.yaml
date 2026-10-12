@@ -4887,11 +4887,25 @@ paths:
         type: string
         maxLength: 1
       description: Filter by first letter of the search reference title
+    - name: filter[usage]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - search
+        - fpo
+        - all
+        default: search
+      description: Filter by usage. `search` references are shown in public search.
+        `fpo` references are used only to train the FPO classifier. `all` returns
+        both.
     get:
       summary: List search references
       tags:
       - Search References
-      description: Returns search references optionally filtered by first letter.
+      description: Returns search references optionally filtered by first letter and
+        usage. By default only `search` references are returned.
       operationId: listSearchReferences
       responses:
         '200':
@@ -4926,6 +4940,13 @@ paths:
                             referenced_class:
                               type: string
                               nullable: true
+                            usage:
+                              type: string
+                              enum:
+                              - search
+                              - fpo
+        '400':
+          description: unknown usage filter
   /api/sections:
     parameters:
     - name: Accept
