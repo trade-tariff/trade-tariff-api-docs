@@ -1,0 +1,17 @@
+<%
+  require 'json'
+  entries = data.changelog.map do |entry|
+    item = {
+      'date' => entry.date.to_s,
+      'type' => entry.type,
+      'description' => entry.description.strip
+    }
+    item['sunset'] = entry.sunset.to_s if entry.sunset
+    item
+  end
+  document = {
+    'api' => 'GOV.UK Trade Tariff API',
+    'updated' => entries.first['date'],
+    'entries' => entries
+  }
+%><%= JSON.pretty_generate(document) %>

@@ -1,0 +1,30 @@
+# Machine-readable API changelog. Newest entry first.
+#
+# Source of truth for both /changelog.md and /api-changelog.json.
+#
+# Fields:
+#   date:        day the change went live (YYYY-MM-DD)
+#   type:        added | breaking | deprecated
+#   description: one plain sentence. Name the endpoint or field that changed.
+#   sunset:      deprecated entries only. Day the old behaviour stops (YYYY-MM-DD).
+#                Leave it out when no date is known.
+#
+# PROOF OF CONCEPT (HMRC-2361): these entries are seed data taken from
+# trade-tariff-backend commits. Check each one before this goes live.
+
+- date: 2026-09-29
+  type: breaking
+  description: >-
+    The v2 enquiry form alias is removed. The Enquiry Form API now exists only
+    in the internal API scope.
+
+- date: 2026-09-14
+  type: added
+  description: >-
+    The quotas search endpoint accepts the status filters `open` and
+    `suspended`.
+
+- date: 2026-09-09
+  type: added
+  description: >-
+    Measure type resources include a `semantic_roles` attribute.

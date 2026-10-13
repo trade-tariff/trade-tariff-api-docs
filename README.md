@@ -138,3 +138,17 @@ assets and quoted material retain their own terms.
 [update-workflow]: .github/workflows/update-openapi-spec.yml
 [source-dir]: https://github.com/trade-tariff/trade-tariff-api-docs/tree/main/source
 [tech-docs-template]: https://github.com/alphagov/tech-docs-template
+
+## API changelog
+
+The API changelog is published in two formats from one file, `data/changelog.yml`:
+
+- `/changelog.txt`: prose, one dated section per change
+- `/api-changelog.json`: the same entries, with a top-level `updated` date
+
+Both are linked from [`llms.txt`](source/llms.txt). LLM clients can read `updated` to
+check whether their cached documentation is stale.
+
+To add an entry, put it at the top of `data/changelog.yml`. Each entry has a `date`,
+a `type` (`added`, `breaking` or `deprecated`) and a `description`. A `deprecated`
+entry can also have a `sunset` date. `make test` checks the format.
