@@ -9,14 +9,14 @@
 #   sunset:      deprecated entries only. Day the old behaviour stops (YYYY-MM-DD).
 #                Leave it out when no date is known.
 #
-# PROOF OF CONCEPT (HMRC-2361): these entries are seed data taken from
-# trade-tariff-backend commits. Check each one before this goes live.
-
-- date: 2026-09-29
-  type: breaking
-  description: >-
-    The v2 enquiry form alias is removed. The Enquiry Form API now exists only
-    in the internal API scope.
+# PROOF OF CONCEPT (HMRC-2361): the two entries below are seed data. Both
+# changes are in the published OpenAPI spec (source/openapi.yaml). Their dates
+# are backend commit dates, not go-live dates. Check the dates with the backend
+# team before you rely on this changelog.
+#
+# Not included: the removal of the v2 enquiry form alias (backend commit
+# f5a34f626, 2026-09-29). The spec does not show it, and it is not known that
+# the alias was ever public. Add it only after that is confirmed.
 
 - date: 2026-09-14
   type: added
