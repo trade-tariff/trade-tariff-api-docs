@@ -1,11 +1,11 @@
 # Machine-readable API changelog. Newest entry first.
 #
-# Source of truth for both /changelog.md and /api-changelog.json.
+# Source of truth for both /changelog.txt and /api-changelog.json.
 #
 # Fields:
 #   date:        day the change went live (YYYY-MM-DD)
 #   type:        added | breaking | deprecated
-#   description: one plain sentence. Name the endpoint or field that changed.
+#   description: one or two short plain sentences. Name the endpoint or field that changed.
 #   sunset:      deprecated entries only. Day the old behaviour stops (YYYY-MM-DD).
 #                Leave it out when no date is known.
 #
