@@ -56,10 +56,18 @@ class ChangelogTest < Minitest::Test
   def test_json_changelog_is_published_and_matches_the_data
     parsed = JSON.parse(File.read(File.join(BUILD_DIR, 'api-changelog.json'), encoding: 'utf-8'))
 
-    assert_equal entries.length, parsed['entries'].length
-    assert_equal entries.first['type'], parsed['entries'].first['type']
-    assert_equal entries.first['date'].iso8601, parsed['entries'].first['date']
-    assert parsed.key?('updated'), 'api-changelog.json should say when it was last updated'
+    expected_entries = entries.map do |entry|
+      expected = {
+        'date' => entry['date'].iso8601,
+        'type' => entry['type'],
+        'description' => entry['description'].strip
+      }
+      expected['sunset'] = entry['sunset'].iso8601 if entry['sunset']
+      expected
+    end
+
+    assert_equal expected_entries, parsed['entries']
+    assert_equal entries.first['date'].iso8601, parsed['updated']
   end
 
   def test_llms_txt_links_to_both_changelog_urls

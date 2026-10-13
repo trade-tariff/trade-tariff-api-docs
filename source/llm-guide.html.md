@@ -247,8 +247,8 @@ GET /uk/api/v2/commodities/0101210000?as_of=2024-01-01
 
 ## Further reading
 
-- [Full API documentation](https://api.trade-tariff.service.gov.uk/the-trade-tariff-api.html) — step-by-step guide covering all endpoints in depth
-- [API reference](https://api.trade-tariff.service.gov.uk/reference.html) — interactive reference with request/response schemas
-- [OpenAPI specification](https://api.trade-tariff.service.gov.uk/openapi.yaml) — machine-readable OAS 3.1 spec
-- [Full LLM context](https://api.trade-tariff.service.gov.uk/llms-full.txt) — prose rendering of all v2 endpoints
+- [Full API documentation](https://docs.trade-tariff.service.gov.uk/the-trade-tariff-api.html) — step-by-step guide covering all endpoints in depth
+- [API reference](https://docs.trade-tariff.service.gov.uk/reference.html) — interactive reference with request/response schemas
+- [OpenAPI specification](https://docs.trade-tariff.service.gov.uk/openapi.yaml) — machine-readable OAS 3.1 spec
+- [Full LLM context](https://docs.trade-tariff.service.gov.uk/llms-full.txt) — prose rendering of all v2 endpoints
 - [Developer portal](https://hub.trade-tariff.service.gov.uk/) — register for API credentials
