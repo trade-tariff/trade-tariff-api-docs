@@ -33,6 +33,10 @@ class ChangelogTest < Minitest::Test
     end
   end
 
+  def test_no_draft_marker_is_left_in_the_changelog
+    refute_match(/^# DRAFT/, File.read(DATA_FILE), 'Review the drafted entries, then delete the "# DRAFT" line')
+  end
+
   def test_entries_are_newest_first
     dates = entries.map { |entry| entry['date'] }
 
