@@ -17,6 +17,8 @@
 - [API reference](https://docs.trade-tariff.service.gov.uk/reference.html): Full interactive API reference
 - [OpenAPI spec](https://docs.trade-tariff.service.gov.uk/openapi.yaml): Machine-readable OAS 3.1 specification
 - [Full LLM context](https://docs.trade-tariff.service.gov.uk/llms-full.txt): Prose rendering of all v2 endpoints
+- [API changelog](https://docs.trade-tariff.service.gov.uk/changelog.txt): Dated list of added, breaking and deprecated API changes. Check it before you generate integration code from cached documentation
+- [API changelog (JSON)](https://docs.trade-tariff.service.gov.uk/api-changelog.json): The same changelog in JSON, with a top-level `updated` date for a quick freshness check
 
 ## Markdown pages
 

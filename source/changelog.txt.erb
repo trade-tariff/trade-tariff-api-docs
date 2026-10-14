@@ -1,0 +1,22 @@
+# GOV.UK Trade Tariff API changelog
+
+Last updated: <%= data.changelog.first.date %>
+
+Change types:
+
+- `added`: new endpoint, field or filter. Existing clients keep working.
+- `breaking`: existing clients can fail. Update your integration.
+- `deprecated`: the old behaviour is going away. It stops on the sunset date, if one is shown.
+
+Machine-readable version: https://docs.trade-tariff.service.gov.uk/api-changelog.json
+
+<% data.changelog.each do |entry| %>
+## <%= entry.date %> (<%= entry.type %>)
+
+<%= entry.description.strip %>
+<% if entry.sunset %>
+
+Sunset date: <%= entry.sunset %>
+<% end %>
+
+<% end %>

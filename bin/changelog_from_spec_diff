@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Usage: bin/changelog_from_spec_diff OLD_SPEC NEW_SPEC CHANGELOG_YAML
+#
+# Adds draft entries to CHANGELOG_YAML for what changed between two OpenAPI
+# specs. The weekly "Update OpenAPI spec" workflow runs this.
+
+require 'yaml'
+require 'date'
+require_relative '../lib/spec_changelog'
+
+if ARGV.length != 3
+  warn 'Usage: bin/changelog_from_spec_diff OLD_SPEC NEW_SPEC CHANGELOG_YAML'
+  exit 1
+end
+
+old_spec_path, new_spec_path, changelog_path = ARGV
+permitted = [Date, Time]
+old_spec = YAML.safe_load_file(old_spec_path, permitted_classes: permitted)
+new_spec = YAML.safe_load_file(new_spec_path, permitted_classes: permitted)
+
+entries = SpecChangelog.changes(old_spec, new_spec)
+File.write(changelog_path, SpecChangelog.prepend(File.read(changelog_path), entries, Date.today))
+puts "Drafted #{entries.length} changelog entries."
