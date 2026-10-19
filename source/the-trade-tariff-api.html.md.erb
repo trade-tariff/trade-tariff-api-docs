@@ -592,6 +592,40 @@ Be aware, the XI tariff API does not contain information about EU quotas. If VAT
 
 Find out more about trading and moving goods in and out of <a href="https://www.gov.uk/guidance/trading-and-moving-goods-in-and-out-of-northern-ireland" target="_blank" rel="noreferrer noopener">Northern Ireland (opens in new tab)</a>.
 
+## Paths without /uk or /xi are deprecated
+
+Some API requests do not include a service prefix. For example:
+
+```text
+https://api.trade-tariff.service.gov.uk/api/v2/commodities/0101210000
+```
+
+These paths are deprecated. The API answers them with an HTTP `308` redirect to the same path with `/uk` at the start:
+
+```text
+https://api.trade-tariff.service.gov.uk/uk/api/v2/commodities/0101210000
+```
+
+**These paths will stop working on 30 April 2027.** After that date, they return a `404` error.
+
+To move to a supported path:
+
+1. Start each request path with the service that you want: `/uk/api/...` for UK data, or `/xi/api/...` for Northern Ireland data.
+2. If you use a path without a prefix, you get UK data. For Northern Ireland data, you must use `/xi/api/...`.
+3. Until you move, make sure that your client follows redirects. A `308` redirect keeps the request method and body, so `POST` requests keep working.
+
+Paths that already start with `/uk/api` or `/xi/api` do not change. The `Accept` header and the API version in the path do not change.
+
+Each redirect response has these headers:
+
+|Header|Meaning|
+|---|---|
+|`Deprecation`|The date when the path was deprecated, as a Unix timestamp with `@` in front.|
+|`Sunset`|The date when the path stops working.|
+|`Link`|A link to this page, with `rel="deprecation"`.|
+
+If your client logs response headers, search for `Deprecation` to find the calls that you must change. The [API changelog](/changelog.txt) also lists this change.
+
 ## API reference
 
 Use the [API Reference](/reference.html) for endpoint and object definitions used throughout this section.
