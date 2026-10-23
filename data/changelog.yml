@@ -18,6 +18,15 @@
 # f5a34f626, 2026-09-29). The spec does not show it, and it is not known that
 # the alias was ever public. Add it only after that is confirmed.
 
+# DRAFT: set `date` to the day HMRC-1366 goes live, then delete this line.
+- date: 2026-10-19
+  type: deprecated
+  description: >-
+    API paths without a service prefix, such as `/api/v2/commodities/0101210000`,
+    return a `308` redirect to the same path with `/uk` at the start. Use
+    `/uk/api` or `/xi/api` instead.
+  sunset: 2027-04-30
+
 - date: 2026-09-14
   type: added
   description: >-
