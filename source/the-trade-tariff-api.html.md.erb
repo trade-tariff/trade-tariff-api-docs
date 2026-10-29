@@ -614,15 +614,17 @@ To move to a supported path:
 2. If you use a path without a prefix, you get UK data. For Northern Ireland data, you must use `/xi/api/...`.
 3. Until you move, make sure that your client follows redirects. A `308` redirect keeps the request method and body, so `POST` requests keep working.
 
-Paths that already start with `/uk/api` or `/xi/api` do not change. The `Accept` header and the API version in the path do not change.
+Paths that already start with `/uk/api` or `/xi/api` do not change. The API version in the path does not change.
 
-Each redirect response has these headers:
+If your client sends the legacy `Accept: application/vnd.hmrc.1.0+json` header to `/api/v2/...`, the API does not redirect it. It answers the request with version 2 and adds the deprecation headers. When you add the `/uk` or `/xi` prefix, you must also change the `Accept` header to the version 2 value, for example `application/vnd.hmrc.2.0+json`. A prefixed path with the legacy header returns a `404` error.
+
+Each redirect response, and each response to a legacy `Accept` header request, has these headers:
 
 |Header|Meaning|
 |---|---|
 |`Deprecation`|The date when the path was deprecated, as a Unix timestamp with `@` in front.|
 |`Sunset`|The date when the path stops working.|
-|`Link`|A link to this page, with `rel="deprecation"`.|
+|`Link`|A link to the [API reference](/reference.html), with `rel="deprecation"`.|
 
 If your client logs response headers, search for `Deprecation` to find the calls that you must change. The [API changelog](/changelog.txt) also lists this change.
 
