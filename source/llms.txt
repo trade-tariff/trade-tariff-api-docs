@@ -4,10 +4,11 @@
 
 ## Notes
 
-- Base URL: `https://www.trade-tariff.service.gov.uk/api/v2`
+- Base URL: `https://www.trade-tariff.service.gov.uk/uk/api/v2`
 - All responses are JSON
 - No authentication is required for public read endpoints
 - Date-scoped endpoints accept an `as_of` query parameter (format: YYYY-MM-DD)
+- The path without a service prefix (`/api/v2`) is deprecated. Always include `uk` or `xi`.
 - An XI (Northern Ireland) variant is available at `https://www.trade-tariff.service.gov.uk/xi/api/v2`
 
 ## Docs
