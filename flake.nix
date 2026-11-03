@@ -215,8 +215,15 @@
               enable = true;
               stages = [ "pre-commit" ];
             };
-            trufflehog = {
+            briar = {
               enable = true;
+              name = "Briar (offline secret scan)";
+              # Keep the image version and digest aligned with .pre-commit-config.yaml.
+              entry = "ghcr.io/willfish/briar:v0.1.0@sha256:8e36caa3ef5892e45435d5388632d63f25e50224cee01678b82503eecc7cf728";
+              language = "docker_image";
+              args = [ "--" ];
+              types = [ "file" ];
+              require_serial = true;
               stages = [ "pre-commit" ];
             };
             rubocop = {
